@@ -1,307 +1,435 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="kmalloc_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kmalloc_8h" kind="file" language="C++">
     <compoundname>kmalloc.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="devfs_8c" local="no">src/sys/devfs/devfs.c</includedby>
-    <includedby refid="main_8c" local="no">src/sys/init/main.c</includedby>
-    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
-    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
-    <includedby refid="ne2k_8c" local="no">src/sys/isa/ne2k.c</includedby>
-    <includedby refid="bioscall_8c" local="no">src/sys/kernel/bioscall.c</includedby>
-    <includedby refid="elf_8c" local="no">src/sys/kernel/elf.c</includedby>
-    <includedby refid="exec_8c" local="no">src/sys/kernel/exec.c</includedby>
-    <includedby refid="gen__calls_8c" local="no">src/sys/kernel/gen_calls.c</includedby>
-    <includedby refid="kern__descrip_8c" local="no">src/sys/kernel/kern_descrip.c</includedby>
-    <includedby refid="kern__sig_8c" local="no">src/sys/kernel/kern_sig.c</includedby>
-    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
-    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
-    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
-    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
-    <includedby refid="tty_8c" local="no">src/sys/kernel/tty.c</includedby>
-    <includedby refid="ubthread_8c" local="no">src/sys/kernel/ubthread.c</includedby>
-    <includedby refid="vitals_8c" local="no">src/sys/kernel/vitals.c</includedby>
-    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
-    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
-    <includedby refid="libcpp_8cc" local="no">src/sys/lib/libcpp.cc</includedby>
-    <includedby refid="system_8c" local="no">src/sys/mpi/system.c</includedby>
-    <includedby refid="hd_8c" local="no">src/sys/pci/hd.c</includedby>
-    <includedby refid="lnc_8c" local="no">src/sys/pci/lnc.c</includedby>
-    <includedby refid="device_8c" local="no">src/sys/sys/device.c</includedby>
-    <includedby refid="idt_8c" local="no">src/sys/sys/idt.c</includedby>
-    <includedby refid="dirCache_8c" local="no">src/sys/ubixfs/dirCache.c</includedby>
-    <includedby refid="directory_8c" local="no">src/sys/ubixfs/directory.c</includedby>
-    <includedby refid="ubixfs_8c" local="no">src/sys/ubixfs/ubixfs.c</includedby>
-    <includedby refid="ffs_8c" local="no">src/sys/ufs/ffs.c</includedby>
-    <includedby refid="ufs_8c" local="no">src/sys/ufs/ufs.c</includedby>
-    <includedby refid="file_8c" local="no">src/sys/vfs/file.c</includedby>
-    <includedby refid="mount_8c" local="no">src/sys/vfs/mount.c</includedby>
-    <includedby refid="vfs_8c" local="no">src/sys/vfs/vfs.c</includedby>
-    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
-    <includedby refid="vmm__memory_8c" local="no">src/sys/vmm/vmm_memory.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="armv6_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</includedby>
+    <includedby refid="exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</includedby>
+    <includedby refid="armv6_2sched_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</includedby>
+    <includedby refid="arch_2armv6_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</includedby>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386__exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</includedby>
+    <includedby refid="i386_2sched_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/sched.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="devfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</includedby>
+    <includedby refid="fat_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat.c</includedby>
+    <includedby refid="dirCache_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</includedby>
+    <includedby refid="directory_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</includedby>
+    <includedby refid="ubixfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</includedby>
+    <includedby refid="ffs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</includedby>
+    <includedby refid="ufs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</includedby>
+    <includedby refid="file_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/file.c</includedby>
+    <includedby refid="mount_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</includedby>
+    <includedby refid="vfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</includedby>
+    <includedby refid="main_8c" local="no">C:/Dev/git/UbixOS/sys/init/main.c</includedby>
+    <includedby refid="atkbd_8c" local="no">C:/Dev/git/UbixOS/sys/isa/atkbd.c</includedby>
+    <includedby refid="fdc_8c" local="no">C:/Dev/git/UbixOS/sys/isa/fdc.c</includedby>
+    <includedby refid="ne2k_8c" local="no">C:/Dev/git/UbixOS/sys/isa/ne2k.c</includedby>
+    <includedby refid="descrip_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/descrip.c</includedby>
+    <includedby refid="kernel_2elf_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/elf.c</includedby>
+    <includedby refid="gen__calls_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</includedby>
+    <includedby refid="kern__sig_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/kern_sig.c</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="ld_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/ld.c</includedby>
+    <includedby refid="sem_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/sem.c</includedby>
+    <includedby refid="tty_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/tty.c</includedby>
+    <includedby refid="ubthread_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/ubthread.c</includedby>
+    <includedby refid="vitals_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/vitals.c</includedby>
+    <includedby refid="kmod_8c" local="no">C:/Dev/git/UbixOS/sys/kmods/kmod.c</includedby>
+    <includedby refid="kern__trie_8c" local="no">C:/Dev/git/UbixOS/sys/lib/kern_trie.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">C:/Dev/git/UbixOS/sys/lib/kmalloc.c</includedby>
+    <includedby refid="libcpp_8cc" local="no">C:/Dev/git/UbixOS/sys/lib/libcpp.cc</includedby>
+    <includedby refid="system_8c" local="no">C:/Dev/git/UbixOS/sys/mpi/system.c</includedby>
+    <includedby refid="bot_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/bot.c</includedby>
+    <includedby refid="net_2init_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/init.c</includedby>
+    <includedby refid="shell_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/shell.c</includedby>
+    <includedby refid="sys__arch_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</includedby>
+    <includedby refid="hd_8c" local="no">C:/Dev/git/UbixOS/sys/pci/hd.c</includedby>
+    <includedby refid="lnc_8c" local="no">C:/Dev/git/UbixOS/sys/pci/lnc.c</includedby>
+    <includedby refid="colours_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/colours.cc</includedby>
+    <includedby refid="main_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/main.cc</includedby>
+    <includedby refid="sde_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/sde.cc</includedby>
+    <includedby refid="device_8c" local="no">C:/Dev/git/UbixOS/sys/sys/device.c</includedby>
+    <includedby refid="idt_8c" local="no">C:/Dev/git/UbixOS/sys/sys/idt.c</includedby>
+    <includedby refid="paging_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/paging.c</includedby>
+    <includedby refid="vmm__memory_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</includedby>
     <incdepgraph>
-      <node id="3234">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3235" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="3235">
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="3233">
-        <label>src/sys/include/lib/kmalloc.h</label>
-        <link refid="kmalloc.h"/>
-        <childnode refid="3234" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3267">
-        <label>src/sys/ufs/ffs.c</label>
-        <link refid="ffs_8c"/>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
       </node>
-      <node id="3261">
-        <label>src/sys/pci/lnc.c</label>
-        <link refid="lnc_8c"/>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="3260">
-        <label>src/sys/pci/hd.c</label>
-        <link refid="hd_8c"/>
-      </node>
-      <node id="3255">
-        <label>src/sys/kernel/vitals.c</label>
-        <link refid="vitals_8c"/>
-      </node>
-      <node id="3243">
-        <label>src/sys/kernel/elf.c</label>
-        <link refid="elf_8c"/>
-      </node>
-      <node id="3253">
-        <label>src/sys/kernel/tty.c</label>
-        <link refid="tty_8c"/>
-      </node>
-      <node id="3256">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod_8c"/>
-      </node>
-      <node id="3259">
-        <label>src/sys/mpi/system.c</label>
-        <link refid="system_8c"/>
-      </node>
-      <node id="3248">
-        <label>src/sys/kernel/kern_sysctl.c</label>
-        <link refid="kern__sysctl_8c"/>
-      </node>
-      <node id="3257">
-        <label>src/sys/lib/kmalloc.c</label>
-        <link refid="kmalloc_8c"/>
-      </node>
-      <node id="3272">
-        <label>src/sys/vmm/paging.c</label>
-        <link refid="paging_8c"/>
-      </node>
-      <node id="3265">
-        <label>src/sys/ubixfs/directory.c</label>
-        <link refid="directory_8c"/>
-      </node>
-      <node id="3268">
-        <label>src/sys/ufs/ufs.c</label>
-        <link refid="ufs_8c"/>
-      </node>
-      <node id="3247">
-        <label>src/sys/kernel/kern_sig.c</label>
-        <link refid="kern__sig_8c"/>
-      </node>
-      <node id="3254">
-        <label>src/sys/kernel/ubthread.c</label>
-        <link refid="ubthread_8c"/>
-      </node>
-      <node id="3252">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="3249">
-        <label>src/sys/kernel/ld.c</label>
-        <link refid="ld_8c"/>
-      </node>
-      <node id="3236">
-        <label>src/sys/include/lib/kmalloc.h</label>
-        <link refid="kmalloc.h"/>
-        <childnode refid="3237" relation="include">
-        </childnode>
-        <childnode refid="3238" relation="include">
-        </childnode>
-        <childnode refid="3239" relation="include">
-        </childnode>
-        <childnode refid="3240" relation="include">
-        </childnode>
-        <childnode refid="3241" relation="include">
-        </childnode>
-        <childnode refid="3242" relation="include">
-        </childnode>
-        <childnode refid="3243" relation="include">
-        </childnode>
-        <childnode refid="3244" relation="include">
-        </childnode>
-        <childnode refid="3245" relation="include">
-        </childnode>
-        <childnode refid="3246" relation="include">
-        </childnode>
-        <childnode refid="3247" relation="include">
-        </childnode>
-        <childnode refid="3248" relation="include">
-        </childnode>
-        <childnode refid="3249" relation="include">
-        </childnode>
-        <childnode refid="3250" relation="include">
-        </childnode>
-        <childnode refid="3251" relation="include">
-        </childnode>
-        <childnode refid="3252" relation="include">
-        </childnode>
-        <childnode refid="3253" relation="include">
-        </childnode>
-        <childnode refid="3254" relation="include">
-        </childnode>
-        <childnode refid="3255" relation="include">
-        </childnode>
-        <childnode refid="3256" relation="include">
-        </childnode>
-        <childnode refid="3257" relation="include">
-        </childnode>
-        <childnode refid="3258" relation="include">
-        </childnode>
-        <childnode refid="3259" relation="include">
-        </childnode>
-        <childnode refid="3260" relation="include">
-        </childnode>
-        <childnode refid="3261" relation="include">
-        </childnode>
-        <childnode refid="3262" relation="include">
-        </childnode>
-        <childnode refid="3263" relation="include">
-        </childnode>
-        <childnode refid="3264" relation="include">
-        </childnode>
-        <childnode refid="3265" relation="include">
-        </childnode>
-        <childnode refid="3266" relation="include">
-        </childnode>
-        <childnode refid="3267" relation="include">
-        </childnode>
-        <childnode refid="3268" relation="include">
-        </childnode>
-        <childnode refid="3269" relation="include">
-        </childnode>
-        <childnode refid="3270" relation="include">
-        </childnode>
-        <childnode refid="3271" relation="include">
-        </childnode>
-        <childnode refid="3272" relation="include">
-        </childnode>
-        <childnode refid="3273" relation="include">
-        </childnode>
-      </node>
-      <node id="3250">
-        <label>src/sys/kernel/sched.c</label>
-        <link refid="sched_8c"/>
-      </node>
-      <node id="3264">
-        <label>src/sys/ubixfs/dirCache.c</label>
-        <link refid="dirCache_8c"/>
-      </node>
-      <node id="3266">
-        <label>src/sys/ubixfs/ubixfs.c</label>
-        <link refid="ubixfs_8c"/>
-      </node>
-      <node id="3238">
-        <label>src/sys/init/main.c</label>
-        <link refid="main_8c"/>
-      </node>
-      <node id="3242">
-        <label>src/sys/kernel/bioscall.c</label>
-        <link refid="bioscall_8c"/>
-      </node>
-      <node id="3262">
-        <label>src/sys/sys/device.c</label>
-        <link refid="device_8c"/>
-      </node>
-      <node id="3251">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
-      </node>
-      <node id="3241">
-        <label>src/sys/isa/ne2k.c</label>
-        <link refid="ne2k_8c"/>
-      </node>
-      <node id="3239">
-        <label>src/sys/isa/atkbd.c</label>
-        <link refid="atkbd_8c"/>
-      </node>
-      <node id="3270">
-        <label>src/sys/vfs/mount.c</label>
-        <link refid="mount_8c"/>
-      </node>
-      <node id="3237">
-        <label>src/sys/devfs/devfs.c</label>
-        <link refid="devfs_8c"/>
-      </node>
-      <node id="3273">
-        <label>src/sys/vmm/vmm_memory.c</label>
-        <link refid="vmm__memory_8c"/>
-      </node>
-      <node id="3246">
-        <label>src/sys/kernel/kern_descrip.c</label>
-        <link refid="kern__descrip_8c"/>
-      </node>
-      <node id="3258">
-        <label>src/sys/lib/libcpp.cc</label>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/lib/libcpp.cc</label>
         <link refid="libcpp_8cc"/>
       </node>
-      <node id="3269">
-        <label>src/sys/vfs/file.c</label>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
         <link refid="file_8c"/>
       </node>
-      <node id="3263">
-        <label>src/sys/sys/idt.c</label>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/sys/idt.c</label>
         <link refid="idt_8c"/>
       </node>
-      <node id="3245">
-        <label>src/sys/kernel/gen_calls.c</label>
-        <link refid="gen__calls_8c"/>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
       </node>
-      <node id="3244">
-        <label>src/sys/kernel/exec.c</label>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
         <link refid="exec_8c"/>
       </node>
-      <node id="3240">
-        <label>src/sys/isa/fdc.c</label>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/kernel/sem.c</label>
+        <link refid="sem_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</label>
+        <link refid="armv6_2bioscall_8c"/>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/isa/fdc.c</label>
         <link refid="fdc_8c"/>
       </node>
-      <node id="3271">
-        <label>src/sys/vfs/vfs.c</label>
-        <link refid="vfs_8c"/>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/kernel/descrip.c</label>
+        <link refid="descrip_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/lib/kern_trie.c</label>
+        <link refid="kern__trie_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/sys/device.c</label>
+        <link refid="device_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
       </node>
     </invincdepgraph>
     <innerclass refid="structmemDescriptor" prot="public">memDescriptor</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="kmalloc_8h_1f0fa0ac2c51032ef234e92b127e59a74" prot="public" static="no">
+      <memberdef kind="define" id="kmalloc_8h_1af0fa0ac2c51032ef234e92b127e59a74" prot="public" static="no">
         <name>MALLOC_ALIGN</name>
         <param><defname>size</defname></param>
-        <initializer>(size + ((((size) % (MALLOC_ALIGN_SIZE)) == 0)? 0 : ((MALLOC_ALIGN_SIZE) - ((size) % (MALLOC_ALIGN_SIZE)))))</initializer>
+        <initializer>(size + ((((size) % (<ref refid="kmalloc_8h_1a507e7ea478c4d42970730698da5c1470" kindref="member">MALLOC_ALIGN_SIZE</ref>)) == 0)? 0 : ((<ref refid="kmalloc_8h_1a507e7ea478c4d42970730698da5c1470" kindref="member">MALLOC_ALIGN_SIZE</ref>) - ((size) % (<ref refid="kmalloc_8h_1a507e7ea478c4d42970730698da5c1470" kindref="member">MALLOC_ALIGN_SIZE</ref>)))))</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kmalloc_8h_1507e7ea478c4d42970730698da5c1470" prot="public" static="no">
+      <memberdef kind="define" id="kmalloc_8h_1a507e7ea478c4d42970730698da5c1470" prot="public" static="no">
         <name>MALLOC_ALIGN_SIZE</name>
         <initializer>32</initializer>
         <briefdescription>
@@ -310,9 +438,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="40" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="39" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kmalloc_8h_181d09bc848b49133401b3efeeb65f1af" prot="public" static="no">
+      <memberdef kind="define" id="kmalloc_8h_1a81d09bc848b49133401b3efeeb65f1af" prot="public" static="no">
         <name>sysID</name>
         <initializer>-2</initializer>
         <briefdescription>
@@ -321,14 +449,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="39" bodyend="-1"/>
-        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
-        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
-        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="38" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void kfree</definition>
         <argsstring>(void *baseAddr)</argsstring>
@@ -343,50 +468,42 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kmalloc.c" bodystart="351" bodyend="391"/>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" compoundref="kmalloc_8h" startline="46">memDescriptor::baseAddr</references>
-        <references refid="kmalloc_8c_1eb1c3f1ef8eb9063c2e5c4af488dd2d0" compoundref="kmalloc_8c" startline="124" endline="173">insertFreeDesc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structmemDescriptor_1058bea66f641af082849f748d83ea065" compoundref="kmalloc_8h" startline="47">memDescriptor::limit</references>
-        <references refid="kmalloc_8c_16f529a6db980782464a6c1bb7eddd09c" compoundref="kmalloc_8c" startline="54">mallocSpinLock</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="structmemDescriptor_1fef7871e9eb4790c4593ddfaddcd028f" compoundref="kmalloc_8h" startline="45">memDescriptor::next</references>
-        <references refid="structmemDescriptor_11c3d40435fbd7093299235a8684d8b66" compoundref="kmalloc_8h" startline="44">memDescriptor::prev</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="kmalloc_8c_1f60f75b69fa71f90b84c0dd58f0040a5" compoundref="kmalloc_8c" startline="47">usedKernDesc</references>
-        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
-        <referencedby refid="device_8c_1b6cc746d95021f087eb5aef767050e71" compoundref="device_8c" startline="110" endline="145">device_remove</referencedby>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
-        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
-        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
-        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
-        <referencedby refid="ne2k_8c_1deb7b37e43d9b5203408374d8d8ce586" compoundref="ne2k_8c" startline="353" endline="357">ne2kFreeBuffer</referencedby>
-        <referencedby refid="libcpp_8cc_13d97a7e2a0208075b4b37328c96ed390" compoundref="libcpp_8cc" startline="64" endline="68">operator delete</referencedby>
-        <referencedby refid="libcpp_8cc_11d8b2d6f17242ae0d182b0f7a98ba54f" compoundref="libcpp_8cc" startline="51" endline="56">operator delete[]</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
-        <referencedby refid="dirCache_8c_1472e166c2202b92faa451f2ae9906882" compoundref="dirCache_8c" startline="202" endline="228">ubixfs_cacheDelete</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubthread_8c_1e914fae69538736dc5e494c15ce93a17" compoundref="ubthread_8c" startline="64" endline="68">ubthread_cond_destroy</referencedby>
-        <referencedby refid="ubthread_8c_1278f5d5b1e11b6668b75da6a285442e4" compoundref="ubthread_8c" startline="70" endline="74">ubthread_mutex_destroy</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="51" column="8" bodyfile="C:/Dev/git/UbixOS/sys/lib/kmalloc.c" bodystart="342" bodyend="382" declfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" declline="51" declcolumn="8"/>
+        <references refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structmemDescriptor_1aa1d1c6fe6d86d782b64c1ca467250cb9" compoundref="kmalloc_8h" startline="45">memDescriptor::baseAddr</references>
+        <referencedby refid="descrip_8c_1aec14600d2aa9db1288f00704ba3a55d7" compoundref="descrip_8c" startline="162" endline="171">close</referencedby>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="descrip_8c_1a9c93ac280b559128027746bda7c5d6d4" compoundref="descrip_8c" startline="96" endline="123">falloc</referencedby>
+        <referencedby refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" compoundref="descrip_8c" startline="147" endline="160">fdestroy</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="ne2k_8c_1adeb7b37e43d9b5203408374d8d8ce586" compoundref="ne2k_8c" startline="353" endline="357">ne2kFreeBuffer</referencedby>
+        <referencedby refid="libcpp_8cc_1a3d97a7e2a0208075b4b37328c96ed390" compoundref="libcpp_8cc" startline="73" endline="76">operator delete</referencedby>
+        <referencedby refid="libcpp_8cc_1a1d8b2d6f17242ae0d182b0f7a98ba54f" compoundref="libcpp_8cc" startline="62" endline="66">operator delete[]</referencedby>
+        <referencedby refid="pci_8c_1a9a16d3ca1d4538415b752ab0c58e72ba" compoundref="pci_8c" startline="139" endline="242">pciProbe</referencedby>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+        <referencedby refid="sem_8c_1aa386df202c6e9b90a1445a61ce694210" compoundref="sem_8c" startline="87" endline="100">sem_destroy</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+        <referencedby refid="dirCache_8h_1aa31fa0816ce9018ef327f17a48b36d3c" compoundref="dirCache_8c" startline="210" endline="238">ubixfs_cacheDelete</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="ubthread_8c_1ae914fae69538736dc5e494c15ce93a17" compoundref="ubthread_8c" startline="71" endline="75">ubthread_cond_destroy</referencedby>
+        <referencedby refid="ubthread_8c_1a278f5d5b1e11b6668b75da6a285442e4" compoundref="ubthread_8c" startline="77" endline="81">ubthread_mutex_destroy</referencedby>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="function" id="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void *</type>
         <definition>void* kmalloc</definition>
         <argsstring>(uInt32 len)</argsstring>
         <name>kmalloc</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
           <declname>len</declname>
         </param>
         <briefdescription>
@@ -395,67 +512,49 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kmalloc.c" bodystart="247" bodyend="339"/>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" compoundref="kmalloc_8h" startline="46">memDescriptor::baseAddr</references>
-        <references refid="kmalloc_8c_1a0c5be194ccb3f36a4ea8e666fbd2dac" compoundref="kmalloc_8c" startline="48">freeKernDesc</references>
-        <references refid="kmalloc_8c_1f6c4ea5cb961c72548d92ff65d7e33a4" compoundref="kmalloc_8c" startline="67" endline="110">getEmptyDesc</references>
-        <references refid="kmalloc_8c_1eb1c3f1ef8eb9063c2e5c4af488dd2d0" compoundref="kmalloc_8c" startline="124" endline="173">insertFreeDesc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structmemDescriptor_1058bea66f641af082849f748d83ea065" compoundref="kmalloc_8h" startline="47">memDescriptor::limit</references>
-        <references refid="kmalloc_8h_1f0fa0ac2c51032ef234e92b127e59a74" compoundref="kmalloc_8h" startline="41">MALLOC_ALIGN</references>
-        <references refid="kmalloc_8c_16f529a6db980782464a6c1bb7eddd09c" compoundref="kmalloc_8c" startline="54">mallocSpinLock</references>
-        <references refid="structmemDescriptor_1fef7871e9eb4790c4593ddfaddcd028f" compoundref="kmalloc_8h" startline="45">memDescriptor::next</references>
-        <references refid="structmemDescriptor_11c3d40435fbd7093299235a8684d8b66" compoundref="kmalloc_8h" startline="44">memDescriptor::prev</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="kmalloc_8c_1f60f75b69fa71f90b84c0dd58f0040a5" compoundref="kmalloc_8c" startline="47">usedKernDesc</references>
-        <referencedby refid="directory_8c_1756e1f497c4d9fed64ac0a2256f9fa46" compoundref="directory_8c" startline="66" endline="91">addDirEntry</referencedby>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
-        <referencedby refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" compoundref="devfs_8c" startline="50" endline="62">devfs_initialize</referencedby>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="kern__descrip_8c_19c93ac280b559128027746bda7c5d6d4" compoundref="kern__descrip_8c" startline="67" endline="88">falloc</referencedby>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
-        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
-        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
-        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
-        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
-        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
-        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
-        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
-        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
-        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="libcpp_8cc_19bccb23e08907b6033c45f524578239a" compoundref="libcpp_8cc" startline="58" endline="62">operator new</referencedby>
-        <referencedby refid="libcpp_8cc_1e55853bd31de5afc92b2093f2567c007" compoundref="libcpp_8cc" startline="46" endline="49">operator new[]</referencedby>
-        <referencedby refid="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" compoundref="sched_8c" startline="69" endline="81">sched_init</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
-        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" compoundref="directory_8c" startline="41" endline="63">ubixFSLoadDir</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubthread_8c_1cbb7170a68758468ab5b02512a320112" compoundref="ubthread_8c" startline="48" endline="54">ubthread_cond_init</referencedby>
-        <referencedby refid="ubthread_8c_1a0af177ef44888f3c93883294207328e" compoundref="ubthread_8c" startline="76" endline="79">ubthread_create</referencedby>
-        <referencedby refid="ubthread_8c_1b6bfc2169b55532821582f24b68dc855" compoundref="ubthread_8c" startline="56" endline="62">ubthread_mutex_init</referencedby>
-        <referencedby refid="ufs_8c_1e5b71ba2291b2d2ef07ece9e0de74a5d" compoundref="ufs_8c" startline="272" endline="289">ufs_openFile</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
-        <referencedby refid="vfs_8c_1d8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</referencedby>
-        <referencedby refid="vitals_8c_134d7f48e003fe73f05d594c6c1f00d49" compoundref="vitals_8c" startline="48" endline="69">vitals_init</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="52" column="8" bodyfile="C:/Dev/git/UbixOS/sys/lib/kmalloc.c" bodystart="241" bodyend="331" declfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" declline="52" declcolumn="8"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a58993494728ce5af573cd51322735210" compoundref="directory_8c" startline="64" endline="89">addDirEntry</referencedby>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
+        <referencedby refid="device_8c_1a24bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="49" endline="70">device_add</referencedby>
+        <referencedby refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" compoundref="descrip_8c" startline="348" endline="375">dup2</referencedby>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="descrip_8c_1a9c93ac280b559128027746bda7c5d6d4" compoundref="descrip_8c" startline="96" endline="123">falloc</referencedby>
+        <referencedby refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</referencedby>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+        <referencedby refid="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="45" endline="68">kmod_add</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="lnc_8c_1afa544fa662f94035a72f9c04f7f7fd5a" compoundref="lnc_8c" startline="316" endline="350">lnc_rxINT</referencedby>
+        <referencedby refid="lnc_8c_1a6fb9d9c3d73ce2d10b2cebe1d71f07e2" compoundref="lnc_8c" startline="278" endline="314">lnc_thread</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
+        <referencedby refid="kern__trie_8c_1afadb3489e5ff24f80e606d9651ec59fc" compoundref="kern__trie_8c" startline="33" endline="43">new_trieNode</referencedby>
+        <referencedby refid="libcpp_8cc_1a9bccb23e08907b6033c45f524578239a" compoundref="libcpp_8cc" startline="68" endline="71">operator new</referencedby>
+        <referencedby refid="libcpp_8cc_1ae55853bd31de5afc92b2093f2567c007" compoundref="libcpp_8cc" startline="58" endline="60">operator new[]</referencedby>
+        <referencedby refid="pci_8c_1a9a16d3ca1d4538415b752ab0c58e72ba" compoundref="pci_8c" startline="139" endline="242">pciProbe</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+        <referencedby refid="sem_8c_1a19bd6e9be9540104f4ab465624e9a579" compoundref="sem_8c" startline="56" endline="73">sem_init</referencedby>
+        <referencedby refid="shell_8c_1a0bc95784e81888a4e64b84306bdc2c66" compoundref="shell_8c" startline="95" endline="110">shell_thread</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+        <referencedby refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</referencedby>
+        <referencedby refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" compoundref="sys__arch_8c" startline="379" endline="408">sys_thread_new</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a3f7a88e7f709a200096c93c0deb13ec2" compoundref="directory_8c" startline="39" endline="61">ubixFSLoadDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="ubthread_8c_1a57168ab258d780168b7334a387651133" compoundref="ubthread_8c" startline="49" endline="58">ubthread_cond_init</referencedby>
+        <referencedby refid="ubthread_8c_1a32f60f4953d8865991ea48cf26236b97" compoundref="ubthread_8c" startline="60" endline="69">ubthread_mutex_init</referencedby>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
+        <referencedby refid="vitals_8c_1a34d7f48e003fe73f05d594c6c1f00d49" compoundref="vitals_8c" startline="47" endline="70">vitals_init</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -463,107 +562,103 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: kmalloc_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KMALLOC_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_KMALLOC_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="38"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39" refid="kmalloc_8h_181d09bc848b49133401b3efeeb65f1af" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sysID<sp/><sp/><sp/><sp/><sp/><sp/>-2</highlight></codeline>
-<codeline lineno="40" refid="kmalloc_8h_1507e7ea478c4d42970730698da5c1470" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MALLOC_ALIGN_SIZE<sp/><sp/>32</highlight></codeline>
-<codeline lineno="41" refid="kmalloc_8h_1f0fa0ac2c51032ef234e92b127e59a74" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MALLOC_ALIGN(size)<sp/>(size<sp/>+<sp/>((((size)<sp/>%<sp/>(MALLOC_ALIGN_SIZE))<sp/>==<sp/>0)?<sp/>0<sp/>:<sp/>((MALLOC_ALIGN_SIZE)<sp/>-<sp/>((size)<sp/>%<sp/>(MALLOC_ALIGN_SIZE)))))</highlight></codeline>
-<codeline lineno="42"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43" refid="structmemDescriptor" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref><sp/>{</highlight></codeline>
-<codeline lineno="44" refid="structmemDescriptor_11c3d40435fbd7093299235a8684d8b66" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref><sp/>*<ref refid="structmemDescriptor_11c3d40435fbd7093299235a8684d8b66" kindref="member">prev</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45" refid="structmemDescriptor_1fef7871e9eb4790c4593ddfaddcd028f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref><sp/>*<ref refid="structmemDescriptor_1fef7871e9eb4790c4593ddfaddcd028f" kindref="member">next</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="46" refid="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" kindref="member">baseAddr</ref>;<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47" refid="structmemDescriptor_1058bea66f641af082849f748d83ea065" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structmemDescriptor_1058bea66f641af082849f748d83ea065" kindref="member">limit</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*uInt8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>status;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>//1<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*char<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved[11];<sp/>//11<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" kindref="member">baseAddr</ref>);</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>len);</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight></codeline>
-<codeline lineno="56"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/>}</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="58"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="60"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="62"><highlight class="comment"><sp/>$Log: kmalloc_8h.xml,v $
-<codeline lineno="62"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
-<codeline lineno="62"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="62"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="63"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="65"><highlight class="comment"></highlight></codeline>
-<codeline lineno="66"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="67"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="68"><highlight class="comment"></highlight></codeline>
-<codeline lineno="69"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:40<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="70"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="71"><highlight class="comment"></highlight></codeline>
-<codeline lineno="72"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/09/14<sp/>20:57:01<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="73"><highlight class="comment"><sp/>Bug<sp/>fixes:<sp/>macro<sp/>problem<sp/>over<sp/>opt<sp/>a<sp/>multiply</highlight></codeline>
-<codeline lineno="74"><highlight class="comment"></highlight></codeline>
-<codeline lineno="75"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/21<sp/>10:02:09<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="76"><highlight class="comment"><sp/>devfs:<sp/>renamed<sp/>functions</highlight></codeline>
-<codeline lineno="77"><highlight class="comment"><sp/>device<sp/>system:<sp/>renamed<sp/>functions</highlight></codeline>
-<codeline lineno="78"><highlight class="comment"><sp/>fdc:<sp/>fixed<sp/>a<sp/>few<sp/>potential<sp/>bugs<sp/>and<sp/>cleaned<sp/>up<sp/>some<sp/>unused<sp/>variables</highlight></codeline>
-<codeline lineno="79"><highlight class="comment"><sp/>strol:<sp/>fixed<sp/>definition</highlight></codeline>
-<codeline lineno="80"><highlight class="comment"><sp/>endtask:<sp/>made<sp/>it<sp/>print<sp/>out<sp/>freepage<sp/>debug<sp/>info</highlight></codeline>
-<codeline lineno="81"><highlight class="comment"><sp/>kmalloc:<sp/>fixed<sp/>a<sp/>huge<sp/>memory<sp/>leak<sp/>we<sp/>had<sp/>some<sp/>unhandled<sp/>descriptor<sp/>insertion<sp/>so<sp/>some<sp/>descriptors<sp/>were<sp/>lost</highlight></codeline>
-<codeline lineno="82"><highlight class="comment"><sp/>ld:<sp/>fixed<sp/>a<sp/>pointer<sp/>conversion</highlight></codeline>
-<codeline lineno="83"><highlight class="comment"><sp/>file:<sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>unused<sp/>variables</highlight></codeline>
-<codeline lineno="84"><highlight class="comment"><sp/>sched:<sp/>broke<sp/>task<sp/>deletion</highlight></codeline>
-<codeline lineno="85"><highlight class="comment"><sp/>kprintf:<sp/>fixed<sp/>ogPrintf<sp/>definition</highlight></codeline>
-<codeline lineno="86"><highlight class="comment"></highlight></codeline>
-<codeline lineno="87"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/19<sp/>02:08:27<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="88"><highlight class="comment"><sp/>Cleaned<sp/>out<sp/>the<sp/>rest<sp/>of<sp/>debuging<sp/>code<sp/>also<sp/>temporarily<sp/>disabled<sp/>the<sp/>ip<sp/>stack<sp/>to<sp/>improve<sp/>boot<sp/>time</highlight></codeline>
-<codeline lineno="89"><highlight class="comment"></highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/18<sp/>05:24:15<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>Fixens</highlight></codeline>
-<codeline lineno="92"><highlight class="comment"></highlight></codeline>
-<codeline lineno="93"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/21<sp/>15:00:27<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="94"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="95"><highlight class="comment"></highlight></codeline>
-<codeline lineno="96"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="97"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_LIB_KMALLOC_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_LIB_KMALLOC_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="kmalloc_8h_1a81d09bc848b49133401b3efeeb65f1af" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sysID<sp/><sp/><sp/><sp/><sp/><sp/>-2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="kmalloc_8h_1a507e7ea478c4d42970730698da5c1470" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MALLOC_ALIGN_SIZE<sp/><sp/>32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="kmalloc_8h_1af0fa0ac2c51032ef234e92b127e59a74" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MALLOC_ALIGN(size)<sp/>(size<sp/>+<sp/>((((size)<sp/>%<sp/>(MALLOC_ALIGN_SIZE))<sp/>==<sp/>0)?<sp/>0<sp/>:<sp/>((MALLOC_ALIGN_SIZE)<sp/>-<sp/>((size)<sp/>%<sp/>(MALLOC_ALIGN_SIZE)))))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="structmemDescriptor" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref><sp/>{</highlight></codeline>
+<codeline lineno="43" refid="structmemDescriptor_1a1c3d40435fbd7093299235a8684d8b66" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref><sp/>*<ref refid="structmemDescriptor_1a1c3d40435fbd7093299235a8684d8b66" kindref="member">prev</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="structmemDescriptor_1afef7871e9eb4790c4593ddfaddcd028f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref><sp/>*<ref refid="structmemDescriptor_1afef7871e9eb4790c4593ddfaddcd028f" kindref="member">next</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="structmemDescriptor_1aa1d1c6fe6d86d782b64c1ca467250cb9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmemDescriptor_1aa1d1c6fe6d86d782b64c1ca467250cb9" kindref="member">baseAddr</ref>;<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="structmemDescriptor_1a058bea66f641af082849f748d83ea065" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="structmemDescriptor_1a058bea66f641af082849f748d83ea065" kindref="member">limit</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*uInt8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>status;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>//1<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*char<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reserved[11];<sp/>//11<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmemDescriptor_1aa1d1c6fe6d86d782b64c1ca467250cb9" kindref="member">baseAddr</ref>);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>len);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>$Log:<sp/>kmalloc.h,v<sp/>$</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"></highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"></highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:40<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"></highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/09/14<sp/>20:57:01<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>Bug<sp/>fixes:<sp/>macro<sp/>problem<sp/>over<sp/>opt<sp/>a<sp/>multiply</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"></highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/21<sp/>10:02:09<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>devfs:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/>device<sp/>system:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>fdc:<sp/>fixed<sp/>a<sp/>few<sp/>potential<sp/>bugs<sp/>and<sp/>cleaned<sp/>up<sp/>some<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>strol:<sp/>fixed<sp/>definition</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>endtask:<sp/>made<sp/>it<sp/>print<sp/>out<sp/>freepage<sp/>debug<sp/>info</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>kmalloc:<sp/>fixed<sp/>a<sp/>huge<sp/>memory<sp/>leak<sp/>we<sp/>had<sp/>some<sp/>unhandled<sp/>descriptor<sp/>insertion<sp/>so<sp/>some<sp/>descriptors<sp/>were<sp/>lost</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/>ld:<sp/>fixed<sp/>a<sp/>pointer<sp/>conversion</highlight></codeline>
+<codeline lineno="82"><highlight class="comment"><sp/>file:<sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>sched:<sp/>broke<sp/>task<sp/>deletion</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"><sp/>kprintf:<sp/>fixed<sp/>ogPrintf<sp/>definition</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"></highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/19<sp/>02:08:27<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/>Cleaned<sp/>out<sp/>the<sp/>rest<sp/>of<sp/>debuging<sp/>code<sp/>also<sp/>temporarily<sp/>disabled<sp/>the<sp/>ip<sp/>stack<sp/>to<sp/>improve<sp/>boot<sp/>time</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"></highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/18<sp/>05:24:15<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/>Fixens</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"></highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/21<sp/>15:00:27<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="93"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="94"><highlight class="comment"></highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h"/>
   </compounddef>
 </doxygen>

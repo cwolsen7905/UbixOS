@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structtrapframe" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtrapframe" kind="struct" language="C++" prot="public">
     <compoundname>trapframe</compoundname>
     <includes refid="trap_8h" local="no">trap.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structtrapframe_113dfa06d7f06bd0f2495fa57e5e957fd" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a13dfa06d7f06bd0f2495fa57e5e957fd" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_cs</definition>
         <argsstring></argsstring>
@@ -15,9 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="49" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1bcc5a426a24512b99e1dd346a10df215" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1abcc5a426a24512b99e1dd346a10df215" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_ds</definition>
         <argsstring></argsstring>
@@ -28,9 +30,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="36" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_eax</definition>
         <argsstring></argsstring>
@@ -41,10 +45,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="44" bodyend="-1"/>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="gen__calls_8c_1a6d945e107f5f3d710b7b571eac2784b5" compoundref="gen__calls_8c" startline="141" endline="145">sys_invalid</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1994aa3af57422c8b5b06e80baaa53ed3" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a994aa3af57422c8b5b06e80baaa53ed3" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_ebp</definition>
         <argsstring></argsstring>
@@ -55,9 +62,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="39" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_186b2120d33a523294045c7b137bff664" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a86b2120d33a523294045c7b137bff664" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_ebx</definition>
         <argsstring></argsstring>
@@ -68,9 +77,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="41" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1db6f2caefa3b0fc4d33f7f3ed03e3a36" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1adb6f2caefa3b0fc4d33f7f3ed03e3a36" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_ecx</definition>
         <argsstring></argsstring>
@@ -81,9 +92,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="43" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1b859bce7daebd16272a36cfcf03004bf" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1ab859bce7daebd16272a36cfcf03004bf" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_edi</definition>
         <argsstring></argsstring>
@@ -94,9 +107,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="37" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_14e14d725fc1185125f65d8812737c3d4" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_edx</definition>
         <argsstring></argsstring>
@@ -107,10 +122,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1dafa69a2f56db6fef99c33bc17c947ba" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1adafa69a2f56db6fef99c33bc17c947ba" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_eflags</definition>
         <argsstring></argsstring>
@@ -121,10 +139,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="50" bodyend="-1"/>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_15d510dabbcd29cf981b17a4c08234c3b" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a5d510dabbcd29cf981b17a4c08234c3b" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_eip</definition>
         <argsstring></argsstring>
@@ -135,10 +156,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="48" bodyend="-1"/>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="pagefault_8c_1a046643b9b8c1ad9efffaaaeb5ff11431" compoundref="pagefault_8c" startline="53" endline="147">vmm_pageFault</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_19e4fa072056d86cd7516e9445822ef34" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a9e4fa072056d86cd7516e9445822ef34" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_err</definition>
         <argsstring></argsstring>
@@ -149,10 +172,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="47" bodyend="-1"/>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="pagefault_8c_1a046643b9b8c1ad9efffaaaeb5ff11431" compoundref="pagefault_8c" startline="53" endline="147">vmm_pageFault</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_18d3e79fb11d18c0707d4d791d72abb36" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a8d3e79fb11d18c0707d4d791d72abb36" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_es</definition>
         <argsstring></argsstring>
@@ -163,9 +187,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="35" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1adba6abdd3ec0afc7ac61ecbec42d2bc" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1aadba6abdd3ec0afc7ac61ecbec42d2bc" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_esi</definition>
         <argsstring></argsstring>
@@ -176,9 +202,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="38" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1cbc06b1642fabea71bfa8ddbba3ede44" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1acbc06b1642fabea71bfa8ddbba3ede44" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_esp</definition>
         <argsstring></argsstring>
@@ -189,10 +217,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="52" bodyend="-1"/>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="pagefault_8c_1a046643b9b8c1ad9efffaaaeb5ff11431" compoundref="pagefault_8c" startline="53" endline="147">vmm_pageFault</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_10f51b8660d4ae038cf4273208dde6320" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a0f51b8660d4ae038cf4273208dde6320" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_fs</definition>
         <argsstring></argsstring>
@@ -203,9 +235,25 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="34" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_16da8d82adb3f7188b9d753c1d9fc3bcb" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1a8877cc21777e7b9feb19b2dc7440b636" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int trapframe::tf_gs</definition>
+        <argsstring></argsstring>
+        <name>tf_gs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtrapframe_1a6da8d82adb3f7188b9d753c1d9fc3bcb" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_isp</definition>
         <argsstring></argsstring>
@@ -216,9 +264,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="40" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="42" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1bfb070fe3681a0ccc49ea3bd62b24be7" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1abfb070fe3681a0ccc49ea3bd62b24be7" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_ss</definition>
         <argsstring></argsstring>
@@ -229,9 +277,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="53" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtrapframe_1d22f14869aa03a440119420cd9d5017f" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtrapframe_1ad22f14869aa03a440119420cd9d5017f" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int trapframe::tf_trapno</definition>
         <argsstring></argsstring>
@@ -242,33 +292,42 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="45" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="trap_8h_1a62b4617f9a2800b1e9baf8d6f93835bd" compoundref="trap_8c" startline="59" endline="99">die_if_kernel</referencedby>
+        <referencedby refid="trap_8h_1a50e545f26a0fed346d9d0ed1d585cbfe" compoundref="trap_8c" startline="101" endline="134">trap</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" line="33" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/trap.h" bodystart="33" bodyend="54"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/trap.h" line="34" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/trap.h" bodystart="34" bodyend="56"/>
     <listofallmembers>
-      <member refid="structtrapframe_113dfa06d7f06bd0f2495fa57e5e957fd" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_cs</name></member>
-      <member refid="structtrapframe_1bcc5a426a24512b99e1dd346a10df215" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ds</name></member>
-      <member refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_eax</name></member>
-      <member refid="structtrapframe_1994aa3af57422c8b5b06e80baaa53ed3" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ebp</name></member>
-      <member refid="structtrapframe_186b2120d33a523294045c7b137bff664" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ebx</name></member>
-      <member refid="structtrapframe_1db6f2caefa3b0fc4d33f7f3ed03e3a36" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ecx</name></member>
-      <member refid="structtrapframe_1b859bce7daebd16272a36cfcf03004bf" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_edi</name></member>
-      <member refid="structtrapframe_14e14d725fc1185125f65d8812737c3d4" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_edx</name></member>
-      <member refid="structtrapframe_1dafa69a2f56db6fef99c33bc17c947ba" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_eflags</name></member>
-      <member refid="structtrapframe_15d510dabbcd29cf981b17a4c08234c3b" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_eip</name></member>
-      <member refid="structtrapframe_19e4fa072056d86cd7516e9445822ef34" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_err</name></member>
-      <member refid="structtrapframe_18d3e79fb11d18c0707d4d791d72abb36" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_es</name></member>
-      <member refid="structtrapframe_1adba6abdd3ec0afc7ac61ecbec42d2bc" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_esi</name></member>
-      <member refid="structtrapframe_1cbc06b1642fabea71bfa8ddbba3ede44" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_esp</name></member>
-      <member refid="structtrapframe_10f51b8660d4ae038cf4273208dde6320" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_fs</name></member>
-      <member refid="structtrapframe_16da8d82adb3f7188b9d753c1d9fc3bcb" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_isp</name></member>
-      <member refid="structtrapframe_1bfb070fe3681a0ccc49ea3bd62b24be7" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ss</name></member>
-      <member refid="structtrapframe_1d22f14869aa03a440119420cd9d5017f" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_trapno</name></member>
+      <member refid="structtrapframe_1a13dfa06d7f06bd0f2495fa57e5e957fd" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_cs</name></member>
+      <member refid="structtrapframe_1abcc5a426a24512b99e1dd346a10df215" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ds</name></member>
+      <member refid="structtrapframe_1afb020a5162b2fe71f4f8fa641f7dd5f2" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_eax</name></member>
+      <member refid="structtrapframe_1a994aa3af57422c8b5b06e80baaa53ed3" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ebp</name></member>
+      <member refid="structtrapframe_1a86b2120d33a523294045c7b137bff664" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ebx</name></member>
+      <member refid="structtrapframe_1adb6f2caefa3b0fc4d33f7f3ed03e3a36" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ecx</name></member>
+      <member refid="structtrapframe_1ab859bce7daebd16272a36cfcf03004bf" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_edi</name></member>
+      <member refid="structtrapframe_1a4e14d725fc1185125f65d8812737c3d4" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_edx</name></member>
+      <member refid="structtrapframe_1adafa69a2f56db6fef99c33bc17c947ba" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_eflags</name></member>
+      <member refid="structtrapframe_1a5d510dabbcd29cf981b17a4c08234c3b" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_eip</name></member>
+      <member refid="structtrapframe_1a9e4fa072056d86cd7516e9445822ef34" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_err</name></member>
+      <member refid="structtrapframe_1a8d3e79fb11d18c0707d4d791d72abb36" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_es</name></member>
+      <member refid="structtrapframe_1aadba6abdd3ec0afc7ac61ecbec42d2bc" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_esi</name></member>
+      <member refid="structtrapframe_1acbc06b1642fabea71bfa8ddbba3ede44" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_esp</name></member>
+      <member refid="structtrapframe_1a0f51b8660d4ae038cf4273208dde6320" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_fs</name></member>
+      <member refid="structtrapframe_1a8877cc21777e7b9feb19b2dc7440b636" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_gs</name></member>
+      <member refid="structtrapframe_1a6da8d82adb3f7188b9d753c1d9fc3bcb" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_isp</name></member>
+      <member refid="structtrapframe_1abfb070fe3681a0ccc49ea3bd62b24be7" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_ss</name></member>
+      <member refid="structtrapframe_1ad22f14869aa03a440119420cd9d5017f" prot="public" virt="non-virtual"><scope>trapframe</scope><name>tf_trapno</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

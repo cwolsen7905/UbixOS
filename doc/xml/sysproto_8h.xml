@@ -1,546 +1,198 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="sysproto_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="sysproto_8h" kind="file" language="C++">
     <compoundname>sysproto.h</compoundname>
-    <includes refid="signal_8h" local="no">sys/signal.h</includes>
     <includes refid="thread_8h" local="no">sys/thread.h</includes>
-    <includedby refid="gen__calls_8h" local="no">src/sys/include/sys/gen_calls.h</includedby>
-    <includedby refid="kern__descrip_8h" local="no">src/sys/include/sys/kern_descrip.h</includedby>
-    <includedby refid="kern__sig_8h" local="no">src/sys/include/sys/kern_sig.h</includedby>
-    <includedby refid="kern__sysctl_8h" local="no">src/sys/include/sys/kern_sysctl.h</includedby>
-    <includedby refid="pipe_8h" local="no">src/sys/include/sys/pipe.h</includedby>
-    <includedby refid="syscalls__new_8h" local="no">src/sys/include/ubixos/syscalls_new.h</includedby>
-    <includedby refid="vfs_8h" local="no">src/sys/include/vfs/vfs.h</includedby>
-    <includedby refid="paging_8h" local="no">src/sys/include/vmm/paging.h</includedby>
-    <includedby refid="kern__descrip_8c" local="no">src/sys/kernel/kern_descrip.c</includedby>
-    <includedby refid="kern__sig_8c" local="no">src/sys/kernel/kern_sig.c</includedby>
-    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
-    <includedby refid="pipe_8c" local="no">src/sys/kernel/pipe.c</includedby>
+    <includedby refid="stat_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/stat.c</includedby>
+    <includedby refid="sde_8h" local="no">C:/Dev/git/UbixOS/sys/include/sde/sde.h</includedby>
+    <includedby refid="syscalls_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscalls.c</includedby>
+    <includedby refid="mpi__syscalls_8c" local="no">C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c</includedby>
+    <includedby refid="system_8c" local="no">C:/Dev/git/UbixOS/sys/mpi/system.c</includedby>
     <incdepgraph>
-      <node id="3858">
+      <node id="11">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="3856" relation="include">
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
         </childnode>
       </node>
-      <node id="3856">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3857" relation="include">
-        </childnode>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
       </node>
-      <node id="3857">
+      <node id="4">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="3854">
-        <label>src/sys/include/sys/sysproto.h</label>
-        <link refid="sysproto.h"/>
-        <childnode refid="3855" relation="include">
-        </childnode>
-        <childnode refid="3858" relation="include">
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="3855">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="3856" relation="include">
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3880">
-        <label>src/sys/ufs/ffs.c</label>
-        <link refid="ffs_8c"/>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="3905">
-        <label>src/sys/include/ufs/ufs.h</label>
-        <link refid="ufs_8h"/>
-        <childnode refid="3870" relation="include">
-        </childnode>
-        <childnode refid="3880" relation="include">
-        </childnode>
-        <childnode refid="3904" relation="include">
-        </childnode>
-      </node>
-      <node id="3883">
-        <label>src/sys/pci/hd.c</label>
-        <link refid="hd_8c"/>
-      </node>
-      <node id="3903">
-        <label>src/sys/include/ufs/ffs.h</label>
-        <link refid="ffs_8h"/>
-        <childnode refid="3880" relation="include">
-        </childnode>
-        <childnode refid="3904" relation="include">
-        </childnode>
-      </node>
-      <node id="3898">
-        <label>src/sys/kernel/vitals.c</label>
-        <link refid="vitals_8c"/>
-      </node>
-      <node id="3911">
-        <label>src/sys/kernel/elf.c</label>
-        <link refid="elf_8c"/>
-      </node>
-      <node id="3907">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod_8c"/>
-      </node>
-      <node id="3872">
-        <label>src/sys/kernel/kern_sysctl.c</label>
-        <link refid="kern__sysctl_8c"/>
-      </node>
-      <node id="3890">
-        <label>src/sys/include/ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="3870" relation="include">
-        </childnode>
-        <childnode refid="3891" relation="include">
-        </childnode>
-        <childnode refid="3892" relation="include">
-        </childnode>
-        <childnode refid="3893" relation="include">
-        </childnode>
-        <childnode refid="3894" relation="include">
-        </childnode>
-        <childnode refid="3884" relation="include">
-        </childnode>
-        <childnode refid="3895" relation="include">
-        </childnode>
-        <childnode refid="3896" relation="include">
-        </childnode>
-        <childnode refid="3897" relation="include">
-        </childnode>
-        <childnode refid="3898" relation="include">
-        </childnode>
-        <childnode refid="3899" relation="include">
-        </childnode>
-        <childnode refid="3900" relation="include">
-        </childnode>
-        <childnode refid="3901" relation="include">
-        </childnode>
-        <childnode refid="3866" relation="include">
-        </childnode>
-        <childnode refid="3902" relation="include">
-        </childnode>
-      </node>
-      <node id="3864">
-        <label>src/sys/kernel/pipe.c</label>
-        <link refid="pipe_8c"/>
-      </node>
-      <node id="3913">
-        <label>src/sys/lib/kmalloc.c</label>
-        <link refid="kmalloc_8c"/>
-      </node>
-      <node id="3920">
-        <label>src/sys/vmm/paging.c</label>
-        <link refid="paging_8c"/>
-      </node>
-      <node id="3887">
-        <label>src/sys/ubixfs/directory.c</label>
-        <link refid="directory_8c"/>
-      </node>
-      <node id="3904">
-        <label>src/sys/ufs/ufs.c</label>
-        <link refid="ufs_8c"/>
-      </node>
-      <node id="3868">
-        <label>src/sys/kernel/kern_sig.c</label>
-        <link refid="kern__sig_8c"/>
-      </node>
-      <node id="3897">
-        <label>src/sys/kernel/ubthread.c</label>
-        <link refid="ubthread_8c"/>
-      </node>
-      <node id="3895">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="3899">
-        <label>src/sys/lib/ogprintf.cc</label>
-        <link refid="ogprintf_8cc"/>
-      </node>
-      <node id="3908">
-        <label>src/sys/include/vmm/paging.h</label>
-        <link refid="paging_8h"/>
-        <childnode refid="3909" relation="include">
-        </childnode>
-        <childnode refid="3900" relation="include">
-        </childnode>
-      </node>
-      <node id="3906">
-        <label>src/sys/kernel/ld.c</label>
-        <link refid="ld_8c"/>
-      </node>
-      <node id="3874">
-        <label>src/sys/include/sys/pipe.h</label>
-        <link refid="pipe_8h"/>
-        <childnode refid="3864" relation="include">
-        </childnode>
-      </node>
-      <node id="3894">
-        <label>src/sys/kernel/fork.c</label>
-        <link refid="fork_8c"/>
-      </node>
-      <node id="3915">
-        <label>src/sys/vmm/createvirtualspace.c</label>
-        <link refid="createvirtualspace_8c"/>
-      </node>
-      <node id="3923">
-        <label>src/sys/vmm/vmm_init.c</label>
-        <link refid="vmm__init_8c"/>
-      </node>
-      <node id="3885">
-        <label>src/sys/ubixfs/block.c</label>
-        <link refid="block_8c"/>
-      </node>
-      <node id="3869">
-        <label>src/sys/include/sys/kern_sysctl.h</label>
-        <link refid="kern__sysctl_8h"/>
-        <childnode refid="3870" relation="include">
-        </childnode>
-        <childnode refid="3872" relation="include">
-        </childnode>
-        <childnode refid="3873" relation="include">
-        </childnode>
-      </node>
-      <node id="3909">
-        <label>src/sys/include/vmm/vmm.h</label>
-        <link refid="vmm_8h"/>
-        <childnode refid="3870" relation="include">
-        </childnode>
-        <childnode refid="3910" relation="include">
-        </childnode>
-        <childnode refid="3911" relation="include">
-        </childnode>
-        <childnode refid="3893" relation="include">
-        </childnode>
-        <childnode refid="3912" relation="include">
-        </childnode>
-        <childnode refid="3894" relation="include">
-        </childnode>
-        <childnode refid="3906" relation="include">
-        </childnode>
-        <childnode refid="3865" relation="include">
-        </childnode>
-        <childnode refid="3884" relation="include">
-        </childnode>
-        <childnode refid="3895" relation="include">
-        </childnode>
-        <childnode refid="3907" relation="include">
-        </childnode>
-        <childnode refid="3913" relation="include">
-        </childnode>
-        <childnode refid="3914" relation="include">
-        </childnode>
-        <childnode refid="3873" relation="include">
-        </childnode>
-        <childnode refid="3915" relation="include">
-        </childnode>
-        <childnode refid="3916" relation="include">
-        </childnode>
-        <childnode refid="3917" relation="include">
-        </childnode>
-        <childnode refid="3918" relation="include">
-        </childnode>
-        <childnode refid="3919" relation="include">
-        </childnode>
-        <childnode refid="3920" relation="include">
-        </childnode>
-        <childnode refid="3921" relation="include">
-        </childnode>
-        <childnode refid="3922" relation="include">
-        </childnode>
-        <childnode refid="3923" relation="include">
-        </childnode>
-        <childnode refid="3902" relation="include">
-        </childnode>
-      </node>
-      <node id="3865">
-        <label>src/sys/kernel/sched.c</label>
-        <link refid="sched_8c"/>
-      </node>
-      <node id="3921">
-        <label>src/sys/vmm/setpageattributes.c</label>
-        <link refid="setpageattributes_8c"/>
-      </node>
-      <node id="3860">
-        <label>src/sys/include/sys/gen_calls.h</label>
-        <link refid="gen__calls_8h"/>
-        <childnode refid="3861" relation="include">
-        </childnode>
-      </node>
-      <node id="3918">
-        <label>src/sys/vmm/getphysicaladdr.c</label>
-        <link refid="getphysicaladdr_8c"/>
-      </node>
-      <node id="3886">
-        <label>src/sys/ubixfs/dirCache.c</label>
-        <link refid="dirCache_8c"/>
-      </node>
-      <node id="3889">
-        <label>src/sys/ubixfs/ubixfs.c</label>
-        <link refid="ubixfs_8c"/>
-      </node>
-      <node id="3877">
-        <label>src/sys/include/vfs/vfs.h</label>
-        <link refid="vfs_8h"/>
-        <childnode refid="3878" relation="include">
-        </childnode>
-        <childnode refid="3879" relation="include">
-        </childnode>
-        <childnode refid="3881" relation="include">
-        </childnode>
-        <childnode refid="3870" relation="include">
-        </childnode>
-        <childnode refid="3890" relation="include">
-        </childnode>
-        <childnode refid="3903" relation="include">
-        </childnode>
-        <childnode refid="3905" relation="include">
-        </childnode>
-        <childnode refid="3906" relation="include">
-        </childnode>
-        <childnode refid="3907" relation="include">
-        </childnode>
-        <childnode refid="3888" relation="include">
-        </childnode>
-        <childnode refid="3889" relation="include">
-        </childnode>
-        <childnode refid="3880" relation="include">
-        </childnode>
-        <childnode refid="3904" relation="include">
-        </childnode>
-        <childnode refid="3900" relation="include">
-        </childnode>
-        <childnode refid="3866" relation="include">
-        </childnode>
-      </node>
-      <node id="3871">
-        <label>src/sys/init/main.c</label>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
       </node>
-      <node id="3881">
-        <label>src/sys/include/ubixfs/ubixfs.h</label>
-        <link refid="ubixfs_8h"/>
-        <childnode refid="3882" relation="include">
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c</label>
+        <link refid="mpi__syscalls_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/stat.c</label>
+        <link refid="stat_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="3870" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="3884" relation="include">
+        <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="3885" relation="include">
+        <childnode refid="11" relation="include">
         </childnode>
-        <childnode refid="3886" relation="include">
-        </childnode>
-        <childnode refid="3887" relation="include">
-        </childnode>
-        <childnode refid="3888" relation="include">
-        </childnode>
-        <childnode refid="3889" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="3910">
-        <label>src/sys/kernel/bioscall.c</label>
-        <link refid="bioscall_8c"/>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
       </node>
-      <node id="3862">
-        <label>src/sys/include/sys/kern_descrip.h</label>
-        <link refid="kern__descrip_8h"/>
-        <childnode refid="3861" relation="include">
-        </childnode>
-        <childnode refid="3863" relation="include">
-        </childnode>
-        <childnode refid="3864" relation="include">
-        </childnode>
-        <childnode refid="3865" relation="include">
-        </childnode>
-        <childnode refid="3866" relation="include">
-        </childnode>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
       </node>
-      <node id="3884">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
       </node>
-      <node id="3867">
-        <label>src/sys/include/sys/kern_sig.h</label>
-        <link refid="kern__sig_8h"/>
-        <childnode refid="3868" relation="include">
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/sde/sde.h</label>
+        <link refid="sde_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
-      </node>
-      <node id="3892">
-        <label>src/sys/isa/ne2k.c</label>
-        <link refid="ne2k_8c"/>
-      </node>
-      <node id="3882">
-        <label>src/sys/include/pci/hd.h</label>
-        <link refid="hd_8h"/>
-        <childnode refid="3870" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
-        <childnode refid="3883" relation="include">
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
         </childnode>
       </node>
-      <node id="3891">
-        <label>src/sys/isa/atkbd.c</label>
-        <link refid="atkbd_8c"/>
-      </node>
-      <node id="3919">
-        <label>src/sys/vmm/pagefault.c</label>
-        <link refid="pagefault_8c"/>
-      </node>
-      <node id="3888">
-        <label>src/sys/ubixfs/thread.c</label>
-        <link refid="thread_8c"/>
-      </node>
-      <node id="3870">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="3871" relation="include">
-        </childnode>
-      </node>
-      <node id="3901">
-        <label>src/sys/vfs/mount.c</label>
-        <link refid="mount_8c"/>
-      </node>
-      <node id="3878">
-        <label>src/sys/devfs/devfs.c</label>
-        <link refid="devfs_8c"/>
-      </node>
-      <node id="3859">
-        <label>src/sys/include/sys/sysproto.h</label>
-        <link refid="sysproto.h"/>
-        <childnode refid="3860" relation="include">
-        </childnode>
-        <childnode refid="3862" relation="include">
-        </childnode>
-        <childnode refid="3867" relation="include">
-        </childnode>
-        <childnode refid="3869" relation="include">
-        </childnode>
-        <childnode refid="3874" relation="include">
-        </childnode>
-        <childnode refid="3875" relation="include">
-        </childnode>
-        <childnode refid="3877" relation="include">
-        </childnode>
-        <childnode refid="3908" relation="include">
-        </childnode>
-        <childnode refid="3863" relation="include">
-        </childnode>
-        <childnode refid="3868" relation="include">
-        </childnode>
-        <childnode refid="3872" relation="include">
-        </childnode>
-        <childnode refid="3864" relation="include">
-        </childnode>
-      </node>
-      <node id="3922">
-        <label>src/sys/vmm/unmappage.c</label>
-        <link refid="unmappage_8c"/>
-      </node>
-      <node id="3896">
-        <label>src/sys/kernel/time.c</label>
-        <link refid="time_8c"/>
-      </node>
-      <node id="3902">
-        <label>src/sys/vmm/vmm_memory.c</label>
-        <link refid="vmm__memory_8c"/>
-      </node>
-      <node id="3863">
-        <label>src/sys/kernel/kern_descrip.c</label>
-        <link refid="kern__descrip_8c"/>
-      </node>
-      <node id="3893">
-        <label>src/sys/kernel/endtask.c</label>
-        <link refid="endtask_8c"/>
-      </node>
-      <node id="3900">
-        <label>src/sys/vfs/file.c</label>
-        <link refid="file_8c"/>
-      </node>
-      <node id="3916">
-        <label>src/sys/vmm/getfreepage.c</label>
-        <link refid="getfreepage_8c"/>
-      </node>
-      <node id="3914">
-        <label>src/sys/sys/idt.c</label>
-        <link refid="idt_8c"/>
-      </node>
-      <node id="3861">
-        <label>src/sys/kernel/gen_calls.c</label>
-        <link refid="gen__calls_8c"/>
-      </node>
-      <node id="3876">
-        <label>src/sys/kernel/syscall_new.c</label>
-        <link refid="syscall__new_8c"/>
-      </node>
-      <node id="3912">
-        <label>src/sys/kernel/exec.c</label>
-        <link refid="exec_8c"/>
-      </node>
-      <node id="3875">
-        <label>src/sys/include/ubixos/syscalls_new.h</label>
-        <link refid="syscalls__new_8h"/>
-        <childnode refid="3876" relation="include">
-        </childnode>
-      </node>
-      <node id="3879">
-        <label>src/sys/include/sys/buf.h</label>
-        <link refid="buf_8h"/>
-        <childnode refid="3880" relation="include">
-        </childnode>
-      </node>
-      <node id="3917">
-        <label>src/sys/vmm/getfreevirtualpage.c</label>
-        <link refid="getfreevirtualpage_8c"/>
-      </node>
-      <node id="3873">
-        <label>src/sys/vmm/copyvirtualspace.c</label>
-        <link refid="copyvirtualspace_8c"/>
-      </node>
-      <node id="3866">
-        <label>src/sys/vfs/vfs.c</label>
-        <link refid="vfs_8c"/>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls.c</label>
+        <link refid="syscalls_8c"/>
       </node>
     </invincdepgraph>
-    <innerclass refid="structclose__args" prot="public">close_args</innerclass>
-    <innerclass refid="structfcntl__args" prot="public">fcntl_args</innerclass>
-    <innerclass refid="structfstat__args" prot="public">fstat_args</innerclass>
-    <innerclass refid="structgetdtablesize__args" prot="public">getdtablesize_args</innerclass>
-    <innerclass refid="structgetgid__args" prot="public">getgid_args</innerclass>
-    <innerclass refid="structgetpid__args" prot="public">getpid_args</innerclass>
-    <innerclass refid="structgettimeofday__args" prot="public">gettimeofday_args</innerclass>
-    <innerclass refid="structgetuid__args" prot="public">getuid_args</innerclass>
-    <innerclass refid="structioctl__args" prot="public">ioctl_args</innerclass>
-    <innerclass refid="structissetugid__args" prot="public">issetugid_args</innerclass>
-    <innerclass refid="structmmap__args" prot="public">mmap_args</innerclass>
-    <innerclass refid="structmunmap__args" prot="public">munmap_args</innerclass>
-    <innerclass refid="structobreak__args" prot="public">obreak_args</innerclass>
-    <innerclass refid="structopen__args" prot="public">open_args</innerclass>
-    <innerclass refid="structpipe__args" prot="public">pipe_args</innerclass>
-    <innerclass refid="structread__args" prot="public">read_args</innerclass>
-    <innerclass refid="structreadlink__args" prot="public">readlink_args</innerclass>
-    <innerclass refid="structsetitimer__args" prot="public">setitimer_args</innerclass>
-    <innerclass refid="structsigaction__args" prot="public">sigaction_args</innerclass>
-    <innerclass refid="structsigprocmask__args" prot="public">sigprocmask_args</innerclass>
-    <innerclass refid="structsysctl__args" prot="public">sysctl_args</innerclass>
-    <innerclass refid="structwrite__args" prot="public">write_args</innerclass>
+    <innerclass refid="structsys__mpiCreateMbox__args" prot="public">sys_mpiCreateMbox_args</innerclass>
+    <innerclass refid="structsys__mpiDestroyMbox__args" prot="public">sys_mpiDestroyMbox_args</innerclass>
+    <innerclass refid="structsys__mpiFetchMessage__args" prot="public">sys_mpiFetchMessage_args</innerclass>
+    <innerclass refid="structsys__mpiPostMessage__args" prot="public">sys_mpiPostMessage_args</innerclass>
+    <innerclass refid="structsys__sde__args" prot="public">sys_sde_args</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="sysproto_8h_16af39d7908a107066bbd16c69a73d8e5" prot="public" static="no">
+      <memberdef kind="define" id="sysproto_8h_1a6af39d7908a107066bbd16c69a73d8e5" prot="public" static="no">
         <name>PAD_</name>
         <param><defname>t</defname></param>
-        <initializer>(sizeof(<ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>) &lt;= sizeof(t) ? \
-                0 : sizeof(<ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>) - sizeof(t))</initializer>
+        <initializer>(sizeof(<ref refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>) &lt;= sizeof(t) ? 0 : sizeof(<ref refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>) - sizeof(t))</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="38" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="36" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" prot="public" static="no">
+      <memberdef kind="define" id="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" prot="public" static="no">
         <name>PADL_</name>
         <param><defname>t</defname></param>
         <initializer>0</initializer>
@@ -550,23 +202,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="42" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="39" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" prot="public" static="no">
+      <memberdef kind="define" id="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" prot="public" static="no">
         <name>PADR_</name>
         <param><defname>t</defname></param>
-        <initializer>PAD_(t)</initializer>
+        <initializer><ref refid="sysproto__posix_8h_1a6af39d7908a107066bbd16c69a73d8e5" kindref="member">PAD_</ref>(t)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="43" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="40" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" prot="public" static="no">
+      <memberdef kind="typedef" id="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" prot="public" static="no">
         <type>int</type>
         <definition>typedef int register_t</definition>
         <argsstring></argsstring>
@@ -577,87 +229,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="36" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="34" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" bodystart="34" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="sysproto_8h_1b913b237bff6f29fa58c01d2d0fc7088" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="sysproto_8h_1a13576493553d11e9334638bf9d082692" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
-        <definition>int setitimer</definition>
-        <argsstring>(struct thread *td, struct setitimer_args *uap)</argsstring>
-        <name>setitimer</name>
+        <definition>int sys_invalid</definition>
+        <argsstring>(struct thread *, void *)</argsstring>
+        <name>sys_invalid</name>
         <param>
           <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
-          <declname>td</declname>
         </param>
         <param>
-          <type>struct <ref refid="structsetitimer__args" kindref="compound">setitimer_args</ref> *</type>
-          <declname>uap</declname>
-        </param>
-        <briefdescription>
-<para>place holder for now functionality to be added later </para>        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="169" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/gen_calls.c" bodystart="149" bodyend="153"/>
-      </memberdef>
-      <memberdef kind="function" id="sysproto_8h_13ca4e48103cbadae2952d277d03687be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int sys_open</definition>
-        <argsstring>(struct thread *td, struct open_args *uap)</argsstring>
-        <name>sys_open</name>
-        <param>
-          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
-          <declname>td</declname>
-        </param>
-        <param>
-          <type>struct <ref refid="structopen__args" kindref="compound">open_args</ref> *</type>
-          <declname>uap</declname>
-        </param>
-        <briefdescription>
-<para>entry point for open syscall </para>        </briefdescription>
-        <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>*td</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>pointer to callers thread </para></parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>*uap</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>pointer to user space arguements for call</para></parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>index to file descriptor </para></simplesect>
-</para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="168" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vfs/vfs.c" bodystart="148" bodyend="166"/>
-        <references refid="kern__descrip_8h_1434fb15226182b0ee879a5afe9a8c190" compoundref="kern__descrip_8c" startline="67" endline="88">falloc</references>
-        <references refid="structfile_15a1b356e191a81d71a02560074aacd2a" compoundref="kern__descrip_8h" startline="96">file::fd</references>
-        <references refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
-        <references refid="structfile_148952da96dfce82445b051d594d7bbf6" compoundref="kern__descrip_8h" startline="95">file::path</references>
-        <references refid="structopen__args_1f0a9dc382e7d1862921cd1f25361b9bf" compoundref="sysproto_8h" startline="57">open_args::path</references>
-        <references refid="strcpy_8S_19132520cc79236b654666f4ddc1b516c" compoundref="strcpy_8S" startline="3">strcpy</references>
-        <references refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="38">thread::td_retval</references>
-      </memberdef>
-      <memberdef kind="function" id="sysproto_8h_114173c973cb6d92a0e2ff34ee072f4d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int sys_write</definition>
-        <argsstring>(struct thread *td, struct write_args *uap)</argsstring>
-        <name>sys_write</name>
-        <param>
-          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
-          <declname>td</declname>
-        </param>
-        <param>
-          <type>struct <ref refid="structwrite__args" kindref="compound">write_args</ref> *</type>
-          <declname>uap</declname>
+          <type>void *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -665,16 +250,99 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="167" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/gen_calls.c" bodystart="67" bodyend="98"/>
-        <references refid="structwrite__args_1719b7bf5c1f0c153d44f60930af3d545" compoundref="sysproto_8h" startline="52">write_args::buf</references>
-        <references refid="structwrite__args_1ca575e653f10af383a927384c410322d" compoundref="sysproto_8h" startline="51">write_args::fd</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="structwrite__args_158b5b8bcea410fee76395f7d266bd462" compoundref="sysproto_8h" startline="53">write_args::nbyte</references>
-        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
-        <references refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="38">thread::td_retval</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="91" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/gen_calls.c" bodystart="141" bodyend="145" declfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" declline="91" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="sysproto_8h_1a8d86b5bea41a3d5d93ff8266851bcbbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiCreateMbox</definition>
+        <argsstring>(struct thread *, struct sys_mpiCreateMbox_args *)</argsstring>
+        <name>sys_mpiCreateMbox</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiCreateMbox__args" kindref="compound">sys_mpiCreateMbox_args</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="92" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="4" bodyend="7" declfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" declline="92" declcolumn="5"/>
+        <references refid="mpi_8h_1a454c70b9013b47d4e8fd0e45af331c69" compoundref="system_8c" startline="68" endline="97">mpi_createMbox</references>
+        <references refid="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" compoundref="sysproto_8h" startline="49">sys_mpiCreateMbox_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="sysproto_8h_1ad885627ef631a3733ed3afba5f62210d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiDestroyMbox</definition>
+        <argsstring>(struct thread *, struct sys_mpiDestroyMbox_args *)</argsstring>
+        <name>sys_mpiDestroyMbox</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiDestroyMbox__args" kindref="compound">sys_mpiDestroyMbox_args</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="93" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="9" bodyend="12" declfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" declline="93" declcolumn="5"/>
+        <references refid="mpi_8h_1a9b34d23f75ad6a36e1f9f62814a33547" compoundref="system_8c" startline="231" endline="252">mpi_destroyMbox</references>
+        <references refid="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" compoundref="sysproto_8h" startline="55">sys_mpiDestroyMbox_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="sysproto_8h_1a34ed9cccbbc3724648e75283a20d7b2a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiFetchMessage</definition>
+        <argsstring>(struct thread *, struct sys_mpiFetchMessage_args *)</argsstring>
+        <name>sys_mpiFetchMessage</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiFetchMessage__args" kindref="compound">sys_mpiFetchMessage_args</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="94" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="14" bodyend="17" declfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" declline="94" declcolumn="5"/>
+        <references refid="mpi_8h_1a22e0e1e2617b3b69b2088c3fd41b7036" compoundref="system_8c" startline="187" endline="221">mpi_fetchMessage</references>
+        <references refid="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" compoundref="sysproto_8h" startline="64">sys_mpiFetchMessage_args::msg</references>
+        <references refid="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" compoundref="sysproto_8h" startline="61">sys_mpiFetchMessage_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+      </memberdef>
+      <memberdef kind="function" id="sysproto_8h_1a1021c4fa8fcb5681fcb9252e6737c7a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mpiPostMessage</definition>
+        <argsstring>(struct thread *, struct sys_mpiPostMessage_args *)</argsstring>
+        <name>sys_mpiPostMessage</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structsys__mpiPostMessage__args" kindref="compound">sys_mpiPostMessage_args</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" line="95" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c" bodystart="19" bodyend="23" declfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h" declline="95" declcolumn="5"/>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="mpi_8h_1a1c2c24c44767f282cddb50a9affa3f55">mpi_postMessage</references>
+        <references refid="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" compoundref="sysproto_8h" startline="76">sys_mpiPostMessage_args::msg</references>
+        <references refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" compoundref="sysproto_8h" startline="70">sys_mpiPostMessage_args::name</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" compoundref="sysproto_8h" startline="73">sys_mpiPostMessage_args::type</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -682,183 +350,104 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: sysproto_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYSPROTO_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SYSPROTO_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="signal_8h" kindref="compound">sys/signal.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_SYSPROTO_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_SYSPROTO_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>;</highlight></codeline>
 <codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>;</highlight></codeline>
+<codeline lineno="36" refid="sysproto_8h_1a6af39d7908a107066bbd16c69a73d8e5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAD_(t)<sp/>(sizeof(register_t)<sp/>&lt;=<sp/>sizeof(t)<sp/>?<sp/>0<sp/>:<sp/>sizeof(register_t)<sp/>-<sp/>sizeof(t))</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="sysproto_8h_16af39d7908a107066bbd16c69a73d8e5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAD_(t)<sp/>(sizeof(register_t)<sp/>&lt;=<sp/>sizeof(t)<sp/>?<sp/>\</highlight></codeline>
-<codeline lineno="39"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/>:<sp/>sizeof(register_t)<sp/>-<sp/>sizeof(t))</highlight></codeline>
-<codeline lineno="40"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>BYTE_ORDER<sp/>==<sp/>LITTLE_ENDIAN</highlight></codeline>
-<codeline lineno="42" refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PADL_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
-<codeline lineno="43" refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PADR_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PAD_(t)</highlight></codeline>
-<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#else</highlight></codeline>
-<codeline lineno="45"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PADL_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PAD_(t)</highlight></codeline>
-<codeline lineno="46"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PADR_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
-<codeline lineno="47"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="48"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="49"><highlight class="normal"></highlight><highlight class="comment">//Protos</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50" refid="structwrite__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structwrite__args" kindref="compound">write_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="51" refid="structwrite__args_1c8f53a779ee464be52c6695da05ed00e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1b7c0ba81e9a390fa2cac4ba2aae2f35e" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1ca575e653f10af383a927384c410322d" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1c8f53a779ee464be52c6695da05ed00e" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="52" refid="structwrite__args_1efa661ad25deec50ec6b58c1df08a763" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1a69b95436bf7543e9fe88627b70e2385" kindref="member">buf_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structbuf" kindref="compound">buf</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1efa661ad25deec50ec6b58c1df08a763" kindref="member">buf_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="53" refid="structwrite__args_1b52f43ea87d3991a0d3157fce826f3bc" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1ac2a502398079660d2a7afadc56e5d69" kindref="member">nbyte_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><ref refid="structwrite__args_158b5b8bcea410fee76395f7d266bd462" kindref="member">nbyte</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structwrite__args_1b52f43ea87d3991a0d3157fce826f3bc" kindref="member">nbyte_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56" refid="structopen__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structopen__args" kindref="compound">open_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="57" refid="structopen__args_18e1dab74f228fce1d34563116ecac89c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structopen__args_12518cfd6758bf72a0d5edc9c5636c602" kindref="member">path_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structopen__args_1f0a9dc382e7d1862921cd1f25361b9bf" kindref="member">path</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structopen__args_18e1dab74f228fce1d34563116ecac89c" kindref="member">path_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="58" refid="structopen__args_14173687dcb7a950ef552dacfee3e9a16" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structopen__args_1f3dcf6e179f7153fc66702daaa6426aa" kindref="member">flags_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structopen__args_106141479b490e5069fec11e7388fb339" kindref="member">flags</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structopen__args_14173687dcb7a950ef552dacfee3e9a16" kindref="member">flags_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="59" refid="structopen__args_1655db778171d8de684da3834a7447d6a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structopen__args_1a0c6369ef242b995b5b8dd141e056e13" kindref="member">mode_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structopen__args_19a1d9880cbd55dbf4636690b2ac1e1cd" kindref="member">mode</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structopen__args_1655db778171d8de684da3834a7447d6a" kindref="member">mode_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight></codeline>
-<codeline lineno="62" refid="structsetitimer__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsetitimer__args" kindref="compound">setitimer_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="63" refid="structsetitimer__args_19772761f9de3b5266d4c3b5c54607b52" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args_1b322a224c23680dc294c527281fac121" kindref="member">which_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref>)];<sp/><ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref><sp/><ref refid="structsetitimer__args_159e7d800158debcae173054f0f239fc0" kindref="member">which</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args_19772761f9de3b5266d4c3b5c54607b52" kindref="member">which_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref>)];</highlight></codeline>
-<codeline lineno="64" refid="structsetitimer__args_17a8490779fe8a9fbe7867d625027e0d5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args_1648e1a60b4f61554ffeba60abd093860" kindref="member">itv_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>itimerval<sp/>*)];<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">itimerval<sp/>*<sp/><ref refid="structsetitimer__args_1e45ae982d60ad155bb364284f13c4a3f" kindref="member">itv</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args_17a8490779fe8a9fbe7867d625027e0d5" kindref="member">itv_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>itimerval<sp/>*)];</highlight></codeline>
-<codeline lineno="65" refid="structsetitimer__args_10fdc8874ed2d5fc409b62d37601c7417" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args_1657814ef10b5cb6ae18ea17c17914704" kindref="member">oitv_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>itimerval<sp/>*)];<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">itimerval<sp/>*<sp/><ref refid="structsetitimer__args_1ec6149a99a19a4d216ea4ff815f8a34b" kindref="member">oitv</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args_10fdc8874ed2d5fc409b62d37601c7417" kindref="member">oitv_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>itimerval<sp/>*)];</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>BYTE_ORDER<sp/>==<sp/>LITTLE_ENDIAN</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PADL_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PADR_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PAD_(t)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PADL_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>PAD_(t)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PADR_(t)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">//Protos</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="structsys__mpiCreateMbox__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mpiCreateMbox__args" kindref="compound">sys_mpiCreateMbox_args</ref><sp/>{</highlight></codeline>
+<codeline lineno="48" refid="structsys__mpiCreateMbox__args_1a3f722b6bbb38595fe7765a2e4eee0721" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiCreateMbox__args_1a3f722b6bbb38595fe7765a2e4eee0721" kindref="member">name_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="49" refid="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structsys__mpiCreateMbox__args_1a3b7dfc23750c875a79bd06ae95b90b2e" kindref="member">name</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structsys__mpiCreateMbox__args_1a5ead48eacbd23dbe9516a32653211461" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiCreateMbox__args_1a5ead48eacbd23dbe9516a32653211461" kindref="member">name_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="51"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="structsys__mpiDestroyMbox__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mpiDestroyMbox__args" kindref="compound">sys_mpiDestroyMbox_args</ref><sp/>{</highlight></codeline>
+<codeline lineno="54" refid="structsys__mpiDestroyMbox__args_1a3a79d4c11c01a3c451a095918d429431" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiDestroyMbox__args_1a3a79d4c11c01a3c451a095918d429431" kindref="member">name_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="55" refid="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structsys__mpiDestroyMbox__args_1abe418546776e89107be878bcfd81db7c" kindref="member">name</ref>;</highlight></codeline>
+<codeline lineno="56" refid="structsys__mpiDestroyMbox__args_1a1b62a0708a2645148faa6ecaa7657b51" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiDestroyMbox__args_1a1b62a0708a2645148faa6ecaa7657b51" kindref="member">name_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="57"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="structsys__mpiFetchMessage__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mpiFetchMessage__args" kindref="compound">sys_mpiFetchMessage_args</ref><sp/>{</highlight></codeline>
+<codeline lineno="60" refid="structsys__mpiFetchMessage__args_1a87ee000bd8126d41223e35b2c3472c00" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiFetchMessage__args_1a87ee000bd8126d41223e35b2c3472c00" kindref="member">name_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="61" refid="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structsys__mpiFetchMessage__args_1aae24d16bfab71e013c214d87bc10f81b" kindref="member">name</ref>;</highlight></codeline>
+<codeline lineno="62" refid="structsys__mpiFetchMessage__args_1a5db8ff21c006dc0daa34f1cf58d0ba28" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiFetchMessage__args_1a5db8ff21c006dc0daa34f1cf58d0ba28" kindref="member">name_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="63" refid="structsys__mpiFetchMessage__args_1aa2806a3072e1a2eb199260ffeb1f114c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiFetchMessage__args_1aa2806a3072e1a2eb199260ffeb1f114c" kindref="member">msg_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="64" refid="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structsys__mpiFetchMessage__args_1a60dc0231544ed1ca120faf56951e64b7" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="65" refid="structsys__mpiFetchMessage__args_1a4bf4fa77b9199f82a281b3e1c52579f1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiFetchMessage__args_1a4bf4fa77b9199f82a281b3e1c52579f1" kindref="member">msg_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="66"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="67"><highlight class="normal"></highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight><highlight class="comment">//Old</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight></codeline>
-<codeline lineno="70" refid="structsysctl__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__args" kindref="compound">sysctl_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="71" refid="structsysctl__args_1672b3b4dbbfb4cdd15633fb8c267508c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1d1ff722dbc06318c0984f6a510772558" kindref="member">name_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structsysctl__args_12653c7c39cf27b5c3d565902797cfb1c" kindref="member">name</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1672b3b4dbbfb4cdd15633fb8c267508c" kindref="member">name_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="72" refid="structsysctl__args_1032bc7ce35f3b1183bd477dd877e92da" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_11e1553b9bc2757bbedd9d9d379d0ded6" kindref="member">namelen_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref>)];<sp/><ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref><sp/><ref refid="structsysctl__args_1bd967f23c35e3af742faa6135f89e79e" kindref="member">namelen</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1032bc7ce35f3b1183bd477dd877e92da" kindref="member">namelen_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref>)];</highlight></codeline>
-<codeline lineno="73" refid="structsysctl__args_1ccd4c5e0f7180580b0a3f2546ce2c3fb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1e6c53b996c80d5bb1d1be2144d3ac929" kindref="member">old_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structsysctl__args_15a10c812e19c32979ad704d816fa78ae" kindref="member">old</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1ccd4c5e0f7180580b0a3f2546ce2c3fb" kindref="member">old_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="74" refid="structsysctl__args_19b26500bafbd054a79f7dc9d6aeb11e7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_15291279ffa17bef536998c690489f355" kindref="member">oldlenp_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>*)];<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>*<sp/><ref refid="structsysctl__args_1d82c3aba52eb190fc3dbee14eea74c0f" kindref="member">oldlenp</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_19b26500bafbd054a79f7dc9d6aeb11e7" kindref="member">oldlenp_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="75" refid="structsysctl__args_1f4c1045e862bb7d2108e222144f043bb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1008871ccee9e25f6eb8cc1aee1a6e4d0" kindref="member">new_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal">;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_1f4c1045e862bb7d2108e222144f043bb" kindref="member">new_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="76" refid="structsysctl__args_18df906e743f1dce735a933c714d5b976" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_15174043ae5cf8e75d30093b3d3cc6f84" kindref="member">newlen_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><ref refid="structsysctl__args_145cc219865ddc983c32a7a12a692106c" kindref="member">newlen</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args_18df906e743f1dce735a933c714d5b976" kindref="member">newlen_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];</highlight></codeline>
-<codeline lineno="77"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"></highlight></codeline>
-<codeline lineno="79" refid="structgetpid__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgetpid__args" kindref="compound">getpid_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="80" refid="structgetpid__args_1bb2b9573f51f030bf74f619f51d9f002" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref><sp/><ref refid="structgetpid__args_1bb2b9573f51f030bf74f619f51d9f002" kindref="member">dummy</ref>;</highlight></codeline>
-<codeline lineno="81"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="82" refid="structissetugid__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structissetugid__args" kindref="compound">issetugid_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="83" refid="structissetugid__args_1d08354d3b758ff8c669d2bdf6ca6c9d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref><sp/><ref refid="structissetugid__args_1d08354d3b758ff8c669d2bdf6ca6c9d9" kindref="member">dummy</ref>;</highlight></codeline>
-<codeline lineno="84"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="85" refid="structfcntl__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfcntl__args" kindref="compound">fcntl_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="86" refid="structfcntl__args_17a814dc6a9c0f146b5a16830f2bb91a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_11eeb34a9ad364db425dc1c24b9ca6fa5" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_1c51e9ffed7cc14ea6146d2fe50ae1028" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_17a814dc6a9c0f146b5a16830f2bb91a6" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="87" refid="structfcntl__args_10ab0757c9d16c0e4b5d2eec8bbdf9316" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_177368a22d9cc698f4cd0503c2b4e87aa" kindref="member">cmd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_137d96e0fe66231dce7f61d06c19e259e" kindref="member">cmd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_10ab0757c9d16c0e4b5d2eec8bbdf9316" kindref="member">cmd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="88" refid="structfcntl__args_1af3e83f65b3a98b08965f31dd96ee6fb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_19992a6b662b0d25721cd03dc62263429" kindref="member">arg_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_1359ca968530c6ac026b226cc564cca0c" kindref="member">arg</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfcntl__args_1af3e83f65b3a98b08965f31dd96ee6fb" kindref="member">arg_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">long</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="89"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"></highlight></codeline>
-<codeline lineno="91" refid="structpipe__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpipe__args" kindref="compound">pipe_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="92" refid="structpipe__args_1ee03af31759f2e318afc33a456e9f3a6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref><sp/><ref refid="structpipe__args_1ee03af31759f2e318afc33a456e9f3a6" kindref="member">dummy</ref>;</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight></codeline>
-<codeline lineno="95" refid="structreadlink__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structreadlink__args" kindref="compound">readlink_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="96" refid="structreadlink__args_14f35d8bc85986e17c8934f4cb3eb6f6c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_14999f1b4dd792b77106ea929c3176fec" kindref="member">path_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structreadlink__args_14c97e5cd326ea78adb5c072e6de3c2a4" kindref="member">path</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_14f35d8bc85986e17c8934f4cb3eb6f6c" kindref="member">path_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="97" refid="structreadlink__args_1cc03a2e4ee1130cb85844ca356c34588" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_1c0b6355ba6d4fd499b127471e12d1d58" kindref="member">buf_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structbuf" kindref="compound">buf</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_1cc03a2e4ee1130cb85844ca356c34588" kindref="member">buf_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="98" refid="structreadlink__args_10d3b906bd5ce2f725f92cc2b72333bed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_1bf7c96099dede28d2729bfc159a72d94" kindref="member">count_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_11c122ab73c591775ed283f58ac5c3019" kindref="member">count</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structreadlink__args_10d3b906bd5ce2f725f92cc2b72333bed" kindref="member">count_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="99"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"></highlight></codeline>
-<codeline lineno="101" refid="structgetuid__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgetuid__args" kindref="compound">getuid_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="102" refid="structgetuid__args_1dab9950a92eaf8ebdbd25d221d3010a1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref><sp/><ref refid="structgetuid__args_1dab9950a92eaf8ebdbd25d221d3010a1" kindref="member">dummy</ref>;</highlight></codeline>
-<codeline lineno="103"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"></highlight></codeline>
-<codeline lineno="105" refid="structgetgid__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgetgid__args" kindref="compound">getgid_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="106" refid="structgetgid__args_124d07a4873dcb40d8da43b56ace6c8cf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref><sp/><ref refid="structgetgid__args_124d07a4873dcb40d8da43b56ace6c8cf" kindref="member">dummy</ref>;</highlight></codeline>
-<codeline lineno="107"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="108" refid="structclose__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structclose__args" kindref="compound">close_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="109" refid="structclose__args_1e79073fdba01a4bedce7048f426db17c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structclose__args_10f51f560581579e7fe5e01b546c07ce1" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structclose__args_1795acdf38594b16ee7638db7ac6a3d4c" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structclose__args_1e79073fdba01a4bedce7048f426db17c" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="110"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"></highlight></codeline>
-<codeline lineno="112" refid="structmmap__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmmap__args" kindref="compound">mmap_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="113" refid="structmmap__args_10cf888e64b413045db4005aa66aa84a4" refkind="member"><highlight class="normal"><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1c455450f8117d242cf1a879587100dac" kindref="member">addr_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref>)];<sp/><ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref><sp/><ref refid="structmmap__args_113ec5b173a8fe6428cf3bf0a5f2d4fc2" kindref="member">addr</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_10cf888e64b413045db4005aa66aa84a4" kindref="member">addr_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref>)];</highlight></codeline>
-<codeline lineno="114" refid="structmmap__args_1e2bfe987d0762a33a0398cb030a2fe7e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_162304d5de202543f756dc40534efc5b8" kindref="member">len_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><ref refid="structmmap__args_10b1dab766559d59a733fede0d3767c14" kindref="member">len</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1e2bfe987d0762a33a0398cb030a2fe7e" kindref="member">len_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];</highlight></codeline>
-<codeline lineno="115" refid="structmmap__args_190e0cf9986dd84c327f987a36058aade" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_10d6fc2e8fbdc54bca991f6f16c80acf6" kindref="member">prot_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1d6c74b2bf9e921cb4da0cbd508b2e21d" kindref="member">prot</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_190e0cf9986dd84c327f987a36058aade" kindref="member">prot_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="116" refid="structmmap__args_1a8c15c317c7877b7586507cbdeb40cb9" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1f451a487a2f18f708c777260760121b8" kindref="member">flags_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_104b82aa69d28fc03e57632b7d524758d" kindref="member">flags</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1a8c15c317c7877b7586507cbdeb40cb9" kindref="member">flags_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="117" refid="structmmap__args_1d7125eedcf948a1dcb3bbc9ee6f59364" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_133bb79bfee9d496848f44b01aa318e36" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1abfe32d5934305c27dd528bba990ae12" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1d7125eedcf948a1dcb3bbc9ee6f59364" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="118" refid="structmmap__args_14eff2b82e74b82abbebd4f45ed1c287e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_1e09614c8295232d667f79b5026f44ef6" kindref="member">pad_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_15ad4ee0f25f92b5a4da5a86ba40ee1e2" kindref="member">pad</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_14eff2b82e74b82abbebd4f45ed1c287e" kindref="member">pad_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="119" refid="structmmap__args_13739c833f8452e5dd610ccefe974dac4" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_12c3a767c42f60d59a146e81340066ce1" kindref="member">pos_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>)];<sp/><ref refid="types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><ref refid="structmmap__args_17cc0a114bae15892a406fa7196229e37" kindref="member">pos</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmmap__args_13739c833f8452e5dd610ccefe974dac4" kindref="member">pos_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>)];</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"></highlight></codeline>
-<codeline lineno="122" refid="structobreak__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structobreak__args" kindref="compound">obreak_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="123" refid="structobreak__args_1a373949733bedd251be0431b0dec84f6" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structobreak__args_1ab92004970d8d3775780f477d57e7514" kindref="member">nsize_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structobreak__args_1b30a3d3c9186553a40d1b6e7c5714fb4" kindref="member">nsize</ref>;</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structobreak__args_1a373949733bedd251be0431b0dec84f6" kindref="member">nsize_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"></highlight></codeline>
-<codeline lineno="126" refid="structsigaction__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsigaction__args" kindref="compound">sigaction_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="127" refid="structsigaction__args_101ccead6735204b33cee342470cd314e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_106ae46d30337213d9d3fe79eee509fb8" kindref="member">sig_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_142dbd06bb30b4a5543452b6dd9b830c4" kindref="member">sig</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_101ccead6735204b33cee342470cd314e" kindref="member">sig_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="128" refid="structsigaction__args_1e04263ad9f217e6f8f5301e6c1f3914e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_15a4a1f284b1224cc0af3935a95257f91" kindref="member">act_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="kern__sig_8h_12f6214f82cae71464614ca35fd87d025" kindref="member">sigaction</ref><sp/>*)];<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="kern__sig_8h_12f6214f82cae71464614ca35fd87d025" kindref="member">sigaction</ref><sp/>*<sp/><ref refid="structsigaction__args_1f7994bee9dd3e398d407a1e156508c13" kindref="member">act</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_1e04263ad9f217e6f8f5301e6c1f3914e" kindref="member">act_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="kern__sig_8h_12f6214f82cae71464614ca35fd87d025" kindref="member">sigaction</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="129" refid="structsigaction__args_136ed75576165fb5d4ee4252b4210fef1" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_1dd3ba9fa50b310b05f062b05593d153c" kindref="member">oact_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="kern__sig_8h_12f6214f82cae71464614ca35fd87d025" kindref="member">sigaction</ref><sp/>*)];<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="kern__sig_8h_12f6214f82cae71464614ca35fd87d025" kindref="member">sigaction</ref><sp/>*<sp/><ref refid="structsigaction__args_1713abc5f1b16ac64540b27601e6dee39" kindref="member">oact</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigaction__args_136ed75576165fb5d4ee4252b4210fef1" kindref="member">oact_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="kern__sig_8h_12f6214f82cae71464614ca35fd87d025" kindref="member">sigaction</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"></highlight></codeline>
-<codeline lineno="132" refid="structgetdtablesize__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgetdtablesize__args" kindref="compound">getdtablesize_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="133" refid="structgetdtablesize__args_1514b5ae606bf5f78bcec675843a63dca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref><sp/><ref refid="structgetdtablesize__args_1514b5ae606bf5f78bcec675843a63dca" kindref="member">dummy</ref>;</highlight></codeline>
-<codeline lineno="134"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="135"><highlight class="normal"></highlight></codeline>
-<codeline lineno="136" refid="structmunmap__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmunmap__args" kindref="compound">munmap_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="137" refid="structmunmap__args_106fe035aeb5130966df22649d11a0355" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmunmap__args_18b89f54741aa66465afa25db2e0e2a01" kindref="member">addr_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structmunmap__args_18392e74205114bd929deeb68c76035dc" kindref="member">addr</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmunmap__args_106fe035aeb5130966df22649d11a0355" kindref="member">addr_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="138" refid="structmunmap__args_1b006fd9e1b74c3488287a2205174d9c5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmunmap__args_18d5d8d299151e239ba9669e428b7180d" kindref="member">len_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><ref refid="structmunmap__args_10daaf8cfeac90dc97056f79931a07b80" kindref="member">len</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structmunmap__args_1b006fd9e1b74c3488287a2205174d9c5" kindref="member">len_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];</highlight></codeline>
-<codeline lineno="139"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"></highlight></codeline>
-<codeline lineno="141" refid="structsigprocmask__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsigprocmask__args" kindref="compound">sigprocmask_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="142" refid="structsigprocmask__args_1c5c57ef328b59a465b6a836be10b1541" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_1c3045ce57a3c43a59726caff400bdb39" kindref="member">how_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_1a0d6a4a10171e13d733d9a2e4ea6868e" kindref="member">how</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_1c5c57ef328b59a465b6a836be10b1541" kindref="member">how_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="143" refid="structsigprocmask__args_1ff48ba5dbee34e65a200d1fcd18f7027" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_161bb4b3a37837f3f054eef2ad444b7f3" kindref="member">set_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct____sigset" kindref="compound">sigset_t</ref><sp/>*)];<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct____sigset" kindref="compound">sigset_t</ref><sp/>*<sp/><ref refid="structsigprocmask__args_1c0f5a6d4da30a032dd0314d5c0c58c6f" kindref="member">set</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_1ff48ba5dbee34e65a200d1fcd18f7027" kindref="member">set_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct____sigset" kindref="compound">sigset_t</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="144" refid="structsigprocmask__args_12e983bc4520c563125ea6661384676ab" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_1b78b139461117755b896dc064361258b" kindref="member">oset_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="struct____sigset" kindref="compound">sigset_t</ref><sp/>*)];<sp/><ref refid="struct____sigset" kindref="compound">sigset_t</ref><sp/>*<sp/><ref refid="structsigprocmask__args_183e920e43b8f12aff29b1e0d24fce3e1" kindref="member">oset</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsigprocmask__args_12e983bc4520c563125ea6661384676ab" kindref="member">oset_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="struct____sigset" kindref="compound">sigset_t</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="146" refid="structgettimeofday__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgettimeofday__args" kindref="compound">gettimeofday_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="147" refid="structgettimeofday__args_14f7acd871b6cda2d2acefeaa06ff40f4" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structgettimeofday__args_1153bad8d6d2f55fa314aefd1fdea8f94" kindref="member">tp_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*)];<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*<sp/><ref refid="structgettimeofday__args_1fd193375eb0db7ca9958363b54d8740b" kindref="member">tp</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structgettimeofday__args_14f7acd871b6cda2d2acefeaa06ff40f4" kindref="member">tp_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="148" refid="structgettimeofday__args_1e3b668286098d30d5eda58c71b04443c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structgettimeofday__args_1b64410e07f613e74243f125c8105a120" kindref="member">tzp_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*)];<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*<sp/><ref refid="structgettimeofday__args_1df6abf340afc684fe7fd5794b1caff5c" kindref="member">tzp</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structgettimeofday__args_1e3b668286098d30d5eda58c71b04443c" kindref="member">tzp_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="150" refid="structfstat__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfstat__args" kindref="compound">fstat_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="151" refid="structfstat__args_191268beb78c26e9ab954671c622d57ba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfstat__args_11b08f21c548c12ec57667bf54bcf7b50" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfstat__args_11bebabe9301b24f1546f59fa60962a07" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfstat__args_191268beb78c26e9ab954671c622d57ba" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="152" refid="structfstat__args_1102abf70e94e5bda9502b449c11dd33b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfstat__args_1dc21fef9118e4721788eaccdcd9cf479" kindref="member">sb_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structstat" kindref="compound">stat</ref><sp/>*)];<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structstat" kindref="compound">stat</ref><sp/>*<sp/><ref refid="structfstat__args_168d8bd4f5caa652e218234d4375f6c13" kindref="member">sb</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structfstat__args_1102abf70e94e5bda9502b449c11dd33b" kindref="member">sb_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structstat" kindref="compound">stat</ref><sp/>*)];</highlight></codeline>
-<codeline lineno="153"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="154" refid="structioctl__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structioctl__args" kindref="compound">ioctl_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="155" refid="structioctl__args_11235dd1f8ecbe157da5c7a398653e4b2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_1c2352a7883adf0eedb3a4381579a75f9" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_114ff7d2d907d993df2c20b3ee623db01" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_11235dd1f8ecbe157da5c7a398653e4b2" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="156" refid="structioctl__args_16832f1ba0d0049d2b22ff087654fba18" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_187571e46eb43200d9c86008d5ef074c1" kindref="member">com_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_18f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref>)];<sp/><ref refid="types_8h_18f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref><sp/><ref refid="structioctl__args_1ffd1f0ddcb0576d2811ce631e9d2fb2b" kindref="member">com</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_16832f1ba0d0049d2b22ff087654fba18" kindref="member">com_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_18f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref>)];</highlight></codeline>
-<codeline lineno="157" refid="structioctl__args_1bec9b96a7a663f8c9c356380b16fabd7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_1514813665cdeecb58d5ab0d18be73a39" kindref="member">data_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref>)];<sp/><ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref><sp/><ref refid="structioctl__args_1eb632d2ac123fb63a619a7553f25fa0d" kindref="member">data</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structioctl__args_1bec9b96a7a663f8c9c356380b16fabd7" kindref="member">data_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref>)];</highlight></codeline>
-<codeline lineno="158"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"></highlight></codeline>
-<codeline lineno="160" refid="structread__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structread__args" kindref="compound">read_args</ref><sp/>{</highlight></codeline>
-<codeline lineno="161" refid="structread__args_1d1edb2e07133bbb97a6fe94f10cc069c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structread__args_139bb04634792a07848bb2c452d54bfdd" kindref="member">fd_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structread__args_1250aa43131c8339cb6af695aa172e3d1" kindref="member">fd</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structread__args_1d1edb2e07133bbb97a6fe94f10cc069c" kindref="member">fd_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)];</highlight></codeline>
-<codeline lineno="162" refid="structread__args_1d41daf541390d0073a4dc1d933d83d28" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structread__args_1d2b7fdd6bfa086065a77452b05cb4b0c" kindref="member">buf_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><ref refid="structbuf" kindref="compound">buf</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structread__args_1d41daf541390d0073a4dc1d933d83d28" kindref="member">buf_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
-<codeline lineno="163" refid="structread__args_1a6ddb1098b4f773bbad408be6b211d12" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structread__args_1e73c85294011a4d506772f5a401c6828" kindref="member">nbyte_l_</ref>[<ref refid="sysproto_8h_1121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><ref refid="structread__args_12043b1fbe1d15b40105590c9cb7a192c" kindref="member">nbyte</ref>;<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structread__args_1a6ddb1098b4f773bbad408be6b211d12" kindref="member">nbyte_r_</ref>[<ref refid="sysproto_8h_1a46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)];</highlight></codeline>
-<codeline lineno="164"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="165"><highlight class="normal"></highlight></codeline>
-<codeline lineno="166"><highlight class="normal"></highlight><highlight class="comment">//Func<sp/>Defs</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="167"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_114173c973cb6d92a0e2ff34ee072f4d3" kindref="member">sys_write</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structwrite__args" kindref="compound">write_args</ref><sp/>*uap);</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_13ca4e48103cbadae2952d277d03687be" kindref="member">sys_open</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structopen__args" kindref="compound">open_args</ref><sp/>*uap);</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1b913b237bff6f29fa58c01d2d0fc7088" kindref="member">setitimer</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsetitimer__args" kindref="compound">setitimer_args</ref><sp/>*uap);</highlight></codeline>
-<codeline lineno="170"><highlight class="normal"></highlight></codeline>
-<codeline lineno="171"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="172"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="173"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="174"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="175"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="structsys__mpiPostMessage__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mpiPostMessage__args" kindref="compound">sys_mpiPostMessage_args</ref><sp/>{</highlight></codeline>
+<codeline lineno="69" refid="structsys__mpiPostMessage__args_1a41eb4f9a72503dc3bc969a70d7566ad9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args_1a41eb4f9a72503dc3bc969a70d7566ad9" kindref="member">name_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="70" refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structsys__mpiPostMessage__args_1a459c8399600687a348be8bacbbcf7b35" kindref="member">name</ref>;</highlight></codeline>
+<codeline lineno="71" refid="structsys__mpiPostMessage__args_1af759655b396eed057fbb4c5cc16b72e2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args_1af759655b396eed057fbb4c5cc16b72e2" kindref="member">name_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="72" refid="structsys__mpiPostMessage__args_1a04fbb8f9cd9407c9e6c1ed69f644b3ef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args_1a04fbb8f9cd9407c9e6c1ed69f644b3ef" kindref="member">type_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)];</highlight></codeline>
+<codeline lineno="73" refid="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structsys__mpiPostMessage__args_1a1a392df6a078d4e61355deabbf83e284" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="74" refid="structsys__mpiPostMessage__args_1a18f34ebdc59a49c0c9e538133823bbeb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args_1a18f34ebdc59a49c0c9e538133823bbeb" kindref="member">type_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)];</highlight></codeline>
+<codeline lineno="75" refid="structsys__mpiPostMessage__args_1ae3f994d8f649993171decda3c02860fb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args_1ae3f994d8f649993171decda3c02860fb" kindref="member">msg_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="76" refid="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structsys__mpiPostMessage__args_1ae0c3314ea5f1e4ec16dc32b192b6fc7f" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="77" refid="structsys__mpiPostMessage__args_1a80bda02354ee521744e37661820aa1e3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args_1a80bda02354ee521744e37661820aa1e3" kindref="member">msg_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)];</highlight></codeline>
+<codeline lineno="78"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="structsys__sde__args" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__sde__args" kindref="compound">sys_sde_args</ref><sp/>{</highlight></codeline>
+<codeline lineno="81" refid="structsys__sde__args_1a6f8f157f148c61ebe88186a6e2cbae2c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__sde__args_1a6f8f157f148c61ebe88186a6e2cbae2c" kindref="member">cmd_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)];</highlight></codeline>
+<codeline lineno="82" refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" kindref="member">cmd</ref>;</highlight></codeline>
+<codeline lineno="83" refid="structsys__sde__args_1a31db2abaf18830b67c8b739bfc8612a1" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__sde__args_1a31db2abaf18830b67c8b739bfc8612a1" kindref="member">cmd_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)];</highlight></codeline>
+<codeline lineno="84" refid="structsys__sde__args_1acc2f0aec6e28e4db4971f152303835a8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__sde__args_1acc2f0aec6e28e4db4971f152303835a8" kindref="member">ptr_l_</ref>[<ref refid="sysproto_8h_1a121b15598871bbd1dc2067855e25c1d4" kindref="member">PADL_</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)];</highlight></codeline>
+<codeline lineno="85" refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" kindref="member">ptr</ref>;</highlight></codeline>
+<codeline lineno="86" refid="structsys__sde__args_1a96682fc2e8912c42d67f7f76399094b2" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__sde__args_1a96682fc2e8912c42d67f7f76399094b2" kindref="member">ptr_r_</ref>[<ref refid="sysproto_8h_1aa46e33ea9096ba0cbafd88a6899b98b6" kindref="member">PADR_</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)];</highlight></codeline>
+<codeline lineno="87"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">//Func<sp/>Defs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1a13576493553d11e9334638bf9d082692" kindref="member">sys_invalid</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1a8d86b5bea41a3d5d93ff8266851bcbbd" kindref="member">sys_mpiCreateMbox</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiCreateMbox__args" kindref="compound">sys_mpiCreateMbox_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1ad885627ef631a3733ed3afba5f62210d" kindref="member">sys_mpiDestroyMbox</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiDestroyMbox__args" kindref="compound">sys_mpiDestroyMbox_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1a34ed9cccbbc3724648e75283a20d7b2a" kindref="member">sys_mpiFetchMessage</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiFetchMessage__args" kindref="compound">sys_mpiFetchMessage_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sysproto_8h_1a1021c4fa8fcb5681fcb9252e6737c7a3" kindref="member">sys_mpiPostMessage</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mpiPostMessage__args" kindref="compound">sys_mpiPostMessage_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto.h"/>
   </compounddef>
 </doxygen>

@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="struct__item__t" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="struct__item__t" kind="struct" language="C++" prot="public">
     <compoundname>_item_t</compoundname>
     <includes refid="lists_8h" local="no">lists.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="struct__item__t_176139a34f13eb90a9bf203579870dbd2" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__item__t_1a76139a34f13eb90a9bf203579870dbd2" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* _item_t::data</definition>
         <argsstring></argsstring>
@@ -15,11 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="11" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="11" bodyend="-1"/>
-        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" line="38" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="45" endline="68">kmod_add</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="struct__item__t_17922bdca5aec571aecbe57e997abb6c9" prot="public" static="no" mutable="no">
-        <type><ref refid="struct__item__t" kindref="compound">Item_t</ref> *</type>
+      <memberdef kind="variable" id="struct__item__t_1a7922bdca5aec571aecbe57e997abb6c9" prot="public" static="no" mutable="no">
+        <type><ref refid="lists_8h_1a4c2a982479f3f5d39102321f3408ca90" kindref="member">Item_t</ref> *</type>
         <definition>Item_t* _item_t::Next</definition>
         <argsstring></argsstring>
         <name>Next</name>
@@ -29,10 +29,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="10" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" line="37" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" bodystart="37" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="struct__item__t_1c48075950d3635b95f943f900580166f" prot="public" static="no" mutable="no">
-        <type><ref refid="struct__item__t" kindref="compound">Item_t</ref> *</type>
+      <memberdef kind="variable" id="struct__item__t_1ac48075950d3635b95f943f900580166f" prot="public" static="no" mutable="no">
+        <type><ref refid="lists_8h_1a4c2a982479f3f5d39102321f3408ca90" kindref="member">Item_t</ref> *</type>
         <definition>Item_t* _item_t::Previous</definition>
         <argsstring></argsstring>
         <name>Previous</name>
@@ -42,7 +42,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="9" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="9" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" line="36" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" bodystart="36" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -50,20 +50,20 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="365">
+      <node id="1">
         <label>_item_t</label>
         <link refid="struct__item__t"/>
-        <childnode refid="365" relation="usage">
-          <edgelabel>Next
-Previous</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+Previous</edgelabel>
+          <edgelabel>+Next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="8" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="7" bodyend="12"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" line="35" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/lists.h" bodystart="35" bodyend="39"/>
     <listofallmembers>
-      <member refid="struct__item__t_176139a34f13eb90a9bf203579870dbd2" prot="public" virt="non-virtual"><scope>_item_t</scope><name>data</name></member>
-      <member refid="struct__item__t_17922bdca5aec571aecbe57e997abb6c9" prot="public" virt="non-virtual"><scope>_item_t</scope><name>Next</name></member>
-      <member refid="struct__item__t_1c48075950d3635b95f943f900580166f" prot="public" virt="non-virtual"><scope>_item_t</scope><name>Previous</name></member>
+      <member refid="struct__item__t_1a76139a34f13eb90a9bf203579870dbd2" prot="public" virt="non-virtual"><scope>_item_t</scope><name>data</name></member>
+      <member refid="struct__item__t_1a7922bdca5aec571aecbe57e997abb6c9" prot="public" virt="non-virtual"><scope>_item_t</scope><name>Next</name></member>
+      <member refid="struct__item__t_1ac48075950d3635b95f943f900580166f" prot="public" virt="non-virtual"><scope>_item_t</scope><name>Previous</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

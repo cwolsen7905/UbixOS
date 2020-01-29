@@ -1,192 +1,16 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structogVESAInfo" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structogVESAInfo" kind="struct" language="C++" prot="public">
     <compoundname>ogVESAInfo</compoundname>
     <includes refid="ogDisplay__UbixOS_8h" local="no">ogDisplay_UbixOS.h</includes>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="structogVESAInfo_1a520b23d61738cbe6448e9455ab6c414" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> paddington[474]</type>
-        <definition>uInt8 paddington [474] ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="57"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1d712e34b4d581b7263b29cd5d431ce57" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMProductRevPtr</type>
-        <definition>uInt32 OEMProductRevPtr ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="56"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_15d9aa8d8daa6162d03232c48990eb0ea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMProductNamePtr</type>
-        <definition>uInt32 OEMProductNamePtr ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="55"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1709a36b3aa42f96cf3c163181cf4888b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMVendorNamePtr</type>
-        <definition>uInt32 OEMVendorNamePtr ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="54"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1c92417302faac24a682523319dac204a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> OEMSoftwareRev</type>
-        <definition>uInt16 OEMSoftwareRev ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="53"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_16698805616f64a769e0ca0323786a786" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> totalMemory</type>
-        <definition>uInt16 totalMemory ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="51"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_16b4de298205d1e686e4a22855ae6fb51" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> videoModePtr</type>
-        <definition>uInt32 videoModePtr ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="50"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1ca339d7d2faf7824dd3bbd6067315607" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> capabilities</type>
-        <definition>uInt32 capabilities ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="49"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_17b397dc7dc60f358c5da913f2114b260" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMStringPtr</type>
-        <definition>uInt32 OEMStringPtr ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="48"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1a54437b806134e829077f037e12d47e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> majVersion</type>
-        <definition>uInt8 majVersion ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="47"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1106e45f583f3b59239c10b8c26cbfc0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> minVersion</type>
-        <definition>uInt8 minVersion ogVESAInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="46"/>
-      </memberdef>
-      <memberdef kind="function" id="structogVESAInfo_1b5876f2c7eb83d43686ecbc59eafe704" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structogVESAInfo_1ab5876f2c7eb83d43686ecbc59eafe704" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>char VBESignature[4]</type>
         <definition>char VBESignature [4] ogVESAInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -194,27 +18,209 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="45"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="74" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a46e4af9bb46c8004ae6df17e036da3c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> minVersion</type>
+        <definition>uint8_t minVersion ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="75" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1aaa636b8c9a8a78c4b9257f45fc24a1e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> majVersion</type>
+        <definition>uint8_t majVersion ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="76" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1afec9919ccf0634788a2bbefa381a865c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> OEMStringPtr</type>
+        <definition>uint32_t OEMStringPtr ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="77" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a548dc92292e107d453acd2f395b70794" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> capabilities</type>
+        <definition>uint32_t capabilities ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="78" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a342e0fa9152b8913fb19465ed128cc5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> videoModePtr</type>
+        <definition>uint32_t videoModePtr ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="79" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a52b84c5cd62916b5e6985cef6298d3af" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> totalMemory</type>
+        <definition>uint16_t totalMemory ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="80" column="26"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1afcf61b17aff5c89efff61402c9206b46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> OEMSoftwareRev</type>
+        <definition>uint16_t OEMSoftwareRev ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="82" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1aec1ae532af29c8e87f0f44ab88771b86" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> OEMVendorNamePtr</type>
+        <definition>uint32_t OEMVendorNamePtr ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="83" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a16e94335a6c2386d8b564b47bf2f6012" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> OEMProductNamePtr</type>
+        <definition>uint32_t OEMProductNamePtr ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="84" column="32"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a29e3444a3dc81db08e4b42fc9d966625" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> OEMProductRevPtr</type>
+        <definition>uint32_t OEMProductRevPtr ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="85" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="structogVESAInfo_1a32d8bdf5ff6f95913095bf1c19fbf361" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> paddington[474]</type>
+        <definition>uint8_t paddington [474] ogVESAInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="86" column="24"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="44" bodyend="58"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>ogVESAInfo</label>
+        <link refid="structogVESAInfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="73" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" bodystart="73" bodyend="87"/>
     <listofallmembers>
-      <member refid="structogVESAInfo_1b5876f2c7eb83d43686ecbc59eafe704" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1106e45f583f3b59239c10b8c26cbfc0d" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1a54437b806134e829077f037e12d47e1" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_17b397dc7dc60f358c5da913f2114b260" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1ca339d7d2faf7824dd3bbd6067315607" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_16b4de298205d1e686e4a22855ae6fb51" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_16698805616f64a769e0ca0323786a786" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1c92417302faac24a682523319dac204a" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1709a36b3aa42f96cf3c163181cf4888b" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_15d9aa8d8daa6162d03232c48990eb0ea" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1d712e34b4d581b7263b29cd5d431ce57" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
-      <member refid="structogVESAInfo_1a520b23d61738cbe6448e9455ab6c414" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1ab5876f2c7eb83d43686ecbc59eafe704" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a46e4af9bb46c8004ae6df17e036da3c1" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1aaa636b8c9a8a78c4b9257f45fc24a1e4" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1afec9919ccf0634788a2bbefa381a865c" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a548dc92292e107d453acd2f395b70794" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a342e0fa9152b8913fb19465ed128cc5d" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a52b84c5cd62916b5e6985cef6298d3af" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1afcf61b17aff5c89efff61402c9206b46" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1aec1ae532af29c8e87f0f44ab88771b86" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a16e94335a6c2386d8b564b47bf2f6012" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a29e3444a3dc81db08e4b42fc9d966625" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
+      <member refid="structogVESAInfo_1a32d8bdf5ff6f95913095bf1c19fbf361" prot="public" virt="non-virtual"><scope>ogVESAInfo</scope><name>__attribute__</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

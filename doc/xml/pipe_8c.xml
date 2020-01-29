@@ -1,116 +1,243 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="pipe_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="pipe_8c" kind="file" language="C++">
     <compoundname>pipe.c</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
-    <includes refid="thread_8h" local="no">sys/thread.h</includes>
     <includes refid="pipe_8h" local="no">sys/pipe.h</includes>
-    <includes refid="kern__descrip_8h" local="no">sys/kern_descrip.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sys/sysproto_posix.h</includes>
+    <includes refid="thread_8h" local="no">sys/thread.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
     <includes refid="assert_8h" local="no">assert.h</includes>
+    <includes refid="descrip_8h" local="no">sys/descrip.h</includes>
     <incdepgraph>
-      <node id="5400">
-        <label>sys/thread.h</label>
-        <link refid="thread_8h"/>
-        <childnode refid="5396" relation="include">
+      <node id="30">
+        <label>sys/fcntl.h</label>
+        <link refid="fcntl_8h"/>
+      </node>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
         </childnode>
       </node>
-      <node id="5395">
-        <label>src/sys/kernel/pipe.c</label>
-        <link refid="pipe.c"/>
-        <childnode refid="5396" relation="include">
+      <node id="28">
+        <label>sys/descrip.h</label>
+        <link refid="descrip_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="5398" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
-        <childnode refid="5400" relation="include">
+        <childnode refid="16" relation="include">
         </childnode>
-        <childnode refid="5401" relation="include">
+        <childnode refid="29" relation="include">
         </childnode>
-        <childnode refid="5402" relation="include">
-        </childnode>
-        <childnode refid="5406" relation="include">
-        </childnode>
-        <childnode refid="5407" relation="include">
+        <childnode refid="30" relation="include">
         </childnode>
       </node>
-      <node id="5396">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5397" relation="include">
-        </childnode>
+      <node id="26">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
       </node>
-      <node id="5397">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="5403">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="5396" relation="include">
-        </childnode>
-        <childnode refid="5404" relation="include">
-        </childnode>
-        <childnode refid="5405" relation="include">
-        </childnode>
-      </node>
-      <node id="5401">
+      <node id="2">
         <label>sys/pipe.h</label>
         <link refid="pipe_8h"/>
-        <childnode refid="5400" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="5398" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
       </node>
-      <node id="5405">
+      <node id="12">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
         <label>vfs/mount.h</label>
         <link refid="mount_8h"/>
-        <childnode refid="5396" relation="include">
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="5406">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5396" relation="include">
+      <node id="14">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="5402">
-        <label>sys/kern_descrip.h</label>
-        <link refid="kern__descrip_8h"/>
-        <childnode refid="5400" relation="include">
-        </childnode>
-        <childnode refid="5398" relation="include">
-        </childnode>
-        <childnode refid="5403" relation="include">
+      <node id="11">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="5407">
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/pipe.c</label>
+        <link refid="pipe_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="27">
         <label>assert.h</label>
         <link refid="assert_8h"/>
       </node>
-      <node id="5404">
+      <node id="13">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="25">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="5396" relation="include">
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="5398">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="5399" relation="include">
-        </childnode>
-        <childnode refid="5400" relation="include">
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="5399">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="5396" relation="include">
+      <node id="29">
+        <label>vfs/stat.h</label>
+        <link refid="stat_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int pipe</definition>
         <argsstring>(struct thread *td, struct pipe_args *uap)</argsstring>
@@ -126,16 +253,17 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>HACK </para>        </detaileddescription>
+<para>HACK </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/pipe.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/pipe.c" bodystart="41" bodyend="51"/>
-        <references refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" compoundref="kern__descrip_8h" startline="94">file::f_flag</references>
-        <references refid="kern__descrip_8h_1434fb15226182b0ee879a5afe9a8c190" compoundref="kern__descrip_8c" startline="67" endline="88">falloc</references>
-        <references refid="structfile_15a1b356e191a81d71a02560074aacd2a" compoundref="kern__descrip_8h" startline="96">file::fd</references>
-        <references refid="kern__descrip_8h_13252b359359dea1efa45bb87c4499acd" compoundref="kern__descrip_8h" startline="54">FREAD</references>
-        <references refid="kern__descrip_8h_1171aed9ee8e3ec0a65cedfb9a2626499" compoundref="kern__descrip_8h" startline="55">FWRITE</references>
-        <references refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="38">thread::td_retval</references>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/pipe.c" line="39" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/pipe.c" bodystart="39" bodyend="49"/>
+        <references refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" compoundref="descrip_8h" startline="68">file::f_flag</references>
+        <references refid="descrip_8h_1a434fb15226182b0ee879a5afe9a8c190" compoundref="descrip_8c" startline="96" endline="123">falloc</references>
+        <references refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" compoundref="descrip_8h" startline="71">file::fd</references>
+        <references refid="fcntl_8h_1a3252b359359dea1efa45bb87c4499acd" compoundref="fcntl_8h" startline="47">FREAD</references>
+        <references refid="fcntl_8h_1a171aed9ee8e3ec0a65cedfb9a2626499" compoundref="fcntl_8h" startline="48">FWRITE</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -143,60 +271,58 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: pipe_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="pipe_8h" kindref="compound">sys/pipe.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kern__descrip_8h" kindref="compound">sys/kern_descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="41" refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="pipe_8h_1476208212b5dff10a39e8039c8eead6d" kindref="member">pipe</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpipe__args" kindref="compound">pipe_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*rf,<sp/>*wf;</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfile_15a1b356e191a81d71a02560074aacd2a" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><ref refid="kern__descrip_8h_1434fb15226182b0ee879a5afe9a8c190" kindref="member">falloc</ref>(td,&amp;rf,&amp;fd);</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/>rf-&gt;<ref refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" kindref="member">f_flag</ref><sp/>=<sp/><ref refid="kern__descrip_8h_13252b359359dea1efa45bb87c4499acd" kindref="member">FREAD</ref><sp/>|<sp/><ref refid="kern__descrip_8h_1171aed9ee8e3ec0a65cedfb9a2626499" kindref="member">FWRITE</ref>;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>fd;</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="kern__descrip_8h_1434fb15226182b0ee879a5afe9a8c190" kindref="member">falloc</ref>(td,&amp;wf,&amp;fd);</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/>wf-&gt;<ref refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" kindref="member">f_flag</ref><sp/>=<sp/><ref refid="kern__descrip_8h_13252b359359dea1efa45bb87c4499acd" kindref="member">FREAD</ref><sp/>|<sp/><ref refid="kern__descrip_8h_1171aed9ee8e3ec0a65cedfb9a2626499" kindref="member">FWRITE</ref>;</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[1]<sp/>=<sp/>fd;</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="54"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="55"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="pipe_8h" kindref="compound">sys/pipe.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto__posix_8h" kindref="compound">sys/sysproto_posix.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="descrip_8h" kindref="compound">sys/descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" kindref="member">pipe</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpipe__args" kindref="compound">pipe_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*rf,<sp/>*wf;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><ref refid="descrip_8h_1a434fb15226182b0ee879a5afe9a8c190" kindref="member">falloc</ref>(td,<sp/>&amp;rf,<sp/>&amp;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/>rf-&gt;<ref refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" kindref="member">f_flag</ref><sp/>=<sp/><ref refid="fcntl_8h_1a3252b359359dea1efa45bb87c4499acd" kindref="member">FREAD</ref><sp/>|<sp/><ref refid="fcntl_8h_1a171aed9ee8e3ec0a65cedfb9a2626499" kindref="member">FWRITE</ref>;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="descrip_8h_1a434fb15226182b0ee879a5afe9a8c190" kindref="member">falloc</ref>(td,<sp/>&amp;wf,<sp/>&amp;<ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/>wf-&gt;<ref refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" kindref="member">f_flag</ref><sp/>=<sp/><ref refid="fcntl_8h_1a3252b359359dea1efa45bb87c4499acd" kindref="member">FREAD</ref><sp/>|<sp/><ref refid="fcntl_8h_1a171aed9ee8e3ec0a65cedfb9a2626499" kindref="member">FWRITE</ref>;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[1]<sp/>=<sp/><ref refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" kindref="member">fd</ref>;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/pipe.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/pipe.c"/>
   </compounddef>
 </doxygen>

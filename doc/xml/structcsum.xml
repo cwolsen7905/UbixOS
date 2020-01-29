@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structcsum" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structcsum" kind="struct" language="C++" prot="public">
     <compoundname>csum</compoundname>
-    <includes refid="ufs_8h" local="no">ufs.h</includes>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structcsum_1c77b40fc2a8d65ec266e9471fb96ed99" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structcsum_1ac77b40fc2a8d65ec266e9471fb96ed99" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t csum::cs_nbfree</definition>
         <argsstring></argsstring>
         <name>cs_nbfree</name>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="175" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="175" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="244" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="244" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structcsum_1910936b597b99baa5f64ddd5a15f6b70" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structcsum_1a910936b597b99baa5f64ddd5a15f6b70" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t csum::cs_ndir</definition>
         <argsstring></argsstring>
         <name>cs_ndir</name>
@@ -28,10 +28,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="174" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="174" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="243" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="243" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structcsum_14725bcc5b848a377eb7aeb181018405d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structcsum_1a4725bcc5b848a377eb7aeb181018405d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t csum::cs_nffree</definition>
         <argsstring></argsstring>
         <name>cs_nffree</name>
@@ -41,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="177" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="177" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="246" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="246" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structcsum_1997edf4fbc43862abb72a4a7e411a51d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structcsum_1a997edf4fbc43862abb72a4a7e411a51d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t csum::cs_nifree</definition>
         <argsstring></argsstring>
         <name>cs_nifree</name>
@@ -54,19 +54,25 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="176" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="176" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="245" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="245" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="173" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="173" bodyend="178"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>csum</label>
+        <link refid="structcsum"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="242" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="242" bodyend="247"/>
     <listofallmembers>
-      <member refid="structcsum_1c77b40fc2a8d65ec266e9471fb96ed99" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_nbfree</name></member>
-      <member refid="structcsum_1910936b597b99baa5f64ddd5a15f6b70" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_ndir</name></member>
-      <member refid="structcsum_14725bcc5b848a377eb7aeb181018405d" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_nffree</name></member>
-      <member refid="structcsum_1997edf4fbc43862abb72a4a7e411a51d" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_nifree</name></member>
+      <member refid="structcsum_1ac77b40fc2a8d65ec266e9471fb96ed99" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_nbfree</name></member>
+      <member refid="structcsum_1a910936b597b99baa5f64ddd5a15f6b70" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_ndir</name></member>
+      <member refid="structcsum_1a4725bcc5b848a377eb7aeb181018405d" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_nffree</name></member>
+      <member refid="structcsum_1a997edf4fbc43862abb72a4a7e411a51d" prot="public" virt="non-virtual"><scope>csum</scope><name>cs_nifree</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdevice__interface" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdevice__interface" kind="struct" language="C++" prot="public">
     <compoundname>device_interface</compoundname>
-    <includes refid="device_8h" local="no">device.h</includes>
+    <includes refid="include_2sys_2device_8h" local="no">device.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* device_interface::info</definition>
         <argsstring></argsstring>
@@ -15,22 +15,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="52" bodyend="-1"/>
-        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
-        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
-        <referencedby refid="ufs_8c_127a0276d7cf729f1a89bd46dac8a9650" compoundref="ufs_8c" startline="51" endline="54">dskread</referencedby>
-        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
-        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="51" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="gpt_8h_1a08130ab1aa44989d74341a21057b62c9" compoundref="gpt_8c" startline="99" endline="188">gptfind</referencedby>
+        <referencedby refid="hd_8c_1ab01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="221" endline="354">hdInit</referencedby>
+        <referencedby refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" compoundref="fat_8c" startline="44" endline="48">media_read</referencedby>
+        <referencedby refid="fat_8c_1a6840e26b7167186163560ab960cb7530" compoundref="fat_8c" startline="50" endline="54">media_write</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a99dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="73" endline="76">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_192620413c2580ea3cf01e121bb54c254" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1a5a20c2397cc4ac3fbb9afe36bea1cfd1" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* device_interface::init)(void *)</definition>
+        <definition>int(* device_interface::init) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>init</name>
         <briefdescription>
@@ -39,13 +37,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="56"/>
-        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="55" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_1561678212ee39a09ce43c1a3567c64e2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="variable" id="structdevice__interface_1a561678212ee39a09ce43c1a3567c64e2" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 device_interface::initialized</definition>
         <argsstring></argsstring>
         <name>initialized</name>
@@ -55,13 +51,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="49" bodyend="-1"/>
-        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
-        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="48" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="hd_8c_1ab01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="221" endline="354">hdInit</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_1a1c4703d14f4a7f53a8dd6d6dda9e641" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1a20117a04f4d19638965b58311c182478" prot="public" static="no" mutable="no">
         <type>void(*</type>
-        <definition>void(* device_interface::ioctl)(void *)</definition>
+        <definition>void(* device_interface::ioctl) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>ioctl</name>
         <briefdescription>
@@ -70,10 +65,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="57"/>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="56" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="56" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_17eb42b0bb3e06dbc9183531a5e59ddb8" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1a7eb42b0bb3e06dbc9183531a5e59ddb8" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int device_interface::major</definition>
         <argsstring></argsstring>
@@ -84,14 +78,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_16caf84418059d0121e76d873e305ddcb" prot="public" static="no" mutable="no">
-        <type>void(*</type>
-        <definition>void(* device_interface::read)(void *, void *, uInt32, uInt32)</definition>
+      <memberdef kind="variable" id="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* device_interface::read) (void *, void *, uInt32, uInt32)</definition>
         <argsstring>)(void *, void *, uInt32, uInt32)</argsstring>
         <name>read</name>
         <briefdescription>
@@ -100,21 +92,17 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="53"/>
-        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
-        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
-        <referencedby refid="ufs_8c_127a0276d7cf729f1a89bd46dac8a9650" compoundref="ufs_8c" startline="51" endline="54">dskread</referencedby>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="52" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
+        <referencedby refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" compoundref="fat_8c" startline="44" endline="48">media_read</referencedby>
+        <referencedby refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_1cbfb9de4fadc968479e1536fcef4a2d6" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1a816fbc5cd527e42d0a64a6d690062ed0" prot="public" static="no" mutable="no">
         <type>void(*</type>
-        <definition>void(* device_interface::reset)(void *)</definition>
+        <definition>void(* device_interface::reset) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>reset</name>
         <briefdescription>
@@ -123,12 +111,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="55"/>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="54" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_182fda947114f5c8d53fb7acbd7eb0e21" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdevice__interface_1a82fda947114f5c8d53fb7acbd7eb0e21" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 device_interface::size</definition>
         <argsstring></argsstring>
         <name>size</name>
@@ -138,14 +125,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="50" bodyend="-1"/>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
-        <referencedby refid="fdc_8c_162847307f237f6b4240d1eb4718b13e7" compoundref="fdc_8c" startline="58" endline="61">fdcInit2</referencedby>
-        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="49" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a62847307f237f6b4240d1eb4718b13e7" compoundref="fdc_8c" startline="56" endline="59">fdcInit2</referencedby>
+        <referencedby refid="hd_8c_1ab01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="221" endline="354">hdInit</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_12c8e52e7fd5b4766863525af3ecb14ed" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1a36ebd62f860911b44a544c4d36d848d2" prot="public" static="no" mutable="no">
         <type>void(*</type>
-        <definition>void(* device_interface::standby)(void *)</definition>
+        <definition>void(* device_interface::standby) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>standby</name>
         <briefdescription>
@@ -154,12 +140,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="60"/>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="59" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="59" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_16376721f0db48a8cc534b41c28e9a060" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1a37e5dbe7244b6b28e8a322912c7de645" prot="public" static="no" mutable="no">
         <type>void(*</type>
-        <definition>void(* device_interface::start)(void *)</definition>
+        <definition>void(* device_interface::start) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>start</name>
         <briefdescription>
@@ -168,12 +153,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="59"/>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="58" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="58" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_1734dddd62b4d34efc7f8faaa4f009304" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevice__interface_1aafc502a40e5990260add50117bc1c4a8" prot="public" static="no" mutable="no">
         <type>void(*</type>
-        <definition>void(* device_interface::stop)(void *)</definition>
+        <definition>void(* device_interface::stop) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>stop</name>
         <briefdescription>
@@ -182,12 +166,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="58"/>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="57" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="57" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice__interface_1f46913eec9f191290c82db23380bc5df" prot="public" static="no" mutable="no">
-        <type>void(*</type>
-        <definition>void(* device_interface::write)(void *, void *, uInt32, uInt32)</definition>
+      <memberdef kind="variable" id="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* device_interface::write) (void *, void *, uInt32, uInt32)</definition>
         <argsstring>)(void *, void *, uInt32, uInt32)</argsstring>
         <name>write</name>
         <briefdescription>
@@ -196,34 +179,39 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="54"/>
-        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
-        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="53" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
+        <referencedby refid="fat_8c_1a6840e26b7167186163560ab960cb7530" compoundref="fat_8c" startline="50" endline="54">media_write</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a99dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="73" endline="76">syncBat</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="48" bodyend="61"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="47" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="47" bodyend="60"/>
     <listofallmembers>
-      <member refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" prot="public" virt="non-virtual"><scope>device_interface</scope><name>info</name></member>
-      <member refid="structdevice__interface_192620413c2580ea3cf01e121bb54c254" prot="public" virt="non-virtual"><scope>device_interface</scope><name>init</name></member>
-      <member refid="structdevice__interface_1561678212ee39a09ce43c1a3567c64e2" prot="public" virt="non-virtual"><scope>device_interface</scope><name>initialized</name></member>
-      <member refid="structdevice__interface_1a1c4703d14f4a7f53a8dd6d6dda9e641" prot="public" virt="non-virtual"><scope>device_interface</scope><name>ioctl</name></member>
-      <member refid="structdevice__interface_17eb42b0bb3e06dbc9183531a5e59ddb8" prot="public" virt="non-virtual"><scope>device_interface</scope><name>major</name></member>
-      <member refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb" prot="public" virt="non-virtual"><scope>device_interface</scope><name>read</name></member>
-      <member refid="structdevice__interface_1cbfb9de4fadc968479e1536fcef4a2d6" prot="public" virt="non-virtual"><scope>device_interface</scope><name>reset</name></member>
-      <member refid="structdevice__interface_182fda947114f5c8d53fb7acbd7eb0e21" prot="public" virt="non-virtual"><scope>device_interface</scope><name>size</name></member>
-      <member refid="structdevice__interface_12c8e52e7fd5b4766863525af3ecb14ed" prot="public" virt="non-virtual"><scope>device_interface</scope><name>standby</name></member>
-      <member refid="structdevice__interface_16376721f0db48a8cc534b41c28e9a060" prot="public" virt="non-virtual"><scope>device_interface</scope><name>start</name></member>
-      <member refid="structdevice__interface_1734dddd62b4d34efc7f8faaa4f009304" prot="public" virt="non-virtual"><scope>device_interface</scope><name>stop</name></member>
-      <member refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df" prot="public" virt="non-virtual"><scope>device_interface</scope><name>write</name></member>
+      <member refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" prot="public" virt="non-virtual"><scope>device_interface</scope><name>info</name></member>
+      <member refid="structdevice__interface_1a5a20c2397cc4ac3fbb9afe36bea1cfd1" prot="public" virt="non-virtual"><scope>device_interface</scope><name>init</name></member>
+      <member refid="structdevice__interface_1a561678212ee39a09ce43c1a3567c64e2" prot="public" virt="non-virtual"><scope>device_interface</scope><name>initialized</name></member>
+      <member refid="structdevice__interface_1a20117a04f4d19638965b58311c182478" prot="public" virt="non-virtual"><scope>device_interface</scope><name>ioctl</name></member>
+      <member refid="structdevice__interface_1a7eb42b0bb3e06dbc9183531a5e59ddb8" prot="public" virt="non-virtual"><scope>device_interface</scope><name>major</name></member>
+      <member refid="structdevice__interface_1a876d3736a8df585bb06a82308724db6f" prot="public" virt="non-virtual"><scope>device_interface</scope><name>read</name></member>
+      <member refid="structdevice__interface_1a816fbc5cd527e42d0a64a6d690062ed0" prot="public" virt="non-virtual"><scope>device_interface</scope><name>reset</name></member>
+      <member refid="structdevice__interface_1a82fda947114f5c8d53fb7acbd7eb0e21" prot="public" virt="non-virtual"><scope>device_interface</scope><name>size</name></member>
+      <member refid="structdevice__interface_1a36ebd62f860911b44a544c4d36d848d2" prot="public" virt="non-virtual"><scope>device_interface</scope><name>standby</name></member>
+      <member refid="structdevice__interface_1a37e5dbe7244b6b28e8a322912c7de645" prot="public" virt="non-virtual"><scope>device_interface</scope><name>start</name></member>
+      <member refid="structdevice__interface_1aafc502a40e5990260add50117bc1c4a8" prot="public" virt="non-virtual"><scope>device_interface</scope><name>stop</name></member>
+      <member refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" prot="public" virt="non-virtual"><scope>device_interface</scope><name>write</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

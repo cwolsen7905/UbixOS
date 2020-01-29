@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdmadat" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdmadat" kind="struct" language="C++" prot="public">
     <compoundname>dmadat</compoundname>
-    <includes refid="file_8h" local="no">file.h</includes>
+    <includes refid="include_2vfs_2file_8h" local="no">file.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdmadat_1d134ba5a7290b627a60d5fd83fc2f204" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdmadat_1ad134ba5a7290b627a60d5fd83fc2f204" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char dmadat::blkbuf[(1&lt;&lt; 12)]</definition>
         <argsstring>[(1&lt;&lt; 12)]</argsstring>
@@ -15,10 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="40" bodyend="-1"/>
-        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/file.h" line="56" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/file.h" bodystart="56" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdmadat_1e1f8eab27e979807a50dbf2d54ec1476" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdmadat_1ae1f8eab27e979807a50dbf2d54ec1476" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char dmadat::indbuf[(1&lt;&lt; 12)]</definition>
         <argsstring>[(1&lt;&lt; 12)]</argsstring>
@@ -29,10 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/file.h" line="57" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/file.h" bodystart="57" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdmadat_1b267db93faadfbb8c65f16ca4df76055" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdmadat_1ab267db93faadfbb8c65f16ca4df76055" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char dmadat::sbbuf[8192]</definition>
         <argsstring>[8192]</argsstring>
@@ -43,11 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="ffs_8c_1ac9a795f42d582183e06192277305e47" compoundref="ffs_8c" startline="11" endline="23">ffs_read</referencedby>
-        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/file.h" line="58" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/file.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="ffs_8c_1ae0611a10bf50ddb7c1ab4ce652c09307" compoundref="ffs_8c" startline="11" endline="23">ffs_read</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdmadat_160f3caaa21d75b5aeb70926ef3392a93" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdmadat_1a60f3caaa21d75b5aeb70926ef3392a93" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char dmadat::secbuf[(1&lt;&lt; 9)]</definition>
         <argsstring>[(1&lt;&lt; 9)]</argsstring>
@@ -58,19 +55,25 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="43" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/file.h" line="59" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/file.h" bodystart="59" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="39" bodyend="44"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/file.h" line="55" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/file.h" bodystart="55" bodyend="60"/>
     <listofallmembers>
-      <member refid="structdmadat_1d134ba5a7290b627a60d5fd83fc2f204" prot="public" virt="non-virtual"><scope>dmadat</scope><name>blkbuf</name></member>
-      <member refid="structdmadat_1e1f8eab27e979807a50dbf2d54ec1476" prot="public" virt="non-virtual"><scope>dmadat</scope><name>indbuf</name></member>
-      <member refid="structdmadat_1b267db93faadfbb8c65f16ca4df76055" prot="public" virt="non-virtual"><scope>dmadat</scope><name>sbbuf</name></member>
-      <member refid="structdmadat_160f3caaa21d75b5aeb70926ef3392a93" prot="public" virt="non-virtual"><scope>dmadat</scope><name>secbuf</name></member>
+      <member refid="structdmadat_1ad134ba5a7290b627a60d5fd83fc2f204" prot="public" virt="non-virtual"><scope>dmadat</scope><name>blkbuf</name></member>
+      <member refid="structdmadat_1ae1f8eab27e979807a50dbf2d54ec1476" prot="public" virt="non-virtual"><scope>dmadat</scope><name>indbuf</name></member>
+      <member refid="structdmadat_1ab267db93faadfbb8c65f16ca4df76055" prot="public" virt="non-virtual"><scope>dmadat</scope><name>sbbuf</name></member>
+      <member refid="structdmadat_1a60f3caaa21d75b5aeb70926ef3392a93" prot="public" virt="non-virtual"><scope>dmadat</scope><name>secbuf</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

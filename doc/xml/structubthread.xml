@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structubthread" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structubthread" kind="struct" language="C++" prot="public">
     <compoundname>ubthread</compoundname>
     <includes refid="ubthread_8h" local="no">ubthread.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structubthread_17644a25394098d5a41d63f44852d5e84" prot="public" static="no" mutable="no">
-        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
-        <definition>kTask_t* ubthread::task</definition>
+      <memberdef kind="variable" id="structubthread_1a1f8603e5e13eda2a78d58bc0c981733e" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
+        <definition>struct taskStruct* ubthread::task</definition>
         <argsstring></argsstring>
         <name>task</name>
         <briefdescription>
@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="47" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="44" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="44" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -23,153 +23,302 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="641">
+      <node id="14">
         <label>i387Struct</label>
         <link refid="structi387Struct"/>
       </node>
-      <node id="655">
+      <node id="13">
+        <label>ufs1_dinode</label>
+        <link refid="structufs1__dinode"/>
+      </node>
+      <node id="32">
         <label>tssStruct</label>
         <link refid="structtssStruct"/>
       </node>
-      <node id="643">
+      <node id="30">
         <label>tty_termNode</label>
         <link refid="structtty__termNode"/>
       </node>
-      <node id="651">
+      <node id="27">
         <label>device_resource</label>
         <link refid="structdevice__resource"/>
       </node>
-      <node id="650">
+      <node id="26">
         <label>device_node</label>
         <link refid="structdevice__node"/>
-        <childnode refid="651" relation="usage">
-          <edgelabel>devRec</edgelabel>
+        <childnode refid="27" relation="usage">
+          <edgelabel>+devRec</edgelabel>
         </childnode>
-        <childnode refid="652" relation="usage">
-          <edgelabel>devInfo</edgelabel>
+        <childnode refid="28" relation="usage">
+          <edgelabel>+devInfo</edgelabel>
         </childnode>
-        <childnode refid="650" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="654">
+      <node id="31">
         <label>osInfo</label>
         <link refid="structosInfo"/>
       </node>
-      <node id="645">
+      <node id="6">
+        <label>msdos_sb_info</label>
+        <link refid="structmsdos__sb__info"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+fat_wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="19">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="17" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="21">
         <label>cacheNode</label>
         <link refid="structcacheNode"/>
-        <childnode refid="645" relation="usage">
-          <edgelabel>prev
-next
-parent
-fileListTail
-fileListHead</edgelabel>
+        <childnode refid="21" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+fileListTail</edgelabel>
+          <edgelabel>+fileListHead</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="648">
+      <node id="4">
+        <label>msdos_inode_info</label>
+        <link refid="structmsdos__inode__info"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+i_old</edgelabel>
+          <edgelabel>+i_depend</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
         <label>ubixDiskLabel</label>
         <link refid="structubixDiskLabel"/>
-        <childnode refid="649" relation="usage">
-          <edgelabel>partitions</edgelabel>
+        <childnode refid="25" relation="usage">
+          <edgelabel>+partitions</edgelabel>
         </childnode>
       </node>
-      <node id="639">
+      <node id="3">
+        <label>inode</label>
+        <link refid="structinode"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+msdos_i</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+i_sb</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+i_prev</edgelabel>
+          <edgelabel>+i_bound_by</edgelabel>
+          <edgelabel>+i_hash_next</edgelabel>
+          <edgelabel>+i_next</edgelabel>
+          <edgelabel>+i_bound_to</edgelabel>
+          <edgelabel>+i_hash_prev</edgelabel>
+          <edgelabel>+i_mount</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>+i_sem</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+pipe_i</edgelabel>
+        </childnode>
+        <childnode refid="11" relation="usage">
+          <edgelabel>+ufs2_i</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+i_wait</edgelabel>
+        </childnode>
+        <childnode refid="12" relation="usage">
+          <edgelabel>+i_op</edgelabel>
+        </childnode>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+ufs1_i</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
         <label>ubthread</label>
         <link refid="structubthread"/>
-        <childnode refid="640" relation="usage">
-          <edgelabel>task</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+task</edgelabel>
         </childnode>
       </node>
-      <node id="649">
+      <node id="25">
         <label>ubixDiskLabel::ubixPartitions</label>
         <link refid="structubixDiskLabel_1_1ubixPartitions"/>
       </node>
-      <node id="644">
-        <label>fileDescriptorStruct</label>
-        <link refid="structfileDescriptorStruct"/>
-        <childnode refid="645" relation="usage">
-          <edgelabel>cacheNode</edgelabel>
-        </childnode>
-        <childnode refid="646" relation="usage">
-          <edgelabel>dmadat</edgelabel>
-        </childnode>
-        <childnode refid="647" relation="usage">
-          <edgelabel>mp</edgelabel>
-        </childnode>
-        <childnode refid="644" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
-        </childnode>
+      <node id="8">
+        <label>super_operations</label>
+        <link refid="structsuper__operations"/>
       </node>
-      <node id="647">
+      <node id="17">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+      <node id="23">
         <label>vfs_mountPoint</label>
         <link refid="structvfs__mountPoint"/>
-        <childnode refid="648" relation="usage">
-          <edgelabel>diskLabel</edgelabel>
+        <childnode refid="24" relation="usage">
+          <edgelabel>+diskLabel</edgelabel>
         </childnode>
-        <childnode refid="650" relation="usage">
-          <edgelabel>device</edgelabel>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+device</edgelabel>
         </childnode>
-        <childnode refid="653" relation="usage">
-          <edgelabel>fs</edgelabel>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+fs</edgelabel>
         </childnode>
-        <childnode refid="647" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="640">
+      <node id="5">
+        <label>super_block</label>
+        <link refid="structsuper__block"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+msdos_sb</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+s_mounted</edgelabel>
+          <edgelabel>+s_covered</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+s_wait</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>+s_op</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
         <label>taskStruct</label>
         <link refid="structtaskStruct"/>
-        <childnode refid="640" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+exec</edgelabel>
+          <edgelabel>+root</edgelabel>
+          <edgelabel>+pwd</edgelabel>
         </childnode>
-        <childnode refid="641" relation="usage">
-          <edgelabel>i387</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
-        <childnode refid="642" relation="usage">
-          <edgelabel>td</edgelabel>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+i387</edgelabel>
         </childnode>
-        <childnode refid="643" relation="usage">
-          <edgelabel>term</edgelabel>
+        <childnode refid="15" relation="usage">
+          <edgelabel>+td</edgelabel>
         </childnode>
-        <childnode refid="644" relation="usage">
-          <edgelabel>imageFd</edgelabel>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+files</edgelabel>
         </childnode>
-        <childnode refid="654" relation="usage">
-          <edgelabel>oInfo</edgelabel>
+        <childnode refid="30" relation="usage">
+          <edgelabel>+term</edgelabel>
         </childnode>
-        <childnode refid="655" relation="usage">
-          <edgelabel>tss</edgelabel>
+        <childnode refid="31" relation="usage">
+          <edgelabel>+oInfo</edgelabel>
+        </childnode>
+        <childnode refid="32" relation="usage">
+          <edgelabel>+tss</edgelabel>
         </childnode>
       </node>
-      <node id="652">
+      <node id="16">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+      <node id="28">
         <label>device_interface</label>
         <link refid="structdevice__interface"/>
       </node>
-      <node id="646">
+      <node id="9">
+        <label>semaphore</label>
+        <link refid="structsemaphore"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+inode</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>+cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+dmadat</edgelabel>
+        </childnode>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+mp</edgelabel>
+        </childnode>
+      </node>
+      <node id="22">
         <label>dmadat</label>
         <link refid="structdmadat"/>
       </node>
-      <node id="642">
+      <node id="10">
+        <label>pipe_inode_info</label>
+        <link refid="structpipe__inode__info"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>wait_queue</label>
+        <link refid="structwait__queue"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+task</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="18">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+      <node id="15">
         <label>thread</label>
         <link refid="structthread"/>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+frame</edgelabel>
+        </childnode>
+        <childnode refid="17" relation="usage">
+          <edgelabel>+sigmask</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+rlim</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+sigact</edgelabel>
+        </childnode>
       </node>
-      <node id="653">
+      <node id="11">
+        <label>ufs2_dinode</label>
+        <link refid="structufs2__dinode"/>
+      </node>
+      <node id="12">
+        <label>inode_operations</label>
+        <link refid="structinode__operations"/>
+      </node>
+      <node id="29">
         <label>fileSystem</label>
         <link refid="structfileSystem"/>
-        <childnode refid="653" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="46" bodyend="48"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="43" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="43" bodyend="45"/>
     <listofallmembers>
-      <member refid="structubthread_17644a25394098d5a41d63f44852d5e84" prot="public" virt="non-virtual"><scope>ubthread</scope><name>task</name></member>
+      <member refid="structubthread_1a1f8603e5e13eda2a78d58bc0c981733e" prot="public" virt="non-virtual"><scope>ubthread</scope><name>task</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

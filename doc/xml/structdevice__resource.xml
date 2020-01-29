@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdevice__resource" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdevice__resource" kind="struct" language="C++" prot="public">
     <compoundname>device_resource</compoundname>
-    <includes refid="device_8h" local="no">device.h</includes>
+    <includes refid="include_2sys_2device_8h" local="no">device.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdevice__resource_1d34267e377cf5ebe9720ac005ada0d2b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="variable" id="structdevice__resource_1ad34267e377cf5ebe9720ac005ada0d2b" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 device_resource::irq</definition>
         <argsstring></argsstring>
         <name>irq</name>
@@ -15,16 +15,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="45" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="44" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="44" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="44" bodyend="46"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/device.h" line="43" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.h" bodystart="43" bodyend="45"/>
     <listofallmembers>
-      <member refid="structdevice__resource_1d34267e377cf5ebe9720ac005ada0d2b" prot="public" virt="non-virtual"><scope>device_resource</scope><name>irq</name></member>
+      <member refid="structdevice__resource_1ad34267e377cf5ebe9720ac005ada0d2b" prot="public" virt="non-virtual"><scope>device_resource</scope><name>irq</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

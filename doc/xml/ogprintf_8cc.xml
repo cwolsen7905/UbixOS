@@ -1,168 +1,458 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="ogprintf_8cc" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ogprintf_8cc" kind="file" language="C++">
     <compoundname>ogprintf.cc</compoundname>
     <includes local="no">objgfx40/objgfx40.h</includes>
     <includes local="no">objgfx40/ogFont.h</includes>
     <includes refid="ogDisplay__UbixOS_8h" local="no">sde/ogDisplay_UbixOS.h</includes>
     <includes refid="vitals_8h" local="no">ubixos/vitals.h</includes>
     <incdepgraph>
-      <node id="5742">
-        <label>sys/thread.h</label>
-        <link refid="thread_8h"/>
-        <childnode refid="5734" relation="include">
+      <node id="26">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
         </childnode>
       </node>
-      <node id="5736">
-        <label>ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="5734" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="5737" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="5738" relation="include">
+        <childnode refid="4" relation="include">
         </childnode>
-        <childnode refid="5741" relation="include">
-        </childnode>
-        <childnode refid="5742" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="5730">
-        <label>objgfx40/ogFont.h</label>
+      <node id="40">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
       </node>
-      <node id="5732">
-        <label>ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="5733" relation="include">
-        </childnode>
-        <childnode refid="5745" relation="include">
-        </childnode>
+      <node id="41">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
       </node>
-      <node id="5734">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5735" relation="include">
-        </childnode>
-      </node>
-      <node id="5735">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="5728">
-        <label>src/sys/lib/ogprintf.cc</label>
-        <link refid="ogprintf.cc"/>
-        <childnode refid="5729" relation="include">
-        </childnode>
-        <childnode refid="5730" relation="include">
-        </childnode>
-        <childnode refid="5731" relation="include">
-        </childnode>
-        <childnode refid="5732" relation="include">
-        </childnode>
-      </node>
-      <node id="5743">
-        <label>ubixos/time.h</label>
-        <link refid="time_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-        <childnode refid="5744" relation="include">
-        </childnode>
-      </node>
-      <node id="5738">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-        <childnode refid="5739" relation="include">
-        </childnode>
-        <childnode refid="5740" relation="include">
-        </childnode>
-      </node>
-      <node id="5741">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-      </node>
-      <node id="5729">
-        <label>objgfx40/objgfx40.h</label>
-      </node>
-      <node id="5745">
-        <label>vfs/vfs.h</label>
-        <link refid="vfs_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-        <childnode refid="5738" relation="include">
-        </childnode>
-        <childnode refid="5740" relation="include">
-        </childnode>
-        <childnode refid="5746" relation="include">
-        </childnode>
-        <childnode refid="5742" relation="include">
-        </childnode>
-      </node>
-      <node id="5740">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-      </node>
-      <node id="5731">
-        <label>sde/ogDisplay_UbixOS.h</label>
-        <link refid="ogDisplay__UbixOS_8h"/>
-        <childnode refid="5729" relation="include">
-        </childnode>
-      </node>
-      <node id="5733">
-        <label>ubixos/ubthread.h</label>
-        <link refid="ubthread_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-        <childnode refid="5736" relation="include">
-        </childnode>
-        <childnode refid="5743" relation="include">
-        </childnode>
-      </node>
-      <node id="5739">
-        <label>ubixfs/dirCache.h</label>
-        <link refid="dirCache_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-      </node>
-      <node id="5746">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="5747" relation="include">
-        </childnode>
-        <childnode refid="5742" relation="include">
-        </childnode>
-      </node>
-      <node id="5747">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-      </node>
-      <node id="5737">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="5734" relation="include">
-        </childnode>
-      </node>
-      <node id="5744">
+      <node id="38">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
+      <node id="47">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>objgfx40/ogFont.h</label>
+      </node>
+      <node id="22">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sde/ogDisplay_UbixOS.h</label>
+        <link refid="ogDisplay__UbixOS_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>objgfx40/objgfx40.h</label>
+      </node>
+      <node id="49">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="28">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="20">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="23">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="46">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="37">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="42">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="ogprintf_8cc_1a84e7c5162e69177bbb7419ebd92ce0f2" prot="public" static="yes" mutable="no">
+        <type>int</type>
+        <definition>int screenCol</definition>
+        <argsstring></argsstring>
+        <name>screenCol</name>
+        <initializer>= 0x1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc" line="38" column="14" bodyfile="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="ogprintf_8cc_1a97d3dbfbd1f7ad8901be103dea8c4051" prot="public" static="yes" mutable="no">
+        <type>int</type>
+        <definition>int screenRow</definition>
+        <argsstring></argsstring>
+        <name>screenRow</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc" line="37" column="14" bodyfile="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="ogprintf_8cc_1d8f6d48c32e4d5822a8743a540725d8e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="ogprintf_8cc_1adb376fc0716d46869dfa1fc94adebff9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int ogPrintf</definition>
-        <argsstring>(char *s)</argsstring>
+        <argsstring>(char *ch)</argsstring>
         <name>ogPrintf</name>
         <param>
           <type>char *</type>
-          <declname>s</declname>
+          <declname>ch</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -170,40 +460,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" bodystart="42" bodyend="84"/>
-        <references refid="structvitalsStruct_1260b45f68a92442f30b6e9a4005ea938" compoundref="vitals_8h" startline="49">vitalsStruct::font</references>
-        <references refid="structvitalsStruct_1e329bdf1a2ce69044a962e612a9eb1e6" compoundref="vitals_8h" startline="48">vitalsStruct::screen</references>
-        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="ogprintf_8cc_184e7c5162e69177bbb7419ebd92ce0f2" prot="public" static="yes" mutable="no">
-        <type>int</type>
-        <definition>int screenCol</definition>
-        <argsstring></argsstring>
-        <name>screenCol</name>
-        <initializer> 0x1</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" bodystart="40" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="ogprintf_8cc_197d3dbfbd1f7ad8901be103dea8c4051" prot="public" static="yes" mutable="no">
-        <type>int</type>
-        <definition>int screenRow</definition>
-        <argsstring></argsstring>
-        <name>screenRow</name>
-        <initializer> 0x0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" bodystart="39" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc" line="40" column="7" bodyfile="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc" bodystart="40" bodyend="80"/>
+        <references refid="structvitalsStruct_1a260b45f68a92442f30b6e9a4005ea938" compoundref="vitals_8h" startline="48">vitalsStruct::font</references>
+        <references refid="structvitalsStruct_1ae329bdf1a2ce69044a962e612a9eb1e6" compoundref="vitals_8h" startline="47">vitalsStruct::screen</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <referencedby refid="kprintf_8c_1ab2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="259" endline="276">kprintf</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -211,134 +472,89 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: ogprintf_8cc.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;objgfx40/objgfx40.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;objgfx40/ogFont.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ogDisplay__UbixOS_8h" kindref="compound">sde/ogDisplay_UbixOS.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight></codeline>
-<codeline lineno="39" refid="ogprintf_8cc_197d3dbfbd1f7ad8901be103dea8c4051" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ogprintf_8cc_197d3dbfbd1f7ad8901be103dea8c4051" kindref="member">screenRow</ref><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="40" refid="ogprintf_8cc_184e7c5162e69177bbb7419ebd92ce0f2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ogprintf_8cc_184e7c5162e69177bbb7419ebd92ce0f2" kindref="member">screenCol</ref><sp/><sp/>=<sp/>0x1;</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="42" refid="ogprintf_8cc_1d8f6d48c32e4d5822a8743a540725d8e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprintf_8h_13b4a66bf1f6583e65660f281b6014aa1" kindref="member">ogPrintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*s)<sp/>{</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bufHeight;</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/>ogSurface<sp/>*screen<sp/>=<sp/>(<ref refid="classogDisplay__UbixOS" kindref="compound">ogDisplay_UbixOS</ref><sp/>*)<ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1e329bdf1a2ce69044a962e612a9eb1e6" kindref="member">screen</ref>;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/>ogBitFont<sp/>*font<sp/><sp/><sp/>=<sp/>(ogBitFont<sp/>*)<ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1260b45f68a92442f30b6e9a4005ea938" kindref="member">font</ref>;<sp/></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(</highlight><highlight class="charliteral">&apos;\0&apos;</highlight><highlight class="normal"><sp/>!=<sp/>s[i])<sp/>{</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(s[i])<sp/>{</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\t&apos;</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>screenCol<sp/>+=<sp/>3;</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\b&apos;</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(screenCol<sp/>&gt;<sp/>0)<sp/>--screenCol;</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>screenCol<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufHeight<sp/>=<sp/>((screen-&gt;ogGetMaxY()+1)<sp/>/<sp/>font-&gt;GetHeight())-1;</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(screenRow<sp/>&lt;<sp/>bufHeight)<sp/></highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>++screenRow;</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogCopyBuf(0,<sp/>0,</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*screen,</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0,<sp/>font-&gt;GetHeight(),</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogGetMaxX(),<sp/>screen-&gt;ogGetMaxY());</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogFillRect(0,<sp/>bufHeight<sp/>*<sp/>font-&gt;GetHeight()+1,</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogGetMaxX(),<sp/>screen-&gt;ogGetMaxY(),</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogPack(122,<sp/>140,<sp/>163));</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>font-&gt;PutChar(*screen,</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screenCol<sp/>*<sp/>font-&gt;GetWidth(),</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screenRow<sp/>*<sp/>font-&gt;GetHeight(),</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>s[i]);</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>switch<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>++screenCol;</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>++i;</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="comment">/*<sp/>while<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="82"><highlight class="normal"></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
-<codeline lineno="84"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>ogPrintf</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="85"><highlight class="normal"></highlight></codeline>
-<codeline lineno="86"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="89"><highlight class="comment"><sp/>$Log: ogprintf_8cc.xml,v $
-<codeline lineno="89"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
-<codeline lineno="89"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="89"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:16<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="92"><highlight class="comment"></highlight></codeline>
-<codeline lineno="93"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="94"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="95"><highlight class="comment"></highlight></codeline>
-<codeline lineno="96"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:13<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="97"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="98"><highlight class="comment"></highlight></codeline>
-<codeline lineno="99"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/07/20<sp/>22:58:33<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="100"><highlight class="comment"><sp/>retiring<sp/>to<sp/>the<sp/>laptop<sp/>for<sp/>the<sp/>night<sp/>must<sp/>sync<sp/>in<sp/>work<sp/>to<sp/>resume<sp/>from<sp/>there</highlight></codeline>
-<codeline lineno="101"><highlight class="comment"></highlight></codeline>
-<codeline lineno="102"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/17<sp/>14:24:22<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="103"><highlight class="comment"><sp/>compile:<sp/>changes<sp/>to<sp/>the<sp/>way<sp/>we<sp/>link<sp/>the<sp/>kernel<sp/>should<sp/>prevent<sp/>future<sp/>errors</highlight></codeline>
-<codeline lineno="104"><highlight class="comment"></highlight></codeline>
-<codeline lineno="105"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/05/23<sp/>23:30:34<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="106"><highlight class="comment"><sp/>Fixens</highlight></codeline>
-<codeline lineno="107"><highlight class="comment"></highlight></codeline>
-<codeline lineno="108"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/05/23<sp/>01:40:19<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="109"><highlight class="comment"><sp/>Spinlock</highlight></codeline>
-<codeline lineno="110"><highlight class="comment"></highlight></codeline>
-<codeline lineno="111"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/19<sp/>17:09:50<sp/><sp/>flameshadow</highlight></codeline>
-<codeline lineno="112"><highlight class="comment"><sp/>chg:<sp/>Undid<sp/>previous<sp/>renaming.<sp/>This<sp/>now<sp/>restores<sp/>me<sp/>as<sp/>the<sp/>EOOUIAD.</highlight></codeline>
-<codeline lineno="113"><highlight class="comment"></highlight></codeline>
-<codeline lineno="114"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/04/26<sp/>12:56:01<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="115"><highlight class="comment"><sp/>Made<sp/>src/sys/sde<sp/>Copy<sp/>and<sp/>Make<sp/>the<sp/>ogPixelFormat.cpp</highlight></codeline>
-<codeline lineno="116"><highlight class="comment"></highlight></codeline>
-<codeline lineno="117"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:10<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="118"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
-<codeline lineno="119"><highlight class="comment"></highlight></codeline>
-<codeline lineno="120"><highlight class="comment"><sp/>Revision<sp/>1.19<sp/><sp/>2004/04/13<sp/>16:36:33<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="121"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
-<codeline lineno="122"><highlight class="comment"></highlight></codeline>
-<codeline lineno="123"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="124"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;objgfx40/objgfx40.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;objgfx40/ogFont.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ogDisplay__UbixOS_8h" kindref="compound">sde/ogDisplay_UbixOS.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>screenRow<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>screenCol<sp/>=<sp/>0x1;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="ogprintf_8cc_1adb376fc0716d46869dfa1fc94adebff9" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ogprintf_8cc_1adb376fc0716d46869dfa1fc94adebff9" kindref="member">ogPrintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*ch)<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bufHeight;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>ogSurface<sp/>*screen<sp/>=<sp/>(<ref refid="classogDisplay__UbixOS" kindref="compound">ogDisplay_UbixOS</ref><sp/>*)<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1ae329bdf1a2ce69044a962e612a9eb1e6" kindref="member">screen</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>ogBitFont<sp/>*font<sp/>=<sp/>(ogBitFont<sp/>*)<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a260b45f68a92442f30b6e9a4005ea938" kindref="member">font</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*s<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>s<sp/>=<sp/>ch;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(</highlight><highlight class="charliteral">&apos;\0&apos;</highlight><highlight class="normal"><sp/>!=<sp/>s[i])<sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(s[i])<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\t&apos;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screenCol<sp/>+=<sp/>3;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\b&apos;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(screenCol<sp/>&gt;<sp/>0)</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>--screenCol;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screenCol<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bufHeight<sp/>=<sp/>((screen-&gt;ogGetMaxY()<sp/>+<sp/>1)<sp/>/<sp/>font-&gt;GetHeight())<sp/>-<sp/>1;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(screenRow<sp/>&lt;<sp/>bufHeight)</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>++screenRow;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogCopyBuf(0,<sp/>0,<sp/>*screen,<sp/>0,<sp/>font-&gt;GetHeight(),<sp/>screen-&gt;ogGetMaxX(),<sp/>screen-&gt;ogGetMaxY());</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>screen-&gt;ogFillRect(0,<sp/>bufHeight<sp/>*<sp/>font-&gt;GetHeight()<sp/>+<sp/>1,<sp/>screen-&gt;ogGetMaxX(),<sp/>screen-&gt;ogGetMaxY(),<sp/>screen-&gt;ogPack(122,<sp/>140,<sp/>163));</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>font-&gt;PutChar(*screen,<sp/>screenCol<sp/>*<sp/>font-&gt;GetWidth(),<sp/>screenRow<sp/>*<sp/>font-&gt;GetHeight(),<sp/>s[i]);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="comment">/*<sp/>switch<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>++screenCol;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>++i;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="comment">/*<sp/>while<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="comment">//<sp/>ogPrintf</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal">}</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc"/>
+    <location file="C:/Dev/git/UbixOS/sys/lib/ogprintf.cc"/>
   </compounddef>
 </doxygen>

@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structsys__timeouts" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__timeouts" kind="struct" language="C++" prot="public">
     <compoundname>sys_timeouts</compoundname>
-    <includes refid="sys_8h" local="no">sys.h</includes>
+    <includes refid="sys__arch_8h" local="no">sys_arch.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structsys__timeouts_180922134cf5f7db06829b6ee49b4954c" prot="public" static="no" mutable="no">
-        <type><ref refid="structsys__timeout" kindref="compound">sys_timeout</ref> *</type>
+      <memberdef kind="variable" id="structsys__timeouts_1a80922134cf5f7db06829b6ee49b4954c" prot="public" static="no" mutable="no">
+        <type>struct sys_timeout *</type>
         <definition>struct sys_timeout* sys_timeouts::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -15,8 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="13" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="13" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -24,24 +23,14 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="357">
+      <node id="1">
         <label>sys_timeouts</label>
         <link refid="structsys__timeouts"/>
-        <childnode refid="358" relation="usage">
-          <edgelabel>next</edgelabel>
-        </childnode>
-      </node>
-      <node id="358">
-        <label>sys_timeout</label>
-        <link refid="structsys__timeout"/>
-        <childnode refid="358" relation="usage">
-          <edgelabel>next</edgelabel>
-        </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="50" bodyend="52"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="12" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="12" bodyend="14"/>
     <listofallmembers>
-      <member refid="structsys__timeouts_180922134cf5f7db06829b6ee49b4954c" prot="public" virt="non-virtual"><scope>sys_timeouts</scope><name>next</name></member>
+      <member refid="structsys__timeouts_1a80922134cf5f7db06829b6ee49b4954c" prot="public" virt="non-virtual"><scope>sys_timeouts</scope><name>next</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

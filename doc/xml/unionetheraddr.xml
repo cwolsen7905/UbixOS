@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="unionetheraddr" kind="union" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="unionetheraddr" kind="union" language="C++" prot="public">
     <compoundname>etheraddr</compoundname>
     <includes refid="ne2k_8h" local="no">ne2k.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="unionetheraddr_156008d2346bd7891de8a166d918b449a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="unionetheraddr_1a56008d2346bd7891de8a166d918b449a" prot="public" static="no" mutable="no">
         <type>unsigned char</type>
         <definition>unsigned char etheraddr::bytes[6]</definition>
         <argsstring>[6]</argsstring>
@@ -15,9 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="46" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/isa/ne2k.h" line="45" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/isa/ne2k.h" bodystart="45" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="unionetheraddr_11a39497e2757eacc1cc96c7ba2f5d12a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="unionetheraddr_1a1a39497e2757eacc1cc96c7ba2f5d12a" prot="public" static="no" mutable="no">
         <type>unsigned short</type>
         <definition>unsigned short etheraddr::shorts[3]</definition>
         <argsstring>[3]</argsstring>
@@ -28,17 +28,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="47" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/isa/ne2k.h" line="46" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/isa/ne2k.h" bodystart="46" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="45" bodyend="48"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>etheraddr</label>
+        <link refid="unionetheraddr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/isa/ne2k.h" line="44" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/isa/ne2k.h" bodystart="44" bodyend="47"/>
     <listofallmembers>
-      <member refid="unionetheraddr_156008d2346bd7891de8a166d918b449a" prot="public" virt="non-virtual"><scope>etheraddr</scope><name>bytes</name></member>
-      <member refid="unionetheraddr_11a39497e2757eacc1cc96c7ba2f5d12a" prot="public" virt="non-virtual"><scope>etheraddr</scope><name>shorts</name></member>
+      <member refid="unionetheraddr_1a56008d2346bd7891de8a166d918b449a" prot="public" virt="non-virtual"><scope>etheraddr</scope><name>bytes</name></member>
+      <member refid="unionetheraddr_1a1a39497e2757eacc1cc96c7ba2f5d12a" prot="public" virt="non-virtual"><scope>etheraddr</scope><name>shorts</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

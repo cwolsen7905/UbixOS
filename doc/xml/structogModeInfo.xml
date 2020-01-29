@@ -1,16 +1,16 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structogModeInfo" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structogModeInfo" kind="struct" language="C++" prot="public">
     <compoundname>ogModeInfo</compoundname>
     <includes refid="ogDisplay__UbixOS_8h" local="no">ogDisplay_UbixOS.h</includes>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="structogModeInfo_17daf5c1d089e98847915af725292fbb7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> paddington[461]</type>
-        <definition>uInt8 paddington [461] ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1a5b6d38fb683d10cc735db348d0b5a6cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> modeAttributes</type>
+        <definition>uint16_t modeAttributes ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -18,15 +18,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="41"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="36" column="29"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_196ce7e3b01ced54b0cf6bbdb192f9429" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> offScreenMemSize</type>
-        <definition>uInt16 offScreenMemSize ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1ae5b5c5895a6d8c231b308bc38797e0b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> windowAFlags</type>
+        <definition>uint8_t windowAFlags ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -34,15 +34,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="40"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="37" column="26"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_153e67af21b9d58913797a7d9a3c5f1cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *offScreenMemOffset</type>
-        <definition>void* offScreenMemOffset ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1ad3d8cdba0eb049c1f5dc9e621d8d32ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> windowBFlags</type>
+        <definition>uint8_t windowBFlags ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -50,15 +50,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="39"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="38" column="26"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1e10483e94772d355fc15d289254bb853" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> physBasePtr</type>
-        <definition>uInt32 physBasePtr ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1aca6bdae81c2b65bd988d7ee554e13b0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> <ref refid="gdt_8h_1a13b3c4a548236ea9660c0df43a518fbc" kindref="member">granularity</ref></type>
+        <definition>uint16_t granularity ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -66,15 +66,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="38"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="39" column="26"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_15226bac7fff8a7da2becf75bc593beaa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> directColourMode</type>
-        <definition>uInt8 directColourMode ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1a866220bd9249a095ad4969a2cb460fa3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> windowSize</type>
+        <definition>uint16_t windowSize ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -82,15 +82,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="36"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="40" column="25"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_14b6b0942d5d36dfc6159ec56e512f31e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> alphaFieldPosition</type>
-        <definition>uInt8 alphaFieldPosition ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1aa3406fdb76003477f8005c2ba5a2b8d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> windowASeg</type>
+        <definition>uint16_t windowASeg ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -98,15 +98,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="35"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="41" column="25"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1543da66878a062f7027c5f1c17221c0f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> alphaMaskSize</type>
-        <definition>uInt8 alphaMaskSize ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1afa33f1f1335942df9f561a9eef4a2e2b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> windowBSeg</type>
+        <definition>uint16_t windowBSeg ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -114,303 +114,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="34"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="42" column="25"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1c61bdb1dd5b4a9b07670dce4f3df2b9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> blueFieldPosition</type>
-        <definition>uInt8 blueFieldPosition ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="33"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_15a94fc61a0e118a800f41dce52011980" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> blueMaskSize</type>
-        <definition>uInt8 blueMaskSize ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="32"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1929e494c7be371388c17f5fc653d2d85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> greenFieldPosition</type>
-        <definition>uInt8 greenFieldPosition ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="31"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1c69a624b2340b023fe1921db7a8add3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> greenMaskSize</type>
-        <definition>uInt8 greenMaskSize ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="30"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_13b18d621f781f2bdca9b36fb1f6d33c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> redFieldPosition</type>
-        <definition>uInt8 redFieldPosition ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="29"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1a9bdb1e7694b8417a15c8698b28d0c24" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> redMaskSize</type>
-        <definition>uInt8 redMaskSize ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="28"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_199ac2f7fbdd102f87fdfbac90f7b87e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> reserved</type>
-        <definition>uInt8 reserved ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="26"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1b443f4583354ff3183d2617897a31754" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> numOfImagePages</type>
-        <definition>uInt8 numOfImagePages ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="25"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_112ed10122838b96f629fa7b51098e857" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> bankSize</type>
-        <definition>uInt8 bankSize ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="24"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1448cad4683a7897e291f14e073368cfc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> memoryModel</type>
-        <definition>uInt8 memoryModel ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="23"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_12d5605373ff52718acd3cc559229edd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> numberOfBanks</type>
-        <definition>uInt8 numberOfBanks ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="22"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1a9695ce86f1e6957acbd0d4551e6168c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> bitsPerPixel</type>
-        <definition>uInt8 bitsPerPixel ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="21"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1ed15265c2b65ac2a7cad7f955c2dc61d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> numBitPlanes</type>
-        <definition>uInt8 numBitPlanes ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="20"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_14e4ed1cc5073003c2faf5586abe14829" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> charHeight</type>
-        <definition>uInt8 charHeight ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="19"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1353361fcb711b8c915bd5fd34e9840b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> charWidth</type>
-        <definition>uInt8 charWidth ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="18"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1a30ab4cd8704ffe4fca0c4ca9dd3acf7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> yRes</type>
-        <definition>uInt16 yRes ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="17"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1c9d3daadd1c512a4b9d9fe60908b207e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> xRes</type>
-        <definition>uInt16 xRes ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="16"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1feee43c558edf928c552bca3b6553625" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> bytesPerLine</type>
-        <definition>uInt16 bytesPerLine ogModeInfo::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="15"/>
-      </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1f422d00e4aadf69dc94edd78021bc8eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structogModeInfo_1af422d00e4aadf69dc94edd78021bc8eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void *bankSwitch</type>
         <definition>void* bankSwitch ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -418,15 +130,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="14"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="43" column="21"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1e0371a6ece6fbf6b3c7c0ba0e0a50888" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> windowBSeg</type>
-        <definition>uInt16 windowBSeg ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1a534b6301b1ec9f4873b723f948d14350" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> bytesPerLine</type>
+        <definition>uint16_t bytesPerLine ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -434,15 +146,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="13"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="44" column="27"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_1a87743a0be52a2f66aab3d2dda6602f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> windowASeg</type>
-        <definition>uInt16 windowASeg ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1ac65b9a18b7b5805231c4723e9d3eed1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> xRes</type>
+        <definition>uint16_t xRes ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -450,15 +162,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="12"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="45" column="19"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_18ee50f6b207d9f402f0c7987a919a2a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> windowSize</type>
-        <definition>uInt16 windowSize ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1aab5c8af03cf70ee36e10c369f7e05ea1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> yRes</type>
+        <definition>uint16_t yRes ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -466,15 +178,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="11"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="46" column="19"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_14bb1bf4412c7bf1976e8287f5b41b887" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> granularity</type>
-        <definition>uInt16 granularity ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1a72b0a8736173b2465e6d5559ac658d09" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> charWidth</type>
+        <definition>uint8_t charWidth ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -482,15 +194,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="10"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="47" column="23"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_18162c1845c3533a8ee29344586f09d8f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> windowBFlags</type>
-        <definition>uInt8 windowBFlags ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1a6b800b74453287bee12d3d3e3f6501a8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> charHeight</type>
+        <definition>uint8_t charHeight ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -498,15 +210,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="9"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="48" column="24"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_10bb5d403bd8079039b632363c2810dc9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> windowAFlags</type>
-        <definition>uInt8 windowAFlags ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1a773d69327c0293cd502b425fc4f7a625" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> numBitPlanes</type>
+        <definition>uint8_t numBitPlanes ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -514,15 +226,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="8"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="49" column="26"/>
       </memberdef>
-      <memberdef kind="function" id="structogModeInfo_178541db80c6df0c845688d5b1147388e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> modeAttributes</type>
-        <definition>uInt16 modeAttributes ogModeInfo::__attribute__</definition>
+      <memberdef kind="function" id="structogModeInfo_1ad56dea4742fc192e69dfa170ea483eb5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> bitsPerPixel</type>
+        <definition>uint8_t bitsPerPixel ogModeInfo::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -530,48 +242,342 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="7"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="50" column="26"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a4c63996a270174a0052cff38c61bb9ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> numberOfBanks</type>
+        <definition>uint8_t numberOfBanks ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="51" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a0827dc7071ff86059517cc8d6a956d78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> memoryModel</type>
+        <definition>uint8_t memoryModel ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="52" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a8f3e11a7639f60ce1dd2835b9a3a4ca4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> bankSize</type>
+        <definition>uint8_t bankSize ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="53" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1ade6c911f2f14b552f5bcf5af78e37e5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> numOfImagePages</type>
+        <definition>uint8_t numOfImagePages ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="54" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a3399aeed771535f7a77184f44b715a43" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> reserved</type>
+        <definition>uint8_t reserved ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="55" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1ab211bed59de9b5c3410f542097a5661a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> redMaskSize</type>
+        <definition>uint8_t redMaskSize ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="57" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1aa7c3cb3b9a2f0c256cf4fbbe07464760" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> redFieldPosition</type>
+        <definition>uint8_t redFieldPosition ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="58" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a0581d22a60112854bc07d6dd16c02c2b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> greenMaskSize</type>
+        <definition>uint8_t greenMaskSize ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="59" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1aadcc413df481f995f05f5bc7e980a345" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> greenFieldPosition</type>
+        <definition>uint8_t greenFieldPosition ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="60" column="32"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a76223e76689236c61f9a96de63de7b32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> blueMaskSize</type>
+        <definition>uint8_t blueMaskSize ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="61" column="26"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a6fe7e9e80cccf788416985c11d0a134d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> blueFieldPosition</type>
+        <definition>uint8_t blueFieldPosition ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="62" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a25c193549f7631b1e7a9a58b12d6fe5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> alphaMaskSize</type>
+        <definition>uint8_t alphaMaskSize ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="63" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a841d3c08393f4e5dd5e82391b9401743" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> alphaFieldPosition</type>
+        <definition>uint8_t alphaFieldPosition ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="64" column="32"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a2decdf575fc3373a8bb721ced8bf3934" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> directColourMode</type>
+        <definition>uint8_t directColourMode ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="65" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1ae1739cbc8ee0195ee272d7f9edd6423f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> physBasePtr</type>
+        <definition>uint32_t physBasePtr ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="67" column="26"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a53e67af21b9d58913797a7d9a3c5f1cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *offScreenMemOffset</type>
+        <definition>void* offScreenMemOffset ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="68" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1a9ee25ca3d2b6fcd0e93da73199016890" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref> offScreenMemSize</type>
+        <definition>uint16_t offScreenMemSize ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="69" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="structogModeInfo_1ad4566ea5ed1efe19f4fcdb1b507baadf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref> paddington[461]</type>
+        <definition>uint8_t paddington [461] ogModeInfo::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="70" column="24"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="6" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="6" bodyend="42"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>ogModeInfo</label>
+        <link refid="structogModeInfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" line="35" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/ogDisplay_UbixOS.h" bodystart="35" bodyend="71"/>
     <listofallmembers>
-      <member refid="structogModeInfo_178541db80c6df0c845688d5b1147388e" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_10bb5d403bd8079039b632363c2810dc9" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_18162c1845c3533a8ee29344586f09d8f" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_14bb1bf4412c7bf1976e8287f5b41b887" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_18ee50f6b207d9f402f0c7987a919a2a3" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1a87743a0be52a2f66aab3d2dda6602f1" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1e0371a6ece6fbf6b3c7c0ba0e0a50888" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1f422d00e4aadf69dc94edd78021bc8eb" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1feee43c558edf928c552bca3b6553625" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1c9d3daadd1c512a4b9d9fe60908b207e" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1a30ab4cd8704ffe4fca0c4ca9dd3acf7" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1353361fcb711b8c915bd5fd34e9840b4" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_14e4ed1cc5073003c2faf5586abe14829" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1ed15265c2b65ac2a7cad7f955c2dc61d" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1a9695ce86f1e6957acbd0d4551e6168c" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_12d5605373ff52718acd3cc559229edd7" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1448cad4683a7897e291f14e073368cfc" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_112ed10122838b96f629fa7b51098e857" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1b443f4583354ff3183d2617897a31754" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_199ac2f7fbdd102f87fdfbac90f7b87e0" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1a9bdb1e7694b8417a15c8698b28d0c24" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_13b18d621f781f2bdca9b36fb1f6d33c9" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1c69a624b2340b023fe1921db7a8add3e" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1929e494c7be371388c17f5fc653d2d85" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_15a94fc61a0e118a800f41dce52011980" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1c61bdb1dd5b4a9b07670dce4f3df2b9a" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1543da66878a062f7027c5f1c17221c0f" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_14b6b0942d5d36dfc6159ec56e512f31e" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_15226bac7fff8a7da2becf75bc593beaa" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_1e10483e94772d355fc15d289254bb853" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_153e67af21b9d58913797a7d9a3c5f1cd" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_196ce7e3b01ced54b0cf6bbdb192f9429" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
-      <member refid="structogModeInfo_17daf5c1d089e98847915af725292fbb7" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a5b6d38fb683d10cc735db348d0b5a6cb" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ae5b5c5895a6d8c231b308bc38797e0b5" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ad3d8cdba0eb049c1f5dc9e621d8d32ad" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1aca6bdae81c2b65bd988d7ee554e13b0a" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a866220bd9249a095ad4969a2cb460fa3" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1aa3406fdb76003477f8005c2ba5a2b8d8" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1afa33f1f1335942df9f561a9eef4a2e2b" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1af422d00e4aadf69dc94edd78021bc8eb" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a534b6301b1ec9f4873b723f948d14350" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ac65b9a18b7b5805231c4723e9d3eed1f" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1aab5c8af03cf70ee36e10c369f7e05ea1" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a72b0a8736173b2465e6d5559ac658d09" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a6b800b74453287bee12d3d3e3f6501a8" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a773d69327c0293cd502b425fc4f7a625" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ad56dea4742fc192e69dfa170ea483eb5" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a4c63996a270174a0052cff38c61bb9ee" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a0827dc7071ff86059517cc8d6a956d78" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a8f3e11a7639f60ce1dd2835b9a3a4ca4" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ade6c911f2f14b552f5bcf5af78e37e5e" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a3399aeed771535f7a77184f44b715a43" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ab211bed59de9b5c3410f542097a5661a" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1aa7c3cb3b9a2f0c256cf4fbbe07464760" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a0581d22a60112854bc07d6dd16c02c2b" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1aadcc413df481f995f05f5bc7e980a345" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a76223e76689236c61f9a96de63de7b32" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a6fe7e9e80cccf788416985c11d0a134d" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a25c193549f7631b1e7a9a58b12d6fe5a" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a841d3c08393f4e5dd5e82391b9401743" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a2decdf575fc3373a8bb721ced8bf3934" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ae1739cbc8ee0195ee272d7f9edd6423f" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a53e67af21b9d58913797a7d9a3c5f1cd" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1a9ee25ca3d2b6fcd0e93da73199016890" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
+      <member refid="structogModeInfo_1ad4566ea5ed1efe19f4fcdb1b507baadf" prot="public" virt="non-virtual"><scope>ogModeInfo</scope><name>__attribute__</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

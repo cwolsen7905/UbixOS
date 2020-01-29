@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structbsd__disklabel" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structbsd__disklabel" kind="struct" language="C++" prot="public">
     <compoundname>bsd_disklabel</compoundname>
     <includes refid="hd_8h" local="no">hd.h</includes>
     <innerclass refid="structbsd__disklabel_1_1partition" prot="public">bsd_disklabel::partition</innerclass>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structbsd__disklabel_11a2e5096cbd1ebe4fe430f882c52c57d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1abc2ad09a05d37bb1e6cbade401faea0f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_acylinders</definition>
         <argsstring></argsstring>
         <name>d_acylinders</name>
@@ -16,10 +16,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="114" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="238" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="238" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1e6fd038ae8f29755866e1c6fcfbfd11f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a1ed085430e0760fd4e43dd563191f06f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_bbsize</definition>
         <argsstring></argsstring>
         <name>d_bbsize</name>
@@ -29,10 +29,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="149" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="149" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="273" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="273" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1c509dd0d343b76b9dc7dc75973219a7e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1ac509dd0d343b76b9dc7dc75973219a7e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_checksum</definition>
         <argsstring></argsstring>
         <name>d_checksum</name>
@@ -42,10 +42,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="145" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="145" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="269" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="269" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_18a1ea7da1a561dc09e78d9fd510cc9d7" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a8a1ea7da1a561dc09e78d9fd510cc9d7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_cylskew</definition>
         <argsstring></argsstring>
         <name>d_cylskew</name>
@@ -55,10 +55,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="136" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="136" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="260" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="260" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1ee88bede04d4e92e3e35ce8b3fa96c53" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a983e60d647e9af12ea24fa2f6e71163c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_drivedata[5]</definition>
         <argsstring>[5]</argsstring>
         <name>d_drivedata</name>
@@ -68,10 +68,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="141" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="265" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="265" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_18c414f88561a87791b7275c85093a497" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1acb64bf505493d09161d7f6c1d97a7583" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_flags</definition>
         <argsstring></argsstring>
         <name>d_flags</name>
@@ -81,10 +81,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="139" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="139" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="263" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="263" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1f4d4f387f5a586b7b7207b627ad97fe8" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a758d7335edac5d43056ce33a70ee95fc" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_headswitch</definition>
         <argsstring></argsstring>
         <name>d_headswitch</name>
@@ -94,10 +94,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="137" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="261" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="261" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_19f251fc6b92836fc3df6fdcf5ada1eaf" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a9f251fc6b92836fc3df6fdcf5ada1eaf" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_interleave</definition>
         <argsstring></argsstring>
         <name>d_interleave</name>
@@ -107,10 +107,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="134" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="258" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="258" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_14cd5d09a3a36da18477d178762fdfd97" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a27c3887c8d7a7604d79f101c0316053e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_magic</definition>
         <argsstring></argsstring>
         <name>d_magic</name>
@@ -120,10 +120,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="87" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="211" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="211" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_11791efc5907c820e31113c0c9a645602" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1ae8b7d14f5218faedcabc8cdb9799f2b8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_magic2</definition>
         <argsstring></argsstring>
         <name>d_magic2</name>
@@ -133,10 +133,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="144" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="268" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="268" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1b714391225d73f1d54cfed83bb856b33" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1ae108495b6fe5374ec7c62ef4baf05f52" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_ncylinders</definition>
         <argsstring></argsstring>
         <name>d_ncylinders</name>
@@ -146,10 +146,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="98" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="222" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="222" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_16a478db13de03d2384bbb5307be1e84c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a6a478db13de03d2384bbb5307be1e84c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_npartitions</definition>
         <argsstring></argsstring>
         <name>d_npartitions</name>
@@ -159,11 +159,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="148" bodyend="-1"/>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="272" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="272" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1941fd2872c4114f45aa6351d274146de" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a29430f05e17ca520b48e407175cfd825" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_nsectors</definition>
         <argsstring></argsstring>
         <name>d_nsectors</name>
@@ -173,10 +172,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="96" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="220" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="220" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1d4d554a81a0a40ea3798534bbcaea9cb" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a3cf810c12ed5a1865fdd5141a57c669a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_ntracks</definition>
         <argsstring></argsstring>
         <name>d_ntracks</name>
@@ -186,9 +185,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="97" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="221" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="221" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1327daaf81e47645765fce50925f63030" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structbsd__disklabel_1a327daaf81e47645765fce50925f63030" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char bsd_disklabel::d_packname[16]</definition>
         <argsstring>[16]</argsstring>
@@ -199,10 +198,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="92" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="216" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="216" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_160c26768f84bf0061c2436f29a2fdff0" prot="public" static="no" mutable="no">
-        <type><ref refid="structbsd__disklabel_1_1partition" kindref="compound">bsd_disklabel::partition</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a60c26768f84bf0061c2436f29a2fdff0" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structbsd__disklabel_1_1partition" kindref="compound">bsd_disklabel::partition</ref></type>
         <definition>struct bsd_disklabel::partition  bsd_disklabel::d_partitions[ 8 ]</definition>
         <argsstring>[8]</argsstring>
         <name>d_partitions</name>
@@ -212,11 +211,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="158"/>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="282" column="23"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_108bc0c83a73009a0886aeadae13adf9f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a08bc0c83a73009a0886aeadae13adf9f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_rpm</definition>
         <argsstring></argsstring>
         <name>d_rpm</name>
@@ -226,10 +224,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="133" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="257" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="257" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1bbdfb5c93b11731acef587db4f9492ff" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1aa9bcc5f28e778368ba4e701deaffc351" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_sbsize</definition>
         <argsstring></argsstring>
         <name>d_sbsize</name>
@@ -239,10 +237,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="150" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="150" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="274" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="274" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1b5b34b633875649ac99cec0d15e0499d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1ac45c76bc77dc6cf20fb6409ffbfaabb8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_secpercyl</definition>
         <argsstring></argsstring>
         <name>d_secpercyl</name>
@@ -252,10 +250,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="99" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="99" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="223" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="223" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1a29883ea8626c0690b18d62a7c6592d9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a8dbc77ac958835d07bc020eb80f8310d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_secperunit</definition>
         <argsstring></argsstring>
         <name>d_secperunit</name>
@@ -265,10 +263,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="100" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="100" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="224" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="224" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_179153fe068fdf0406a058bde26cc878a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a3dea108384282d50790daa26839d635c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_secsize</definition>
         <argsstring></argsstring>
         <name>d_secsize</name>
@@ -278,10 +276,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="95" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="219" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="219" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_117cd3e21e9fe8f67745c28330f31db11" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1affb4aec41b89db44d843e6e373119cb2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_spare[5]</definition>
         <argsstring>[5]</argsstring>
         <name>d_spare</name>
@@ -291,10 +289,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="143" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="267" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="267" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_166e9626c5aa0312540d253599483b6b6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a66e9626c5aa0312540d253599483b6b6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_sparespercyl</definition>
         <argsstring></argsstring>
         <name>d_sparespercyl</name>
@@ -304,10 +302,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="109" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="233" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="233" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_170038e5db15a12985955a06daa31b2b6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a70038e5db15a12985955a06daa31b2b6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_sparespertrack</definition>
         <argsstring></argsstring>
         <name>d_sparespertrack</name>
@@ -317,10 +315,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="108" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="232" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="232" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1c6a9dfd75ae82c8c45e86726ca9cdd3b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1ac6a9dfd75ae82c8c45e86726ca9cdd3b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_subtype</definition>
         <argsstring></argsstring>
         <name>d_subtype</name>
@@ -330,10 +328,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="89" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="89" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="213" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="213" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_116886f26e50cfa69d6f8a83c3ec74d3f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a16886f26e50cfa69d6f8a83c3ec74d3f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_trackskew</definition>
         <argsstring></argsstring>
         <name>d_trackskew</name>
@@ -343,10 +341,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="135" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="135" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="259" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="259" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_122be9443e1f538e456eb0ecdee8a3b56" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1ac39855e86b97beb97c29c5dc6d350925" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t bsd_disklabel::d_trkseek</definition>
         <argsstring></argsstring>
         <name>d_trkseek</name>
@@ -356,10 +354,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="138" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="262" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="262" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1339de842bcffc11bce9a34fc53b03362" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structbsd__disklabel_1a339de842bcffc11bce9a34fc53b03362" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t bsd_disklabel::d_type</definition>
         <argsstring></argsstring>
         <name>d_type</name>
@@ -369,9 +367,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="88" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="212" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="212" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbsd__disklabel_1d6a5a058cc4fa40a5a0a5cb305104569" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structbsd__disklabel_1ad6a5a058cc4fa40a5a0a5cb305104569" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char bsd_disklabel::d_typename[16]</definition>
         <argsstring>[16]</argsstring>
@@ -382,7 +380,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="90" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="90" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="214" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="214" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -390,49 +388,49 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="378">
+      <node id="1">
         <label>bsd_disklabel</label>
         <link refid="structbsd__disklabel"/>
-        <childnode refid="379" relation="usage">
-          <edgelabel>d_partitions</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+d_partitions</edgelabel>
         </childnode>
       </node>
-      <node id="379">
+      <node id="2">
         <label>bsd_disklabel::partition</label>
         <link refid="structbsd__disklabel_1_1partition"/>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="86" bodyend="159"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/hd.h" line="210" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/hd.h" bodystart="210" bodyend="283"/>
     <listofallmembers>
-      <member refid="structbsd__disklabel_11a2e5096cbd1ebe4fe430f882c52c57d" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_acylinders</name></member>
-      <member refid="structbsd__disklabel_1e6fd038ae8f29755866e1c6fcfbfd11f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_bbsize</name></member>
-      <member refid="structbsd__disklabel_1c509dd0d343b76b9dc7dc75973219a7e" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_checksum</name></member>
-      <member refid="structbsd__disklabel_18a1ea7da1a561dc09e78d9fd510cc9d7" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_cylskew</name></member>
-      <member refid="structbsd__disklabel_1ee88bede04d4e92e3e35ce8b3fa96c53" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_drivedata</name></member>
-      <member refid="structbsd__disklabel_18c414f88561a87791b7275c85093a497" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_flags</name></member>
-      <member refid="structbsd__disklabel_1f4d4f387f5a586b7b7207b627ad97fe8" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_headswitch</name></member>
-      <member refid="structbsd__disklabel_19f251fc6b92836fc3df6fdcf5ada1eaf" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_interleave</name></member>
-      <member refid="structbsd__disklabel_14cd5d09a3a36da18477d178762fdfd97" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_magic</name></member>
-      <member refid="structbsd__disklabel_11791efc5907c820e31113c0c9a645602" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_magic2</name></member>
-      <member refid="structbsd__disklabel_1b714391225d73f1d54cfed83bb856b33" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_ncylinders</name></member>
-      <member refid="structbsd__disklabel_16a478db13de03d2384bbb5307be1e84c" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_npartitions</name></member>
-      <member refid="structbsd__disklabel_1941fd2872c4114f45aa6351d274146de" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_nsectors</name></member>
-      <member refid="structbsd__disklabel_1d4d554a81a0a40ea3798534bbcaea9cb" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_ntracks</name></member>
-      <member refid="structbsd__disklabel_1327daaf81e47645765fce50925f63030" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_packname</name></member>
-      <member refid="structbsd__disklabel_160c26768f84bf0061c2436f29a2fdff0" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_partitions</name></member>
-      <member refid="structbsd__disklabel_108bc0c83a73009a0886aeadae13adf9f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_rpm</name></member>
-      <member refid="structbsd__disklabel_1bbdfb5c93b11731acef587db4f9492ff" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_sbsize</name></member>
-      <member refid="structbsd__disklabel_1b5b34b633875649ac99cec0d15e0499d" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_secpercyl</name></member>
-      <member refid="structbsd__disklabel_1a29883ea8626c0690b18d62a7c6592d9" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_secperunit</name></member>
-      <member refid="structbsd__disklabel_179153fe068fdf0406a058bde26cc878a" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_secsize</name></member>
-      <member refid="structbsd__disklabel_117cd3e21e9fe8f67745c28330f31db11" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_spare</name></member>
-      <member refid="structbsd__disklabel_166e9626c5aa0312540d253599483b6b6" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_sparespercyl</name></member>
-      <member refid="structbsd__disklabel_170038e5db15a12985955a06daa31b2b6" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_sparespertrack</name></member>
-      <member refid="structbsd__disklabel_1c6a9dfd75ae82c8c45e86726ca9cdd3b" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_subtype</name></member>
-      <member refid="structbsd__disklabel_116886f26e50cfa69d6f8a83c3ec74d3f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_trackskew</name></member>
-      <member refid="structbsd__disklabel_122be9443e1f538e456eb0ecdee8a3b56" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_trkseek</name></member>
-      <member refid="structbsd__disklabel_1339de842bcffc11bce9a34fc53b03362" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_type</name></member>
-      <member refid="structbsd__disklabel_1d6a5a058cc4fa40a5a0a5cb305104569" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_typename</name></member>
+      <member refid="structbsd__disklabel_1abc2ad09a05d37bb1e6cbade401faea0f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_acylinders</name></member>
+      <member refid="structbsd__disklabel_1a1ed085430e0760fd4e43dd563191f06f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_bbsize</name></member>
+      <member refid="structbsd__disklabel_1ac509dd0d343b76b9dc7dc75973219a7e" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_checksum</name></member>
+      <member refid="structbsd__disklabel_1a8a1ea7da1a561dc09e78d9fd510cc9d7" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_cylskew</name></member>
+      <member refid="structbsd__disklabel_1a983e60d647e9af12ea24fa2f6e71163c" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_drivedata</name></member>
+      <member refid="structbsd__disklabel_1acb64bf505493d09161d7f6c1d97a7583" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_flags</name></member>
+      <member refid="structbsd__disklabel_1a758d7335edac5d43056ce33a70ee95fc" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_headswitch</name></member>
+      <member refid="structbsd__disklabel_1a9f251fc6b92836fc3df6fdcf5ada1eaf" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_interleave</name></member>
+      <member refid="structbsd__disklabel_1a27c3887c8d7a7604d79f101c0316053e" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_magic</name></member>
+      <member refid="structbsd__disklabel_1ae8b7d14f5218faedcabc8cdb9799f2b8" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_magic2</name></member>
+      <member refid="structbsd__disklabel_1ae108495b6fe5374ec7c62ef4baf05f52" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_ncylinders</name></member>
+      <member refid="structbsd__disklabel_1a6a478db13de03d2384bbb5307be1e84c" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_npartitions</name></member>
+      <member refid="structbsd__disklabel_1a29430f05e17ca520b48e407175cfd825" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_nsectors</name></member>
+      <member refid="structbsd__disklabel_1a3cf810c12ed5a1865fdd5141a57c669a" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_ntracks</name></member>
+      <member refid="structbsd__disklabel_1a327daaf81e47645765fce50925f63030" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_packname</name></member>
+      <member refid="structbsd__disklabel_1a60c26768f84bf0061c2436f29a2fdff0" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_partitions</name></member>
+      <member refid="structbsd__disklabel_1a08bc0c83a73009a0886aeadae13adf9f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_rpm</name></member>
+      <member refid="structbsd__disklabel_1aa9bcc5f28e778368ba4e701deaffc351" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_sbsize</name></member>
+      <member refid="structbsd__disklabel_1ac45c76bc77dc6cf20fb6409ffbfaabb8" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_secpercyl</name></member>
+      <member refid="structbsd__disklabel_1a8dbc77ac958835d07bc020eb80f8310d" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_secperunit</name></member>
+      <member refid="structbsd__disklabel_1a3dea108384282d50790daa26839d635c" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_secsize</name></member>
+      <member refid="structbsd__disklabel_1affb4aec41b89db44d843e6e373119cb2" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_spare</name></member>
+      <member refid="structbsd__disklabel_1a66e9626c5aa0312540d253599483b6b6" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_sparespercyl</name></member>
+      <member refid="structbsd__disklabel_1a70038e5db15a12985955a06daa31b2b6" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_sparespertrack</name></member>
+      <member refid="structbsd__disklabel_1ac6a9dfd75ae82c8c45e86726ca9cdd3b" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_subtype</name></member>
+      <member refid="structbsd__disklabel_1a16886f26e50cfa69d6f8a83c3ec74d3f" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_trackskew</name></member>
+      <member refid="structbsd__disklabel_1ac39855e86b97beb97c29c5dc6d350925" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_trkseek</name></member>
+      <member refid="structbsd__disklabel_1a339de842bcffc11bce9a34fc53b03362" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_type</name></member>
+      <member refid="structbsd__disklabel_1ad6a5a058cc4fa40a5a0a5cb305104569" prot="public" virt="non-virtual"><scope>bsd_disklabel</scope><name>d_typename</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

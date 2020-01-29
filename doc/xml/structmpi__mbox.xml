@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structmpi__mbox" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmpi__mbox" kind="struct" language="C++" prot="public">
     <compoundname>mpi_mbox</compoundname>
     <includes refid="mpi_8h" local="no">mpi.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" prot="public" static="no" mutable="no">
-        <type><ref refid="structmpi__message" kindref="compound">mpi_message</ref> *</type>
+      <memberdef kind="variable" id="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmpi__message" kindref="compound">mpi_message</ref> *</type>
         <definition>struct mpi_message* mpi_mbox::msg</definition>
         <argsstring></argsstring>
         <name>msg</name>
@@ -15,13 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="48" bodyend="-1"/>
-        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
-        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
-        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="47" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="47" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" prot="public" static="no" mutable="no">
-        <type><ref refid="structmpi__message" kindref="compound">mpi_message</ref> *</type>
+      <memberdef kind="variable" id="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmpi__message" kindref="compound">mpi_message</ref> *</type>
         <definition>struct mpi_message* mpi_mbox::msgLast</definition>
         <argsstring></argsstring>
         <name>msgLast</name>
@@ -31,11 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="49" bodyend="-1"/>
-        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
-        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="48" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="48" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structmpi__mbox_1a1dd212ba5f9ee0acea4c50534510e0d8" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char mpi_mbox::name[64]</definition>
         <argsstring>[64]</argsstring>
@@ -46,13 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="50" bodyend="-1"/>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" compoundref="system_8c" startline="47" endline="57">mpi_findMbox</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="49" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="49" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" prot="public" static="no" mutable="no">
-        <type><ref refid="structmpi__mbox" kindref="compound">mpi_mbox</ref> *</type>
+      <memberdef kind="variable" id="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmpi__mbox" kindref="compound">mpi_mbox</ref> *</type>
         <definition>struct mpi_mbox* mpi_mbox::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -62,14 +54,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="46" bodyend="-1"/>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" compoundref="system_8c" startline="47" endline="57">mpi_findMbox</referencedby>
-        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="45" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="45" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+      <memberdef kind="variable" id="structmpi__mbox_1ab9e2e323d303e4f0aa69bdb2066b92ba" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
         <definition>pidType mpi_mbox::pid</definition>
         <argsstring></argsstring>
         <name>pid</name>
@@ -79,13 +67,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="50" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="50" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" prot="public" static="no" mutable="no">
-        <type><ref refid="structmpi__mbox" kindref="compound">mpi_mbox</ref> *</type>
+      <memberdef kind="variable" id="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmpi__mbox" kindref="compound">mpi_mbox</ref> *</type>
         <definition>struct mpi_mbox* mpi_mbox::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -95,9 +80,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="47" bodyend="-1"/>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="46" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="46" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -105,34 +88,34 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="544">
+      <node id="2">
         <label>mpi_message</label>
         <link refid="structmpi__message"/>
-        <childnode refid="544" relation="usage">
-          <edgelabel>next</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="543">
+      <node id="1">
         <label>mpi_mbox</label>
         <link refid="structmpi__mbox"/>
-        <childnode refid="544" relation="usage">
-          <edgelabel>msgLast
-msg</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+msg</edgelabel>
+          <edgelabel>+msgLast</edgelabel>
         </childnode>
-        <childnode refid="543" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="45" bodyend="52"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" line="44" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/mpi/mpi.h" bodystart="44" bodyend="51"/>
     <listofallmembers>
-      <member refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>msg</name></member>
-      <member refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>msgLast</name></member>
-      <member refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>name</name></member>
-      <member refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>next</name></member>
-      <member refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>pid</name></member>
-      <member refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>prev</name></member>
+      <member refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>msg</name></member>
+      <member refid="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>msgLast</name></member>
+      <member refid="structmpi__mbox_1a1dd212ba5f9ee0acea4c50534510e0d8" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>name</name></member>
+      <member refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>next</name></member>
+      <member refid="structmpi__mbox_1ab9e2e323d303e4f0aa69bdb2066b92ba" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>pid</name></member>
+      <member refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" prot="public" virt="non-virtual"><scope>mpi_mbox</scope><name>prev</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,12 +1,29 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structfile" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfile" kind="struct" language="C++" prot="public">
     <compoundname>file</compoundname>
-    <includes refid="kern__descrip_8h" local="no">kern_descrip.h</includes>
+    <includes refid="descrip_8h" local="no">descrip.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structfile_1314e5cc77afefbebb7f5e7d197b089ab" prot="public" static="no" mutable="no">
-        <type>int</type>
-        <definition>int file::f_flag</definition>
+      <memberdef kind="variable" id="structfile_1adfb0c6311589d1d62b720c9610430ad0" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* file::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="74" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="74" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t file::f_flag</definition>
         <argsstring></argsstring>
         <name>f_flag</name>
         <briefdescription>
@@ -15,14 +32,41 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="94" bodyend="-1"/>
-        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
-        <referencedby refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="41" endline="51">pipe</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="68" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="68" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</referencedby>
+        <referencedby refid="vfs__calls_8c_1ab35b14c33a5b03f7617b58b4c0667bd4" compoundref="vfs__calls_8c" startline="399" endline="448">kern_openat</referencedby>
+        <referencedby refid="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="39" endline="49">pipe</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfile_15a1b356e191a81d71a02560074aacd2a" prot="public" static="no" mutable="no">
-        <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
-        <definition>fileDescriptor* file::fd</definition>
+      <memberdef kind="variable" id="structfile_1ad028f15c75ffe1607632f78ada7bcfbd" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfileOps" kindref="compound">fileOps</ref> *</type>
+        <definition>struct fileOps* file::f_ops</definition>
+        <argsstring></argsstring>
+        <name>f_ops</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="70" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfile_1ad5d0e9ab60915cc757d73bf3f6bc2e15" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t file::f_type</definition>
+        <argsstring></argsstring>
+        <name>f_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="69" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
+        <definition>fileDescriptor_t* file::fd</definition>
         <argsstring></argsstring>
         <name>fd</name>
         <briefdescription>
@@ -31,24 +75,66 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="96" bodyend="-1"/>
-        <referencedby refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="41" endline="51">pipe</referencedby>
-        <referencedby refid="gen__calls_8c_15eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="125" endline="144">read</referencedby>
-        <referencedby refid="vfs_8c_13ca4e48103cbadae2952d277d03687be" compoundref="vfs_8c" startline="148" endline="166">sys_open</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="71" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="71" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" compoundref="descrip_8c" startline="348" endline="375">dup2</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1a73224c70c8caaeed4f6b507f5089147c" compoundref="file_8c" startline="526" endline="566">fclose</referencedby>
+        <referencedby refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" compoundref="descrip_8c" startline="147" endline="160">fdestroy</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aac3b8b18e3c19492e533d385cae01f3a" compoundref="file_8c" startline="337" endline="342">feof</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1af3ae9aab3fa1a25c0b0cde40aa97f2d0" compoundref="file_8c" startline="366" endline="377">fgetc</referencedby>
+        <referencedby refid="file_8c_1aeedf75b4010ae4e12e9743744a3b20f0" compoundref="file_8c" startline="350" endline="358">fputc</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1ac539f57edd90fcd088fd3baa10319166" compoundref="file_8c" startline="291" endline="309">fread</referencedby>
+        <referencedby refid="descrip_8c_1a14e228d6e5391a882d3b20ff2466b2ac" compoundref="descrip_8c" startline="214" endline="227">getfd</referencedby>
+        <referencedby refid="vfs__calls_8c_1ab35b14c33a5b03f7617b58b4c0667bd4" compoundref="vfs__calls_8c" startline="399" endline="448">kern_openat</referencedby>
+        <referencedby refid="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="39" endline="49">pipe</referencedby>
+        <referencedby refid="gen__calls_8c_1a5eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="100" endline="119">read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a5ad4ab96ec36d0f1763b9540edaf0128" compoundref="file_8c" startline="197" endline="218">sys_fchdir</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="vfs__calls_8c_1aec77dd1139b0a36d6aa7b29d08039bc1" compoundref="vfs__calls_8c" startline="373" endline="387">sys_getdirentries</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a22d7ac2731d375722cb6fcfaa8b35996" compoundref="file_8c" startline="149" endline="184">sys_lseek</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="vfs__calls_8c_1a61bacda2680307d7f33cd2efe52ba2b5" compoundref="vfs__calls_8c" startline="45" endline="97">sys_openat</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfile_148952da96dfce82445b051d594d7bbf6" prot="public" static="no" mutable="no">
-        <type>char</type>
-        <definition>char file::path[1024]</definition>
-        <argsstring>[1024]</argsstring>
-        <name>path</name>
+      <memberdef kind="variable" id="structfile_1ac43cc1da8bee1eb339249ad88518f769" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int file::fd_type</definition>
+        <argsstring></argsstring>
+        <name>fd_type</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="95" bodyend="-1"/>
-        <referencedby refid="vfs_8c_13ca4e48103cbadae2952d277d03687be" compoundref="vfs_8c" startline="148" endline="166">sys_open</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfile_1aaad1c900a9ee26ad1aa91be70b6f98ec" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int file::socket</definition>
+        <argsstring></argsstring>
+        <name>socket</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -56,109 +142,315 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="471">
+      <node id="9">
+        <label>i387Struct</label>
+        <link refid="structi387Struct"/>
+      </node>
+      <node id="23">
+        <label>ufs1_dinode</label>
+        <link refid="structufs1__dinode"/>
+      </node>
+      <node id="17">
+        <label>tssStruct</label>
+        <link refid="structtssStruct"/>
+      </node>
+      <node id="15">
+        <label>tty_termNode</label>
+        <link refid="structtty__termNode"/>
+      </node>
+      <node id="30">
         <label>device_resource</label>
         <link refid="structdevice__resource"/>
       </node>
-      <node id="470">
+      <node id="29">
         <label>device_node</label>
         <link refid="structdevice__node"/>
-        <childnode refid="471" relation="usage">
-          <edgelabel>devRec</edgelabel>
+        <childnode refid="30" relation="usage">
+          <edgelabel>+devRec</edgelabel>
         </childnode>
-        <childnode refid="472" relation="usage">
-          <edgelabel>devInfo</edgelabel>
+        <childnode refid="31" relation="usage">
+          <edgelabel>+devInfo</edgelabel>
         </childnode>
-        <childnode refid="470" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="465">
+      <node id="16">
+        <label>osInfo</label>
+        <link refid="structosInfo"/>
+      </node>
+      <node id="6">
+        <label>msdos_sb_info</label>
+        <link refid="structmsdos__sb__info"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+fat_wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="12" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
         <label>cacheNode</label>
         <link refid="structcacheNode"/>
-        <childnode refid="465" relation="usage">
-          <edgelabel>prev
-next
-parent
-fileListTail
-fileListHead</edgelabel>
+        <childnode refid="24" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+fileListTail</edgelabel>
+          <edgelabel>+fileListHead</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="468">
+      <node id="4">
+        <label>msdos_inode_info</label>
+        <link refid="structmsdos__inode__info"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+i_old</edgelabel>
+          <edgelabel>+i_depend</edgelabel>
+        </childnode>
+      </node>
+      <node id="27">
         <label>ubixDiskLabel</label>
         <link refid="structubixDiskLabel"/>
-        <childnode refid="469" relation="usage">
-          <edgelabel>partitions</edgelabel>
+        <childnode refid="28" relation="usage">
+          <edgelabel>+partitions</edgelabel>
         </childnode>
       </node>
-      <node id="469">
+      <node id="3">
+        <label>inode</label>
+        <link refid="structinode"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+msdos_i</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+i_sb</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+i_prev</edgelabel>
+          <edgelabel>+i_bound_by</edgelabel>
+          <edgelabel>+i_hash_next</edgelabel>
+          <edgelabel>+i_next</edgelabel>
+          <edgelabel>+i_bound_to</edgelabel>
+          <edgelabel>+i_hash_prev</edgelabel>
+          <edgelabel>+i_mount</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+i_sem</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+pipe_i</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>+ufs2_i</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+i_wait</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+i_op</edgelabel>
+        </childnode>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+ufs1_i</edgelabel>
+        </childnode>
+      </node>
+      <node id="28">
         <label>ubixDiskLabel::ubixPartitions</label>
         <link refid="structubixDiskLabel_1_1ubixPartitions"/>
       </node>
-      <node id="464">
-        <label>fileDescriptorStruct</label>
-        <link refid="structfileDescriptorStruct"/>
-        <childnode refid="465" relation="usage">
-          <edgelabel>cacheNode</edgelabel>
-        </childnode>
-        <childnode refid="466" relation="usage">
-          <edgelabel>dmadat</edgelabel>
-        </childnode>
-        <childnode refid="467" relation="usage">
-          <edgelabel>mp</edgelabel>
-        </childnode>
-        <childnode refid="464" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
-        </childnode>
+      <node id="18">
+        <label>super_operations</label>
+        <link refid="structsuper__operations"/>
       </node>
-      <node id="463">
+      <node id="33">
+        <label>fileOps</label>
+        <link refid="structfileOps"/>
+      </node>
+      <node id="12">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+      <node id="1">
         <label>file</label>
         <link refid="structfile"/>
-        <childnode refid="464" relation="usage">
-          <edgelabel>fd</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+fd</edgelabel>
+        </childnode>
+        <childnode refid="33" relation="usage">
+          <edgelabel>+f_ops</edgelabel>
         </childnode>
       </node>
-      <node id="467">
+      <node id="26">
         <label>vfs_mountPoint</label>
         <link refid="structvfs__mountPoint"/>
-        <childnode refid="468" relation="usage">
-          <edgelabel>diskLabel</edgelabel>
+        <childnode refid="27" relation="usage">
+          <edgelabel>+diskLabel</edgelabel>
         </childnode>
-        <childnode refid="470" relation="usage">
-          <edgelabel>device</edgelabel>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+device</edgelabel>
         </childnode>
-        <childnode refid="473" relation="usage">
-          <edgelabel>fs</edgelabel>
+        <childnode refid="32" relation="usage">
+          <edgelabel>+fs</edgelabel>
         </childnode>
-        <childnode refid="467" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="472">
+      <node id="5">
+        <label>super_block</label>
+        <link refid="structsuper__block"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+msdos_sb</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+s_mounted</edgelabel>
+          <edgelabel>+s_covered</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+s_wait</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+s_op</edgelabel>
+        </childnode>
+      </node>
+      <node id="8">
+        <label>taskStruct</label>
+        <link refid="structtaskStruct"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+exec</edgelabel>
+          <edgelabel>+root</edgelabel>
+          <edgelabel>+pwd</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>+i387</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+td</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+files</edgelabel>
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>+term</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+oInfo</edgelabel>
+        </childnode>
+        <childnode refid="17" relation="usage">
+          <edgelabel>+tss</edgelabel>
+        </childnode>
+      </node>
+      <node id="11">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+      <node id="31">
         <label>device_interface</label>
         <link refid="structdevice__interface"/>
       </node>
-      <node id="466">
+      <node id="19">
+        <label>semaphore</label>
+        <link refid="structsemaphore"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+inode</edgelabel>
+        </childnode>
+        <childnode refid="24" relation="usage">
+          <edgelabel>+cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="25" relation="usage">
+          <edgelabel>+dmadat</edgelabel>
+        </childnode>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+mp</edgelabel>
+        </childnode>
+      </node>
+      <node id="25">
         <label>dmadat</label>
         <link refid="structdmadat"/>
       </node>
-      <node id="473">
+      <node id="20">
+        <label>pipe_inode_info</label>
+        <link refid="structpipe__inode__info"/>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="7">
+        <label>wait_queue</label>
+        <link refid="structwait__queue"/>
+        <childnode refid="8" relation="usage">
+          <edgelabel>+task</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="13">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+      <node id="10">
+        <label>thread</label>
+        <link refid="structthread"/>
+        <childnode refid="11" relation="usage">
+          <edgelabel>+frame</edgelabel>
+        </childnode>
+        <childnode refid="12" relation="usage">
+          <edgelabel>+sigmask</edgelabel>
+        </childnode>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+rlim</edgelabel>
+        </childnode>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+sigact</edgelabel>
+        </childnode>
+      </node>
+      <node id="21">
+        <label>ufs2_dinode</label>
+        <link refid="structufs2__dinode"/>
+      </node>
+      <node id="22">
+        <label>inode_operations</label>
+        <link refid="structinode__operations"/>
+      </node>
+      <node id="32">
         <label>fileSystem</label>
         <link refid="structfileSystem"/>
-        <childnode refid="473" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="32" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="93" bodyend="97"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" line="67" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/descrip.h" bodystart="67" bodyend="75"/>
     <listofallmembers>
-      <member refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" prot="public" virt="non-virtual"><scope>file</scope><name>f_flag</name></member>
-      <member refid="structfile_15a1b356e191a81d71a02560074aacd2a" prot="public" virt="non-virtual"><scope>file</scope><name>fd</name></member>
-      <member refid="structfile_148952da96dfce82445b051d594d7bbf6" prot="public" virt="non-virtual"><scope>file</scope><name>path</name></member>
+      <member refid="structfile_1adfb0c6311589d1d62b720c9610430ad0" prot="public" virt="non-virtual"><scope>file</scope><name>data</name></member>
+      <member refid="structfile_1ad549b6a207bd14d3a8a8f8b5c3ee1b9a" prot="public" virt="non-virtual"><scope>file</scope><name>f_flag</name></member>
+      <member refid="structfile_1ad028f15c75ffe1607632f78ada7bcfbd" prot="public" virt="non-virtual"><scope>file</scope><name>f_ops</name></member>
+      <member refid="structfile_1ad5d0e9ab60915cc757d73bf3f6bc2e15" prot="public" virt="non-virtual"><scope>file</scope><name>f_type</name></member>
+      <member refid="structfile_1af2108e4a1620fe81b2b5e7b6db5d41d4" prot="public" virt="non-virtual"><scope>file</scope><name>fd</name></member>
+      <member refid="structfile_1ac43cc1da8bee1eb339249ad88518f769" prot="public" virt="non-virtual"><scope>file</scope><name>fd_type</name></member>
+      <member refid="structfile_1aaad1c900a9ee26ad1aa91be70b6f98ec" prot="public" virt="non-virtual"><scope>file</scope><name>socket</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

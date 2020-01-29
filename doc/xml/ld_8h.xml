@@ -1,62 +1,107 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="ld_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="ld_8h" kind="file" language="C++">
     <compoundname>ld.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="exec_8c" local="no">src/sys/kernel/exec.c</includedby>
-    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</includedby>
+    <includedby refid="i386__exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</includedby>
+    <includedby refid="ld_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/ld.c</includedby>
     <incdepgraph>
-      <node id="4317">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4318" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="4318">
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/ld.h</label>
+        <link refid="ld_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="4316">
-        <label>src/sys/include/ubixos/ld.h</label>
-        <link refid="ld.h"/>
-        <childnode refid="4317" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4321">
-        <label>src/sys/kernel/ld.c</label>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/ld.h</label>
+        <link refid="ld_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
         <link refid="ld_8c"/>
       </node>
-      <node id="4319">
-        <label>src/sys/include/ubixos/ld.h</label>
-        <link refid="ld.h"/>
-        <childnode refid="4320" relation="include">
-        </childnode>
-        <childnode refid="4321" relation="include">
-        </childnode>
-      </node>
-      <node id="4320">
-        <label>src/sys/kernel/exec.c</label>
-        <link refid="exec_8c"/>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
       </node>
     </invincdepgraph>
       <sectiondef kind="define">
-      <memberdef kind="define" id="ld_8h_1f4d6f389174a00e0de80e1ea0e23e956" prot="public" static="no">
+      <memberdef kind="define" id="ld_8h_1af4d6f389174a00e0de80e1ea0e23e956" prot="public" static="no">
         <name>LD_START</name>
-        <initializer>0x1000000</initializer>
+        <initializer>0xAAA00000</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ld.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ld.h" bodystart="35" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ld.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ld.h" bodystart="34" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="ld_8h_1b0622e93915d1824df770950e425875f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="ld_8h_1ab0622e93915d1824df770950e425875f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 ldEnable</definition>
         <argsstring>()</argsstring>
         <name>ldEnable</name>
@@ -66,45 +111,8 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ld.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ld.c" bodystart="42" bodyend="176"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structelfHeader_18ff3dd1b27053bc5a2f01afe5403e53b" compoundref="elf_8h" startline="102">elfHeader::eEntry</references>
-        <references refid="elf_8h_18d1ac0f35a8999a4a8a3350ca95ab54b" compoundref="elf_8h" startline="172">ELF32_R_SYM</references>
-        <references refid="elf_8h_1a4ffd69f2c1c03229686bfa3a898db00" compoundref="elf_8h" startline="173">ELF32_R_TYPE</references>
-        <references refid="elf_8h_118371af6e681af62767a92ac64af1ebb" compoundref="elf_8c" startline="107" endline="109">elfGetRelType</references>
-        <references refid="structelfHeader_14635401868104caa04fcb5bb60840df6" compoundref="elf_8h" startline="108">elfHeader::ePhnum</references>
-        <references refid="structelfHeader_1aff1ff2cb64932f1e1a1f6cf3b881787" compoundref="elf_8h" startline="103">elfHeader::ePhoff</references>
-        <references refid="structelfHeader_1a5b9594ecad96ed7448dbcf95da7895f" compoundref="elf_8h" startline="110">elfHeader::eShnum</references>
-        <references refid="structelfHeader_13d8c518903e5e4db018a336edb6ef204" compoundref="elf_8h" startline="104">elfHeader::eShoff</references>
-        <references refid="structelfHeader_18842d2d5aed087cd50914a46461d3f40" compoundref="elf_8h" startline="111">elfHeader::eShstrndx</references>
-        <references refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
-        <references refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
-        <references refid="file_8h_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</references>
-        <references refid="file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" compoundref="kmod_8h" startline="35">LD_START</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" compoundref="elf_8h" startline="120">elfProgramHeader::phMemsz</references>
-        <references refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" compoundref="elf_8h" startline="117">elfProgramHeader::phVaddr</references>
-        <references refid="elf_8h_12121a2f01c51e8462bfd4d47725649d8" compoundref="elf_8h" startline="81">PT_DYNAMIC</references>
-        <references refid="elf_8h_1f9283bc32e6d3e87d2bab2f55bc1949b" compoundref="elf_8h" startline="91">PT_GNU_STACK</references>
-        <references refid="elf_8h_184d7768fd6c6ece599d297090900cf92" compoundref="elf_8h" startline="80">PT_LOAD</references>
-        <references refid="elf_8h_17294b5e14e1cf5becf35236381698f48" compoundref="elf_8h" startline="93">PT_PAX_FLAGS</references>
-        <references refid="elf_8h_1f363b787459afd7e272677d7858572c0" compoundref="elf_8h" startline="40">R_386_32</references>
-        <references refid="elf_8h_1d55eb4ccb6e52c4c03f99b34cc8c690b" compoundref="elf_8h" startline="41">R_386_PC32</references>
-        <references refid="elf_8h_1ee5190154984e6176e1c6804ac13217d" compoundref="elf_8h" startline="47">R_386_RELATIVE</references>
-        <references refid="structelfSectionHeader_1285d41cc0ad6e460792b9524c6db5345" compoundref="elf_8h" startline="131">elfSectionHeader::shSize</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ld.h" line="36" column="8" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/ld.h" declline="36" declcolumn="8"/>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -112,84 +120,45 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: ld_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_LD_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_LD_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35" refid="ld_8h_1f4d6f389174a00e0de80e1ea0e23e956" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LD_START<sp/>0x1000000</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="ld_8h_1b0622e93915d1824df770950e425875f" kindref="member">ldEnable</ref>();</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="40"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="42"><highlight class="comment"><sp/>$Log: ld_8h.xml,v $
-<codeline lineno="42"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
-<codeline lineno="42"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="42"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="43"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="44"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="45"><highlight class="comment"></highlight></codeline>
-<codeline lineno="46"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="47"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="48"><highlight class="comment"></highlight></codeline>
-<codeline lineno="49"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:55<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="50"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="51"><highlight class="comment"></highlight></codeline>
-<codeline lineno="52"><highlight class="comment"><sp/>Revision<sp/>1.10<sp/><sp/>2004/06/17<sp/>12:20:32<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="53"><highlight class="comment"><sp/>Try<sp/>this<sp/>now<sp/>solarwind</highlight></codeline>
-<codeline lineno="54"><highlight class="comment"></highlight></codeline>
-<codeline lineno="55"><highlight class="comment"><sp/>Revision<sp/>1.9<sp/><sp/>2004/06/17<sp/>02:19:29<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="56"><highlight class="comment"><sp/>Cleaning<sp/>out<sp/>dead<sp/>code</highlight></codeline>
-<codeline lineno="57"><highlight class="comment"></highlight></codeline>
-<codeline lineno="58"><highlight class="comment"><sp/>Revision<sp/>1.8<sp/><sp/>2004/06/16<sp/>17:32:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="59"><highlight class="comment"><sp/>Removed<sp/>Dead<sp/>LD<sp/>Code<sp/>now<sp/>part<sp/>of<sp/>ld.so</highlight></codeline>
-<codeline lineno="60"><highlight class="comment"></highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/06/16<sp/>17:04:13<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="62"><highlight class="comment"><sp/>ld.so:<sp/>rest<sp/>of<sp/>the<sp/>commit</highlight></codeline>
-<codeline lineno="63"><highlight class="comment"></highlight></codeline>
-<codeline lineno="64"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/06/13<sp/>03:05:15<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="65"><highlight class="comment"><sp/>we<sp/>now<sp/>have<sp/>a<sp/>dynamic<sp/>linker</highlight></codeline>
-<codeline lineno="66"><highlight class="comment"></highlight></codeline>
-<codeline lineno="67"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/06/12<sp/>01:27:26<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="68"><highlight class="comment"><sp/>shared<sp/>objects:<sp/>yes<sp/>we<sp/>almost<sp/>fully<sp/>support<sp/>shared<sp/>objects</highlight></codeline>
-<codeline lineno="69"><highlight class="comment"></highlight></codeline>
-<codeline lineno="70"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="71"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="72"><highlight class="comment"></highlight></codeline>
-<codeline lineno="73"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="74"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UBIXOS_LD_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UBIXOS_LD_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="ld_8h_1af4d6f389174a00e0de80e1ea0e23e956" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LD_START<sp/>0xAAA00000<sp/>//0x1000000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="ld_8h_1ab0622e93915d1824df770950e425875f" kindref="member">ldEnable</ref>();</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_UBIXOS_LD_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ld.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ld.h"/>
   </compounddef>
 </doxygen>

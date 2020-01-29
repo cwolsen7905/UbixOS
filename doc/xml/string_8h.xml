@@ -1,180 +1,661 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="string_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="string_8h" kind="file" language="C++">
     <compoundname>string.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="ne2k_8c" local="no">src/sys/isa/ne2k.c</includedby>
-    <includedby refid="fork_8c" local="no">src/sys/kernel/fork.c</includedby>
-    <includedby refid="gen__calls_8c" local="no">src/sys/kernel/gen_calls.c</includedby>
-    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
-    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
-    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
-    <includedby refid="tty_8c" local="no">src/sys/kernel/tty.c</includedby>
-    <includedby refid="vitals_8c" local="no">src/sys/kernel/vitals.c</includedby>
-    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
-    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
-    <includedby refid="bcopy_8c" local="no">src/sys/lib/bcopy.c</includedby>
-    <includedby refid="memset_8c" local="no">src/sys/lib/memset.c</includedby>
-    <includedby refid="net_8c" local="no">src/sys/lib/net.c</includedby>
-    <includedby refid="hd_8c" local="no">src/sys/pci/hd.c</includedby>
-    <includedby refid="idt_8c" local="no">src/sys/sys/idt.c</includedby>
-    <includedby refid="copyvirtualspace_8c" local="no">src/sys/vmm/copyvirtualspace.c</includedby>
-    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="strings_8h" local="no">strings.h</includes>
+    <includedby refid="armv6_2fork_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</includedby>
+    <includedby refid="armv6_2sched_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</includedby>
+    <includedby refid="arch_2armv6_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</includedby>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</includedby>
+    <includedby refid="i386_2fork_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/fork.c</includedby>
+    <includedby refid="i386__exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</includedby>
+    <includedby refid="i386_2sched_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/sched.c</includedby>
+    <includedby refid="i386_2spinlock_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="devfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</includedby>
+    <includedby refid="fat_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat.c</includedby>
+    <includedby refid="fat__access_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</includedby>
+    <includedby refid="fat__cache_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</includedby>
+    <includedby refid="fat__filelib_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</includedby>
+    <includedby refid="fat__format_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</includedby>
+    <includedby refid="fat__misc_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</includedby>
+    <includedby refid="fat__string_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c</includedby>
+    <includedby refid="fat__table_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</includedby>
+    <includedby refid="fat__write_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</includedby>
+    <includedby refid="dirCache_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</includedby>
+    <includedby refid="directory_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</includedby>
+    <includedby refid="ubixfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</includedby>
+    <includedby refid="ffs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</includedby>
+    <includedby refid="ufs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</includedby>
+    <includedby refid="file_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/file.c</includedby>
+    <includedby refid="mount_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</includedby>
+    <includedby refid="vfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</includedby>
+    <includedby refid="gpt_8h" local="no">C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</includedby>
+    <includedby refid="ne2k_8c" local="no">C:/Dev/git/UbixOS/sys/isa/ne2k.c</includedby>
+    <includedby refid="kernel_2elf_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/elf.c</includedby>
+    <includedby refid="gen__calls_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</includedby>
+    <includedby refid="kern__pipe_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="ld_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/ld.c</includedby>
+    <includedby refid="kernel_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscall.c</includedby>
+    <includedby refid="syscall__posix_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</includedby>
+    <includedby refid="tty_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/tty.c</includedby>
+    <includedby refid="vfs__calls_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/vfs_calls.c</includedby>
+    <includedby refid="vitals_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/vitals.c</includedby>
+    <includedby refid="kmod_8c" local="no">C:/Dev/git/UbixOS/sys/kmods/kmod.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">C:/Dev/git/UbixOS/sys/lib/kmalloc.c</includedby>
+    <includedby refid="kprintf_8c" local="no">C:/Dev/git/UbixOS/sys/lib/kprintf.c</includedby>
+    <includedby refid="net_8c" local="no">C:/Dev/git/UbixOS/sys/lib/net.c</includedby>
+    <includedby refid="string_8c" local="no">C:/Dev/git/UbixOS/sys/lib/string.c</includedby>
+    <includedby refid="strncpy_8c" local="no">C:/Dev/git/UbixOS/sys/lib/strncpy.c</includedby>
+    <includedby refid="strtok_8c" local="no">C:/Dev/git/UbixOS/sys/lib/strtok.c</includedby>
+    <includedby refid="vsprintf_8c" local="no">C:/Dev/git/UbixOS/sys/lib/vsprintf.c</includedby>
+    <includedby refid="system_8c" local="no">C:/Dev/git/UbixOS/sys/mpi/system.c</includedby>
+    <includedby refid="def_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/def.c</includedby>
+    <includedby refid="inet__chksum_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</includedby>
+    <includedby refid="ip6__frag_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</includedby>
+    <includedby refid="mem_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/mem.c</includedby>
+    <includedby refid="memp_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/memp.c</includedby>
+    <includedby refid="netif_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/netif.c</includedby>
+    <includedby refid="pbuf_8c" local="no">C:/Dev/git/UbixOS/sys/net/core/pbuf.c</includedby>
+    <includedby refid="bot_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/bot.c</includedby>
+    <includedby refid="shell_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/shell.c</includedby>
+    <includedby refid="hd_8c" local="no">C:/Dev/git/UbixOS/sys/pci/hd.c</includedby>
+    <includedby refid="colours_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/colours.cc</includedby>
+    <includedby refid="sde_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/sde.cc</includedby>
+    <includedby refid="idt_8c" local="no">C:/Dev/git/UbixOS/sys/sys/idt.c</includedby>
+    <includedby refid="copyvirtualspace_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</includedby>
+    <includedby refid="paging_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/paging.c</includedby>
+    <includedby refid="vmm__allocpagetable_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c</includedby>
     <incdepgraph>
-      <node id="3360">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3361" relation="include">
+      <node id="9">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="3361">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="3359">
-        <label>src/sys/include/string.h</label>
-        <link refid="string.h"/>
-        <childnode refid="3360" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3375">
-        <label>src/sys/lib/memcpy.c</label>
-        <link refid="memcpy_8c"/>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
       </node>
-      <node id="3378">
-        <label>src/sys/pci/hd.c</label>
-        <link refid="hd_8c"/>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</label>
+        <link refid="inet__chksum_8c"/>
       </node>
-      <node id="3377">
-        <label>src/sys/lib/net.c</label>
-        <link refid="net_8c"/>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
       </node>
-      <node id="3371">
-        <label>src/sys/kernel/vitals.c</label>
-        <link refid="vitals_8c"/>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/net/core/def.c</label>
+        <link refid="def_8c"/>
       </node>
-      <node id="3370">
-        <label>src/sys/kernel/tty.c</label>
-        <link refid="tty_8c"/>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="3372">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod_8c"/>
-      </node>
-      <node id="3366">
-        <label>src/sys/kernel/kern_sysctl.c</label>
-        <link refid="kern__sysctl_8c"/>
-      </node>
-      <node id="3373">
-        <label>src/sys/lib/kmalloc.c</label>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/lib/kmalloc.c</label>
         <link refid="kmalloc_8c"/>
       </node>
-      <node id="3381">
-        <label>src/sys/vmm/paging.c</label>
-        <link refid="paging_8c"/>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
       </node>
-      <node id="3369">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/lib/kprintf.c</label>
+        <link refid="kprintf_8c"/>
       </node>
-      <node id="3362">
-        <label>src/sys/include/string.h</label>
-        <link refid="string.h"/>
-        <childnode refid="3363" relation="include">
-        </childnode>
-        <childnode refid="3364" relation="include">
-        </childnode>
-        <childnode refid="3365" relation="include">
-        </childnode>
-        <childnode refid="3366" relation="include">
-        </childnode>
-        <childnode refid="3367" relation="include">
-        </childnode>
-        <childnode refid="3368" relation="include">
-        </childnode>
-        <childnode refid="3369" relation="include">
-        </childnode>
-        <childnode refid="3370" relation="include">
-        </childnode>
-        <childnode refid="3371" relation="include">
-        </childnode>
-        <childnode refid="3372" relation="include">
-        </childnode>
-        <childnode refid="3373" relation="include">
-        </childnode>
-        <childnode refid="3374" relation="include">
-        </childnode>
-        <childnode refid="3376" relation="include">
-        </childnode>
-        <childnode refid="3377" relation="include">
-        </childnode>
-        <childnode refid="3378" relation="include">
-        </childnode>
-        <childnode refid="3379" relation="include">
-        </childnode>
-        <childnode refid="3380" relation="include">
-        </childnode>
-        <childnode refid="3381" relation="include">
-        </childnode>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
       </node>
-      <node id="3367">
-        <label>src/sys/kernel/ld.c</label>
-        <link refid="ld_8c"/>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
       </node>
-      <node id="3364">
-        <label>src/sys/kernel/fork.c</label>
-        <link refid="fork_8c"/>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
       </node>
-      <node id="3368">
-        <label>src/sys/kernel/sched.c</label>
-        <link refid="sched_8c"/>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
       </node>
-      <node id="3376">
-        <label>src/sys/lib/memset.c</label>
-        <link refid="memset_8c"/>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
       </node>
-      <node id="3363">
-        <label>src/sys/isa/ne2k.c</label>
-        <link refid="ne2k_8c"/>
-      </node>
-      <node id="3374">
-        <label>src/sys/lib/bcopy.c</label>
-        <link refid="bcopy_8c"/>
-        <childnode refid="3375" relation="include">
-        </childnode>
-      </node>
-      <node id="3379">
-        <label>src/sys/sys/idt.c</label>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/sys/idt.c</label>
         <link refid="idt_8c"/>
       </node>
-      <node id="3365">
-        <label>src/sys/kernel/gen_calls.c</label>
-        <link refid="gen__calls_8c"/>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
       </node>
-      <node id="3380">
-        <label>src/sys/vmm/copyvirtualspace.c</label>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c</label>
+        <link refid="vmm__allocpagetable_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</label>
+        <link refid="i386_2spinlock_8c"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vfs_calls.c</label>
+        <link refid="vfs__calls_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_table.c</label>
+        <link refid="fat__table_8c"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</label>
         <link refid="copyvirtualspace_8c"/>
       </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_pipe.c</label>
+        <link refid="kern__pipe_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_cache.c</label>
+        <link refid="fat__cache_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_string.c</label>
+        <link refid="fat__string_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/lib/strncpy.c</label>
+        <link refid="strncpy_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/include/fs/common/gpt.h</label>
+        <link refid="gpt_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/lib/string.c</label>
+        <link refid="string_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_access.c</label>
+        <link refid="fat__access_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_write.c</label>
+        <link refid="fat__write_8c"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/lib/strtok.c</label>
+        <link refid="strtok_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_misc.c</label>
+        <link refid="fat__misc_8c"/>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/lib/vsprintf.c</label>
+        <link refid="vsprintf_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_format.c</label>
+        <link refid="fat__format_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat_filelib.c</label>
+        <link refid="fat__filelib_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
     </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="string_8h_1a5ef167c7fdd7318098d597f27a068b29" prot="public" static="no">
+        <name>bcd2bin</name>
+        <param><defname>bcd</defname></param>
+        <initializer>(<ref refid="string_8c_1a085a912fbee69c4cbfdf4c3b4803c23c" kindref="member">bcd2bin_data</ref>[bcd])</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/string.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="string_8h_1a6ff78f39c76c893318b85676e3c7d42a" prot="public" static="no">
+        <name>bin2bcd</name>
+        <param><defname>bin</defname></param>
+        <initializer>(<ref refid="string_8c_1afdca2196cfd449806ad5d6d50097d248" kindref="member">bin2bcd_data</ref>[bin])</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/string.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="string_8h_1a7e312016bd63b21a97110c5d4164388c" prot="public" static="no">
+        <name>hex2ascii</name>
+        <param><defname>hex</defname></param>
+        <initializer>(<ref refid="string_8c_1a0fa13b4447a7212573d04fa4445d7af2" kindref="member">hex2ascii_data</ref>[hex])</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="53" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/string.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="string_8h_1a422175620f52b1ca4dbc39d627296d83" prot="public" static="no">
+        <name>tolower</name>
+        <param><defname>c</defname></param>
+        <initializer>((c) + 0x20 * (((c) &gt;= &apos;A&apos;) &amp;&amp; ((c) &lt;= &apos;Z&apos;)))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/string.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="string_8h_1adda03014c30b02d7b496fce96f37951b" prot="public" static="no">
+        <name>toupper</name>
+        <param><defname>c</defname></param>
+        <initializer>((c) - 0x20 * (((c) &gt;= &apos;a&apos;) &amp;&amp; ((c) &lt;= &apos;z&apos;)))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/string.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="string_8h_1a085a912fbee69c4cbfdf4c3b4803c23c" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="include_2sys_2types_8h_1ae2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref></type>
+        <definition>const u_char bcd2bin_data[]</definition>
+        <argsstring>[]</argsstring>
+        <name>bcd2bin_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="47" column="21" bodyfile="C:/Dev/git/UbixOS/sys/lib/string.c" bodystart="31" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="47" declcolumn="21"/>
+      </memberdef>
+      <memberdef kind="variable" id="string_8h_1afdca2196cfd449806ad5d6d50097d248" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> <ref refid="include_2sys_2types_8h_1ae2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref></type>
+        <definition>const u_char bin2bcd_data[]</definition>
+        <argsstring>[]</argsstring>
+        <name>bin2bcd_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="48" column="21" bodyfile="C:/Dev/git/UbixOS/sys/lib/string.c" bodystart="33" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="48" declcolumn="21"/>
+      </memberdef>
+      <memberdef kind="variable" id="string_8h_1a0fa13b4447a7212573d04fa4445d7af2" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char</type>
+        <definition>const char hex2ascii_data[]</definition>
+        <argsstring>[]</argsstring>
+        <name>hex2ascii_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="49" column="19" bodyfile="C:/Dev/git/UbixOS/sys/lib/string.c" bodystart="36" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="49" declcolumn="19"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="string_8h_1438fd8df168b3de7321baec2a8805c72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* memcpy</definition>
-        <argsstring>(void *dst, const void *src, size_t length)</argsstring>
-        <name>memcpy</name>
+      <memberdef kind="function" id="string_8h_1a3ecfabf29de8f914413abc2da01f5ca5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int memcmp</definition>
+        <argsstring>(const void *dst, const void *src, size_t length)</argsstring>
+        <name>memcmp</name>
         <param>
-          <type>void *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
           <declname>dst</declname>
         </param>
         <param>
-          <type>const void *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
           <declname>src</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
           <declname>length</declname>
         </param>
         <briefdescription>
@@ -183,9 +664,54 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="37"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="41" column="5" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="41" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="string_8h_1ce4b911463887af5e748326323e99a23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="string_8h_1ae33b18edb618c656b9b795b9fce2316c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memcpy</definition>
+        <argsstring>(const void *dst, const void *src, size_t length)</argsstring>
+        <name>memcpy</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
+          <declname>src</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="35" column="6" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="35" declcolumn="6"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a58993494728ce5af573cd51322735210" compoundref="directory_8c" startline="64" endline="89">addDirEntry</referencedby>
+        <referencedby refid="smp_8c_1a70e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="231" endline="251">apicMagic</referencedby>
+        <referencedby refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" compoundref="descrip_8c" startline="348" endline="375">dup2</referencedby>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__access_8h_1a7333a9802b496ce05ca6df36c2fc6009" compoundref="fat__access_8c" startline="643" endline="702">fatfs_mark_file_deleted</referencedby>
+        <referencedby refid="fat__string_8h_1a5d871ba6e84ac429b88cb32f61d49b74" compoundref="fat__string_8c" startline="151" endline="178">fatfs_split_path</referencedby>
+        <referencedby refid="fat__access_8h_1af94f715b4cdb59cf7854b564de855a65" compoundref="fat__access_8c" startline="578" endline="636">fatfs_update_file_length</referencedby>
+        <referencedby refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="lnc_8c_1a85f794a709a826cb783b49a20dda4cf3" compoundref="lnc_8c" startline="546" endline="571">lnc_sendPacket</referencedby>
+        <referencedby refid="i386_2sched_8c_1a92458df2063761371869cdfe0c9b4ee3" compoundref="i386_2sched_8c" startline="156" endline="192">schedNewTask</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1aa52846421fb6bb39fb090a155cbfbdab" compoundref="gen__calls_8c" startline="360" endline="366">sys_getlogin</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="gen__calls_8c_1a2c9b502d95322a6c040cf0f87f15aeba" compoundref="gen__calls_8c" startline="368" endline="374">sys_setlogin</referencedby>
+        <referencedby refid="gen__calls_8c_1add3795da6dd256853821910f6fde5569" compoundref="gen__calls_8c" startline="294" endline="308">sys_sigaction</referencedby>
+        <referencedby refid="gen__calls_8c_1adb0dc568dd674705e372495140616236" compoundref="gen__calls_8c" startline="243" endline="292">sys_sigprocmask</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+        <referencedby refid="tty_8c_1a52a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="84" endline="113">tty_change</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1ace4b911463887af5e748326323e99a23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void *</type>
         <definition>void* memset</definition>
         <argsstring>(void *dst, int c, size_t length)</argsstring>
@@ -199,7 +725,7 @@
           <declname>c</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
           <declname>length</declname>
         </param>
         <briefdescription>
@@ -208,24 +734,47 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/memset.c" bodystart="37" bodyend="80"/>
-        <references refid="memset_8c_16a203659ae1d198f05feb3f9f987013d" compoundref="memset_8c" startline="34">VAL</references>
-        <references refid="memset_8c_162799d9c2c8c93ff3336ea492d4522d6" compoundref="memset_8c" startline="35">WIDEVAL</references>
-        <references refid="bcopy_8c_1b5deaef115ff5ca6ef1457d923d8331a" compoundref="bcopy_8c" startline="49">wmask</references>
-        <references refid="bcopy_8c_101c6b59ca21f041b23efbb9845cc4e32" compoundref="bcopy_8c" startline="48">wsize</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="39" column="6" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="39" declcolumn="6"/>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="fat__table_8h_1acee4d83639e6fa1a228aec05618140e6" compoundref="fat__table_8c" startline="60" endline="79">fatfs_fat_init</referencedby>
+        <referencedby refid="fat__misc_8h_1a0af6939cdfa14c20077e9508d1fd861d" compoundref="fat__misc_8c" startline="186" endline="220">fatfs_filename_to_lfn</referencedby>
+        <referencedby refid="fat__access_8h_1a8a18a3afa5804c2c3143f671d462687d" compoundref="fat__access_8c" startline="380" endline="472">fatfs_get_file_entry</referencedby>
+        <referencedby refid="fat__misc_8h_1aa1fe29de6c2c59fdcf3159607ac2af47" compoundref="fat__misc_8c" startline="38" endline="50">fatfs_lfn_cache_init</referencedby>
+        <referencedby refid="fat__misc_8h_1a25a4d4a522ffdb06b4fab094d05b1763" compoundref="fat__misc_8c" startline="260" endline="315">fatfs_lfn_create_sfn</referencedby>
+        <referencedby refid="fat__misc_8h_1a140f2ac336bea9e8c945b6357fc65083" compoundref="fat__misc_8c" startline="346" endline="366">fatfs_lfn_generate_tail</referencedby>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="lnc_8c_1afa544fa662f94035a72f9c04f7f7fd5a" compoundref="lnc_8c" startline="316" endline="350">lnc_rxINT</referencedby>
+        <referencedby refid="lnc_8c_1a6fb9d9c3d73ce2d10b2cebe1d71f07e2" compoundref="lnc_8c" startline="278" endline="314">lnc_thread</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
+        <referencedby refid="mem_8c_1ab0bdc525971701883f2065e7fb257a24" compoundref="mem_8c" startline="765" endline="776">mem_calloc</referencedby>
+        <referencedby refid="group__netif_1ga66970b5877dd6b0cae906bfa78d0cb4c" compoundref="netif_8c" startline="241" endline="338">netif_add</referencedby>
+        <referencedby refid="pci_8c_1a9a16d3ca1d4538415b752ab0c58e72ba" compoundref="pci_8c" startline="139" endline="242">pciProbe</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+        <referencedby refid="spinlock_8h_1a3ed033ffdc33d480e77190d424149415" compoundref="i386_2spinlock_8c" startline="47" endline="49">spinLockInit</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+        <referencedby refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" compoundref="sys__arch_8c" startline="379" endline="408">sys_thread_new</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="ubthread_8c_1a57168ab258d780168b7334a387651133" compoundref="ubthread_8c" startline="49" endline="58">ubthread_cond_init</referencedby>
+        <referencedby refid="ubthread_8c_1a32f60f4953d8865991ea48cf26236b97" compoundref="ubthread_8c" startline="60" endline="69">ubthread_mutex_init</referencedby>
+        <referencedby refid="vitals_8c_1a34d7f48e003fe73f05d594c6c1f00d49" compoundref="vitals_8c" startline="47" endline="70">vitals_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="string_8h_13082155ec11e7229f7a20439b31a169e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="string_8h_1ac38cd16373d98782e1465bd3d5aba470" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sprintf</definition>
-        <argsstring>(char *str, const char *format,...)</argsstring>
+        <argsstring>(char *buf, const char *fmt,...)</argsstring>
         <name>sprintf</name>
         <param>
           <type>char *</type>
-          <declname>str</declname>
+          <declname>buf</declname>
         </param>
         <param>
-          <type>const char *</type>
-          <declname>format</declname>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>fmt</declname>
         </param>
         <param>
           <type>...</type>
@@ -236,21 +785,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="51" bodyend="58"/>
-        <references refid="stdarg_8h_19eb66fe3016779da70a50f348919a850" compoundref="stdarg_8h" startline="43">vaEnd</references>
-        <references refid="stdarg_8h_18a3212be1635dea2009b962c2abe5237" compoundref="stdarg_8h" startline="35">vaStart</references>
-        <references refid="stdarg_8h_1621577c2df0ad5faa281223c56eeb7a5" compoundref="vsprintf_8c" startline="139" endline="280">vsprintf</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="68" column="7" bodyfile="C:/Dev/git/UbixOS/sys/lib/kprintf.c" bodystart="278" bodyend="286" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="68" declcolumn="7"/>
+        <references refid="kprintf_8c_1a3093cdac4668a4ccffdd7f77270888b7" compoundref="kprintf_8c" startline="315" endline="660">kvprintf</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="stdarg_8h_1acd9b3b9085ec072324c5fdac2b40304e" compoundref="stdarg_8h" startline="50">va_end</references>
+        <references refid="stdarg_8h_1ade24ac546ea93fde2353ed2db8e89c66" compoundref="stdarg_8h" startline="41">va_start</references>
       </memberdef>
-      <memberdef kind="function" id="string_8h_121e4788b4a0ae39b11aa32e9a1079f98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int strcmp</definition>
-        <argsstring>(const char *, const char *)</argsstring>
+        <argsstring>(const char *str1, const char *str2)</argsstring>
         <name>strcmp</name>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str1</declname>
         </param>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>str2</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -258,20 +810,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/string.c" bodystart="32" bodyend="46"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="37" column="5" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="37" declcolumn="5"/>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+        <referencedby refid="mount_8h_1aa8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="128" endline="138">vfs_findMount</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="function" id="string_8h_11a8e0d046aa6ccaf2c9947e3142e4786" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="string_8h_1a55e123beb3d7f96e25e024a13582d987" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>char *</type>
         <definition>char* strcpy</definition>
-        <argsstring>(char *dst, const char *src)</argsstring>
+        <argsstring>(char *, const char *)</argsstring>
         <name>strcpy</name>
         <param>
           <type>char *</type>
-          <declname>dst</declname>
         </param>
         <param>
-          <type>const char *</type>
-          <declname>src</declname>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -279,15 +835,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="35"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="36" column="6" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="36" declcolumn="6"/>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="function" id="string_8h_1ce2e8f8b5db1119196eee36974d8b536" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="string_8h_1ace2e8f8b5db1119196eee36974d8b536" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int strlen</definition>
         <argsstring>(const char *string)</argsstring>
         <name>strlen</name>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
           <declname>string</declname>
         </param>
         <briefdescription>
@@ -296,24 +855,26 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="39"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="40" column="5" bodyfile="C:/Dev/git/UbixOS/sys/lib/strlen.c" bodystart="55" bodyend="101" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="40" declcolumn="5"/>
+        <references refid="strlen_8c_1ae33e2dfb5c1456c17782ba1e0894d783" compoundref="strlen_8c" startline="43">LONGPTR_MASK</references>
+        <references refid="strlen_8c_1a57c8d92afd27a2061de282ec221f8c32" compoundref="strlen_8c" startline="49">testbyte</references>
       </memberdef>
-      <memberdef kind="function" id="string_8h_123a80e470a9dae66d16e7d25fbba122a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>long</type>
-        <definition>long strtol</definition>
-        <argsstring>(const char *__restrict nptr, char **__restrict endptr, int base)</argsstring>
-        <name>strtol</name>
+      <memberdef kind="function" id="string_8h_1adb3227f852046ace07342303d3e87c78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int strncmp</definition>
+        <argsstring>(const char *a, const char *b, size_t c)</argsstring>
+        <name>strncmp</name>
         <param>
-          <type>const char *__restrict</type>
-          <declname>nptr</declname>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>a</declname>
         </param>
         <param>
-          <type>char **__restrict</type>
-          <declname>endptr</declname>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>b</declname>
         </param>
         <param>
-          <type>int</type>
-          <declname>base</declname>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>c</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -321,11 +882,108 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/strtol.c" bodystart="12" bodyend="103"/>
-        <references refid="strtol_8c_150fece4db74f09568b2938db583c5655" compoundref="strtol_8c" startline="7">LONG_MAX</references>
-        <references refid="strtol_8c_1e8a44c5a7436466221e0f3859d02420f" compoundref="strtol_8c" startline="6">LONG_MIN</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
-        <referencedby refid="net_8c_1a9e522808a681d651832da7d16ff1ebb" compoundref="net_8c" startline="112" endline="209">inet_aton</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="38" column="5" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="38" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1a3a2a3fddad0b7aa0ddb8fcd7509b9e27" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* strncpy</definition>
+        <argsstring>(char *__restrict, const char *__restrict, size_t)</argsstring>
+        <name>strncpy</name>
+        <param>
+          <type>char *</type>
+          <declname>__restrict</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>__restrict</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="42" column="9" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="42" declcolumn="9"/>
+        <referencedby refid="fat__access_8h_1a256495a47634d609602fc487830aba5c" compoundref="fat__access_8c" startline="719" endline="846">fatfs_list_directory_next</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1adcec9a82a6a276e8edb0fd4fc26fe8f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* strstr</definition>
+        <argsstring>(const char *s, char *find)</argsstring>
+        <name>strstr</name>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>find</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="45" column="6" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="45" declcolumn="6"/>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2eb9cc767595f53b3c580cd534a0a890" compoundref="file_8c" startline="186" endline="195">sys_chdir</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a5ad4ab96ec36d0f1763b9540edaf0128" compoundref="file_8c" startline="197" endline="218">sys_fchdir</referencedby>
+        <referencedby refid="file_8c_1a81e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="576" endline="609">sysMkDir</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1a9af7251f0c1b875e0e34b8e2b94dda39" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* strtok</definition>
+        <argsstring>(char *str, const char *sep)</argsstring>
+        <name>strtok</name>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>sep</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="43" column="6" bodyfile="C:/Dev/git/UbixOS/sys/lib/strtok.c" bodystart="76" bodyend="79" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="43" declcolumn="6"/>
+        <references refid="strtok_8c_1af18c3fca5cc30bc1313728d45c031ae9" compoundref="strtok_8c" startline="32" endline="74">strtok_r</references>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="file_8c_1a81e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="576" endline="609">sysMkDir</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1a1fd91a5c8419dbcadcf759283511b6d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* strtok_r</definition>
+        <argsstring>(char *str, const char *sep, char **last)</argsstring>
+        <name>strtok_r</name>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <param>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>sep</declname>
+        </param>
+        <param>
+          <type>char **</type>
+          <declname>last</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/string.h" line="44" column="6" bodyfile="C:/Dev/git/UbixOS/sys/lib/strtok.c" bodystart="32" bodyend="74" declfile="C:/Dev/git/UbixOS/sys/include/string.h" declline="44" declcolumn="6"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="strtok_8c_1a80f8fb5a529dbd4b3efb2575764d850e" compoundref="strtok_8c" startline="76" endline="79">strtok</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -333,57 +991,81 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: string_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_STRING_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_STRING_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_STRING_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_STRING_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="strings_8h" kindref="compound">strings.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="strcpy_8S_19132520cc79236b654666f4ddc1b516c" kindref="member">strcpy</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*dst,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*src);</highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>dst,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>src,<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>length);</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>dst,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>c,<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>length);</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" kindref="member">strlen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>string);</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>str,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>format,<sp/>...);</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="string_8h_123a80e470a9dae66d16e7d25fbba122a" kindref="member">strtol</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>__restrict<sp/>nptr,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**<sp/>__restrict<sp/>endptr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>base);</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="47"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="49"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="50"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*dst,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>src,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="string_8h_1a55e123beb3d7f96e25e024a13582d987" kindref="member">strcpy</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str1,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str2);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="string_8h_1adb3227f852046ace07342303d3e87c78" kindref="member">strncmp</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>a,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>b,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>c);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>dst,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>c,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="string_8h_1ace2e8f8b5db1119196eee36974d8b536" kindref="member">strlen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="string_8h_1a3ecfabf29de8f914413abc2da01f5ca5" kindref="member">memcmp</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>dst,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>src,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>length);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>*<ref refid="string_8h_1a3a2a3fddad0b7aa0ddb8fcd7509b9e27" kindref="member">strncpy</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="cdefs_8h_1a4127c12268159bf73f8e69b23c34c610" kindref="member">__restrict</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><ref refid="cdefs_8h_1a4127c12268159bf73f8e69b23c34c610" kindref="member">__restrict</ref>,<sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="string_8h_1a9af7251f0c1b875e0e34b8e2b94dda39" kindref="member">strtok</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*sep);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="string_8h_1a1fd91a5c8419dbcadcf759283511b6d5" kindref="member">strtok_r</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*sep,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**last);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="string_8h_1adcec9a82a6a276e8edb0fd4fc26fe8f2" kindref="member">strstr</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*s,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*find);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1ae2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="string_8h_1a085a912fbee69c4cbfdf4c3b4803c23c" kindref="member">bcd2bin_data</ref>[];</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1ae2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="string_8h_1afdca2196cfd449806ad5d6d50097d248" kindref="member">bin2bcd_data</ref>[];</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="string_8h_1a0fa13b4447a7212573d04fa4445d7af2" kindref="member">hex2ascii_data</ref>[];</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="string_8h_1a5ef167c7fdd7318098d597f27a068b29" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>bcd2bin(bcd)<sp/><sp/><sp/><sp/>(bcd2bin_data[bcd])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="string_8h_1a6ff78f39c76c893318b85676e3c7d42a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>bin2bcd(bin)<sp/><sp/><sp/><sp/>(bin2bcd_data[bin])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="string_8h_1a7e312016bd63b21a97110c5d4164388c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>hex2ascii(hex)<sp/><sp/>(hex2ascii_data[hex])</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="string_8h_1adda03014c30b02d7b496fce96f37951b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>toupper(c)<sp/>((c)<sp/>-<sp/>0x20<sp/>*<sp/>(((c)<sp/>&gt;=<sp/>&apos;a&apos;)<sp/>&amp;&amp;<sp/>((c)<sp/>&lt;=<sp/>&apos;z&apos;)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="string_8h_1a422175620f52b1ca4dbc39d627296d83" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>tolower(c)<sp/>((c)<sp/>+<sp/>0x20<sp/>*<sp/>(((c)<sp/>&gt;=<sp/>&apos;A&apos;)<sp/>&amp;&amp;<sp/>((c)<sp/>&lt;=<sp/>&apos;Z&apos;)))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="string_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*fmt,<sp/>...);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_STRING_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/string.h"/>
   </compounddef>
 </doxygen>

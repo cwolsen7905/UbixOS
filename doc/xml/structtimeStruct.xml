@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structtimeStruct" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtimeStruct" kind="struct" language="C++" prot="public">
     <compoundname>timeStruct</compoundname>
     <includes refid="time_8h" local="no">time.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timeStruct::day</definition>
         <argsstring></argsstring>
@@ -15,11 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="61" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="50" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timeStruct::hour</definition>
         <argsstring></argsstring>
@@ -30,11 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="60" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="49" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timeStruct::min</definition>
         <argsstring></argsstring>
@@ -45,11 +41,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="59" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="48" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timeStruct::mon</definition>
         <argsstring></argsstring>
@@ -60,11 +54,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="62" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="51" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtimeStruct_1e8a295d466724bf589ab44565582058c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimeStruct_1ae8a295d466724bf589ab44565582058c" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timeStruct::sec</definition>
         <argsstring></argsstring>
@@ -75,11 +67,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="58" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="47" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtimeStruct_1b445a5158d90b51e249809848de5a9da" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timeStruct::year</definition>
         <argsstring></argsstring>
@@ -90,23 +80,28 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="63" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="time_8c_1ae380db5538cf415ed920ff3873aa4207" compoundref="time_8c" startline="87" endline="108">timeMake</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="57" bodyend="64"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>timeStruct</label>
+        <link refid="structtimeStruct"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="46" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="46" bodyend="53"/>
     <listofallmembers>
-      <member refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>day</name></member>
-      <member refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>hour</name></member>
-      <member refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>min</name></member>
-      <member refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>mon</name></member>
-      <member refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>sec</name></member>
-      <member refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>year</name></member>
+      <member refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>day</name></member>
+      <member refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>hour</name></member>
+      <member refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>min</name></member>
+      <member refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>mon</name></member>
+      <member refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>sec</name></member>
+      <member refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" prot="public" virt="non-virtual"><scope>timeStruct</scope><name>year</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

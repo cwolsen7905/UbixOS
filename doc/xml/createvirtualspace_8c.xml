@@ -1,72 +1,204 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="createvirtualspace_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="createvirtualspace_8c" kind="file" language="C++">
     <compoundname>createvirtualspace.c</compoundname>
     <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
     <incdepgraph>
-      <node id="6125">
+      <node id="23">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/vmm/createvirtualspace.c</label>
+        <link refid="createvirtualspace_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="12">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="20">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="13">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="6121" relation="include">
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
         </childnode>
       </node>
-      <node id="6121">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="6122" relation="include">
-        </childnode>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
       </node>
-      <node id="6122">
+      <node id="4">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="6120">
-        <label>vmm/paging.h</label>
-        <link refid="paging_8h"/>
-        <childnode refid="6121" relation="include">
-        </childnode>
-        <childnode refid="6123" relation="include">
-        </childnode>
-        <childnode refid="6125" relation="include">
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="6118">
-        <label>src/sys/vmm/createvirtualspace.c</label>
-        <link refid="createvirtualspace.c"/>
-        <childnode refid="6119" relation="include">
+      <node id="24">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="6119">
-        <label>vmm/vmm.h</label>
-        <link refid="vmm_8h"/>
-        <childnode refid="6120" relation="include">
+      <node id="11">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="12" relation="include">
         </childnode>
-        <childnode refid="6121" relation="include">
+        <childnode refid="13" relation="include">
         </childnode>
-      </node>
-      <node id="6123">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="6124" relation="include">
-        </childnode>
-        <childnode refid="6125" relation="include">
+        <childnode refid="17" relation="include">
         </childnode>
       </node>
-      <node id="6124">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="6121" relation="include">
+      <node id="18">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="createvirtualspace_8c_1ab7ce06bf4237638127c7f052e8872f8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void *</type>
-        <definition>void* vmmCreateVirtualSpace</definition>
+        <definition>void* vmm_createVirtualSpace</definition>
         <argsstring>(pid_t pid)</argsstring>
-        <name>vmmCreateVirtualSpace</name>
+        <name>vmm_createVirtualSpace</name>
         <param>
-          <type><ref refid="types_8h_1288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref></type>
           <declname>pid</declname>
         </param>
         <briefdescription>
@@ -75,15 +207,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/createvirtualspace.c" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/createvirtualspace.c" bodystart="81" bodyend="143"/>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" compoundref="getphysicaladdr_8c" startline="40" endline="54">vmm_getPhysicalAddr</references>
-        <references refid="paging_8h_1d006a10f436671f8ee9cb402e372ff02" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</references>
-        <references refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</references>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/vmm/createvirtualspace.c" line="53" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/createvirtualspace.c" bodystart="53" bodyend="191"/>
+        <references refid="vmm_8h_1aafef303dc8f2c6ed7bcf171819579166">adjustCowCounter</references>
+        <references refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" compoundref="gpt_8h" startline="37">bzero</references>
+        <references refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="69">KERNEL_PAGE_DEFAULT</references>
+        <references refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="64">PAGE_COW</references>
+        <references refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="55">PAGE_PRESENT</references>
+        <references refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" compoundref="paging_8h" startline="37">PAGE_SIZE</references>
+        <references refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" compoundref="paging_8h" startline="45">PD_BASE_ADDR</references>
+        <references refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" compoundref="paging_8h" startline="48">PD_ENTRIES</references>
+        <references refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" compoundref="paging_8h" startline="40">PD_INDEX</references>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <references refid="paging_8h_1adc9776583e54abf06ae7b99f1f3036a6" compoundref="paging_8h" startline="49">PT_ENTRIES</references>
+        <references refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" compoundref="getfreepage_8c" startline="45" endline="80">vmm_getFreePage</references>
+        <references refid="paging_8h_1a5522eccf81d4630537620209651be16e" compoundref="getphysicaladdr_8c" startline="38" endline="53">vmm_getPhysicalAddr</references>
+        <references refid="vmm_8h_1ad6394b4f60e68fe4e1431fc4e1998957" compoundref="vmm_8h" startline="64">VMM_KERN_START</references>
+        <references refid="vmm_8h_1a457446966aafafd939af6603f68516b1" compoundref="unmappage_8c" startline="47" endline="81">vmm_unmapPage</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -91,158 +230,199 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Log: createvirtualspace_8c.xml,v $
-<codeline lineno="26"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:50  reddawg
-<codeline lineno="26"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="26"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="27"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="28"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="29"><highlight class="comment"></highlight></codeline>
-<codeline lineno="30"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:38<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="31"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
 <codeline lineno="32"><highlight class="comment"></highlight></codeline>
-<codeline lineno="33"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:50<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="34"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="35"><highlight class="comment"></highlight></codeline>
-<codeline lineno="36"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/07/28<sp/>15:05:43<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="37"><highlight class="comment"><sp/>Major:</highlight></codeline>
-<codeline lineno="38"><highlight class="comment"><sp/><sp/><sp/>Pages<sp/>now<sp/>have<sp/>strict<sp/>security<sp/>enforcement.</highlight></codeline>
-<codeline lineno="39"><highlight class="comment"><sp/><sp/><sp/>Many<sp/>null<sp/>dereferences<sp/>have<sp/>been<sp/>resolved.</highlight></codeline>
-<codeline lineno="40"><highlight class="comment"><sp/><sp/><sp/>When<sp/>apps<sp/>loaded<sp/>permissions<sp/>set<sp/>for<sp/>pages<sp/>rw<sp/>and<sp/>ro</highlight></codeline>
-<codeline lineno="41"><highlight class="comment"></highlight></codeline>
-<codeline lineno="42"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:06:51<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>Function:<sp/>void<sp/>*vmm_createVirtualSpace(pid_t);</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>Description:<sp/>Creates<sp/>A<sp/>Virtual<sp/>Space<sp/>For<sp/>A<sp/>New<sp/>Task</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"></highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>07/30/02<sp/>-<sp/>This<sp/>Is<sp/>Going<sp/>To<sp/>Create<sp/>A<sp/>New<sp/>VM<sp/>Space<sp/>However<sp/>Its<sp/>Going<sp/>To</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>Share<sp/>The<sp/>Same<sp/>Top<sp/>1GB<sp/>Space<sp/>With<sp/>The<sp/>Kernels<sp/>VM<sp/>And<sp/>Lower</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>1MB<sp/>Of<sp/>VM<sp/>Space<sp/>With<sp/>The<sp/>Kernel</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"></highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>07/30/02<sp/>-<sp/>Note<sp/>This<sp/>Is<sp/>Going<sp/>To<sp/>Get<sp/>The<sp/>Top<sp/>1Gig<sp/>And<sp/>Lower<sp/>1MB<sp/>Region</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>From<sp/>The<sp/>Currently<sp/>Loaded<sp/>Page<sp/>Directory<sp/>This<sp/>Is<sp/>Safe<sp/>Because</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>All<sp/>VM<sp/>Spaces<sp/>Will<sp/>Share<sp/>These<sp/>Regions</highlight></codeline>
 <codeline lineno="44"><highlight class="comment"></highlight></codeline>
-<codeline lineno="45"><highlight class="comment"><sp/>Revision<sp/>1.8<sp/><sp/>2004/04/13<sp/>16:36:34<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="46"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
-<codeline lineno="47"><highlight class="comment"></highlight></codeline>
-<codeline lineno="48"><highlight class="comment"></highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>07/30/02<sp/>-<sp/>Note<sp/>I<sp/>Realized<sp/>A<sp/>Mistake<sp/>The<sp/>First<sp/>Page<sp/>Table<sp/>Will<sp/>Need<sp/>To<sp/>Be</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>A<sp/>Copy<sp/>But<sp/>The<sp/>Page<sp/>Tables<sp/>For<sp/>The<sp/>Top<sp/>1GB<sp/>Will<sp/>Not<sp/>Reason<sp/>For</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>This<sp/>Is<sp/>That<sp/>We<sp/>Just<sp/>Share<sp/>The<sp/>First<sp/>1MB<sp/>In<sp/>The<sp/>First<sp/>Page<sp/>Table</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>So<sp/>We<sp/>Will<sp/>Just<sp/>Share<sp/>Physical<sp/>Pages.</highlight></codeline>
 <codeline lineno="49"><highlight class="comment"></highlight></codeline>
-<codeline lineno="50"><highlight class="comment"><sp/>$Id: createvirtualspace_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="51"><highlight class="comment"></highlight></codeline>
-<codeline lineno="52"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>08/02/02<sp/>-<sp/>Added<sp/>Passing<sp/>Of<sp/>pid_t<sp/>pid<sp/>For<sp/>Better<sp/>Tracking<sp/>Of<sp/>Who<sp/>Has<sp/>Which</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>Set<sp/>Of<sp/>Pages</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"></highlight></codeline>
+<codeline lineno="53" refid="createvirtualspace_8c_1ab7ce06bf4237638127c7f052e8872f8a" refkind="member"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="createvirtualspace_8c_1ab7ce06bf4237638127c7f052e8872f8a" kindref="member">vmm_createVirtualSpace</ref>(<ref refid="include_2sys_2types_8h_1a288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref><sp/>pid)<sp/>{</highlight></codeline>
 <codeline lineno="55"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
-<codeline lineno="58"><highlight class="comment"></highlight></codeline>
-<codeline lineno="59"><highlight class="comment">Function:<sp/>void<sp/>*vmmCreateVirtualSpace(pid_t);</highlight></codeline>
-<codeline lineno="60"><highlight class="comment">Description:<sp/>Creates<sp/>A<sp/>Virtual<sp/>Space<sp/>For<sp/>A<sp/>New<sp/>Task</highlight></codeline>
-<codeline lineno="61"><highlight class="comment">Notes:</highlight></codeline>
-<codeline lineno="62"><highlight class="comment"></highlight></codeline>
-<codeline lineno="63"><highlight class="comment">07/30/02<sp/>-<sp/>This<sp/>Is<sp/>Going<sp/>To<sp/>Create<sp/>A<sp/>New<sp/>VM<sp/>Space<sp/>However<sp/>Its<sp/>Going<sp/>To</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Share<sp/>The<sp/>Same<sp/>Top<sp/>1GB<sp/>Space<sp/>With<sp/>The<sp/>Kernels<sp/>VM<sp/>And<sp/>Lower</highlight></codeline>
-<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1MB<sp/>Of<sp/>VM<sp/>Space<sp/>With<sp/>The<sp/>Kernel</highlight></codeline>
-<codeline lineno="66"><highlight class="comment"></highlight></codeline>
-<codeline lineno="67"><highlight class="comment">07/30/02<sp/>-<sp/>Note<sp/>This<sp/>Is<sp/>Going<sp/>To<sp/>Get<sp/>The<sp/>Top<sp/>1Gig<sp/>And<sp/>Lower<sp/>1MB<sp/>Region</highlight></codeline>
-<codeline lineno="68"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>From<sp/>The<sp/>Currently<sp/>Loaded<sp/>Page<sp/>Directory<sp/>This<sp/>Is<sp/>Safe<sp/>Because</highlight></codeline>
-<codeline lineno="69"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>All<sp/>VM<sp/>Spaces<sp/>Will<sp/>Share<sp/>These<sp/>Regions</highlight></codeline>
-<codeline lineno="70"><highlight class="comment"></highlight></codeline>
-<codeline lineno="71"><highlight class="comment">07/30/02<sp/>-<sp/>Note<sp/>I<sp/>Realized<sp/>A<sp/>Mistake<sp/>The<sp/>First<sp/>Page<sp/>Table<sp/>Will<sp/>Need<sp/>To<sp/>Be</highlight></codeline>
-<codeline lineno="72"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>A<sp/>Copy<sp/>But<sp/>The<sp/>Page<sp/>Tables<sp/>For<sp/>The<sp/>Top<sp/>1GB<sp/>Will<sp/>Not<sp/>Reason<sp/>For</highlight></codeline>
-<codeline lineno="73"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>This<sp/>Is<sp/>That<sp/>We<sp/>Just<sp/>Share<sp/>The<sp/>First<sp/>1MB<sp/>In<sp/>The<sp/>First<sp/>Page<sp/>Table</highlight></codeline>
-<codeline lineno="74"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>So<sp/>We<sp/>Will<sp/>Just<sp/>Share<sp/>Physical<sp/>Pages.</highlight></codeline>
-<codeline lineno="75"><highlight class="comment"></highlight></codeline>
-<codeline lineno="76"><highlight class="comment">08/02/02<sp/>-<sp/>Added<sp/>Passing<sp/>Of<sp/>pid_t<sp/>pid<sp/>For<sp/>Better<sp/>Tracking<sp/>Of<sp/>Who<sp/>Has<sp/>Which</highlight></codeline>
-<codeline lineno="77"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Set<sp/>Of<sp/>Pages</highlight></codeline>
-<codeline lineno="78"><highlight class="comment"></highlight></codeline>
-<codeline lineno="79"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*</highlight></codeline>
-<codeline lineno="81" refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" refkind="member"><highlight class="normal"><ref refid="paging_8h_139ac9b6ea58fc8b6f129775642077c99" kindref="member">vmmCreateVirtualSpace</ref>(<ref refid="types_8h_1288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref><sp/>pid)</highlight></codeline>
-<codeline lineno="82"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*newPageDirectoryAddress<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*parentPageDirectory<sp/>=<sp/>0x0,<sp/>*newPageDirectory<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*parentPageTable<sp/>=<sp/>0x0,<sp/>*newPageTable<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*newPageDirectoryAddress<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*parentPageDirectory<sp/>=<sp/>0x0,<sp/>*newPageDirectory<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*parentPageTable<sp/>=<sp/>0x0,<sp/>*newPageTable<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Address<sp/>Of<sp/>Parent<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>parentPageDirectory<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/><ref refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" kindref="member">PD_BASE_ADDR</ref>;<sp/></highlight><highlight class="comment">/*<sp/>PD_BASE_ADDR<sp/>is<sp/>the<sp/>addressable<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>A<sp/>New<sp/>Page<sp/>For<sp/>The<sp/>New<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>newPageDirectory<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/><ref refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" kindref="member">vmm_getFreePage</ref>(pid);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>newPageDirectoryAddress<sp/>To<sp/>The<sp/>Newly<sp/>Created<sp/>Page<sp/>Directories<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/>newPageDirectoryAddress<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="paging_8h_1a5522eccf81d4630537620209651be16e" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageDirectory);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>First<sp/>Set<sp/>Up<sp/>A<sp/>Flushed<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(newPageDirectory,<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>The<sp/>Lower<sp/>8MB<sp/>Kernel<sp/>Code<sp/>Space<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>First<sp/>4MB<sp/>1:1<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>newPageDirectory[0]<sp/>=<sp/>parentPageDirectory[0];</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//XXX:<sp/>We<sp/>Dont<sp/>Need<sp/>This<sp/>-<sp/>newPageDirectory[1]<sp/>=<sp/>parentPageDirectory[1];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>Second<sp/>4MB<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>newPageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/><ref refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" kindref="member">vmm_getFreePage</ref>(pid);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(newPageTable,<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/>parentPageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/>(<ref refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" kindref="member">PT_BASE_ADDR</ref><sp/>+<sp/>(<ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref><sp/>*<sp/>1));</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/><ref refid="paging_8h_1adc9776583e54abf06ae7b99f1f3036a6" kindref="member">PT_ENTRIES</ref>;<sp/>x++)<sp/>{</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(((parentPageTable[x])<sp/>&amp;<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>)<sp/>==<sp/><ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>)<sp/>{</highlight></codeline>
 <codeline lineno="87"><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Address<sp/>Of<sp/>Parent<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/>parentPageDirectory<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" kindref="member">parentPageDirAddr</ref>;</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>A<sp/>New<sp/>Page<sp/>For<sp/>The<sp/>New<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/>newPageDirectory<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_1d006a10f436671f8ee9cb402e372ff02" kindref="member">vmmGetFreePage</ref>(pid);</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>newPageDirectoryAddress<sp/>To<sp/>The<sp/>Newly<sp/>Created<sp/>Page<sp/>Directories<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/>newPageDirectoryAddress<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageDirectory);</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>First<sp/>Set<sp/>Up<sp/>A<sp/>Flushed<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/><ref refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" kindref="member">pageEntries</ref>;<sp/>x++)<sp/>{</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageDirectory[x]<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>0x0;</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>The<sp/>Top<sp/>1GB<sp/>Region<sp/>Of<sp/>The<sp/>VM<sp/>Space<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>768;<sp/>x<sp/>&lt;<sp/>pageEntries;<sp/>x++)<sp/>{</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>newPageDirectory[x]<sp/>=<sp/>parentPageDirectory[x];</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="103"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Allocate<sp/>A<sp/>New<sp/>Page<sp/>For<sp/>The<sp/>The<sp/>First<sp/>Page<sp/>Table<sp/>Where<sp/>We<sp/>Will<sp/>Map<sp/>The</highlight></codeline>
-<codeline lineno="104"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Lower<sp/>Region</highlight></codeline>
-<codeline lineno="105"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/>newPageTable<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_1d006a10f436671f8ee9cb402e372ff02" kindref="member">vmmGetFreePage</ref>(pid);</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Flush<sp/>The<sp/>Page<sp/>From<sp/>Garbage<sp/>In<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>pageEntries;<sp/>x++)<sp/>{</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageTable[x]<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>0x0;</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>This<sp/>Into<sp/>The<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/>newPageDirectory[0]<sp/>=<sp/>(<ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageTable)<sp/>|<sp/><ref refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>);</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Address<sp/>Of<sp/>Parents<sp/>Page<sp/>Table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/>parentPageTable<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" kindref="member">tablesBaseAddress</ref>;</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>The<sp/>First<sp/>1MB<sp/>Worth<sp/>Of<sp/>Pages<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>(pageEntries<sp/>/<sp/>4);<sp/>x++)<sp/>{</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>newPageTable[x]<sp/>=<sp/>parentPageTable[x];</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Virtual<sp/>Mapping<sp/>For<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/>newPageTable[256]<sp/>=<sp/>(<ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageDirectory)<sp/>|<sp/><ref refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"></highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="123"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Now<sp/>The<sp/>Fun<sp/>Stuff<sp/>Build<sp/>The<sp/>Initial<sp/>Virtual<sp/>Page<sp/>Space<sp/>So<sp/>We<sp/>Don&apos;t<sp/>Have</highlight></codeline>
-<codeline lineno="124"><highlight class="comment"><sp/><sp/><sp/>*<sp/>To<sp/>Worry<sp/>About<sp/>Mapping<sp/>Them<sp/>In<sp/>Later<sp/>How<sp/>Ever<sp/>I&apos;m<sp/>Concerned<sp/>This<sp/>May</highlight></codeline>
-<codeline lineno="125"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Become<sp/>A<sp/>Security<sp/>Issue</highlight></codeline>
-<codeline lineno="126"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>First<sp/>Lets<sp/>Unmap<sp/>The<sp/>Previously<sp/>Allocated<sp/>Page<sp/>Table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><ref refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" kindref="member">vmmUnmapPage</ref>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageTable,<sp/>1);</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>A<sp/>New<sp/>Page<sp/>Table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/>newPageTable<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_1d006a10f436671f8ee9cb402e372ff02" kindref="member">vmmGetFreePage</ref>(pid);</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>First<sp/>Set<sp/>Our<sp/>Page<sp/>Directory<sp/>To<sp/>Contain<sp/>This<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/>newPageDirectory[767]<sp/>=<sp/><ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageTable)<sp/>|<sp/><ref refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>;</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>Lets<sp/>Build<sp/>The<sp/>Page<sp/>Table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>pageEntries;<sp/>x++)<sp/>{</highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/>newPageTable[x]<sp/>=<sp/>newPageDirectory[x];</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>We<sp/>Are<sp/>Done<sp/>So<sp/>Lets<sp/>Unmap<sp/>This<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><ref refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" kindref="member">vmmUnmapPage</ref>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<sp/>newPageTable,<sp/>1);</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>We<sp/>Are<sp/>Done<sp/>With<sp/>The<sp/>Page<sp/>Directory<sp/>So<sp/>Lets<sp/>Unmap<sp/>That<sp/>Too<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="140"><highlight class="normal"><sp/><sp/><ref refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" kindref="member">vmmUnmapPage</ref>((uInt32)<sp/>newPageDirectory,<sp/>1);</highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>Physical<sp/>Address<sp/>Of<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(newPageDirectoryAddress);</highlight></codeline>
-<codeline lineno="143"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"></highlight></codeline>
-<codeline lineno="145"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="146"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="147"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Page<sp/>To<sp/>COW<sp/>In<sp/>Parent<sp/>And<sp/>Child<sp/>Space<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>newPageTable[x]<sp/>=<sp/>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>parentPageTable[x]<sp/>&amp;<sp/>0xFFFFF000)<sp/>|<sp/>(<ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref><sp/>|<sp/><ref refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>));</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Increment<sp/>The<sp/>COW<sp/>Counter<sp/>For<sp/>This<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>parentPageTable[x]<sp/>&amp;<sp/><ref refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>)<sp/>==<sp/><ref refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="vmm_8h_1aafef303dc8f2c6ed7bcf171819579166" kindref="member">adjustCowCounter</ref>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>parentPageTable[x]<sp/>&amp;<sp/>0xFFFFF000),<sp/>1);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Add<sp/>Two<sp/>If<sp/>This<sp/>Is<sp/>The<sp/>First<sp/>Time<sp/>Setting<sp/>To<sp/>COW<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="vmm_8h_1aafef303dc8f2c6ed7bcf171819579166" kindref="member">adjustCowCounter</ref>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>parentPageTable[x]<sp/>&amp;<sp/>0xFFFFF000),<sp/>2);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parentPageTable[x]<sp/>|=<sp/><ref refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>;<sp/></highlight><highlight class="comment">//<sp/>newPageTable[i];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>newPageTable[x]<sp/>=<sp/>parentPageTable[x];</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/>newPageDirectory[1]<sp/>=<sp/>(<ref refid="paging_8h_1a5522eccf81d4630537620209651be16e" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable)<sp/>|<sp/><ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref>);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable,<sp/>1);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Done<sp/>Mapping<sp/>Second<sp/>4MB<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>The<sp/>Top<sp/>Kernel<sp/>(APPROX<sp/>1GB)<sp/>Region<sp/>Of<sp/>The<sp/>VM<sp/>Space<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/><ref refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" kindref="member">PD_INDEX</ref>(<ref refid="vmm_8h_1ad6394b4f60e68fe4e1431fc4e1998957" kindref="member">VMM_KERN_START</ref>);<sp/>x<sp/>&lt;<sp/><ref refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" kindref="member">PD_ENTRIES</ref>;<sp/>x++)<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>newPageDirectory[x]<sp/>=<sp/>parentPageDirectory[x];</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>Stack<sp/>Pages<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>newPageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/><ref refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" kindref="member">vmm_getFreePage</ref>(pid);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(newPageTable,<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/>newPageDirectory[1023]<sp/>=<sp/>(<ref refid="paging_8h_1a5522eccf81d4630537620209651be16e" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable)<sp/>|<sp/><ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref>);</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>parentPageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/>(<ref refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" kindref="member">PT_BASE_ADDR</ref><sp/>+<sp/>(<ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref><sp/>*<sp/>1023));</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>newPageTable[1023]<sp/>=<sp/>parentPageTable[1023]<sp/>|<sp/><ref refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1aafef303dc8f2c6ed7bcf171819579166" kindref="member">adjustCowCounter</ref>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>parentPageTable[1023]<sp/>&amp;<sp/>0xFFFFF000),<sp/>2);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/>newPageTable[1022]<sp/>=<sp/>parentPageTable[1022]<sp/>|<sp/><ref refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1aafef303dc8f2c6ed7bcf171819579166" kindref="member">adjustCowCounter</ref>(((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>parentPageTable[1022]<sp/>&amp;<sp/>0xFFFFF000),<sp/>2);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable,<sp/>1);</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Allocate<sp/>A<sp/>New<sp/>Page<sp/>For<sp/>The<sp/>The<sp/>First<sp/>Page<sp/>Table<sp/>Where<sp/>We<sp/>Will<sp/>Map<sp/>The</highlight></codeline>
+<codeline lineno="133"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Lower<sp/>Region</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//newPageTable<sp/>=<sp/>(uint32_t<sp/>*)<sp/>vmm_getFreePage(pid);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Flush<sp/>The<sp/>Page<sp/>From<sp/>Garbage<sp/>In<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//bzero(newPageTable,<sp/>PAGE_SIZE);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>This<sp/>Into<sp/>The<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//newPageDirectory[0]<sp/>=<sp/>(vmm_getPhysicalAddr((uint32_t)<sp/>newPageTable)<sp/>|<sp/>KERNEL_PAGE_DEFAULT);<sp/>//MrOlsen<sp/>2018-01-14<sp/>PAGE_DEFAULT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Address<sp/>Of<sp/>Parents<sp/>Page<sp/>Table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//parentPageTable<sp/>=<sp/>(uint32_t<sp/>*)<sp/>PT_BASE_ADDR;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Map<sp/>The<sp/>First<sp/>1MB<sp/>Worth<sp/>Of<sp/>Pages<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/><sp/><sp/>for<sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>(PD_ENTRIES<sp/>/<sp/>4);<sp/>x++)<sp/>{</highlight></codeline>
+<codeline lineno="146"><highlight class="comment"><sp/><sp/><sp/>newPageTable[x]<sp/>=<sp/>parentPageTable[x];</highlight></codeline>
+<codeline lineno="147"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="148"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Unmap<sp/>Page<sp/>From<sp/>Virtual<sp/>Space<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//vmm_unmapPage((uint32_t)<sp/>newPageTable,<sp/>1);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="153"><highlight class="comment"><sp/><sp/><sp/>*</highlight></codeline>
+<codeline lineno="154"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Map<sp/>Page<sp/>Directory<sp/>Into<sp/>VM<sp/>Space</highlight></codeline>
+<codeline lineno="155"><highlight class="comment"><sp/><sp/><sp/>*<sp/>First<sp/>Page<sp/>After<sp/>Page<sp/>Tables</highlight></codeline>
+<codeline lineno="156"><highlight class="comment"><sp/><sp/><sp/>*<sp/>This<sp/>must<sp/>be<sp/>mapped<sp/>into<sp/>the<sp/>page<sp/>directory<sp/>before<sp/>we<sp/>map<sp/>all<sp/>1024<sp/>page<sp/>directories<sp/>into<sp/>the<sp/>memory<sp/>space</highlight></codeline>
+<codeline lineno="157"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/>newPageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/><ref refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" kindref="member">vmm_getFreePage</ref>(pid);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/>newPageDirectory[<ref refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" kindref="member">PD_INDEX</ref>(<ref refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" kindref="member">PD_BASE_ADDR</ref>)]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>(<ref refid="paging_8h_1a5522eccf81d4630537620209651be16e" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable)<sp/>|<sp/><ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref>);<sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>2018-01-14<sp/>PAGE_DEFAULT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/>newPageTable[0]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>(newPageDirectoryAddress)<sp/>|<sp/><ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref>);<sp/></highlight><highlight class="comment">//MrOlsen<sp/>2018-01-14<sp/>PAGE_DEFAULT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable,<sp/>1);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="167"><highlight class="comment"><sp/><sp/><sp/>*</highlight></codeline>
+<codeline lineno="168"><highlight class="comment"><sp/><sp/><sp/>*<sp/>Map<sp/>Page<sp/>Tables<sp/>Into<sp/>VM<sp/>Space</highlight></codeline>
+<codeline lineno="169"><highlight class="comment"><sp/><sp/><sp/>*<sp/>The<sp/>First<sp/>Page<sp/>Table<sp/>(4MB)<sp/>Maps<sp/>To<sp/>All<sp/>Page<sp/>Directories</highlight></codeline>
+<codeline lineno="170"><highlight class="comment"><sp/><sp/><sp/>*</highlight></codeline>
+<codeline lineno="171"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/>newPageTable<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*)<sp/><ref refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" kindref="member">vmm_getFreePage</ref>(pid);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/>newPageDirectory[<ref refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" kindref="member">PD_INDEX</ref>(<ref refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" kindref="member">PT_BASE_ADDR</ref>)]<sp/>=<sp/>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>(<ref refid="paging_8h_1a5522eccf81d4630537620209651be16e" kindref="member">vmm_getPhysicalAddr</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable)<sp/>|<sp/><ref refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" kindref="member">KERNEL_PAGE_DEFAULT</ref>);<sp/></highlight><highlight class="comment">//MrOlsen<sp/>2018-01-14<sp/>PAGE_DEFAULT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Flush<sp/>The<sp/>Page<sp/>From<sp/>Garbage<sp/>In<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><ref refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" kindref="member">bzero</ref>(newPageTable,<sp/><ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/><ref refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" kindref="member">PD_ENTRIES</ref>;<sp/>x++)<sp/>{</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>newPageTable[x]<sp/>=<sp/>newPageDirectory[x];</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Unmap<sp/>Page<sp/>From<sp/>Virtual<sp/>Space<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageTable,<sp/>1);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>We<sp/>Are<sp/>Done<sp/>With<sp/>The<sp/>Page<sp/>Directory<sp/>So<sp/>Lets<sp/>Unmap<sp/>That<sp/>Too<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><ref refid="vmm_8h_1a457446966aafafd939af6603f68516b1" kindref="member">vmm_unmapPage</ref>((<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>)<sp/>newPageDirectory,<sp/>1);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>Physical<sp/>Address<sp/>Of<sp/>Page<sp/>Directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(newPageDirectoryAddress);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal">}</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/createvirtualspace.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/vmm/createvirtualspace.c"/>
   </compounddef>
 </doxygen>

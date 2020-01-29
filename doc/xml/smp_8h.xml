@@ -1,42 +1,80 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="smp_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="smp_8h" kind="file" language="C++">
     <compoundname>smp.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="smp_8c" local="no">src/sys/kernel/smp.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="smp_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/smp.c</includedby>
     <incdepgraph>
-      <node id="4389">
-        <label>src/sys/include/ubixos/smp.h</label>
-        <link refid="smp.h"/>
-        <childnode refid="4390" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="4390">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4391" relation="include">
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="4391">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/smp.h</label>
+        <link refid="smp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-    </incdepgraph>
-    <invincdepgraph>
-      <node id="4392">
-        <label>src/sys/include/ubixos/smp.h</label>
-        <link refid="smp.h"/>
-        <childnode refid="4393" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="4393">
-        <label>src/sys/kernel/smp.c</label>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/smp.h</label>
+        <link refid="smp_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/kernel/smp.c</label>
         <link refid="smp_8c"/>
       </node>
     </invincdepgraph>
     <innerclass refid="structcpuinfo__t" prot="public">cpuinfo_t</innerclass>
       <sectiondef kind="func">
-      <memberdef kind="function" id="smp_8h_1fb282ad2f10cfff4d0da79689e6dfc82" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8h_1afb282ad2f10cfff4d0da79689e6dfc82" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void apicMagic</definition>
         <argsstring>()</argsstring>
@@ -47,25 +85,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="234" bodyend="248"/>
-        <references refid="smp_8c_1e4dc28abba9d6b02a779ca1b8ffecd98">ap_trampoline_end</references>
-        <references refid="ap-boot_8S_1b1cb92a8709c60591691af45d450d9f3" compoundref="ap-boot_8S" startline="6">ap_trampoline_start</references>
-        <references refid="smp_8c_198935271c68a482c194d4c784d814ddd" compoundref="smp_8c" startline="45" endline="47">apicRead</references>
-        <references refid="smp_8c_1ab4a831897afae67446bf78c88123749" compoundref="smp_8c" startline="49" endline="51">apicWrite</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="51" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="231" bodyend="251" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="51" declcolumn="6"/>
+        <references refid="smp_8c_1ae4dc28abba9d6b02a779ca1b8ffecd98">ap_trampoline_end</references>
+        <references refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d">ap_trampoline_start</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8h_18e797e0b8a36194fca8fa45767974c2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpuid</definition>
         <argsstring>(uInt32, uInt32 *)</argsstring>
         <name>cpuid</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> *</type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -73,10 +108,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="52"/>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="50" column="6" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="50" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8h_1c89d80447fce7d622c7dfc6620039600" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8h_1ac89d80447fce7d622c7dfc6620039600" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpuidDetect</definition>
         <argsstring>()</argsstring>
@@ -87,14 +121,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="173" bodyend="180"/>
-        <references refid="smp_8h_1abe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="252" endline="260">getEflags</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" compoundref="smp_8c" startline="262" endline="269">setEflags</references>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="46" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="168" bodyend="175" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="46" declcolumn="6"/>
+        <references refid="smp_8c_1aabe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="253" endline="261">getEflags</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" compoundref="smp_8c" startline="263" endline="270">setEflags</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="function" id="smp_8h_1a452f210aee65a2a30cbc5cb8923a9881" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 cpuInfo</definition>
         <argsstring>()</argsstring>
         <name>cpuInfo</name>
@@ -104,34 +137,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="182" bodyend="231"/>
-        <references refid="structcpuinfo__t_1a76ba6d81506e6a5d086cb8c61a6246f" compoundref="smp_8h" startline="38">cpuinfo_t::apic_id</references>
-        <references refid="structcpuinfo__t_17b9f17434cf958ae23150aea98a91724" compoundref="smp_8h" startline="38">cpuinfo_t::apic_ver</references>
-        <references refid="smp_8c_198935271c68a482c194d4c784d814ddd" compoundref="smp_8c" startline="45" endline="47">apicRead</references>
-        <references refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" compoundref="smp_8h" startline="42">cpuinfo_t::brand</references>
-        <references refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f">cpuid</references>
-        <references refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" compoundref="smp_8c" startline="40">cpuinfo</references>
-        <references refid="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" compoundref="smp_8c" startline="38">cpuInfoLock</references>
-        <references refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" compoundref="smp_8c" startline="39">cpus</references>
-        <references refid="structcpuinfo__t_1b8935d0ed0f78c40e238027b807d2ee7" compoundref="smp_8h" startline="40">cpuinfo_t::feature</references>
-        <references refid="smp_8h_1abe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="252" endline="260">getEflags</references>
-        <references refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" compoundref="smp_8h" startline="36">cpuinfo_t::id</references>
-        <references refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" compoundref="smp_8h" startline="43">cpuinfo_t::ident</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="structcpuinfo__t_1666edb35af6b506907e999f0c29ee91f" compoundref="smp_8h" startline="41">cpuinfo_t::max</references>
-        <references refid="structcpuinfo__t_155e6db773b2ec5602b132fe54ef2da27" compoundref="smp_8h" startline="37">cpuinfo_t::ok</references>
-        <references refid="smp_8c_15607ecf06fd77905053dbb15eaf0ff6b" compoundref="smp_8c" startline="53" endline="56">setDr3</references>
-        <references refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" compoundref="smp_8c" startline="262" endline="269">setEflags</references>
-        <references refid="structcpuinfo__t_14dc954f30d7ac869a43702bc6a0389dc" compoundref="smp_8h" startline="39">cpuinfo_t::signature</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
-        <references refid="ap-boot_8S_1c2a218176530ced267bbcc8042da1000" compoundref="ap-boot_8S" startline="52">x30</references>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="47" column="7" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="177" bodyend="227" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="47" declcolumn="7"/>
+        <references refid="smp_8c_1aabe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="253" endline="261">getEflags</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" compoundref="smp_8c" startline="263" endline="270">setEflags</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8h_1abe8182d15984977e87831f32527ff78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="smp_8h_1aabe8182d15984977e87831f32527ff78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 getEflags</definition>
         <argsstring>()</argsstring>
         <name>getEflags</name>
@@ -141,17 +154,17 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="252" bodyend="260"/>
-        <referencedby refid="smp_8c_1c89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="173" endline="180">cpuidDetect</referencedby>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="48" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="253" bodyend="261" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="48" declcolumn="8"/>
+        <referencedby refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="168" endline="175">cpuidDetect</referencedby>
+        <referencedby refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="177" endline="227">cpuInfo</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8h_1ad58e8f36b58bd7c198307a1f012fd975" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void setEflags</definition>
         <argsstring>(uInt32)</argsstring>
         <name>setEflags</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -159,11 +172,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="262" bodyend="269"/>
-        <referencedby refid="smp_8c_1c89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="173" endline="180">cpuidDetect</referencedby>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="49" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="263" bodyend="270" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="49" declcolumn="6"/>
+        <referencedby refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="168" endline="175">cpuidDetect</referencedby>
+        <referencedby refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="177" endline="227">cpuInfo</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8h_1ce31619db109aa8b20a916d48969928d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8h_1ace31619db109aa8b20a916d48969928d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void smpInit</definition>
         <argsstring>()</argsstring>
@@ -174,14 +187,8 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="161" bodyend="171"/>
-        <references refid="smp_8h_1fb282ad2f10cfff4d0da79689e6dfc82" compoundref="smp_8c" startline="234" endline="248">apicMagic</references>
-        <references refid="smp_8h_1c89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="173" endline="180">cpuidDetect</references>
-        <references refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</references>
-        <references refid="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" compoundref="smp_8c" startline="69" endline="94">GDT_fixer</references>
-        <references refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" compoundref="smp_8c" startline="37">initSpinLock</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" line="45" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="156" bodyend="166" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h" declline="45" declcolumn="6"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -189,83 +196,60 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: smp_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SMP_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SMP_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35" refid="structcpuinfo__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/>{</highlight></codeline>
-<codeline lineno="36" refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" kindref="member">id</ref>;</highlight></codeline>
-<codeline lineno="37" refid="structcpuinfo__t_155e6db773b2ec5602b132fe54ef2da27" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structcpuinfo__t_155e6db773b2ec5602b132fe54ef2da27" kindref="member">ok</ref>;<sp/><sp/></highlight><highlight class="comment">//<sp/>1=Ok,<sp/>0=Bad</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="structcpuinfo__t_17b9f17434cf958ae23150aea98a91724" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structcpuinfo__t_1a76ba6d81506e6a5d086cb8c61a6246f" kindref="member">apic_id</ref>,<ref refid="structcpuinfo__t_17b9f17434cf958ae23150aea98a91724" kindref="member">apic_ver</ref>;</highlight></codeline>
-<codeline lineno="39" refid="structcpuinfo__t_14dc954f30d7ac869a43702bc6a0389dc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structcpuinfo__t_14dc954f30d7ac869a43702bc6a0389dc" kindref="member">signature</ref>;<sp/></highlight><highlight class="comment">//<sp/>Family,<sp/>Model,<sp/>Stepping</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40" refid="structcpuinfo__t_1b8935d0ed0f78c40e238027b807d2ee7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structcpuinfo__t_1b8935d0ed0f78c40e238027b807d2ee7" kindref="member">feature</ref>;</highlight></codeline>
-<codeline lineno="41" refid="structcpuinfo__t_1666edb35af6b506907e999f0c29ee91f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structcpuinfo__t_1666edb35af6b506907e999f0c29ee91f" kindref="member">max</ref>;</highlight></codeline>
-<codeline lineno="42" refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[49];<sp/><sp/></highlight><highlight class="comment">//<sp/>Brand<sp/>name</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43" refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[17];</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1ce31619db109aa8b20a916d48969928d" kindref="member">smpInit</ref>();</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1c89d80447fce7d622c7dfc6620039600" kindref="member">cpuidDetect</ref>();</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>();</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>();</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" kindref="member">setEflags</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*);</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1fb282ad2f10cfff4d0da79689e6dfc82" kindref="member">apicMagic</ref>();</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="56"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="58"><highlight class="comment"><sp/>$Log: smp_8h.xml,v $
-<codeline lineno="58"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
-<codeline lineno="58"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="58"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="59"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"></highlight></codeline>
-<codeline lineno="62"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="63"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"></highlight></codeline>
-<codeline lineno="65"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:56<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="66"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="67"><highlight class="comment"></highlight></codeline>
-<codeline lineno="68"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="69"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="70"><highlight class="comment"></highlight></codeline>
-<codeline lineno="71"><highlight class="comment"></highlight></codeline>
-<codeline lineno="72"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="73"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UBIXOS_SMP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UBIXOS_SMP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="structcpuinfo__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="35" refid="structcpuinfo__t_1af5c4407ffad5df94902b218355267260" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structcpuinfo__t_1af5c4407ffad5df94902b218355267260" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="36" refid="structcpuinfo__t_1a55e6db773b2ec5602b132fe54ef2da27" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structcpuinfo__t_1a55e6db773b2ec5602b132fe54ef2da27" kindref="member">ok</ref>;<sp/><sp/></highlight><highlight class="comment">//<sp/>1=Ok,<sp/>0=Bad</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="structcpuinfo__t_1a7b9f17434cf958ae23150aea98a91724" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structcpuinfo__t_1aa76ba6d81506e6a5d086cb8c61a6246f" kindref="member">apic_id</ref>,<sp/><ref refid="structcpuinfo__t_1a7b9f17434cf958ae23150aea98a91724" kindref="member">apic_ver</ref>;</highlight></codeline>
+<codeline lineno="38" refid="structcpuinfo__t_1a4dc954f30d7ac869a43702bc6a0389dc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="structcpuinfo__t_1a4dc954f30d7ac869a43702bc6a0389dc" kindref="member">signature</ref>;<sp/></highlight><highlight class="comment">//<sp/>Family,<sp/>Model,<sp/>Stepping</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="structcpuinfo__t_1ab8935d0ed0f78c40e238027b807d2ee7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="structcpuinfo__t_1ab8935d0ed0f78c40e238027b807d2ee7" kindref="member">feature</ref>;</highlight></codeline>
+<codeline lineno="40" refid="structcpuinfo__t_1a666edb35af6b506907e999f0c29ee91f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="structcpuinfo__t_1a666edb35af6b506907e999f0c29ee91f" kindref="member">max</ref>;</highlight></codeline>
+<codeline lineno="41" refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[49];<sp/><sp/></highlight><highlight class="comment">//<sp/>Brand<sp/>name</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="structcpuinfo__t_1ae529ad76c06841e1f825296d0ec107a0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structcpuinfo__t_1ae529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[17];</highlight></codeline>
+<codeline lineno="43"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1ace31619db109aa8b20a916d48969928d" kindref="member">smpInit</ref>();</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1ac89d80447fce7d622c7dfc6620039600" kindref="member">cpuidDetect</ref>();</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8h_1a452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>();</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="smp_8h_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>();</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1ad58e8f36b58bd7c198307a1f012fd975" kindref="member">setEflags</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1afb282ad2f10cfff4d0da79689e6dfc82" kindref="member">apicMagic</ref>();</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/smp.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/smp.h"/>
   </compounddef>
 </doxygen>

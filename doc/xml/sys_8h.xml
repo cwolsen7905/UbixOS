@@ -1,243 +1,837 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="sys_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="sys_8h" kind="file" language="C++">
     <compoundname>sys.h</compoundname>
-    <includes refid="cc_8h" local="yes">arch/cc.h</includes>
-    <includes refid="sys__arch_8h" local="yes">arch/sys_arch.h</includes>
-    <includedby refid="api_8h" local="yes">src/sys/include/net/api.h</includedby>
-    <includedby refid="api__msg_8h" local="yes">src/sys/include/net/api_msg.h</includedby>
-    <includedby refid="tcp_8h" local="yes">src/sys/include/net/tcp.h</includedby>
-    <includedby refid="api__msg_8c" local="yes">src/sys/net/api/api_msg.c</includedby>
-    <includedby refid="tcpip_8c" local="yes">src/sys/net/api/tcpip.c</includedby>
-    <includedby refid="init_8c" local="no">src/sys/net/net/init.c</includedby>
-    <includedby refid="sys__arch_8c" local="yes">src/sys/net/net/sys_arch.c</includedby>
-    <includedby refid="udpecho_8c" local="yes">src/sys/net/net/udpecho.c</includedby>
-    <includedby refid="ethernetif_8c" local="yes">src/sys/net/netif/ethernetif.c</includedby>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includes refid="sys__arch_8h" local="no">net/arch/sys_arch.h</includes>
+    <includes refid="err_8h" local="yes">net/err.h</includes>
+    <includedby refid="tcpip__priv_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</includedby>
+    <includedby refid="timeouts_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/timeouts.h</includedby>
+    <includedby refid="err_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/err.c</includedby>
+    <includedby refid="tcpip_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/tcpip.c</includedby>
+    <includedby refid="core_2init_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/init.c</includedby>
+    <includedby refid="mem_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/mem.c</includedby>
+    <includedby refid="memp_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/memp.c</includedby>
+    <includedby refid="netif_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/netif.c</includedby>
+    <includedby refid="pbuf_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/pbuf.c</includedby>
+    <includedby refid="sys_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/sys.c</includedby>
+    <includedby refid="timeouts_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/timeouts.c</includedby>
+    <includedby refid="net_2init_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/init.c</includedby>
+    <includedby refid="sys__arch_8c" local="yes">C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</includedby>
+    <includedby refid="udpecho_8c" local="yes">C:/Dev/git/UbixOS/sys/net/net/udpecho.c</includedby>
     <incdepgraph>
-      <node id="1005">
-        <label>arch/sys_arch.h</label>
-        <link refid="sys__arch_8h"/>
-      </node>
-      <node id="1003">
-        <label>src/sys/include/net/sys.h</label>
-        <link refid="sys.h"/>
-        <childnode refid="1004" relation="include">
+      <node id="33">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="6" relation="include">
         </childnode>
-        <childnode refid="1005" relation="include">
+        <childnode refid="34" relation="include">
         </childnode>
       </node>
-      <node id="1004">
-        <label>arch/cc.h</label>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="38">
+        <label>ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="39">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="36">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>net/arch/cc.h</label>
         <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="19">
+        <label>net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="27">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="30">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="40">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="1017">
-        <label>src/sys/net/net/udpecho.c</label>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/net/net/udpecho.c</label>
         <link refid="udpecho_8c"/>
       </node>
-      <node id="1020">
-        <label>src/sys/net/netif/tcpdump.c</label>
-        <link refid="tcpdump_8c"/>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
       </node>
-      <node id="1019">
-        <label>src/sys/net/netif/loopif.c</label>
-        <link refid="loopif_8c"/>
-      </node>
-      <node id="1021">
-        <label>src/sys/net/net/sys_arch.c</label>
-        <link refid="sys__arch_8c"/>
-      </node>
-      <node id="1018">
-        <label>src/sys/include/net/tcp.h</label>
-        <link refid="tcp_8h"/>
-        <childnode refid="1007" relation="include">
-        </childnode>
-        <childnode refid="1008" relation="include">
-        </childnode>
-        <childnode refid="1011" relation="include">
-        </childnode>
-        <childnode refid="1019" relation="include">
-        </childnode>
-        <childnode refid="1020" relation="include">
-        </childnode>
-      </node>
-      <node id="1022">
-        <label>src/sys/net/netif/ethernetif.c</label>
-        <link refid="ethernetif_8c"/>
-      </node>
-      <node id="1015">
-        <label>src/sys/net/net/bot.c</label>
-        <link refid="bot_8c"/>
-      </node>
-      <node id="1011">
-        <label>src/sys/net/api/tcpip.c</label>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
         <link refid="tcpip_8c"/>
       </node>
-      <node id="1009">
-        <label>src/sys/include/net/tcpip.h</label>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/include/net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/net/core/sys.c</label>
+        <link refid="sys_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
         <link refid="tcpip_8h"/>
-        <childnode refid="1010" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="1011" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="1012" relation="include">
-        </childnode>
-      </node>
-      <node id="1008">
-        <label>src/sys/include/net/api_msg.h</label>
-        <link refid="api__msg_8h"/>
-        <childnode refid="1009" relation="include">
-        </childnode>
-        <childnode refid="1013" relation="include">
-        </childnode>
-        <childnode refid="1010" relation="include">
+        <childnode refid="9" relation="include">
         </childnode>
       </node>
-      <node id="1016">
-        <label>src/sys/net/net/shell.c</label>
-        <link refid="shell_8c"/>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
       </node>
-      <node id="1013">
-        <label>src/sys/net/api/api_lib.c</label>
-        <link refid="api__lib_8c"/>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
       </node>
-      <node id="1012">
-        <label>src/sys/net/net/init.c</label>
-        <link refid="init_8c"/>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
       </node>
-      <node id="1007">
-        <label>src/sys/include/net/api.h</label>
-        <link refid="api_8h"/>
-        <childnode refid="1008" relation="include">
-        </childnode>
-        <childnode refid="1013" relation="include">
-        </childnode>
-        <childnode refid="1014" relation="include">
-        </childnode>
-        <childnode refid="1015" relation="include">
-        </childnode>
-        <childnode refid="1016" relation="include">
-        </childnode>
-        <childnode refid="1017" relation="include">
-        </childnode>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
       </node>
-      <node id="1006">
-        <label>src/sys/include/net/sys.h</label>
-        <link refid="sys.h"/>
-        <childnode refid="1007" relation="include">
-        </childnode>
-        <childnode refid="1008" relation="include">
-        </childnode>
-        <childnode refid="1018" relation="include">
-        </childnode>
-        <childnode refid="1010" relation="include">
-        </childnode>
-        <childnode refid="1011" relation="include">
-        </childnode>
-        <childnode refid="1012" relation="include">
-        </childnode>
-        <childnode refid="1021" relation="include">
-        </childnode>
-        <childnode refid="1017" relation="include">
-        </childnode>
-        <childnode refid="1022" relation="include">
-        </childnode>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
       </node>
-      <node id="1014">
-        <label>src/sys/net/api/sockets.c</label>
-        <link refid="sockets_8c"/>
-      </node>
-      <node id="1010">
-        <label>src/sys/net/api/api_msg.c</label>
-        <link refid="api__msg_8c"/>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
       </node>
     </invincdepgraph>
-    <innerclass refid="structsys__timeout" prot="public">sys_timeout</innerclass>
-    <innerclass refid="structsys__timeouts" prot="public">sys_timeouts</innerclass>
-      <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="sys_8h_11aa9ee90811cc556b2011559ae4154a8" prot="public" static="no">
-        <type>void(*)</type>
-        <definition>typedef void(* ) sys_timeout_handler(void *arg)</definition>
-        <argsstring>(void *arg)</argsstring>
-        <name>sys_timeout_handler</name>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="sys_8h_1a7bada49634cd3b28b28bdcedd763a1e6" prot="public" static="no">
+        <name>LWIP_COMPAT_MUTEX</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define LWIP_COMPAT_MUTEX if the port has no mutexes and binary semaphores should be used instead </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1aa9a585faa63acdd5d59ac5e7759a07c5" prot="public" static="no">
+        <name>SYS_ARCH_DEC</name>
+        <param><defname>var</defname></param>
+        <param><defname>val</defname></param>
+        <initializer>do { \
+                                <ref refid="sys_8h_1a945395fa326214fc9736487242710a90" kindref="member">SYS_ARCH_DECL_PROTECT</ref>(old_level); \
+                                <ref refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" kindref="member">SYS_ARCH_PROTECT</ref>(old_level); \
+                                var -= val; \
+                                <ref refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" kindref="member">SYS_ARCH_UNPROTECT</ref>(old_level); \
+                              } while(0)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="41" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="384" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="384" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a945395fa326214fc9736487242710a90" prot="public" static="no">
+        <name>SYS_ARCH_DECL_PROTECT</name>
+        <param><defname>lev</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>SYS_LIGHTWEIGHT_PROT define SYS_LIGHTWEIGHT_PROT in <ref refid="lwipopts_8h" kindref="compound">lwipopts.h</ref> if you want inter-task protection for certain critical regions during buffer allocation, deallocation and memory allocation and deallocation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="361" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="361" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a0da95147531964d619be7744c7169986" prot="public" static="no">
+        <name>SYS_ARCH_GET</name>
+        <param><defname>var</defname></param>
+        <param><defname>ret</defname></param>
+        <initializer>do { \
+                                <ref refid="sys_8h_1a945395fa326214fc9736487242710a90" kindref="member">SYS_ARCH_DECL_PROTECT</ref>(old_level); \
+                                <ref refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" kindref="member">SYS_ARCH_PROTECT</ref>(old_level); \
+                                ret = var; \
+                                <ref refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" kindref="member">SYS_ARCH_UNPROTECT</ref>(old_level); \
+                              } while(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="393" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="393" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1acc5f7f8cbd020de628d1e9a0443da4c7" prot="public" static="no">
+        <name>SYS_ARCH_INC</name>
+        <param><defname>var</defname></param>
+        <param><defname>val</defname></param>
+        <initializer>do { \
+                                <ref refid="sys_8h_1a945395fa326214fc9736487242710a90" kindref="member">SYS_ARCH_DECL_PROTECT</ref>(old_level); \
+                                <ref refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" kindref="member">SYS_ARCH_PROTECT</ref>(old_level); \
+                                var += val; \
+                                <ref refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" kindref="member">SYS_ARCH_UNPROTECT</ref>(old_level); \
+                              } while(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="375" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="375" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" prot="public" static="no">
+        <name>SYS_ARCH_PROTECT</name>
+        <param><defname>lev</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="362" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="362" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a24ff55288a4d9fa28100c78b2f4612f6" prot="public" static="no">
+        <name>SYS_ARCH_SET</name>
+        <param><defname>var</defname></param>
+        <param><defname>val</defname></param>
+        <initializer>do { \
+                                <ref refid="sys_8h_1a945395fa326214fc9736487242710a90" kindref="member">SYS_ARCH_DECL_PROTECT</ref>(old_level); \
+                                <ref refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" kindref="member">SYS_ARCH_PROTECT</ref>(old_level); \
+                                var = val; \
+                                <ref refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" kindref="member">SYS_ARCH_UNPROTECT</ref>(old_level); \
+                              } while(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="402" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="402" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1ac1495030a8ab5e1f3c89e42ced527c5b" prot="public" static="no">
+        <name>SYS_ARCH_TIMEOUT</name>
+        <initializer>0xffffffffUL</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Return code for timeouts from sys_arch_mbox_fetch and sys_arch_sem_wait </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" prot="public" static="no">
+        <name>SYS_ARCH_UNPROTECT</name>
+        <param><defname>lev</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="363" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="363" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1ab0571e67edca0132b144106e9b319ef9" prot="public" static="no">
+        <name>SYS_MBOX_EMPTY</name>
+        <initializer><ref refid="sys_8h_1ac1495030a8ab5e1f3c89e42ced527c5b" kindref="member">SYS_ARCH_TIMEOUT</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><ref refid="sys_8h_1ab7841780b31ba9c0a39a440aad1fca13" kindref="member">sys_mbox_tryfetch()</ref> returns SYS_MBOX_EMPTY if appropriate. For now we use the same magic value, but we allow this to change in future. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a5bae9efa9c945dc810665dc4a7e60117" prot="public" static="no">
+        <name>sys_mbox_fetch</name>
+        <param><defname>mbox</defname></param>
+        <param><defname>msg</defname></param>
+        <initializer><ref refid="group__sys__mbox_1gacc53b5c30f131abc40f0885d39d32f87" kindref="member">sys_arch_mbox_fetch</ref>(mbox, msg, 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="252" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="252" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1ae293feebb61d36f2db99be53702b8203" prot="public" static="no">
+        <name>sys_mbox_set_invalid_val</name>
+        <param><defname>mbox</defname></param>
+        <initializer><ref refid="group__sys__mbox_1ga64ca1b1ef4c810f4d67595eca4fdfef0" kindref="member">sys_mbox_set_invalid</ref>(&amp;(mbox))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Same as <ref refid="group__sys__mbox_1ga64ca1b1ef4c810f4d67595eca4fdfef0" kindref="member">sys_mbox_set_invalid()</ref> but taking a value, not a pointer </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="277" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="277" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1ab7841780b31ba9c0a39a440aad1fca13" prot="public" static="no">
+        <name>sys_mbox_tryfetch</name>
+        <param><defname>mbox</defname></param>
+        <param><defname>msg</defname></param>
+        <initializer><ref refid="group__sys__mbox_1ga3e0e0f02be2f670ebfb093a21f7dcdb8" kindref="member">sys_arch_mbox_tryfetch</ref>(mbox, msg)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>For now, we map straight to sys_arch implementation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="245" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="245" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1aae82640d0bdbeec7b9b6511b3f8d99cb" prot="public" static="no">
+        <name>sys_mbox_valid_val</name>
+        <param><defname>mbox</defname></param>
+        <initializer><ref refid="group__sys__mbox_1gadf4b8fccb41fe2d76e88bef546e8e8bb" kindref="member">sys_mbox_valid</ref>(&amp;(mbox))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Same as <ref refid="group__sys__mbox_1gadf4b8fccb41fe2d76e88bef546e8e8bb" kindref="member">sys_mbox_valid()</ref> but taking a value, not a pointer </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="271" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="271" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a2556e570f6973a6f4d57d0e76ef190d8" prot="public" static="no">
+        <name>sys_sem_set_invalid_val</name>
+        <param><defname>sem</defname></param>
+        <initializer><ref refid="group__sys__sem_1ga6b618ddf0c8e73302f1dae7821661457" kindref="member">sys_sem_set_invalid</ref>(&amp;(sem))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Same as <ref refid="group__sys__sem_1ga6b618ddf0c8e73302f1dae7821661457" kindref="member">sys_sem_set_invalid()</ref> but taking a value, not a pointer </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="183" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="183" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a9e8ad541356786936f23ab83b8f550cc" prot="public" static="no">
+        <name>sys_sem_valid_val</name>
+        <param><defname>sem</defname></param>
+        <initializer><ref refid="group__sys__sem_1gac7ff314270976b80559d043f6098817b" kindref="member">sys_sem_valid</ref>(&amp;(sem))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Same as <ref refid="group__sys__sem_1gac7ff314270976b80559d043f6098817b" kindref="member">sys_sem_valid()</ref> but taking a value, not a pointer </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="177" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys_8h_1a84e7e4bc00255aee84e6e7289a985703" prot="public" static="no">
+        <name>sys_sem_wait</name>
+        <param><defname>sem</defname></param>
+        <initializer><ref refid="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" kindref="member">sys_arch_sem_wait</ref>(sem, 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Wait for a semaphore - forever/no timeout </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="158" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="sys_8h_1ae30a77bf6bd69bfcc5f235eaad54f2b9" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* lwip_thread_fn) (void *arg)</definition>
+        <argsstring>)(void *arg)</argsstring>
+        <name>lwip_thread_fn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function prototype for thread functions </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" bodystart="58" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="sys_8h_194ffa3f15cc0eda6dae85c6ccb88da6e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 sys_arch_mbox_fetch</definition>
-        <argsstring>(sys_mbox_t mbox, void **msg, uInt16 timeout)</argsstring>
+      <memberdef kind="function" id="group__sys__mbox_1gacc53b5c30f131abc40f0885d39d32f87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_arch_mbox_fetch</definition>
+        <argsstring>(struct sys_mbox **mb, void **msg, uint32_t timeout)</argsstring>
         <name>sys_arch_mbox_fetch</name>
         <param>
-          <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
-          <declname>mbox</declname>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
         </param>
         <param>
           <type>void **</type>
           <declname>msg</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
           <declname>timeout</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Wait for a new message to arrive in the mbox <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to get a message from </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer where the message is stored </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>maximum time (in milliseconds) to wait for a message (0 = wait forever) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>time (in milliseconds) waited for a message, may be 0 if not waited or SYS_ARCH_TIMEOUT on timeout The returned time has to be accurate to prevent timer jitter! </para>
+</simplesect>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="80"/>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="229" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="287" bodyend="334" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="229" declcolumn="10"/>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1bf9681f6dcec783b38693e9d0b7af937" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 sys_arch_sem_wait</definition>
-        <argsstring>(sys_sem_t sem, uInt16 timeout)</argsstring>
+      <memberdef kind="function" id="group__sys__mbox_1ga3e0e0f02be2f670ebfb093a21f7dcdb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_arch_mbox_tryfetch</definition>
+        <argsstring>(struct sys_mbox **mb, void **msg)</argsstring>
+        <name>sys_arch_mbox_tryfetch</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>void **</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Wait for a new message to arrive in the mbox <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to get a message from </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer where the message is stored </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0 (milliseconds) if a message has been received or SYS_MBOX_EMPTY if the mailbox is empty </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="240" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="336" bodyend="365" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="240" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_arch_sem_wait</definition>
+        <argsstring>(struct sys_sem **s, uint32_t timeout)</argsstring>
         <name>sys_arch_sem_wait</name>
         <param>
-          <type><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref></type>
-          <declname>sem</declname>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
           <declname>timeout</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Wait for a semaphore for the specified timeout <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the semaphore to wait for </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>timeout</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>timeout in milliseconds to wait (0 = wait forever) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>time (in milliseconds) waited for the semaphore or SYS_ARCH_TIMEOUT on timeout </para>
+</simplesect>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="72"/>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="150" column="10" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="105" bodyend="130" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="150" declcolumn="10"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" compoundref="sem_8h" startline="39">sys_sem::mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" compoundref="sem_8h" startline="37">sys_sem::signaled</references>
+        <references refid="ubthread_8h_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</references>
+        <referencedby refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" compoundref="sys_8c" startline="93" endline="103">sys_msleep</referencedby>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_12ffdebd63f7a80c0233aa7460a816dff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structsys__timeouts" kindref="compound">sys_timeouts</ref> *</type>
-        <definition>struct sys_timeouts* sys_arch_timeouts</definition>
-        <argsstring>(void)</argsstring>
-        <name>sys_arch_timeouts</name>
-        <param>
-          <type>void</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="409" bodyend="413"/>
-        <references refid="sys__arch_8c_1c216bafdd6453f68ef27dc764b134e94" compoundref="sys__arch_8c" startline="135" endline="153">current_thread</references>
-        <references refid="structsys__thread_1bf0a0f75b1958421416c879d8011413b" compoundref="sys__arch_8c" startline="123">sys_thread::timeouts</references>
-      </memberdef>
-      <memberdef kind="function" id="sys_8h_1f411a8bc6b7ed4b0af9114e10c959448" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="sys_8h_1af411a8bc6b7ed4b0af9114e10c959448" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void sys_init</definition>
         <argsstring>(void)</argsstring>
@@ -251,100 +845,105 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="404" bodyend="407"/>
-        <references refid="time_8h_1df30830f5265e55035171c301eb9c3fb" compoundref="time_8c" startline="110" endline="115">gettimeofday</references>
-        <references refid="sys__arch_8c_1726d4f4e11d7b38233574938939e0db9" compoundref="sys__arch_8c" startline="128">starttime</references>
-        <referencedby refid="init_8c_122b2914249628f6cba7d4e1f138c969f" compoundref="init_8c" startline="50" endline="63">net_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="296" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="32" bodyend="35" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="296" declcolumn="6"/>
+        <references refid="time_8h_1adf30830f5265e55035171c301eb9c3fb" compoundref="time_8c" startline="110" endline="118">gettimeofday</references>
+        <referencedby refid="core_2init_8c_1a0c1a18439524d2f4a5e51d25c0ca2ce9" compoundref="core_2init_8c" startline="333" endline="381">lwip_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1afce1f71c38e3d7d08ebf0654ec97dfa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sys_mbox_fetch</definition>
-        <argsstring>(sys_mbox_t mbox, void **msg)</argsstring>
-        <name>sys_mbox_fetch</name>
-        <param>
-          <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
-          <declname>mbox</declname>
-        </param>
-        <param>
-          <type>void **</type>
-          <declname>msg</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="83"/>
-        <referencedby refid="api__lib_8c_1b1ef5f260ad8147a3b5b70b317b489d2" compoundref="api__lib_8c" startline="416" endline="427">netconn_accept</referencedby>
-        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
-        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
-        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
-        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
-        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="tcpip_8c_161474ad2c2c25ba58cc774e2bcc4ef5f" compoundref="tcpip_8c" startline="68" endline="98">tcpip_thread</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="sys_8h_166160e039d0222f4dd8534cd3ab84699" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sys_mbox_free</definition>
-        <argsstring>(sys_mbox_t mbox)</argsstring>
-        <name>sys_mbox_free</name>
-        <param>
-          <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
-          <declname>mbox</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="81"/>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="sys_8h_13b766e6df37d63d5f1144c5089c2af94" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
-        <definition>sys_mbox_t sys_mbox_new</definition>
+      <memberdef kind="function" id="sys_8h_1ac89f307e8b360eaf821b461a4f26753a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+        <definition>u32_t sys_jiffies</definition>
         <argsstring>(void)</argsstring>
-        <name>sys_mbox_new</name>
+        <name>sys_jiffies</name>
         <param>
           <type>void</type>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Ticks/jiffies since power up. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="204" bodyend="213"/>
-        <references refid="structsys__mbox_18db17d5a2fed5c240e46f2644f64fe6b" compoundref="sys__arch_8c" startline="109">sys_mbox::first</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="structsys__mbox_1e88d235ceab3354ef612e0be18456a01" compoundref="sys__arch_8c" startline="109">sys_mbox::last</references>
-        <references refid="structsys__mbox_155a1a2b60ec2ffc998debbcdb68cb6fd" compoundref="sys__arch_8c" startline="111">sys_mbox::mail</references>
-        <references refid="tcpip_8c_1189da3fa172ad9c1b0491dcb4857fee6" compoundref="tcpip_8c" startline="56">mbox</references>
-        <references refid="structsys__mbox_14c3d45a63605eee5abf52b98914ad5c7" compoundref="sys__arch_8c" startline="112">sys_mbox::mutex</references>
-        <references refid="sys__arch_8c_17e7a76cc67fb974dbc234d15f9b885fe" compoundref="sys__arch_8c" startline="299" endline="309">sys_sem_new_</references>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
-        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
-        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
-        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
-        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
-        <referencedby refid="tcpip_8c_1aa3df02b3de2b41fe4bf7b2194e5e8e0" compoundref="tcpip_8c" startline="135" endline="141">tcpip_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="302" column="7" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="302" declcolumn="7"/>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1217a9af37c5dd7c3fc16daddaacb976f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sys__mbox_1gad4a51a28337f89d4b4806e6deb99798d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mbox_free</definition>
+        <argsstring>(struct sys_mbox **mb)</argsstring>
+        <name>sys_mbox_free</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Delete an mbox <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to delete </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="251" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="194" bodyend="213" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="251" declcolumn="6"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="sys__arch_8h_1a151f190d8a41cf6e2a02e0eec2b75355" compoundref="sys__arch_8h" startline="7">SYS_MBOX_NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_mbox_new</definition>
+        <argsstring>(struct sys_mbox **mb, int size)</argsstring>
+        <name>sys_mbox_new</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create a new mbox of specified size <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to the mbox to create </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(minimum) number of messages in this mbox </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, another err_t otherwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="203" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="161" bodyend="192" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="203" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1ga8ff11ed9831af7ca486123f74d4064ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void sys_mbox_post</definition>
-        <argsstring>(sys_mbox_t mbox, void *msg)</argsstring>
+        <argsstring>(struct sys_mbox **mb, void *msg)</argsstring>
         <name>sys_mbox_post</name>
         <param>
-          <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
-          <declname>mbox</declname>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
         </param>
         <param>
           <type>void *</type>
@@ -353,29 +952,303 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Post a message to an mbox - may not fail -&gt; blocks if full, only used from tasks not from ISR <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to posts the message </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>message to post (ATTENTION: can be NULL) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="79"/>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
-        <referencedby refid="api__msg_8c_19b56a6c9fb571348291027f09471890a" compoundref="api__msg_8c" startline="479" endline="501">do_close</referencedby>
-        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
-        <referencedby refid="api__msg_8c_117dd70d363c3f70a12d629bfdae64f97" compoundref="api__msg_8c" startline="284" endline="302">do_connected</referencedby>
-        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
-        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
-        <referencedby refid="api__msg_8c_1e2a8fddd0b0f2a2b50c6e52281d37a67" compoundref="api__msg_8c" startline="438" endline="446">do_recv</referencedby>
-        <referencedby refid="api__msg_8c_1c47e25770a5c135b4ef043b8f9608d95" compoundref="api__msg_8c" startline="419" endline="435">do_send</referencedby>
-        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
-        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
-        <referencedby refid="api__msg_8c_15271a23a432de3322f8fa228a3f3a11f" compoundref="api__msg_8c" startline="47" endline="63">recv_tcp</referencedby>
-        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
-        <referencedby refid="tcpip_8c_1d72ca05f74e20244cd26a8828711e9f2" compoundref="tcpip_8c" startline="121" endline="132">tcpip_apimsg</referencedby>
-        <referencedby refid="tcpip_8c_1e510f195171bed8499ae94e264a92717" compoundref="tcpip_8c" startline="101" endline="118">tcpip_input</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="211" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="215" bodyend="249" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="211" declcolumn="6"/>
+        <references refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" compoundref="sys__arch_8h" startline="23">sys_mbox::head</references>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_17bf682e03264736e39a24472167d0bca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>unsigned long</type>
-        <definition>unsigned long sys_now</definition>
+      <memberdef kind="function" id="group__sys__mbox_1ga64ca1b1ef4c810f4d67595eca4fdfef0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mbox_set_invalid</definition>
+        <argsstring>(struct sys_mbox **mb)</argsstring>
+        <name>sys_mbox_set_invalid</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set an mbox invalid so that sys_mbox_valid returns 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="265" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="375" bodyend="377" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="265" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1gacc06f47f34de04084e1d49788ce871b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_mbox_trypost</definition>
+        <argsstring>(struct sys_mbox **mb, void *msg)</argsstring>
+        <name>sys_mbox_trypost</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Try to post a message to an mbox - may fail if full or ISR <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>mbox to posts the message </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>message to post (ATTENTION: can be NULL) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="218" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="251" bodyend="285" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="218" declcolumn="7"/>
+        <references refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" compoundref="sys__arch_8h" startline="23">sys_mbox::head</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mbox_1gadf4b8fccb41fe2d76e88bef546e8e8bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mbox_valid</definition>
+        <argsstring>(struct sys_mbox **mb)</argsstring>
+        <name>sys_mbox_valid</name>
+        <param>
+          <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> **</type>
+          <declname>mb</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Check if an mbox is valid/allocated: return 1 for valid, 0 for invalid </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="258" column="5" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="367" bodyend="373" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="258" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_msleep</definition>
+        <argsstring>(u32_t ms)</argsstring>
+        <name>sys_msleep</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+          <declname>ms</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sleep for specified number of ms</para>
+<para>Sleep for some ms. Timeouts are NOT processed while sleeping.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ms</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>number of milliseconds to sleep </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="191" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/core/sys.c" bodystart="93" bodyend="103" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="191" declcolumn="6"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" compoundref="sys__arch_8c" startline="105" endline="130">sys_arch_sem_wait</references>
+        <references refid="group__sys__sem_1ga4d02e29e5dfa092559efc04dee985822" compoundref="sys__arch_8c" startline="75" endline="86">sys_sem_free</references>
+        <references refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga16336ce68b741e98204102ca4bc84dd9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_free</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_free</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Delete a semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the mutex to delete </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="109" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="149" bodyend="151" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="109" declcolumn="6"/>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="ubthread_8h_1a278f5d5b1e11b6668b75da6a285442e4" compoundref="ubthread_8c" startline="77" endline="81">ubthread_mutex_destroy</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_lock</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_lock</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Lock a mutex <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the mutex to lock </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="97" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="153" bodyend="155" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="97" declcolumn="6"/>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="ubthread_8h_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</references>
+        <referencedby refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" compoundref="mem_8c" startline="603" endline="742">mem_malloc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga38e7dae1fd88b338eb1cd97f110f3897" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_mutex_new</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_new</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Create a new mutex. Note that mutexes are expected to not be taken recursively by the lwIP code, so both implementation types (recursive or non-recursive) should work. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to the mutex to create </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, another err_t otherwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="91" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="144" bodyend="147" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="91" declcolumn="7"/>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="ubthread_8h_1ab6bfc2169b55532821582f24b68dc855">ubthread_mutex_init</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga3f392725971dc837aa56dd7e45fa7ca8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_set_invalid</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_set_invalid</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set a mutex invalid so that sys_mutex_valid returns 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="122" column="6" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="122" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_mutex_unlock</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_unlock</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Unlock a mutex <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>mutex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the mutex to unlock </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="103" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="157" bodyend="159" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="103" declcolumn="6"/>
+        <references refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="43">mutex</references>
+        <references refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" compoundref="ubthread_8h" startline="70">ubthread_mutex_list::mutex</references>
+        <references refid="ubthread_8h_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</references>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__mutex_1gaebe83ba90a6d9c23cdb3eb5d49562c4a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_mutex_valid</definition>
+        <argsstring>(sys_mutex_t *mutex)</argsstring>
+        <name>sys_mutex_valid</name>
+        <param>
+          <type><ref refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" kindref="member">sys_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Check if a mutex is valid/allocated: return 1 for valid, 0 for invalid </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="115" column="5" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="115" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__time_1ga11316ac1e77418c6fa4ab8869e3fa199" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref></type>
+        <definition>u32_t sys_now</definition>
         <argsstring>(void)</argsstring>
         <name>sys_now</name>
         <param>
@@ -384,165 +1257,250 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Returns the current time in milliseconds, may be the same as sys_jiffies or at least based on it. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="92"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="310" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="497" bodyend="499" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="310" declcolumn="7"/>
+        <references refid="sys__arch_8c_1aa40706a5e306545035127c0cf198cf49" compoundref="sys__arch_8c" startline="483" endline="495">sys_unix_now</references>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1f36773453b6a4db5ae71afef8bb77184" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sys__sem_1ga4d02e29e5dfa092559efc04dee985822" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void sys_sem_free</definition>
-        <argsstring>(sys_sem_t sem)</argsstring>
+        <argsstring>(sys_sem_t **sem)</argsstring>
         <name>sys_sem_free</name>
         <param>
-          <type><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref></type>
+          <type><ref refid="sem_8h_1a900e36da93bb688c29fc8148f2f44e04" kindref="member">sys_sem_t</ref> **</type>
           <declname>sem</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Delete a semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>semaphore to delete </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="73"/>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="156" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="75" bodyend="86" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="156" declcolumn="6"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="sem_8h_1adcce987e1dbe6b3740a4b8f1a49c680f" compoundref="sem_8c" startline="87" endline="100">sem_destroy</references>
+        <references refid="sys__arch_8h_1ac66fcad3bfe79589054eb31765031544" compoundref="sys__arch_8h" startline="8">SYS_SEM_NULL</references>
+        <referencedby refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" compoundref="sys_8c" startline="93" endline="103">sys_msleep</referencedby>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1adf2563f342b33ff6033eaa12f642e9d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref></type>
-        <definition>sys_sem_t sys_sem_new</definition>
-        <argsstring>(uInt8 count)</argsstring>
+      <memberdef kind="function" id="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+        <definition>err_t sys_sem_new</definition>
+        <argsstring>(sys_sem_t **sem, u8_t count)</argsstring>
         <name>sys_sem_new</name>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="sem_8h_1a900e36da93bb688c29fc8148f2f44e04" kindref="member">sys_sem_t</ref> **</type>
+          <declname>sem</declname>
+        </param>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
           <declname>count</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Create a new semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to the semaphore to create </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>initial count of the semaphore </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>ERR_OK if successful, another err_t otherwise </para>
+</simplesect>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="295" bodyend="297"/>
-        <references refid="sys__arch_8c_17e7a76cc67fb974dbc234d15f9b885fe" compoundref="sys__arch_8c" startline="299" endline="309">sys_sem_new_</references>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="135" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="52" bodyend="72" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="135" declcolumn="7"/>
+        <references refid="structsys__sem_1aa758e52262d23c22a40204e410b5f8c4" compoundref="sem_8h" startline="38">sys_sem::cond</references>
+        <references refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" compoundref="err_8h" startline="63">ERR_OK</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" compoundref="sem_8h" startline="39">sys_sem::mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="sem_8h_1a741be298cbcc3eab1747e8b9b239d5f0" compoundref="sem_8c" startline="56" endline="73">sem_init</references>
+        <references refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" compoundref="sem_8h" startline="37">sys_sem::signaled</references>
+        <references refid="ubthread_8h_1acbb7170a68758468ab5b02512a320112">ubthread_cond_init</references>
+        <references refid="ubthread_8h_1ab6bfc2169b55532821582f24b68dc855">ubthread_mutex_init</references>
+        <referencedby refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" compoundref="sys_8c" startline="93" endline="103">sys_msleep</referencedby>
+        <referencedby refid="tcpip_8c_1a3d42b0c46607f91aedcc7745ed466b08" compoundref="tcpip_8c" startline="356" endline="394">tcpip_api_call</referencedby>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1dcdd78b22487e983e7636c636292fbfa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="group__sys__sem_1ga6b618ddf0c8e73302f1dae7821661457" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sys_sem_set_invalid</definition>
+        <argsstring>(struct sys_sem **s)</argsstring>
+        <name>sys_sem_set_invalid</name>
+        <param>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Set a semaphore invalid so that sys_sem_valid returns 0 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="171" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="140" bodyend="142" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="171" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="group__sys__sem_1gaff1dd2af219b75ae812e0b1660bd7455" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void sys_sem_signal</definition>
-        <argsstring>(sys_sem_t sem)</argsstring>
+        <argsstring>(struct sys_sem **s)</argsstring>
         <name>sys_sem_signal</name>
         <param>
-          <type><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref></type>
-          <declname>sem</declname>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Signals a semaphore <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the semaphore to signal </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="71"/>
-        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
-        <referencedby refid="api__msg_8c_1cfa8c3089ec7810a74fea8d004197343" compoundref="api__msg_8c" startline="96" endline="107">poll_tcp</referencedby>
-        <referencedby refid="api__msg_8c_1603b715a121557dc45c821caab18efc2" compoundref="api__msg_8c" startline="110" endline="119">sent_tcp</referencedby>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
-        <referencedby refid="init_8c_17e611c367a5df004912ea29854b871ec" compoundref="init_8c" startline="95" endline="99">tcpip_init_done</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="141" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="89" bodyend="103" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="141" declcolumn="6"/>
+        <references refid="structsys__sem_1aa758e52262d23c22a40204e410b5f8c4" compoundref="sem_8h" startline="38">sys_sem::cond</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" compoundref="sem_8h" startline="39">sys_sem::mutex</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" compoundref="sem_8h" startline="37">sys_sem::signaled</references>
+        <references refid="ubthread_8h_1aeb2f756a095ecfddad31354f819623ee" compoundref="ubthread_8c" startline="164" endline="169">ubthread_cond_broadcast</references>
+        <references refid="ubthread_8h_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</references>
+        <references refid="ubthread_8h_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</references>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_16c4530613bd616e719a295779b87ae5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sys_sem_wait</definition>
-        <argsstring>(sys_sem_t sem)</argsstring>
-        <name>sys_sem_wait</name>
+      <memberdef kind="function" id="group__sys__sem_1gac7ff314270976b80559d043f6098817b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_sem_valid</definition>
+        <argsstring>(struct sys_sem **s)</argsstring>
+        <name>sys_sem_valid</name>
         <param>
-          <type><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref></type>
-          <declname>sem</declname>
+          <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> **</type>
+          <declname>s</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Check if a semaphore is valid/allocated: return 1 for valid, 0 for invalid </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="75"/>
-        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
-        <referencedby refid="sys__arch_8c_15f93e13777922e6745f5aeb6bb27ee0b" compoundref="sys__arch_8c" startline="215" endline="225">sys_mbox_free</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="164" column="5" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="132" bodyend="138" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="164" declcolumn="5"/>
+        <referencedby refid="tcpip_8c_1a12bdf37eddcd72c4178e3ea7d370395d" compoundref="tcpip_8c" startline="322" endline="344">tcpip_send_msg_wait_sem</referencedby>
       </memberdef>
-      <memberdef kind="function" id="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sys_thread_new</definition>
-        <argsstring>(void(*function)(void), void *arg)</argsstring>
+      <memberdef kind="function" id="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="sys__arch_8h_1a2930394713e07b1b46b0b5396708d911" kindref="member">sys_thread_t</ref></type>
+        <definition>sys_thread_t sys_thread_new</definition>
+        <argsstring>(const char *name, lwip_thread_fn thread, void *arg, int stacksize, int prio)</argsstring>
         <name>sys_thread_new</name>
         <param>
-          <type>void(*)(void)</type>
-          <declname>function</declname>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type><ref refid="sys_8h_1ae30a77bf6bd69bfcc5f235eaad54f2b9" kindref="member">lwip_thread_fn</ref></type>
+          <declname>thread</declname>
         </param>
         <param>
           <type>void *</type>
           <declname>arg</declname>
         </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="172" bodyend="202"/>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="44" endline="62">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="sys__arch_8c_1ca0303cc326b3efc7d32b4a794ddeb61" compoundref="sys__arch_8c" startline="99">netThreadSpinlock</references>
-        <references refid="structsys__thread_130bbf3f21718b4c9579777d2ba4d6528" compoundref="sys__arch_8c" startline="122">sys_thread::next</references>
-        <references refid="structsys__timeouts_180922134cf5f7db06829b6ee49b4954c" compoundref="sys_8h" startline="51">sys_timeouts::next</references>
-        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="sys__arch_8c_115905349139e42ffd3f853e8daae250f" compoundref="sys__arch_8c" startline="98">threads</references>
-        <references refid="structsys__thread_1bf0a0f75b1958421416c879d8011413b" compoundref="sys__arch_8c" startline="123">sys_thread::timeouts</references>
-        <references refid="structsys__thread_1109a6dc4db2e0d62aa546ce36f3fbc1b" compoundref="sys__arch_8c" startline="124">sys_thread::ubthread</references>
-        <references refid="ubthread_8h_1a0af177ef44888f3c93883294207328e" compoundref="ubthread_8c" startline="76" endline="79">ubthread_create</references>
-        <referencedby refid="bot_8c_1e5e17afd28772b096c68d413334b257a" compoundref="bot_8c" startline="83" endline="85">bot_init</referencedby>
-        <referencedby refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" compoundref="ethernetif_8c" startline="81" endline="101">low_level_init</referencedby>
-        <referencedby refid="init_8c_122b2914249628f6cba7d4e1f138c969f" compoundref="init_8c" startline="50" endline="63">net_init</referencedby>
-        <referencedby refid="shell_8h_169b075ef7e4d7bcf5a903d3d75baac02" compoundref="shell_8c" startline="114" endline="116">shell_init</referencedby>
-        <referencedby refid="tcpip_8c_1aa3df02b3de2b41fe4bf7b2194e5e8e0" compoundref="tcpip_8c" startline="135" endline="141">tcpip_init</referencedby>
-        <referencedby refid="udpecho_8h_1b288cc2f0b684d8cffe7f074724127e2" compoundref="udpecho_8c" startline="78" endline="81">udpecho_init</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="sys_8h_1eb917c25d96a51e1998478b9e6e78a44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sys_timeout</definition>
-        <argsstring>(uInt16 msecs, sys_timeout_handler h, void *arg)</argsstring>
-        <name>sys_timeout</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>msecs</declname>
+          <type>int</type>
+          <declname>stacksize</declname>
         </param>
         <param>
-          <type><ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref></type>
-          <declname>h</declname>
-        </param>
-        <param>
-          <type>void *</type>
-          <declname>arg</declname>
+          <type>int</type>
+          <declname>prio</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>The only thread function: Creates a new thread ATTENTION: although this function returns a value, it MUST NOT FAIL (ports have to assert this!) <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>human-readable name for the thread (used for debugging purposes) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>thread</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>thread-function </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>arg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>parameter passed to &apos;thread&apos; </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>stacksize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>stack size in bytes for the new thread (may be ignored by ports) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>prio</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>priority of the new thread (may be ignored by ports) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="66"/>
-        <referencedby refid="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" compoundref="ethernetif_8c" startline="309" endline="313">arp_timer</referencedby>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
-        <referencedby refid="tcpip_8c_137e1880ffdc8a50daa4e9876bc894a8f" compoundref="tcpip_8c" startline="60" endline="64">tcpip_tcp_timer</referencedby>
-        <referencedby refid="tcpip_8c_161474ad2c2c25ba58cc774e2bcc4ef5f" compoundref="tcpip_8c" startline="68" endline="98">tcpip_thread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h" line="291" column="14" bodyfile="C:/Dev/git/UbixOS/sys/net/net/sys_arch.c" bodystart="379" bodyend="408" declfile="C:/Dev/git/UbixOS/sys/include/net/sys.h" declline="291" declcolumn="14"/>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="bot_8c_1ae5e17afd28772b096c68d413334b257a" compoundref="bot_8c" startline="83" endline="85">bot_init</referencedby>
+        <referencedby refid="net_2init_8c_1a22b2914249628f6cba7d4e1f138c969f" compoundref="net_2init_8c" startline="52" endline="70">net_init</referencedby>
+        <referencedby refid="udpecho_8h_1ab288cc2f0b684d8cffe7f074724127e2" compoundref="udpecho_8c" startline="64" endline="66">udpecho_init</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -551,100 +1509,246 @@
     </detaileddescription>
     <programlisting>
 <codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
 <codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
-<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
-<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
-<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
-<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
 <codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
-<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
-<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
-<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: sys_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_SYS_H__</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_SYS_H__</highlight></codeline>
-<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="cc_8h" kindref="compound">arch/cc.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys__arch_8h" kindref="compound">arch/sys_arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight></codeline>
-<codeline lineno="41" refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<sp/><ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight></codeline>
-<codeline lineno="43" refid="structsys__timeout" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeout" kindref="compound">sys_timeout</ref><sp/>{</highlight></codeline>
-<codeline lineno="44" refid="structsys__timeout_1dc3659bd760019a94f216809e2eb8271" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeout" kindref="compound">sys_timeout</ref><sp/>*<ref refid="structsys__timeout_1dc3659bd760019a94f216809e2eb8271" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="45" refid="structsys__timeout_15f858b7e108ef28f4da55f062ebc9bb6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structsys__timeout_15f858b7e108ef28f4da55f062ebc9bb6" kindref="member">time</ref>;</highlight></codeline>
-<codeline lineno="46" refid="structsys__timeout_1dc2f8654aef6eae6d4f8818681de92f4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref><sp/><ref refid="structsys__timeout_1dc2f8654aef6eae6d4f8818681de92f4" kindref="member">h</ref>;</highlight></codeline>
-<codeline lineno="47" refid="structsys__timeout_108ef2543fa6f102c1e2b5ea3fed3cc36" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structsys__timeout_108ef2543fa6f102c1e2b5ea3fed3cc36" kindref="member">arg</ref>;</highlight></codeline>
-<codeline lineno="48"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"></highlight></codeline>
-<codeline lineno="50" refid="structsys__timeouts" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeouts" kindref="compound">sys_timeouts</ref><sp/>{</highlight></codeline>
-<codeline lineno="51" refid="structsys__timeouts_180922134cf5f7db06829b6ee49b4954c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeout" kindref="compound">sys_timeout</ref><sp/>*<ref refid="structsys__timeouts_180922134cf5f7db06829b6ee49b4954c" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="52"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>NET_HDR_SYS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NET_HDR_SYS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys__arch_8h" kindref="compound">net/arch/sys_arch.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>NO_SYS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>NO_SYS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="sys_8h_1ac1495030a8ab5e1f3c89e42ced527c5b" refkind="member"><highlight class="preprocessor">#define<sp/>SYS_ARCH_TIMEOUT<sp/>0xffffffffUL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="sys_8h_1ab0571e67edca0132b144106e9b319ef9" refkind="member"><highlight class="preprocessor">#define<sp/>SYS_MBOX_EMPTY<sp/>SYS_ARCH_TIMEOUT</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="53"><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>sys_init()<sp/>must<sp/>be<sp/>called<sp/>before<sp/>anthing<sp/>else.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1f411a8bc6b7ed4b0af9114e10c959448" kindref="member">sys_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="err_8h" kindref="compound">net/err.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys__arch_8h" kindref="compound">net/arch/sys_arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="58"><highlight class="comment"><sp/>*<sp/>sys_timeout():</highlight></codeline>
-<codeline lineno="59"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>Schedule<sp/>a<sp/>timeout<sp/>a<sp/>specified<sp/>amount<sp/>of<sp/>milliseconds<sp/>in<sp/>the</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>*<sp/>future.<sp/>When<sp/>the<sp/>timeout<sp/>occurs,<sp/>the<sp/>specified<sp/>timeout<sp/>handler<sp/>will</highlight></codeline>
-<codeline lineno="62"><highlight class="comment"><sp/>*<sp/>be<sp/>called.<sp/>The<sp/>handler<sp/>will<sp/>be<sp/>passed<sp/>the<sp/>&quot;arg&quot;<sp/>argument<sp/>when</highlight></codeline>
-<codeline lineno="63"><highlight class="comment"><sp/>*<sp/>called.</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="65"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1eb917c25d96a51e1998478b9e6e78a44" kindref="member">sys_timeout</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>msecs,<sp/><ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref><sp/><ref refid="structsys__timeout_1dc2f8654aef6eae6d4f8818681de92f4" kindref="member">h</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structsys__timeout_108ef2543fa6f102c1e2b5ea3fed3cc36" kindref="member">arg</ref>);</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeouts" kindref="compound">sys_timeouts</ref><sp/>*<ref refid="sys_8h_12ffdebd63f7a80c0233aa7460a816dff" kindref="member">sys_arch_timeouts</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Semaphore<sp/>functions.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/><ref refid="sys_8h_1adf2563f342b33ff6033eaa12f642e9d" kindref="member">sys_sem_new</ref>(<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>count);</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1dcdd78b22487e983e7636c636292fbfa" kindref="member">sys_sem_signal</ref>(<ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>sem);</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="sys_8h_1bf9681f6dcec783b38693e9d0b7af937" kindref="member">sys_arch_sem_wait</ref>(<ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>sem,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>timeout);</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1f36773453b6a4db5ae71afef8bb77184" kindref="member">sys_sem_free</ref>(<ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>sem);</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_16c4530613bd616e719a295779b87ae5c" kindref="member">sys_sem_wait</ref>(<ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>sem);</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Mailbox<sp/>functions.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref><sp/><ref refid="sys_8h_13b766e6df37d63d5f1144c5089c2af94" kindref="member">sys_mbox_new</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1217a9af37c5dd7c3fc16daddaacb976f" kindref="member">sys_mbox_post</ref>(<ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref><sp/><ref refid="tcpip_8c_1189da3fa172ad9c1b0491dcb4857fee6" kindref="member">mbox</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*msg);</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="sys_8h_194ffa3f15cc0eda6dae85c6ccb88da6e" kindref="member">sys_arch_mbox_fetch</ref>(<ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref><sp/><ref refid="tcpip_8c_1189da3fa172ad9c1b0491dcb4857fee6" kindref="member">mbox</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>**msg,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>timeout);</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_166160e039d0222f4dd8534cd3ab84699" kindref="member">sys_mbox_free</ref>(<ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref><sp/><ref refid="tcpip_8c_1189da3fa172ad9c1b0491dcb4857fee6" kindref="member">mbox</ref>);</highlight></codeline>
+<codeline lineno="58" refid="sys_8h_1ae30a77bf6bd69bfcc5f235eaad54f2b9" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="sys_8h_1ae30a77bf6bd69bfcc5f235eaad54f2b9" kindref="member">lwip_thread_fn</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Function<sp/>prototypes<sp/>for<sp/>functions<sp/>to<sp/>be<sp/>implemented<sp/>by<sp/>platform<sp/>ports</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/><sp/><sp/>(in<sp/>sys_arch.c)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Mutex<sp/>functions:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor">#ifndef<sp/>LWIP_COMPAT_MUTEX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="sys_8h_1a7bada49634cd3b28b28bdcedd763a1e6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_COMPAT_MUTEX<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>LWIP_COMPAT_MUTEX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>for<sp/>old<sp/>ports<sp/>that<sp/>don&apos;t<sp/>have<sp/>mutexes:<sp/>define<sp/>them<sp/>to<sp/>binary<sp/>semaphores<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_t<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_t</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_new(mutex)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_new(mutex,<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_lock(mutex)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_wait(mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_unlock(mutex)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_signal(mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_free(mutex)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_free(mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_valid(mutex)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_valid(mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mutex_set_invalid(mutex)<sp/><sp/>sys_sem_set_invalid(mutex)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_COMPAT_MUTEX<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="82"><highlight class="normal"></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1afce1f71c38e3d7d08ebf0654ec97dfa" kindref="member">sys_mbox_fetch</ref>(<ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref><sp/><ref refid="tcpip_8c_1189da3fa172ad9c1b0491dcb4857fee6" kindref="member">mbox</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>**msg);</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"></highlight></codeline>
-<codeline lineno="85"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Thread<sp/>functions.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>sys_thread_new(void<sp/>(*<sp/>thread)(void<sp/>*arg),<sp/>void<sp/>*arg);</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" kindref="member">sys_thread_new</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*<sp/>function)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">),<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>following<sp/>functions<sp/>are<sp/>used<sp/>only<sp/>in<sp/>Unix<sp/>code,<sp/>and</highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>can<sp/>be<sp/>omitted<sp/>when<sp/>porting<sp/>the<sp/>stack.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Returns<sp/>the<sp/>current<sp/>time<sp/>in<sp/>microseconds.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="sys_8h_17bf682e03264736e39a24472167d0bca" kindref="member">sys_now</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"></highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_SYS_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="group__sys__mutex_1ga38e7dae1fd88b338eb1cd97f110f3897" kindref="member">sys_mutex_new</ref>(<ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>*<ref refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="97"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" kindref="member">sys_mutex_lock</ref>(<ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>*<ref refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="103"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" kindref="member">sys_mutex_unlock</ref>(<ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>*<ref refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="109"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mutex_1ga16336ce68b741e98204102ca4bc84dd9" kindref="member">sys_mutex_free</ref>(<ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>*<ref refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_mutex_valid</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sys__mutex_1gaebe83ba90a6d9c23cdb3eb5d49562c4a" kindref="member">sys_mutex_valid</ref>(<ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>*<ref refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_mutex_set_invalid</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mutex_1ga3f392725971dc837aa56dd7e45fa7ca8" kindref="member">sys_mutex_set_invalid</ref>(<ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref><sp/>*<ref refid="ubthread_8c_1a18b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_COMPAT_MUTEX<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Semaphore<sp/>functions:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" kindref="member">sys_sem_new</ref>(<ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>**sem,<sp/><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref><sp/>count);</highlight></codeline>
+<codeline lineno="141"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__sem_1gaff1dd2af219b75ae812e0b1660bd7455" kindref="member">sys_sem_signal</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>**s);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" kindref="member">sys_arch_sem_wait</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>**s,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>timeout);</highlight></codeline>
+<codeline lineno="156"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__sem_1ga4d02e29e5dfa092559efc04dee985822" kindref="member">sys_sem_free</ref>(<ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>**sem);</highlight></codeline>
+<codeline lineno="158" refid="sys_8h_1a84e7e4bc00255aee84e6e7289a985703" refkind="member"><highlight class="preprocessor">#define<sp/>sys_sem_wait(sem)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_arch_sem_wait(sem,<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_sem_valid</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sys__sem_1gac7ff314270976b80559d043f6098817b" kindref="member">sys_sem_valid</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>**s);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_sem_set_invalid</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__sem_1ga6b618ddf0c8e73302f1dae7821661457" kindref="member">sys_sem_set_invalid</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>**s);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_sem_valid_val</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177" refid="sys_8h_1a9e8ad541356786936f23ab83b8f550cc" refkind="member"><highlight class="preprocessor">#define<sp/>sys_sem_valid_val(sem)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_sem_valid(&amp;(sem))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_sem_set_invalid_val</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183" refid="sys_8h_1a2556e570f6973a6f4d57d0e76ef190d8" refkind="member"><highlight class="preprocessor">#define<sp/>sys_sem_set_invalid_val(sem)<sp/>sys_sem_set_invalid(&amp;(sem))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_msleep</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__misc_1ga6b8786f43e779953e8b74e983c88682e" kindref="member">sys_msleep</ref>(<ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/>ms);<sp/></highlight><highlight class="comment">/*<sp/>only<sp/>has<sp/>a<sp/>(close<sp/>to)<sp/>1<sp/>ms<sp/>resolution.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Mailbox<sp/>functions.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="group__sys__mbox_1ga26c015e64c859c9361a6f75c4e6fa829" kindref="member">sys_mbox_new</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="211"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mbox_1ga8ff11ed9831af7ca486123f74d4064ac" kindref="member">sys_mbox_post</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*msg);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/><ref refid="group__sys__mbox_1gacc06f47f34de04084e1d49788ce871b6" kindref="member">sys_mbox_trypost</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*msg);</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="group__sys__mbox_1gacc53b5c30f131abc40f0885d39d32f87" kindref="member">sys_arch_mbox_fetch</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>**msg,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>timeout);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Allow<sp/>port<sp/>to<sp/>override<sp/>with<sp/>a<sp/>macro,<sp/>e.g.<sp/>special<sp/>timeout<sp/>for<sp/>sys_arch_mbox_fetch()<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_arch_mbox_tryfetch</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="group__sys__mbox_1ga3e0e0f02be2f670ebfb093a21f7dcdb8" kindref="member">sys_arch_mbox_tryfetch</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>**msg);</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight></codeline>
+<codeline lineno="245" refid="sys_8h_1ab7841780b31ba9c0a39a440aad1fca13" refkind="member"><highlight class="preprocessor">#define<sp/>sys_mbox_tryfetch(mbox,<sp/>msg)<sp/>sys_arch_mbox_tryfetch(mbox,<sp/>msg)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mbox_1gad4a51a28337f89d4b4806e6deb99798d" kindref="member">sys_mbox_free</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb);</highlight></codeline>
+<codeline lineno="252" refid="sys_8h_1a5bae9efa9c945dc810665dc4a7e60117" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sys_mbox_fetch(mbox,<sp/>msg)<sp/>sys_arch_mbox_fetch(mbox,<sp/>msg,<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_mbox_valid</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__sys__mbox_1gadf4b8fccb41fe2d76e88bef546e8e8bb" kindref="member">sys_mbox_valid</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb);</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_mbox_set_invalid</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="group__sys__mbox_1ga64ca1b1ef4c810f4d67595eca4fdfef0" kindref="member">sys_mbox_set_invalid</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>**mb);</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_mbox_valid_val</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271" refid="sys_8h_1aae82640d0bdbeec7b9b6511b3f8d99cb" refkind="member"><highlight class="preprocessor">#define<sp/>sys_mbox_valid_val(mbox)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>sys_mbox_valid(&amp;(mbox))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_mbox_set_invalid_val</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277" refid="sys_8h_1ae293feebb61d36f2db99be53702b8203" refkind="member"><highlight class="preprocessor">#define<sp/>sys_mbox_set_invalid_val(mbox)<sp/>sys_mbox_set_invalid(&amp;(mbox))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><ref refid="structsys__thread" kindref="compound">sys_thread_t</ref><sp/><ref refid="group__sys__misc_1ga0d596afdd8dbcfad320172d39b0f607a" kindref="member">sys_thread_new</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/><ref refid="sys_8h_1ae30a77bf6bd69bfcc5f235eaad54f2b9" kindref="member">lwip_thread_fn</ref><sp/><ref refid="structthread" kindref="compound">thread</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>stacksize,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>prio);</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>NO_SYS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>sys_init()<sp/>must<sp/>be<sp/>called<sp/>before<sp/>anything<sp/>else.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sys_8h_1af411a8bc6b7ed4b0af9114e10c959448" kindref="member">sys_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>sys_jiffies</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/><ref refid="sys_8h_1ac89f307e8b360eaf821b461a4f26753a" kindref="member">sys_jiffies</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="304"><highlight class="normal"></highlight></codeline>
+<codeline lineno="310"><highlight class="normal"><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/><ref refid="group__sys__time_1ga11316ac1e77418c6fa4ab8869e3fa199" kindref="member">sys_now</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="311"><highlight class="normal"></highlight></codeline>
+<codeline lineno="312"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Critical<sp/>Region<sp/>Protection<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>These<sp/>functions<sp/>must<sp/>be<sp/>implemented<sp/>in<sp/>the<sp/>sys_arch.c<sp/>file.</highlight></codeline>
+<codeline lineno="314"><highlight class="comment"><sp/><sp/><sp/>In<sp/>some<sp/>implementations<sp/>they<sp/>can<sp/>provide<sp/>a<sp/>more<sp/>light-weight<sp/>protection</highlight></codeline>
+<codeline lineno="315"><highlight class="comment"><sp/><sp/><sp/>mechanism<sp/>than<sp/>using<sp/>semaphores.<sp/>Otherwise<sp/>semaphores<sp/>can<sp/>be<sp/>used<sp/>for</highlight></codeline>
+<codeline lineno="316"><highlight class="comment"><sp/><sp/><sp/>implementation<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="317"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SYS_ARCH_PROTECT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight></codeline>
+<codeline lineno="323"><highlight class="preprocessor">#if<sp/>SYS_LIGHTWEIGHT_PROT</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"></highlight></codeline>
+<codeline lineno="332"><highlight class="preprocessor">#define<sp/>SYS_ARCH_DECL_PROTECT(lev)<sp/>sys_prot_t<sp/>lev</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="333"><highlight class="normal"></highlight></codeline>
+<codeline lineno="344"><highlight class="preprocessor">#define<sp/>SYS_ARCH_PROTECT(lev)<sp/>lev<sp/>=<sp/>sys_arch_protect()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="345"><highlight class="normal"></highlight></codeline>
+<codeline lineno="355"><highlight class="preprocessor">#define<sp/>SYS_ARCH_UNPROTECT(lev)<sp/>sys_arch_unprotect(lev)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="356"><highlight class="normal">sys_prot_t<sp/>sys_arch_protect(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>sys_arch_unprotect(sys_prot_t<sp/>pval);</highlight></codeline>
+<codeline lineno="358"><highlight class="normal"></highlight></codeline>
+<codeline lineno="359"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="360"><highlight class="normal"></highlight></codeline>
+<codeline lineno="361" refid="sys_8h_1a945395fa326214fc9736487242710a90" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_DECL_PROTECT(lev)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="362" refid="sys_8h_1a3d0e48feafd378e9c26c64567ecd8bab" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_PROTECT(lev)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="363" refid="sys_8h_1a2f48e97047945642ddeb27e65bf4ffe2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_UNPROTECT(lev)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="364"><highlight class="normal"></highlight></codeline>
+<codeline lineno="365"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_LIGHTWEIGHT_PROT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="366"><highlight class="normal"></highlight></codeline>
+<codeline lineno="367"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_ARCH_PROTECT<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="368"><highlight class="normal"></highlight></codeline>
+<codeline lineno="369"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="370"><highlight class="comment"><sp/>*<sp/>Macros<sp/>to<sp/>set/get<sp/>and<sp/>increase/decrease<sp/>variables<sp/>in<sp/>a<sp/>thread-safe<sp/>way.</highlight></codeline>
+<codeline lineno="371"><highlight class="comment"><sp/>*<sp/>Use<sp/>these<sp/>for<sp/>accessing<sp/>variable<sp/>that<sp/>are<sp/>used<sp/>from<sp/>more<sp/>than<sp/>one<sp/>thread.</highlight></codeline>
+<codeline lineno="372"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"></highlight></codeline>
+<codeline lineno="374"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SYS_ARCH_INC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="375" refid="sys_8h_1acc5f7f8cbd020de628d1e9a0443da4c7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_INC(var,<sp/>val)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="376"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_DECL_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="377"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="378"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>var<sp/>+=<sp/>val;<sp/>\</highlight></codeline>
+<codeline lineno="379"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_UNPROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="380"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="381"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_ARCH_INC<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="382"><highlight class="normal"></highlight></codeline>
+<codeline lineno="383"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SYS_ARCH_DEC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="384" refid="sys_8h_1aa9a585faa63acdd5d59ac5e7759a07c5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_DEC(var,<sp/>val)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="385"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_DECL_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="386"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="387"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>var<sp/>-=<sp/>val;<sp/>\</highlight></codeline>
+<codeline lineno="388"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_UNPROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="389"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="390"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_ARCH_DEC<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="391"><highlight class="normal"></highlight></codeline>
+<codeline lineno="392"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SYS_ARCH_GET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="393" refid="sys_8h_1a0da95147531964d619be7744c7169986" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_GET(var,<sp/>ret)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="394"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_DECL_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="395"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="396"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ret<sp/>=<sp/>var;<sp/>\</highlight></codeline>
+<codeline lineno="397"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_UNPROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="398"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="399"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_ARCH_GET<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="400"><highlight class="normal"></highlight></codeline>
+<codeline lineno="401"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>SYS_ARCH_SET</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="402" refid="sys_8h_1a24ff55288a4d9fa28100c78b2f4612f6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_ARCH_SET(var,<sp/>val)<sp/>do<sp/>{<sp/>\</highlight></codeline>
+<codeline lineno="403"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_DECL_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="404"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_PROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="405"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>var<sp/>=<sp/>val;<sp/>\</highlight></codeline>
+<codeline lineno="406"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>SYS_ARCH_UNPROTECT(old_level);<sp/>\</highlight></codeline>
+<codeline lineno="407"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/>while(0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="408"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>SYS_ARCH_SET<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="409"><highlight class="normal"></highlight></codeline>
+<codeline lineno="410"><highlight class="normal"></highlight></codeline>
+<codeline lineno="411"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="412"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="413"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="414"><highlight class="normal"></highlight></codeline>
+<codeline lineno="415"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>NET_HDR_SYS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/sys.h"/>
   </compounddef>
 </doxygen>

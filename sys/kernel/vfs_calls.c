@@ -65,7 +65,8 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     nfp->fd = fopen(args->path, "r");
 
   if (nfp->fd == 0x0) {
-    fdestroy(td, nfp, fd);
+    if (fdestroy(td, nfp, fd) != 0x0)
+      kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
     td->td_retval[0] = -1;
     error = -1;
@@ -118,13 +119,15 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
         pFD = fd->data;
         if (args->fd == pFD->rFD) {
           if (pFD->rfdCNT < 2)
-            fdestroy(td, fd, args->fd);
+            if (fdestroy(td, fd, args->fd) != 0x0)
+              kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
           pFD->rfdCNT--;
         }
 
         if (args->fd == pFD->wFD) {
           if (pFD->wfdCNT < 2)
-            fdestroy(td, fd, args->fd);
+            if (fdestroy(td, fd, args->fd) != 0x0)
+              kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
           pFD->wfdCNT--;
         }
 
@@ -137,7 +140,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
             td->td_retval[0] = -1;
 
           kprintf("DESTROY: %i!", args->fd);
-          if (!fdestroy(td, fd, args->fd))
+          if (fdestroy(td, fd, args->fd) != 0x0)
             kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
 
           td->td_retval[0] = 0;
@@ -431,7 +434,8 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
   nfp->fd = fopen(path, "rwb");
 
   if (nfp->fd == 0x0) {
-    fdestroy(thr, nfp, fd);
+    if (fdestroy(thr, nfp, fd) != 0x0)
+      kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
     thr->td_retval[0] = -1;
 

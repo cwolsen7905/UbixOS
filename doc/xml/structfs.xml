@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structfs" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfs" kind="struct" language="C++" prot="public">
     <compoundname>fs</compoundname>
-    <includes refid="ufs_8h" local="no">ufs.h</includes>
+    <includes refid="ufs_2ffs_2fs_8h" local="no">fs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structfs_1c1520bcda580bd3694fa7be346622285" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref> *</type>
-        <definition>u_int* fs::fs_active</definition>
+      <memberdef kind="variable" id="structfs_1a242bad85def13c2aba47daaf58de7308" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref> *</type>
+        <definition>u_int * fs::fs_active</definition>
         <argsstring></argsstring>
         <name>fs_active</name>
         <briefdescription>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="260" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="260" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="331" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="331" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_13d750fecfb70d46d78e3964c0fc62db0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a3d750fecfb70d46d78e3964c0fc62db0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_avgfilesize</definition>
         <argsstring></argsstring>
         <name>fs_avgfilesize</name>
@@ -28,10 +28,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="273" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="273" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="252" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="252" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_14e27ad3d243d1868c517c7f50db36c68" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1aac41d7cc53c7100d01164f2b296b05ee" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t fs::fs_avgfilesize</definition>
+        <argsstring></argsstring>
+        <name>fs_avgfilesize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="347" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="347" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a4e27ad3d243d1868c517c7f50db36c68" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_avgfpdir</definition>
         <argsstring></argsstring>
         <name>fs_avgfpdir</name>
@@ -41,10 +54,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="274" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="274" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="253" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="253" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_19a6df636b99f001bb0fe96c2c567c3db" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ada76c669a82750d9a8c0d7ca2eddd082" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t fs::fs_avgfpdir</definition>
+        <argsstring></argsstring>
+        <name>fs_avgfpdir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="348" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="348" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a9a6df636b99f001bb0fe96c2c567c3db" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_bmask</definition>
         <argsstring></argsstring>
         <name>fs_bmask</name>
@@ -54,10 +80,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="210" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="210" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="281" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="281" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1664686425d41a31c188000518c356682" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a664686425d41a31c188000518c356682" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_bshift</definition>
         <argsstring></argsstring>
         <name>fs_bshift</name>
@@ -67,10 +93,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="212" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="212" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="283" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="283" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1beaa37858276e7d7d7f8f4260bc53f6d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1abeaa37858276e7d7d7f8f4260bc53f6d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_bsize</definition>
         <argsstring></argsstring>
         <name>fs_bsize</name>
@@ -80,10 +106,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="202" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="202" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="273" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="273" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1dedb82f28a6436a506aa3c47bdf49aa0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1adedb82f28a6436a506aa3c47bdf49aa0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_cblkno</definition>
         <argsstring></argsstring>
         <name>fs_cblkno</name>
@@ -93,10 +119,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="193" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="193" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="264" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="264" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_130411c307e72e31cec612a97b004453e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a30411c307e72e31cec612a97b004453e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_cgrotor</definition>
         <argsstring></argsstring>
         <name>fs_cgrotor</name>
@@ -106,10 +132,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="255" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="255" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="326" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="326" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_11a500c66d35a8ae7875ae00c2a953eea" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a1a500c66d35a8ae7875ae00c2a953eea" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_cgsize</definition>
         <argsstring></argsstring>
         <name>fs_cgsize</name>
@@ -119,10 +145,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="235" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="235" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="306" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="306" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1d70b3b14f20ee12639f774ce0a6817b0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ad70b3b14f20ee12639f774ce0a6817b0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
         <definition>int8_t fs::fs_clean</definition>
         <argsstring></argsstring>
         <name>fs_clean</name>
@@ -132,11 +158,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="247" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="247" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="318" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="318" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1d7440c4ded770a821535ad723d30f74a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref> *</type>
-        <definition>u_int8_t* fs::fs_contigdirs</definition>
+      <memberdef kind="variable" id="structfs_1ada48615e2bbbfed4cce9753d86d7584f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref> *</type>
+        <definition>u_int8_t * fs::fs_contigdirs</definition>
         <argsstring></argsstring>
         <name>fs_contigdirs</name>
         <briefdescription>
@@ -145,10 +171,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="257" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="257" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="328" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="328" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1cdd52fe6ac532b73eb877c57b286dd93" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1acdd52fe6ac532b73eb877c57b286dd93" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_contigsumsize</definition>
         <argsstring></argsstring>
         <name>fs_contigsumsize</name>
@@ -158,10 +184,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="278" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="278" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="354" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="354" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1d43582016bfc00268dbd3de5bdf63c56" prot="public" static="no" mutable="no">
-        <type><ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ad43582016bfc00268dbd3de5bdf63c56" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1ad1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref></type>
         <definition>ufs2_daddr_t fs::fs_csaddr</definition>
         <argsstring></argsstring>
         <name>fs_csaddr</name>
@@ -171,11 +197,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="269" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="269" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="343" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="343" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1ec267ea11a6dd319fb4b484d555c1ed8" prot="public" static="no" mutable="no">
-        <type><ref refid="structcsum" kindref="compound">csum</ref> *</type>
-        <definition>struct csum* fs::fs_csp</definition>
+      <memberdef kind="variable" id="structfs_1a4b9c3e77f89f5a59f71e37f83b8d42aa" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcsum" kindref="compound">csum</ref> *</type>
+        <definition>struct csum * fs::fs_csp</definition>
         <argsstring></argsstring>
         <name>fs_csp</name>
         <briefdescription>
@@ -184,10 +210,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="258" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="258" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="329" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="329" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_18eba877a723ca9b8f9c762a1d65878e9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a8eba877a723ca9b8f9c762a1d65878e9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_cssize</definition>
         <argsstring></argsstring>
         <name>fs_cssize</name>
@@ -197,10 +223,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="234" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="234" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="305" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="305" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_185a5dbf3800d9a52f02efc0367cf87f2" prot="public" static="no" mutable="no">
-        <type><ref refid="structcsum__total" kindref="compound">csum_total</ref></type>
+      <memberdef kind="variable" id="structfs_1a85a5dbf3800d9a52f02efc0367cf87f2" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcsum__total" kindref="compound">csum_total</ref></type>
         <definition>struct csum_total fs::fs_cstotal</definition>
         <argsstring></argsstring>
         <name>fs_cstotal</name>
@@ -210,10 +236,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="265" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="265" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="338" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="339" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1fc80e8002a127f6e31ab675bc79d7466" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1afc80e8002a127f6e31ab675bc79d7466" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_dblkno</definition>
         <argsstring></argsstring>
         <name>fs_dblkno</name>
@@ -223,10 +249,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="195" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="195" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="266" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="266" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1a8e6378d3a6150f5a1dc264cf2e306e6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1aa8e6378d3a6150f5a1dc264cf2e306e6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
         <definition>int64_t fs::fs_dsize</definition>
         <argsstring></argsstring>
         <name>fs_dsize</name>
@@ -236,10 +262,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="268" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="268" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="342" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="342" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1845f442a845714c10fff6d8b12c9eb9e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a845f442a845714c10fff6d8b12c9eb9e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_firstfield</definition>
         <argsstring></argsstring>
         <name>fs_firstfield</name>
@@ -249,10 +275,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="190" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="190" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="261" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="261" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_13036cb913215b8925934f2d87792e75b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a3036cb913215b8925934f2d87792e75b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_flags</definition>
         <argsstring></argsstring>
         <name>fs_flags</name>
@@ -262,10 +288,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="277" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="277" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="353" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="353" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1f447cdadaacd96c24c81f7e34c0059f5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1af447cdadaacd96c24c81f7e34c0059f5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_fmask</definition>
         <argsstring></argsstring>
         <name>fs_fmask</name>
@@ -275,10 +301,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="211" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="211" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="282" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="282" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1685528bae5950f6dc8d7868ce1df2268" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a685528bae5950f6dc8d7868ce1df2268" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
         <definition>int8_t fs::fs_fmod</definition>
         <argsstring></argsstring>
         <name>fs_fmod</name>
@@ -288,10 +314,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="246" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="246" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="317" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="317" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_18231c53c394bf5c523584dbe87295b03" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a8231c53c394bf5c523584dbe87295b03" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_fpg</definition>
         <argsstring></argsstring>
         <name>fs_fpg</name>
@@ -301,10 +327,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="242" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="242" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="313" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="313" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_113aa148271139d206d6b778ac9b3ed09" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a13aa148271139d206d6b778ac9b3ed09" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_frag</definition>
         <argsstring></argsstring>
         <name>fs_frag</name>
@@ -314,10 +340,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="204" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="204" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="275" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="275" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_127f2b7e09b8716cf08237aba7529fbf7" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a27f2b7e09b8716cf08237aba7529fbf7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_fragshift</definition>
         <argsstring></argsstring>
         <name>fs_fragshift</name>
@@ -327,10 +353,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="218" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="218" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="289" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="289" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1420213fcd930d17a087a39fa48eab6bb" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a420213fcd930d17a087a39fa48eab6bb" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_fsbtodb</definition>
         <argsstring></argsstring>
         <name>fs_fsbtodb</name>
@@ -340,10 +366,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="219" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="219" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="290" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="290" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1c62c66d38fde6372b81e3cf8ef8ec6f2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ac62c66d38fde6372b81e3cf8ef8ec6f2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_fshift</definition>
         <argsstring></argsstring>
         <name>fs_fshift</name>
@@ -353,10 +379,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="213" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="213" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="284" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="284" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1c2a347c2b6170615954aee791991f94d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ac2a347c2b6170615954aee791991f94d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_fsize</definition>
         <argsstring></argsstring>
         <name>fs_fsize</name>
@@ -366,11 +392,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="203" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="203" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="274" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="274" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1286576f62e4a544a73a65c880189b838" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1e2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref></type>
-        <definition>u_char fs::fs_fsmnt[468]</definition>
+      <memberdef kind="variable" id="structfs_1a580ddd495e4e346d10f6f74cd8ae35ad" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref></type>
+        <definition>u_char fs::fs_fsmnt</definition>
         <argsstring>[468]</argsstring>
         <name>fs_fsmnt</name>
         <briefdescription>
@@ -379,10 +405,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="250" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="250" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="321" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="321" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1680d9067242a7b551779146d839997f4" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a680d9067242a7b551779146d839997f4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_iblkno</definition>
         <argsstring></argsstring>
         <name>fs_iblkno</name>
@@ -392,11 +418,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="194" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="194" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="265" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="265" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1b656ef66b4edf79aaf8def4739d65aa2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
-        <definition>int32_t fs::fs_id[2]</definition>
+      <memberdef kind="variable" id="structfs_1ad573635cfbc906b4d5af65a338705fef" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fs::fs_id</definition>
         <argsstring>[2]</argsstring>
         <name>fs_id</name>
         <briefdescription>
@@ -405,10 +431,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="231" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="231" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="302" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="302" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_109f5993f6a06c3a6543978b91da11826" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a09f5993f6a06c3a6543978b91da11826" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_inopb</definition>
         <argsstring></argsstring>
         <name>fs_inopb</name>
@@ -418,10 +444,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="224" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="224" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="203" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="203" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1b9ac53ea2f7e8f218b48ce3d68245e12" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a733402e62d65acbcba0ab0468022b4d5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t fs::fs_inopb</definition>
+        <argsstring></argsstring>
+        <name>fs_inopb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="295" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="295" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1ab9ac53ea2f7e8f218b48ce3d68245e12" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_ipg</definition>
         <argsstring></argsstring>
         <name>fs_ipg</name>
@@ -431,10 +470,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="241" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="241" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="220" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="220" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1acc2f0aa6f3902f165c563ce5ba76373" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1adf24d0e3ffe0fceef2f3821305e04e3d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t fs::fs_ipg</definition>
+        <argsstring></argsstring>
+        <name>fs_ipg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="312" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="312" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1aacc2f0aa6f3902f165c563ce5ba76373" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_magic</definition>
         <argsstring></argsstring>
         <name>fs_magic</name>
@@ -444,11 +496,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="289" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="289" bodyend="-1"/>
-        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="365" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="365" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_11236b6b674047859269b8df46a745aba" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a1236b6b674047859269b8df46a745aba" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_maxbpg</definition>
         <argsstring></argsstring>
         <name>fs_maxbpg</name>
@@ -458,10 +509,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="216" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="216" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="287" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="287" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1133f70897ddd802936d9f15f9c4f7b1d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a133f70897ddd802936d9f15f9c4f7b1d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_maxbsize</definition>
         <argsstring></argsstring>
         <name>fs_maxbsize</name>
@@ -471,11 +522,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="262" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="262" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="333" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="333" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_150ffe84a85ce08275f6ca6f585cfe3c8" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref> *</type>
-        <definition>int32_t* fs::fs_maxcluster</definition>
+      <memberdef kind="variable" id="structfs_1a3456619a6ebb8c8c6b522d5d3ef1b081" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref> *</type>
+        <definition>int32_t * fs::fs_maxcluster</definition>
         <argsstring></argsstring>
         <name>fs_maxcluster</name>
         <briefdescription>
@@ -484,10 +535,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="259" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="259" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="330" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="330" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_178bdd388e46c8136e6f9e5b6b7a3f600" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a78bdd388e46c8136e6f9e5b6b7a3f600" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_maxcontig</definition>
         <argsstring></argsstring>
         <name>fs_maxcontig</name>
@@ -497,10 +548,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="215" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="215" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="286" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="286" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_180705fcf0b5478639af84da1d4c24e72" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a80705fcf0b5478639af84da1d4c24e72" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
         <definition>u_int64_t fs::fs_maxfilesize</definition>
         <argsstring></argsstring>
         <name>fs_maxfilesize</name>
@@ -510,11 +561,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="281" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="281" bodyend="-1"/>
-        <referencedby refid="ffs_8c_1ac9a795f42d582183e06192277305e47" compoundref="ffs_8c" startline="11" endline="23">ffs_read</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="357" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="357" bodyend="-1"/>
+        <referencedby refid="ffs_8c_1ae0611a10bf50ddb7c1ab4ce652c09307" compoundref="ffs_8c" startline="11" endline="23">ffs_read</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1bc0a279ec4d6a3f7a70e7078c9def3d3" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1abc0a279ec4d6a3f7a70e7078c9def3d3" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_maxsymlinklen</definition>
         <argsstring></argsstring>
         <name>fs_maxsymlinklen</name>
@@ -524,10 +575,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="279" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="279" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="355" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="355" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_13b39e3f97e0438ecbb1a953dec03a5c1" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a7c602e34fbe2437930da5af29bdd3f40" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fs::fs_metaspace</definition>
+        <argsstring></argsstring>
+        <name>fs_metaspace</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="336" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="336" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a3b39e3f97e0438ecbb1a953dec03a5c1" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_minfree</definition>
         <argsstring></argsstring>
         <name>fs_minfree</name>
@@ -537,10 +601,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="206" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="206" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="277" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="277" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_106f4cbb13f8a47c87f53f5b3a7d86340" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a60205b64391864a0fdd1184ad7599c68" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1aec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref></type>
+        <definition>ufs_time_t fs::fs_mtime</definition>
+        <argsstring></argsstring>
+        <name>fs_mtime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="350" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a06f4cbb13f8a47c87f53f5b3a7d86340" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_ncg</definition>
         <argsstring></argsstring>
         <name>fs_ncg</name>
@@ -550,10 +627,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="201" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="201" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="180" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="180" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_12d119c1181a7e3acad4d7705a589d20b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a2d9e55c707f7e3d817aecadcdd64caaf" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t fs::fs_ncg</definition>
+        <argsstring></argsstring>
+        <name>fs_ncg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="272" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="272" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a2d119c1181a7e3acad4d7705a589d20b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_nindir</definition>
         <argsstring></argsstring>
         <name>fs_nindir</name>
@@ -563,12 +653,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="223" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="223" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="294" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="294" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1a917d7ad714b69f2bd80b5bde291828c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfs_1a4cf49593a8f0cf0a1d2d53992fab1ec7" prot="public" static="no" mutable="no">
         <type>void *</type>
-        <definition>void* fs::fs_ocsp[((128/sizeof(void *))-4)]</definition>
-        <argsstring>[((128/sizeof(void *))-4)]</argsstring>
+        <definition>void * fs::fs_ocsp</definition>
+        <argsstring>[((128/sizeof(void *)) - 4)]</argsstring>
         <name>fs_ocsp</name>
         <briefdescription>
         </briefdescription>
@@ -576,10 +666,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="256" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="256" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="327" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="327" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_13372db524b01604405d0736d4c76ed88" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a3372db524b01604405d0736d4c76ed88" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_cgmask</definition>
         <argsstring></argsstring>
         <name>fs_old_cgmask</name>
@@ -589,10 +679,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="197" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="197" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="268" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="268" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_10e65a1457e48bf92c3ff9ed5de2d2f97" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a0e65a1457e48bf92c3ff9ed5de2d2f97" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_cgoffset</definition>
         <argsstring></argsstring>
         <name>fs_old_cgoffset</name>
@@ -602,10 +692,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="196" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="196" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="267" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="267" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1da2826b8126cd04502a8d106d97f2feb" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ada2826b8126cd04502a8d106d97f2feb" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_cpc</definition>
         <argsstring></argsstring>
         <name>fs_old_cpc</name>
@@ -615,10 +705,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="261" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="261" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="332" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="332" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_13059d11894848b96ae73618740f0dac6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a3059d11894848b96ae73618740f0dac6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_cpg</definition>
         <argsstring></argsstring>
         <name>fs_old_cpg</name>
@@ -628,10 +718,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="240" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="240" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="311" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="311" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_11e5f3cc79f0589b713e56ae3f7892287" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a1e5f3cc79f0589b713e56ae3f7892287" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_csaddr</definition>
         <argsstring></argsstring>
         <name>fs_old_csaddr</name>
@@ -641,10 +731,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="233" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="233" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="304" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="304" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1987656a71ddd126654688a50477b4757" prot="public" static="no" mutable="no">
-        <type><ref refid="structcsum" kindref="compound">csum</ref></type>
+      <memberdef kind="variable" id="structfs_1a987656a71ddd126654688a50477b4757" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcsum" kindref="compound">csum</ref></type>
         <definition>struct csum fs::fs_old_cstotal</definition>
         <argsstring></argsstring>
         <name>fs_old_cstotal</name>
@@ -654,10 +744,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="244" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="244" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="313" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="315" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_107a13bddf97b62b08ec62f12f788be8a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a07a13bddf97b62b08ec62f12f788be8a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_dsize</definition>
         <argsstring></argsstring>
         <name>fs_old_dsize</name>
@@ -667,10 +757,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="200" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="200" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="271" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="271" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_12eb4e28e41443e46d48f4b2d401fa61f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a2eb4e28e41443e46d48f4b2d401fa61f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
         <definition>int8_t fs::fs_old_flags</definition>
         <argsstring></argsstring>
         <name>fs_old_flags</name>
@@ -680,10 +770,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="249" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="249" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="320" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="320" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_18fd0d606db522d961af347195bb59909" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a8fd0d606db522d961af347195bb59909" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_inodefmt</definition>
         <argsstring></argsstring>
         <name>fs_old_inodefmt</name>
@@ -693,10 +783,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="280" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="280" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="356" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="356" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1ffe7e7f7fcff6fab9079d83220e3e1cc" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1affe7e7f7fcff6fab9079d83220e3e1cc" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_interleave</definition>
         <argsstring></argsstring>
         <name>fs_old_interleave</name>
@@ -706,10 +796,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="229" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="229" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="300" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="300" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_13b4d10d43d4175b9444ed73ddcf18140" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a3b4d10d43d4175b9444ed73ddcf18140" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_ncyl</definition>
         <argsstring></argsstring>
         <name>fs_old_ncyl</name>
@@ -719,10 +809,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="239" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="239" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="310" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="310" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1aefee9a806967afe881a50fcbe391ff5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1aaefee9a806967afe881a50fcbe391ff5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_npsect</definition>
         <argsstring></argsstring>
         <name>fs_old_npsect</name>
@@ -732,10 +822,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="228" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="228" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="299" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="299" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1ef6eb7c95acad0463084fc855e91c73d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1aef6eb7c95acad0463084fc855e91c73d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_nrpos</definition>
         <argsstring></argsstring>
         <name>fs_old_nrpos</name>
@@ -745,10 +835,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="286" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="286" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="362" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="362" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_189b502e2bf515440bc150e8e4ebb12c9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a89b502e2bf515440bc150e8e4ebb12c9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_nsect</definition>
         <argsstring></argsstring>
         <name>fs_old_nsect</name>
@@ -758,10 +848,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="237" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="237" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="308" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="308" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_17262744877dac1c79e119fab7ee3d67d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a7262744877dac1c79e119fab7ee3d67d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_nspf</definition>
         <argsstring></argsstring>
         <name>fs_old_nspf</name>
@@ -771,10 +861,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="225" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="225" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="296" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="296" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1ff096e7b1228e1914b01a8b66e74b1b1" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1aff096e7b1228e1914b01a8b66e74b1b1" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_postblformat</definition>
         <argsstring></argsstring>
         <name>fs_old_postblformat</name>
@@ -784,10 +874,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="285" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="285" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="361" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="361" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_131507b3bebe2528e83e9eecadea5fca0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a31507b3bebe2528e83e9eecadea5fca0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_rotdelay</definition>
         <argsstring></argsstring>
         <name>fs_old_rotdelay</name>
@@ -797,10 +887,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="207" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="207" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="278" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="278" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1f615de722bf977da3bf0b21e99099358" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1af615de722bf977da3bf0b21e99099358" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_rps</definition>
         <argsstring></argsstring>
         <name>fs_old_rps</name>
@@ -810,10 +900,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="208" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="208" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="279" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="279" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1d24dc27973a0594319921fe1aa0394d4" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ad24dc27973a0594319921fe1aa0394d4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_size</definition>
         <argsstring></argsstring>
         <name>fs_old_size</name>
@@ -823,10 +913,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="199" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="199" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="270" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="270" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1ffb1c061e74f60407af46700f5394a0c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1affb1c061e74f60407af46700f5394a0c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_spc</definition>
         <argsstring></argsstring>
         <name>fs_old_spc</name>
@@ -836,10 +926,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="238" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="238" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="309" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="309" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1948e2a387ab0a3cfd674e93db8e9faf0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a948e2a387ab0a3cfd674e93db8e9faf0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_time</definition>
         <argsstring></argsstring>
         <name>fs_old_time</name>
@@ -849,10 +939,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="198" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="198" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="269" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="269" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1b013e02a3dd43b54edb8d17a6303987e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ab013e02a3dd43b54edb8d17a6303987e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_old_trackskew</definition>
         <argsstring></argsstring>
         <name>fs_old_trackskew</name>
@@ -862,10 +952,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="230" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="230" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="301" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="301" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1d2741b461acb83e521e8f094586e1f04" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ad2741b461acb83e521e8f094586e1f04" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_optim</definition>
         <argsstring></argsstring>
         <name>fs_optim</name>
@@ -875,10 +965,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="227" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="227" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="298" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="298" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_12cb27fb4a6379e89a430db9f9d51eda5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a2cb27fb4a6379e89a430db9f9d51eda5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_pad</definition>
         <argsstring></argsstring>
         <name>fs_pad</name>
@@ -888,10 +978,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="253" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="253" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="324" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="324" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1716babdd931f0aae037a388a76fb0f5e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a716babdd931f0aae037a388a76fb0f5e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
         <definition>int64_t fs::fs_pendingblocks</definition>
         <argsstring></argsstring>
         <name>fs_pendingblocks</name>
@@ -901,10 +991,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="270" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="270" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="344" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="344" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_12edcaaaf740c2737b958c8f0de0bafde" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a2edcaaaf740c2737b958c8f0de0bafde" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_pendinginodes</definition>
         <argsstring></argsstring>
         <name>fs_pendinginodes</name>
@@ -914,10 +1004,36 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="271" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="271" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="250" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="250" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1a771c09702d1e51ee526fb822e7230a5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a0cbe58ffe6a5938d48c456413580d492" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t fs::fs_pendinginodes</definition>
+        <argsstring></argsstring>
+        <name>fs_pendinginodes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="345" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="345" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a0b72655872d538c1bd9970a3756695da" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fs::fs_providersize</definition>
+        <argsstring></argsstring>
+        <name>fs_providersize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="335" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="335" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1aa771c09702d1e51ee526fb822e7230a5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
         <definition>int64_t fs::fs_qbmask</definition>
         <argsstring></argsstring>
         <name>fs_qbmask</name>
@@ -927,10 +1043,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="282" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="282" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="358" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="358" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1b48686a078d1a8410ec36696f0afeb05" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ab48686a078d1a8410ec36696f0afeb05" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
         <definition>int64_t fs::fs_qfmask</definition>
         <argsstring></argsstring>
         <name>fs_qfmask</name>
@@ -940,10 +1056,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="283" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="283" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="359" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="359" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1c4a00ffe190e24cf27323062dd3c4b04" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ac4a00ffe190e24cf27323062dd3c4b04" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref></type>
         <definition>int8_t fs::fs_ronly</definition>
         <argsstring></argsstring>
         <name>fs_ronly</name>
@@ -953,10 +1069,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="248" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="248" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="319" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="319" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1296f6ea58ab5171bb0cebf8d9e9759b9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a296f6ea58ab5171bb0cebf8d9e9759b9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_save_cgsize</definition>
         <argsstring></argsstring>
         <name>fs_save_cgsize</name>
@@ -966,10 +1082,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="275" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="275" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="349" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="349" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1b96f2622ae5d8b12c0ca31a210b3c58e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ab96f2622ae5d8b12c0ca31a210b3c58e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_sblkno</definition>
         <argsstring></argsstring>
         <name>fs_sblkno</name>
@@ -979,10 +1095,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="192" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="192" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="263" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="263" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_17f7bd1346fb9aa31b3509e7736b9c3c5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a7f7bd1346fb9aa31b3509e7736b9c3c5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
         <definition>int64_t fs::fs_sblockloc</definition>
         <argsstring></argsstring>
         <name>fs_sblockloc</name>
@@ -992,10 +1108,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="264" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="264" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="338" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="338" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_160ddc7f4adc14ba5f09977808f93b124" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a60ddc7f4adc14ba5f09977808f93b124" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_sbsize</definition>
         <argsstring></argsstring>
         <name>fs_sbsize</name>
@@ -1005,10 +1121,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="220" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="220" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="291" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="291" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_14f95748c8c7cc9e3e9ed007405b99761" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a4f95748c8c7cc9e3e9ed007405b99761" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
         <definition>int64_t fs::fs_size</definition>
         <argsstring></argsstring>
         <name>fs_size</name>
@@ -1018,10 +1134,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="267" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="267" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="341" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="341" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1c6261d52facc413146d79821e88c2df4" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ac6261d52facc413146d79821e88c2df4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_snapinum[20]</definition>
         <argsstring>[20]</argsstring>
         <name>fs_snapinum</name>
@@ -1031,11 +1147,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="272" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="272" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="251" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="251" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1b3bce140bf4c56bf44bb2d19eed05a03" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
-        <definition>int32_t fs::fs_spare1[2]</definition>
+      <memberdef kind="variable" id="structfs_1a1d23acba4998d1e7aaa613fabbeacd8c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t fs::fs_snapinum[20]</definition>
+        <argsstring>[20]</argsstring>
+        <name>fs_snapinum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="346" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="346" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1ae626e7eadba9d15bd1aa6bd733de59fe" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fs::fs_spare1</definition>
         <argsstring>[2]</argsstring>
         <name>fs_spare1</name>
         <briefdescription>
@@ -1044,10 +1173,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="221" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="221" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="292" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="292" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_17cebf2cb358cde121c29269dbc20a1f3" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a7cebf2cb358cde121c29269dbc20a1f3" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_spare2</definition>
         <argsstring></argsstring>
         <name>fs_spare2</name>
@@ -1057,11 +1186,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="236" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="236" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="307" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="307" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1a0a18ada28e13800a631dce1e2c4c54a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
-        <definition>int32_t fs::fs_spare5[2]</definition>
+      <memberdef kind="variable" id="structfs_1ae21d3f568b4f3eec3613927631ff9ccf" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fs::fs_spare5</definition>
         <argsstring>[2]</argsstring>
         <name>fs_spare5</name>
         <briefdescription>
@@ -1070,12 +1199,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="287" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="287" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="363" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="363" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1eaac93a705f4c2c2f2b194cc8772cc80" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
-        <definition>int32_t fs::fs_sparecon32[26]</definition>
-        <argsstring>[26]</argsstring>
+      <memberdef kind="variable" id="structfs_1a505ae55360f35ac57519ef73a583c65c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fs::fs_sparecon32</definition>
+        <argsstring>[23]</argsstring>
         <name>fs_sparecon32</name>
         <briefdescription>
         </briefdescription>
@@ -1083,12 +1212,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="276" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="276" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="352" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="352" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1aafbb9b21699c2a5f5ec95503454212c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
-        <definition>int64_t fs::fs_sparecon64[17]</definition>
-        <argsstring>[17]</argsstring>
+      <memberdef kind="variable" id="structfs_1a7abf5f534e4a4a54dcbb38013f2afcb7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fs::fs_sparecon64</definition>
+        <argsstring>[14]</argsstring>
         <name>fs_sparecon64</name>
         <briefdescription>
         </briefdescription>
@@ -1096,10 +1225,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="263" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="263" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="337" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="337" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_16c2e8cf33c773a90113fcc7fe9a75c51" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a6c2e8cf33c773a90113fcc7fe9a75c51" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_state</definition>
         <argsstring></argsstring>
         <name>fs_state</name>
@@ -1109,10 +1238,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="284" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="284" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="360" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="360" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_1582e900902af7c6ba9a7a837c61ce8b9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a54d0164284e53108ca2996f60b55565b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t fs::fs_sujfree</definition>
+        <argsstring></argsstring>
+        <name>fs_sujfree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="351" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a582e900902af7c6ba9a7a837c61ce8b9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
         <definition>u_int64_t fs::fs_swuid</definition>
         <argsstring></argsstring>
         <name>fs_swuid</name>
@@ -1122,10 +1264,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="252" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="252" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="323" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="323" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_105c9a84e408e2f7898dd0a83f7859112" prot="public" static="no" mutable="no">
-        <type><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref></type>
+      <memberdef kind="variable" id="structfs_1a05c9a84e408e2f7898dd0a83f7859112" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1aec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref></type>
         <definition>ufs_time_t fs::fs_time</definition>
         <argsstring></argsstring>
         <name>fs_time</name>
@@ -1135,10 +1277,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="266" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="266" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="340" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="340" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_17246de3f8042955f49127b1e656838f5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structfs_1ac2ce9858e817fcdc2ce736089aebe49b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a96411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>int64_t fs::fs_unrefs</definition>
+        <argsstring></argsstring>
+        <name>fs_unrefs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="334" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="334" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfs_1a7246de3f8042955f49127b1e656838f5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t fs::fs_unused_1</definition>
         <argsstring></argsstring>
         <name>fs_unused_1</name>
@@ -1148,11 +1303,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="191" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="191" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="262" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="262" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfs_19e02d1702d25282ad5ea637095372466" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1e2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref></type>
-        <definition>u_char fs::fs_volname[32]</definition>
+      <memberdef kind="variable" id="structfs_1af062a835d2e2599fd6ffd453c454dd22" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref></type>
+        <definition>u_char fs::fs_volname</definition>
         <argsstring>[32]</argsstring>
         <name>fs_volname</name>
         <briefdescription>
@@ -1161,7 +1316,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="251" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="251" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="322" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="322" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -1169,117 +1324,129 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="489">
+      <node id="2">
         <label>csum</label>
         <link refid="structcsum"/>
       </node>
-      <node id="490">
+      <node id="3">
         <label>csum_total</label>
         <link refid="structcsum__total"/>
       </node>
-      <node id="488">
+      <node id="1">
         <label>fs</label>
         <link refid="structfs"/>
-        <childnode refid="489" relation="usage">
-          <edgelabel>fs_old_cstotal
-fs_csp</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+fs_csp</edgelabel>
+          <edgelabel>+fs_old_cstotal</edgelabel>
         </childnode>
-        <childnode refid="490" relation="usage">
-          <edgelabel>fs_cstotal</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+fs_cstotal</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="189" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="189" bodyend="290"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" line="260" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ffs/fs.h" bodystart="260" bodyend="366"/>
     <listofallmembers>
-      <member refid="structfs_1c1520bcda580bd3694fa7be346622285" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_active</name></member>
-      <member refid="structfs_13d750fecfb70d46d78e3964c0fc62db0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_avgfilesize</name></member>
-      <member refid="structfs_14e27ad3d243d1868c517c7f50db36c68" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_avgfpdir</name></member>
-      <member refid="structfs_19a6df636b99f001bb0fe96c2c567c3db" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_bmask</name></member>
-      <member refid="structfs_1664686425d41a31c188000518c356682" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_bshift</name></member>
-      <member refid="structfs_1beaa37858276e7d7d7f8f4260bc53f6d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_bsize</name></member>
-      <member refid="structfs_1dedb82f28a6436a506aa3c47bdf49aa0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cblkno</name></member>
-      <member refid="structfs_130411c307e72e31cec612a97b004453e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cgrotor</name></member>
-      <member refid="structfs_11a500c66d35a8ae7875ae00c2a953eea" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cgsize</name></member>
-      <member refid="structfs_1d70b3b14f20ee12639f774ce0a6817b0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_clean</name></member>
-      <member refid="structfs_1d7440c4ded770a821535ad723d30f74a" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_contigdirs</name></member>
-      <member refid="structfs_1cdd52fe6ac532b73eb877c57b286dd93" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_contigsumsize</name></member>
-      <member refid="structfs_1d43582016bfc00268dbd3de5bdf63c56" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_csaddr</name></member>
-      <member refid="structfs_1ec267ea11a6dd319fb4b484d555c1ed8" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_csp</name></member>
-      <member refid="structfs_18eba877a723ca9b8f9c762a1d65878e9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cssize</name></member>
-      <member refid="structfs_185a5dbf3800d9a52f02efc0367cf87f2" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cstotal</name></member>
-      <member refid="structfs_1fc80e8002a127f6e31ab675bc79d7466" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_dblkno</name></member>
-      <member refid="structfs_1a8e6378d3a6150f5a1dc264cf2e306e6" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_dsize</name></member>
-      <member refid="structfs_1845f442a845714c10fff6d8b12c9eb9e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_firstfield</name></member>
-      <member refid="structfs_13036cb913215b8925934f2d87792e75b" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_flags</name></member>
-      <member refid="structfs_1f447cdadaacd96c24c81f7e34c0059f5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fmask</name></member>
-      <member refid="structfs_1685528bae5950f6dc8d7868ce1df2268" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fmod</name></member>
-      <member refid="structfs_18231c53c394bf5c523584dbe87295b03" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fpg</name></member>
-      <member refid="structfs_113aa148271139d206d6b778ac9b3ed09" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_frag</name></member>
-      <member refid="structfs_127f2b7e09b8716cf08237aba7529fbf7" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fragshift</name></member>
-      <member refid="structfs_1420213fcd930d17a087a39fa48eab6bb" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fsbtodb</name></member>
-      <member refid="structfs_1c62c66d38fde6372b81e3cf8ef8ec6f2" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fshift</name></member>
-      <member refid="structfs_1c2a347c2b6170615954aee791991f94d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fsize</name></member>
-      <member refid="structfs_1286576f62e4a544a73a65c880189b838" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fsmnt</name></member>
-      <member refid="structfs_1680d9067242a7b551779146d839997f4" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_iblkno</name></member>
-      <member refid="structfs_1b656ef66b4edf79aaf8def4739d65aa2" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_id</name></member>
-      <member refid="structfs_109f5993f6a06c3a6543978b91da11826" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_inopb</name></member>
-      <member refid="structfs_1b9ac53ea2f7e8f218b48ce3d68245e12" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ipg</name></member>
-      <member refid="structfs_1acc2f0aa6f3902f165c563ce5ba76373" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_magic</name></member>
-      <member refid="structfs_11236b6b674047859269b8df46a745aba" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxbpg</name></member>
-      <member refid="structfs_1133f70897ddd802936d9f15f9c4f7b1d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxbsize</name></member>
-      <member refid="structfs_150ffe84a85ce08275f6ca6f585cfe3c8" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxcluster</name></member>
-      <member refid="structfs_178bdd388e46c8136e6f9e5b6b7a3f600" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxcontig</name></member>
-      <member refid="structfs_180705fcf0b5478639af84da1d4c24e72" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxfilesize</name></member>
-      <member refid="structfs_1bc0a279ec4d6a3f7a70e7078c9def3d3" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxsymlinklen</name></member>
-      <member refid="structfs_13b39e3f97e0438ecbb1a953dec03a5c1" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_minfree</name></member>
-      <member refid="structfs_106f4cbb13f8a47c87f53f5b3a7d86340" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ncg</name></member>
-      <member refid="structfs_12d119c1181a7e3acad4d7705a589d20b" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_nindir</name></member>
-      <member refid="structfs_1a917d7ad714b69f2bd80b5bde291828c" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ocsp</name></member>
-      <member refid="structfs_13372db524b01604405d0736d4c76ed88" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cgmask</name></member>
-      <member refid="structfs_10e65a1457e48bf92c3ff9ed5de2d2f97" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cgoffset</name></member>
-      <member refid="structfs_1da2826b8126cd04502a8d106d97f2feb" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cpc</name></member>
-      <member refid="structfs_13059d11894848b96ae73618740f0dac6" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cpg</name></member>
-      <member refid="structfs_11e5f3cc79f0589b713e56ae3f7892287" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_csaddr</name></member>
-      <member refid="structfs_1987656a71ddd126654688a50477b4757" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cstotal</name></member>
-      <member refid="structfs_107a13bddf97b62b08ec62f12f788be8a" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_dsize</name></member>
-      <member refid="structfs_12eb4e28e41443e46d48f4b2d401fa61f" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_flags</name></member>
-      <member refid="structfs_18fd0d606db522d961af347195bb59909" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_inodefmt</name></member>
-      <member refid="structfs_1ffe7e7f7fcff6fab9079d83220e3e1cc" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_interleave</name></member>
-      <member refid="structfs_13b4d10d43d4175b9444ed73ddcf18140" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_ncyl</name></member>
-      <member refid="structfs_1aefee9a806967afe881a50fcbe391ff5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_npsect</name></member>
-      <member refid="structfs_1ef6eb7c95acad0463084fc855e91c73d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_nrpos</name></member>
-      <member refid="structfs_189b502e2bf515440bc150e8e4ebb12c9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_nsect</name></member>
-      <member refid="structfs_17262744877dac1c79e119fab7ee3d67d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_nspf</name></member>
-      <member refid="structfs_1ff096e7b1228e1914b01a8b66e74b1b1" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_postblformat</name></member>
-      <member refid="structfs_131507b3bebe2528e83e9eecadea5fca0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_rotdelay</name></member>
-      <member refid="structfs_1f615de722bf977da3bf0b21e99099358" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_rps</name></member>
-      <member refid="structfs_1d24dc27973a0594319921fe1aa0394d4" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_size</name></member>
-      <member refid="structfs_1ffb1c061e74f60407af46700f5394a0c" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_spc</name></member>
-      <member refid="structfs_1948e2a387ab0a3cfd674e93db8e9faf0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_time</name></member>
-      <member refid="structfs_1b013e02a3dd43b54edb8d17a6303987e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_trackskew</name></member>
-      <member refid="structfs_1d2741b461acb83e521e8f094586e1f04" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_optim</name></member>
-      <member refid="structfs_12cb27fb4a6379e89a430db9f9d51eda5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pad</name></member>
-      <member refid="structfs_1716babdd931f0aae037a388a76fb0f5e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pendingblocks</name></member>
-      <member refid="structfs_12edcaaaf740c2737b958c8f0de0bafde" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pendinginodes</name></member>
-      <member refid="structfs_1a771c09702d1e51ee526fb822e7230a5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_qbmask</name></member>
-      <member refid="structfs_1b48686a078d1a8410ec36696f0afeb05" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_qfmask</name></member>
-      <member refid="structfs_1c4a00ffe190e24cf27323062dd3c4b04" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ronly</name></member>
-      <member refid="structfs_1296f6ea58ab5171bb0cebf8d9e9759b9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_save_cgsize</name></member>
-      <member refid="structfs_1b96f2622ae5d8b12c0ca31a210b3c58e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sblkno</name></member>
-      <member refid="structfs_17f7bd1346fb9aa31b3509e7736b9c3c5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sblockloc</name></member>
-      <member refid="structfs_160ddc7f4adc14ba5f09977808f93b124" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sbsize</name></member>
-      <member refid="structfs_14f95748c8c7cc9e3e9ed007405b99761" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_size</name></member>
-      <member refid="structfs_1c6261d52facc413146d79821e88c2df4" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_snapinum</name></member>
-      <member refid="structfs_1b3bce140bf4c56bf44bb2d19eed05a03" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_spare1</name></member>
-      <member refid="structfs_17cebf2cb358cde121c29269dbc20a1f3" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_spare2</name></member>
-      <member refid="structfs_1a0a18ada28e13800a631dce1e2c4c54a" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_spare5</name></member>
-      <member refid="structfs_1eaac93a705f4c2c2f2b194cc8772cc80" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sparecon32</name></member>
-      <member refid="structfs_1aafbb9b21699c2a5f5ec95503454212c" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sparecon64</name></member>
-      <member refid="structfs_16c2e8cf33c773a90113fcc7fe9a75c51" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_state</name></member>
-      <member refid="structfs_1582e900902af7c6ba9a7a837c61ce8b9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_swuid</name></member>
-      <member refid="structfs_105c9a84e408e2f7898dd0a83f7859112" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_time</name></member>
-      <member refid="structfs_17246de3f8042955f49127b1e656838f5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_unused_1</name></member>
-      <member refid="structfs_19e02d1702d25282ad5ea637095372466" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_volname</name></member>
+      <member refid="structfs_1a242bad85def13c2aba47daaf58de7308" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_active</name></member>
+      <member refid="structfs_1aac41d7cc53c7100d01164f2b296b05ee" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_avgfilesize</name></member>
+      <member refid="structfs_1a3d750fecfb70d46d78e3964c0fc62db0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_avgfilesize</name></member>
+      <member refid="structfs_1ada76c669a82750d9a8c0d7ca2eddd082" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_avgfpdir</name></member>
+      <member refid="structfs_1a4e27ad3d243d1868c517c7f50db36c68" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_avgfpdir</name></member>
+      <member refid="structfs_1a9a6df636b99f001bb0fe96c2c567c3db" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_bmask</name></member>
+      <member refid="structfs_1a664686425d41a31c188000518c356682" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_bshift</name></member>
+      <member refid="structfs_1abeaa37858276e7d7d7f8f4260bc53f6d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_bsize</name></member>
+      <member refid="structfs_1adedb82f28a6436a506aa3c47bdf49aa0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cblkno</name></member>
+      <member refid="structfs_1a30411c307e72e31cec612a97b004453e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cgrotor</name></member>
+      <member refid="structfs_1a1a500c66d35a8ae7875ae00c2a953eea" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cgsize</name></member>
+      <member refid="structfs_1ad70b3b14f20ee12639f774ce0a6817b0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_clean</name></member>
+      <member refid="structfs_1ada48615e2bbbfed4cce9753d86d7584f" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_contigdirs</name></member>
+      <member refid="structfs_1acdd52fe6ac532b73eb877c57b286dd93" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_contigsumsize</name></member>
+      <member refid="structfs_1ad43582016bfc00268dbd3de5bdf63c56" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_csaddr</name></member>
+      <member refid="structfs_1a4b9c3e77f89f5a59f71e37f83b8d42aa" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_csp</name></member>
+      <member refid="structfs_1a8eba877a723ca9b8f9c762a1d65878e9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cssize</name></member>
+      <member refid="structfs_1a85a5dbf3800d9a52f02efc0367cf87f2" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_cstotal</name></member>
+      <member refid="structfs_1afc80e8002a127f6e31ab675bc79d7466" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_dblkno</name></member>
+      <member refid="structfs_1aa8e6378d3a6150f5a1dc264cf2e306e6" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_dsize</name></member>
+      <member refid="structfs_1a845f442a845714c10fff6d8b12c9eb9e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_firstfield</name></member>
+      <member refid="structfs_1a3036cb913215b8925934f2d87792e75b" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_flags</name></member>
+      <member refid="structfs_1af447cdadaacd96c24c81f7e34c0059f5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fmask</name></member>
+      <member refid="structfs_1a685528bae5950f6dc8d7868ce1df2268" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fmod</name></member>
+      <member refid="structfs_1a8231c53c394bf5c523584dbe87295b03" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fpg</name></member>
+      <member refid="structfs_1a13aa148271139d206d6b778ac9b3ed09" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_frag</name></member>
+      <member refid="structfs_1a27f2b7e09b8716cf08237aba7529fbf7" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fragshift</name></member>
+      <member refid="structfs_1a420213fcd930d17a087a39fa48eab6bb" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fsbtodb</name></member>
+      <member refid="structfs_1ac62c66d38fde6372b81e3cf8ef8ec6f2" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fshift</name></member>
+      <member refid="structfs_1ac2a347c2b6170615954aee791991f94d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fsize</name></member>
+      <member refid="structfs_1a580ddd495e4e346d10f6f74cd8ae35ad" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_fsmnt</name></member>
+      <member refid="structfs_1a680d9067242a7b551779146d839997f4" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_iblkno</name></member>
+      <member refid="structfs_1ad573635cfbc906b4d5af65a338705fef" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_id</name></member>
+      <member refid="structfs_1a733402e62d65acbcba0ab0468022b4d5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_inopb</name></member>
+      <member refid="structfs_1a09f5993f6a06c3a6543978b91da11826" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_inopb</name></member>
+      <member refid="structfs_1adf24d0e3ffe0fceef2f3821305e04e3d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ipg</name></member>
+      <member refid="structfs_1ab9ac53ea2f7e8f218b48ce3d68245e12" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ipg</name></member>
+      <member refid="structfs_1aacc2f0aa6f3902f165c563ce5ba76373" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_magic</name></member>
+      <member refid="structfs_1a1236b6b674047859269b8df46a745aba" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxbpg</name></member>
+      <member refid="structfs_1a133f70897ddd802936d9f15f9c4f7b1d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxbsize</name></member>
+      <member refid="structfs_1a3456619a6ebb8c8c6b522d5d3ef1b081" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxcluster</name></member>
+      <member refid="structfs_1a78bdd388e46c8136e6f9e5b6b7a3f600" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxcontig</name></member>
+      <member refid="structfs_1a80705fcf0b5478639af84da1d4c24e72" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxfilesize</name></member>
+      <member refid="structfs_1abc0a279ec4d6a3f7a70e7078c9def3d3" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_maxsymlinklen</name></member>
+      <member refid="structfs_1a7c602e34fbe2437930da5af29bdd3f40" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_metaspace</name></member>
+      <member refid="structfs_1a3b39e3f97e0438ecbb1a953dec03a5c1" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_minfree</name></member>
+      <member refid="structfs_1a60205b64391864a0fdd1184ad7599c68" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_mtime</name></member>
+      <member refid="structfs_1a2d9e55c707f7e3d817aecadcdd64caaf" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ncg</name></member>
+      <member refid="structfs_1a06f4cbb13f8a47c87f53f5b3a7d86340" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ncg</name></member>
+      <member refid="structfs_1a2d119c1181a7e3acad4d7705a589d20b" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_nindir</name></member>
+      <member refid="structfs_1a4cf49593a8f0cf0a1d2d53992fab1ec7" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ocsp</name></member>
+      <member refid="structfs_1a3372db524b01604405d0736d4c76ed88" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cgmask</name></member>
+      <member refid="structfs_1a0e65a1457e48bf92c3ff9ed5de2d2f97" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cgoffset</name></member>
+      <member refid="structfs_1ada2826b8126cd04502a8d106d97f2feb" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cpc</name></member>
+      <member refid="structfs_1a3059d11894848b96ae73618740f0dac6" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cpg</name></member>
+      <member refid="structfs_1a1e5f3cc79f0589b713e56ae3f7892287" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_csaddr</name></member>
+      <member refid="structfs_1a987656a71ddd126654688a50477b4757" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_cstotal</name></member>
+      <member refid="structfs_1a07a13bddf97b62b08ec62f12f788be8a" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_dsize</name></member>
+      <member refid="structfs_1a2eb4e28e41443e46d48f4b2d401fa61f" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_flags</name></member>
+      <member refid="structfs_1a8fd0d606db522d961af347195bb59909" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_inodefmt</name></member>
+      <member refid="structfs_1affe7e7f7fcff6fab9079d83220e3e1cc" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_interleave</name></member>
+      <member refid="structfs_1a3b4d10d43d4175b9444ed73ddcf18140" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_ncyl</name></member>
+      <member refid="structfs_1aaefee9a806967afe881a50fcbe391ff5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_npsect</name></member>
+      <member refid="structfs_1aef6eb7c95acad0463084fc855e91c73d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_nrpos</name></member>
+      <member refid="structfs_1a89b502e2bf515440bc150e8e4ebb12c9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_nsect</name></member>
+      <member refid="structfs_1a7262744877dac1c79e119fab7ee3d67d" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_nspf</name></member>
+      <member refid="structfs_1aff096e7b1228e1914b01a8b66e74b1b1" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_postblformat</name></member>
+      <member refid="structfs_1a31507b3bebe2528e83e9eecadea5fca0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_rotdelay</name></member>
+      <member refid="structfs_1af615de722bf977da3bf0b21e99099358" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_rps</name></member>
+      <member refid="structfs_1ad24dc27973a0594319921fe1aa0394d4" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_size</name></member>
+      <member refid="structfs_1affb1c061e74f60407af46700f5394a0c" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_spc</name></member>
+      <member refid="structfs_1a948e2a387ab0a3cfd674e93db8e9faf0" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_time</name></member>
+      <member refid="structfs_1ab013e02a3dd43b54edb8d17a6303987e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_old_trackskew</name></member>
+      <member refid="structfs_1ad2741b461acb83e521e8f094586e1f04" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_optim</name></member>
+      <member refid="structfs_1a2cb27fb4a6379e89a430db9f9d51eda5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pad</name></member>
+      <member refid="structfs_1a716babdd931f0aae037a388a76fb0f5e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pendingblocks</name></member>
+      <member refid="structfs_1a0cbe58ffe6a5938d48c456413580d492" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pendinginodes</name></member>
+      <member refid="structfs_1a2edcaaaf740c2737b958c8f0de0bafde" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_pendinginodes</name></member>
+      <member refid="structfs_1a0b72655872d538c1bd9970a3756695da" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_providersize</name></member>
+      <member refid="structfs_1aa771c09702d1e51ee526fb822e7230a5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_qbmask</name></member>
+      <member refid="structfs_1ab48686a078d1a8410ec36696f0afeb05" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_qfmask</name></member>
+      <member refid="structfs_1ac4a00ffe190e24cf27323062dd3c4b04" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_ronly</name></member>
+      <member refid="structfs_1a296f6ea58ab5171bb0cebf8d9e9759b9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_save_cgsize</name></member>
+      <member refid="structfs_1ab96f2622ae5d8b12c0ca31a210b3c58e" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sblkno</name></member>
+      <member refid="structfs_1a7f7bd1346fb9aa31b3509e7736b9c3c5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sblockloc</name></member>
+      <member refid="structfs_1a60ddc7f4adc14ba5f09977808f93b124" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sbsize</name></member>
+      <member refid="structfs_1a4f95748c8c7cc9e3e9ed007405b99761" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_size</name></member>
+      <member refid="structfs_1a1d23acba4998d1e7aaa613fabbeacd8c" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_snapinum</name></member>
+      <member refid="structfs_1ac6261d52facc413146d79821e88c2df4" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_snapinum</name></member>
+      <member refid="structfs_1ae626e7eadba9d15bd1aa6bd733de59fe" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_spare1</name></member>
+      <member refid="structfs_1a7cebf2cb358cde121c29269dbc20a1f3" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_spare2</name></member>
+      <member refid="structfs_1ae21d3f568b4f3eec3613927631ff9ccf" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_spare5</name></member>
+      <member refid="structfs_1a505ae55360f35ac57519ef73a583c65c" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sparecon32</name></member>
+      <member refid="structfs_1a7abf5f534e4a4a54dcbb38013f2afcb7" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sparecon64</name></member>
+      <member refid="structfs_1a6c2e8cf33c773a90113fcc7fe9a75c51" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_state</name></member>
+      <member refid="structfs_1a54d0164284e53108ca2996f60b55565b" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_sujfree</name></member>
+      <member refid="structfs_1a582e900902af7c6ba9a7a837c61ce8b9" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_swuid</name></member>
+      <member refid="structfs_1a05c9a84e408e2f7898dd0a83f7859112" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_time</name></member>
+      <member refid="structfs_1ac2ce9858e817fcdc2ce736089aebe49b" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_unrefs</name></member>
+      <member refid="structfs_1a7246de3f8042955f49127b1e656838f5" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_unused_1</name></member>
+      <member refid="structfs_1af062a835d2e2599fd6ffd453c454dd22" prot="public" virt="non-virtual"><scope>fs</scope><name>fs_volname</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

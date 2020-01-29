@@ -1,236 +1,80 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="main_8cpp" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="main_8cpp" kind="file" language="C++">
     <compoundname>main.cpp</compoundname>
-    <includes local="no">iostream</includes>
-    <includes local="no">vector</includes>
-    <includes local="no">stdlib.h</includes>
-    <includes refid="ubixfsv2_2vfs_8h" local="yes">vfs.h</includes>
-    <includes refid="btree_8h" local="yes">btree.h</includes>
-    <includes refid="ubixfsv2_2ubixfs_8h" local="yes">ubixfs.h</includes>
-    <includes refid="ubixfsv2_2device_8h" local="yes">device.h</includes>
-    <includes refid="ramdrive_8h" local="yes">ramdrive.h</includes>
-    <incdepgraph>
-      <node id="4573">
-        <label>btree.h</label>
-        <link refid="btree_8h"/>
-        <childnode refid="4572" relation="include">
-        </childnode>
-        <childnode refid="4574" relation="include">
-        </childnode>
-        <childnode refid="4582" relation="include">
-        </childnode>
-        <childnode refid="4581" relation="include">
-        </childnode>
-      </node>
-      <node id="4570">
-        <label>stdlib.h</label>
-      </node>
-      <node id="4574">
-        <label>ubixfs.h</label>
-        <link refid="ubixfsv2_2ubixfs_8h"/>
-        <childnode refid="4575" relation="include">
-        </childnode>
-        <childnode refid="4576" relation="include">
-        </childnode>
-        <childnode refid="4577" relation="include">
-        </childnode>
-        <childnode refid="4580" relation="include">
-        </childnode>
-        <childnode refid="4581" relation="include">
-        </childnode>
-      </node>
-      <node id="4567">
-        <label>src/sys/ubixfsv2/main.cpp</label>
-        <link refid="main.cpp"/>
-        <childnode refid="4568" relation="include">
-        </childnode>
-        <childnode refid="4569" relation="include">
-        </childnode>
-        <childnode refid="4570" relation="include">
-        </childnode>
-        <childnode refid="4571" relation="include">
-        </childnode>
-        <childnode refid="4573" relation="include">
-        </childnode>
-        <childnode refid="4574" relation="include">
-        </childnode>
-        <childnode refid="4579" relation="include">
-        </childnode>
-        <childnode refid="4583" relation="include">
-        </childnode>
-      </node>
-      <node id="4582">
-        <label>btreeheader.h</label>
-        <link refid="btreeheader_8h"/>
-      </node>
-      <node id="4581">
-        <label>file.h</label>
-        <link refid="ubixfsv2_2file_8h"/>
-        <childnode refid="4574" relation="include">
-        </childnode>
-      </node>
-      <node id="4575">
-        <label>sys/types.h</label>
-      </node>
-      <node id="4577">
-        <label>fsAbstract.h</label>
-        <link refid="fsAbstract_8h"/>
-        <childnode refid="4572" relation="include">
-        </childnode>
-        <childnode refid="4578" relation="include">
-        </childnode>
-        <childnode refid="4575" relation="include">
-        </childnode>
-        <childnode refid="4579" relation="include">
-        </childnode>
-        <childnode refid="4581" relation="include">
-        </childnode>
-      </node>
-      <node id="4580">
-        <label>types.h</label>
-        <link refid="ubixfsv2_2types_8h"/>
-      </node>
-      <node id="4576">
-        <label>unistd.h</label>
-      </node>
-      <node id="4569">
-        <label>vector</label>
-      </node>
-      <node id="4571">
-        <label>vfs.h</label>
-        <link refid="ubixfsv2_2vfs_8h"/>
-        <childnode refid="4570" relation="include">
-        </childnode>
-        <childnode refid="4572" relation="include">
-        </childnode>
-      </node>
-      <node id="4579">
-        <label>device.h</label>
-        <link refid="ubixfsv2_2device_8h"/>
-        <childnode refid="4575" relation="include">
-        </childnode>
-        <childnode refid="4580" relation="include">
-        </childnode>
-      </node>
-      <node id="4568">
-        <label>iostream</label>
-      </node>
-      <node id="4583">
-        <label>ramdrive.h</label>
-        <link refid="ramdrive_8h"/>
-        <childnode refid="4579" relation="include">
-        </childnode>
-      </node>
-      <node id="4572">
-        <label>stdio.h</label>
-      </node>
-      <node id="4578">
-        <label>dirent.h</label>
-      </node>
-    </incdepgraph>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>int</type>
-        <definition>int main</definition>
-        <argsstring>(void)</argsstring>
-        <name>main</name>
-        <param>
-          <type>void</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/main.cpp" line="12" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/main.cpp" bodystart="12" bodyend="65"/>
-        <references refid="ramdrive_8cpp_1788c47c723973c46800d667ee8eaa979" compoundref="ramdrive_8cpp" startline="95" endline="108">dev_ramDestroy</references>
-        <references refid="ramdrive_8cpp_1fc84c5ce562d095ec8a54c428f416ff1" compoundref="ramdrive_8cpp" startline="66" endline="92">dev_ramDrive</references>
-        <references refid="classbTree_18d04e7d1bb555d157f32673af0977244" compoundref="btree_8cpp" startline="603" endline="605">bTree::GetFirstNode</references>
-        <references refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
-        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
-        <references refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">bTree::Save</references>
-        <references refid="strcpy_8S_19132520cc79236b654666f4ddc1b516c" compoundref="strcpy_8S" startline="3">strcpy</references>
-        <references refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</references>
-        <references refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">UbixFS::vfs_init</references>
-        <references refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" compoundref="ubixfs_8cpp" startline="891" endline="963">UbixFS::vfs_mkdir</references>
-        <references refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" compoundref="ubixfs_8cpp" startline="557" endline="585">UbixFS::vfs_stop</references>
-      </memberdef>
-      </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&lt;iostream&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;vector&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2vfs_8h" kindref="compound">vfs.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="btree_8h" kindref="compound">btree.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2ubixfs_8h" kindref="compound">ubixfs.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2device_8h" kindref="compound">device.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ramdrive_8h" kindref="compound">ramdrive.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">using<sp/>namespace<sp/></highlight><highlight class="normal">std;</highlight></codeline>
-<codeline lineno="10"><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12" refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" refkind="member"><highlight class="normal"><ref refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" kindref="member">main</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"><sp/><sp/><ref refid="structdevice__t" kindref="compound">device_t</ref><sp/>*<sp/>ramDrive<sp/>=<sp/><ref refid="ramdrive_8cpp_1fc84c5ce562d095ec8a54c428f416ff1" kindref="member">dev_ramDrive</ref>();</highlight></codeline>
-<codeline lineno="15"><highlight class="normal"><sp/><sp/><ref refid="classUbixFS" kindref="compound">UbixFS</ref><sp/>*<sp/><ref refid="structfs" kindref="compound">fs</ref><sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><ref refid="classUbixFS" kindref="compound">UbixFS</ref>(ramDrive);</highlight></codeline>
-<codeline lineno="16"><highlight class="normal"><sp/><sp/>fs-&gt;<ref refid="classUbixFS_1e1266337d259778b1404601184d75028" kindref="member">vfs_format</ref>(ramDrive);</highlight></codeline>
-<codeline lineno="17"><highlight class="normal"><sp/><sp/>fs-&gt;<ref refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" kindref="member">vfs_init</ref>();<sp/></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"><sp/><sp/>fs-&gt;<ref refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" kindref="member">vfs_mkdir</ref>(</highlight><highlight class="stringliteral">&quot;/testdir&quot;</highlight><highlight class="normal">,<sp/>0);</highlight></codeline>
-<codeline lineno="19"><highlight class="normal"><sp/><sp/>fs-&gt;<ref refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" kindref="member">vfs_stop</ref>();</highlight></codeline>
-<codeline lineno="20"><highlight class="normal"><sp/><sp/><ref refid="ramdrive_8cpp_1788c47c723973c46800d667ee8eaa979" kindref="member">dev_ramDestroy</ref>();</highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight></codeline>
-<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>0</highlight></codeline>
-<codeline lineno="23"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="24"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*<sp/>inode<sp/>=<sp/>(<ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*)malloc(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref>));</highlight></codeline>
-<codeline lineno="25"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>(inode,<sp/>0,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(ubixfsInode));</highlight></codeline>
-<codeline lineno="26"><highlight class="normal"><sp/><sp/><ref refid="strcpy_8S_19132520cc79236b654666f4ddc1b516c" kindref="member">strcpy</ref>(inode<sp/>-&gt;<sp/><ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/></highlight><highlight class="stringliteral">&quot;50&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="27"><highlight class="normal"><sp/><sp/><ref refid="classbTree" kindref="compound">bTree</ref><sp/>*<sp/>tree<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><ref refid="classbTree" kindref="compound">bTree</ref>(</highlight><highlight class="stringliteral">&quot;.&quot;</highlight><highlight class="normal">,<sp/>inode);</highlight></codeline>
-<codeline lineno="28"><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>100;<sp/>i++)<sp/>{</highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/>while<sp/>(tree-&gt;Verify())<sp/>{</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>if<sp/>(i%1000<sp/>==<sp/>0)<sp/>cout<sp/>&lt;&lt;<sp/>&quot;-_-<sp/>i<sp/>=<sp/>&quot;&lt;&lt;i&lt;&lt;&quot;<sp/>-_-&quot;<sp/>&lt;&lt;<sp/>endl;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>inode<sp/>=<sp/>(ubixfsInode<sp/>*)malloc(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(ubixfsInode));</highlight></codeline>
-<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(inode<sp/>==<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>(inode,<sp/>0,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(ubixfsInode));</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>k<sp/>=<sp/>0;<sp/>k<sp/>&lt;<sp/>(random()<sp/>%<sp/>100)+5;<sp/>k++)<sp/>{</highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>for<sp/>(int<sp/>k<sp/>=<sp/>0;<sp/>k<sp/>&lt;<sp/>100;<sp/>k++)<sp/>{</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>inode-&gt;name[k]<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">)((random()<sp/>%<sp/>26)+</highlight><highlight class="charliteral">&apos;a&apos;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="comment">//<sp/>for<sp/>k</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>tree-&gt;Insert(inode);</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!tree-&gt;<ref refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" kindref="member">Insert</ref>(inode-&gt;name,<sp/>inode))<sp/>cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;Insert(&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>inode-&gt;name<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;)<sp/>failed&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/>++i;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="comment">//<sp/>for<sp/>i</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/>cout<sp/>&lt;&lt;<sp/>&quot;i<sp/>made<sp/>it<sp/>to:<sp/>&quot;<sp/>&lt;&lt;<sp/>i<sp/>&lt;&lt;<sp/>endl;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/>i<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/>ubixfsInode<sp/>*<sp/>tmpInode<sp/>=<sp/>tmpInode<sp/>=<sp/>tree-&gt;<ref refid="classbTree_18d04e7d1bb555d157f32673af0977244" kindref="member">GetFirstNode</ref>();</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpInode<sp/>==<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;GetFirstNode()<sp/>returns<sp/>null&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(tmpInode<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//cout<sp/>&lt;&lt;<sp/>&quot;node[&quot;<sp/>&lt;&lt;<sp/>i++<sp/>&lt;&lt;<sp/>&quot;]:<sp/>&quot;<sp/>&lt;&lt;<sp/>tmpInode-&gt;name<sp/>&lt;&lt;<sp/>endl;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>cout<sp/>&lt;&lt;<sp/>tmpInode-&gt;name<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpInode<sp/>=<sp/>tmpInode-&gt;next.iPtr;</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="comment">//<sp/>while</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/>tree-&gt;Info();</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/>tree-&gt;<ref refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" kindref="member">Save</ref>(</highlight><highlight class="stringliteral">&quot;tree.dat&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/>free(inode);</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal"><sp/>tree;</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="60"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/><sp/>cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;sizeof(bNode):<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbNode" kindref="compound">bNode</ref>)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/>cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;sizeof(ubixfsInode):<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ubixfsInode)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/>cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;sizeof(diskSuperBlock):<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdiskSuperBlock" kindref="compound">diskSuperBlock</ref>)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/>cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;sizeof(bTreeHeader):<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbTreeHeader" kindref="compound">bTreeHeader</ref>)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
-<codeline lineno="65"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>#include<sp/>&lt;iostream&gt;</highlight></codeline>
+<codeline lineno="3"><highlight class="comment">#include<sp/>&lt;vector&gt;</highlight></codeline>
+<codeline lineno="4"><highlight class="comment">#include<sp/>&lt;stdlib.h&gt;</highlight></codeline>
+<codeline lineno="5"><highlight class="comment">#include<sp/>&quot;vfs.h&quot;</highlight></codeline>
+<codeline lineno="6"><highlight class="comment">#include<sp/>&quot;btree.h&quot;</highlight></codeline>
+<codeline lineno="7"><highlight class="comment">#include<sp/>&quot;ubixfs.h&quot;</highlight></codeline>
+<codeline lineno="8"><highlight class="comment">#include<sp/>&quot;device.h&quot;</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">#include<sp/>&quot;ramdrive.h&quot;</highlight></codeline>
+<codeline lineno="10"><highlight class="comment">using<sp/>namespace<sp/>std;</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"></highlight></codeline>
+<codeline lineno="12"><highlight class="comment">int</highlight></codeline>
+<codeline lineno="13"><highlight class="comment">main(void)<sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/><sp/>device_t<sp/>*<sp/>ramDrive<sp/>=<sp/>dev_ramDrive();</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/><sp/>UbixFS<sp/>*<sp/>fs<sp/>=<sp/>new<sp/>UbixFS(ramDrive);</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/><sp/>fs-&gt;vfs_format(ramDrive);</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/><sp/>fs-&gt;vfs_init();<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/><sp/>fs-&gt;vfs_mkdir(&quot;/testdir&quot;,<sp/>0);</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/><sp/>fs-&gt;vfs_stop();</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/><sp/>dev_ramDestroy();</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"></highlight></codeline>
+<codeline lineno="23"><highlight class="comment">#if<sp/>0</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/><sp/>int<sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/><sp/>ubixfsInode<sp/>*<sp/>inode<sp/>=<sp/>(ubixfsInode<sp/>*)malloc(sizeof(ubixfsInode));</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/><sp/>memset(inode,<sp/>0,<sp/>sizeof(ubixfsInode));</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/><sp/>strcpy(inode<sp/>-&gt;<sp/>name,<sp/>&quot;50&quot;);</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/><sp/>bTree<sp/>*<sp/>tree<sp/>=<sp/>new<sp/>bTree(&quot;.&quot;,<sp/>inode);</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"></highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/><sp/>for<sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>100;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="31"><highlight class="comment">//<sp/><sp/>while<sp/>(tree-&gt;Verify())<sp/>{</highlight></codeline>
+<codeline lineno="32"><highlight class="comment">//<sp/><sp/><sp/><sp/>if<sp/>(i%1000<sp/>==<sp/>0)<sp/>cout<sp/>&lt;&lt;<sp/>&quot;-_-<sp/>i<sp/>=<sp/>&quot;&lt;&lt;i&lt;&lt;&quot;<sp/>-_-&quot;<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/><sp/><sp/><sp/>inode<sp/>=<sp/>(ubixfsInode<sp/>*)malloc(sizeof(ubixfsInode));</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/><sp/><sp/><sp/>if<sp/>(inode<sp/>==<sp/>NULL)<sp/>break;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/><sp/><sp/><sp/>memset(inode,<sp/>0,<sp/>sizeof(ubixfsInode));</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/><sp/><sp/><sp/>for<sp/>(int<sp/>k<sp/>=<sp/>0;<sp/>k<sp/>&lt;<sp/>(random()<sp/>%<sp/>100)+5;<sp/>k++)<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="comment">//<sp/><sp/><sp/><sp/>for<sp/>(int<sp/>k<sp/>=<sp/>0;<sp/>k<sp/>&lt;<sp/>100;<sp/>k++)<sp/>{</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>inode-&gt;name[k]<sp/>=<sp/>(char)((random()<sp/>%<sp/>26)+&apos;a&apos;);</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/><sp/><sp/><sp/>}<sp/>//<sp/>for<sp/>k</highlight></codeline>
+<codeline lineno="40"><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>tree-&gt;Insert(inode);</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/><sp/><sp/><sp/>if<sp/>(!tree-&gt;Insert(inode-&gt;name,<sp/>inode))<sp/>cout<sp/>&lt;&lt;<sp/>&quot;Insert(&quot;<sp/>&lt;&lt;<sp/>inode-&gt;name<sp/>&lt;&lt;<sp/>&quot;)<sp/>failed&quot;<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="42"><highlight class="comment">//<sp/><sp/><sp/><sp/>++i;</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/><sp/>}<sp/>//<sp/>for<sp/>i</highlight></codeline>
+<codeline lineno="44"><highlight class="comment">//<sp/><sp/>cout<sp/>&lt;&lt;<sp/>&quot;i<sp/>made<sp/>it<sp/>to:<sp/>&quot;<sp/>&lt;&lt;<sp/>i<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"></highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/><sp/>ubixfsInode<sp/>*<sp/>tmpInode<sp/>=<sp/>tmpInode<sp/>=<sp/>tree-&gt;GetFirstNode();</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/><sp/>if<sp/>(tmpInode<sp/>==<sp/>NULL)<sp/>cout<sp/>&lt;&lt;<sp/>&quot;GetFirstNode()<sp/>returns<sp/>null&quot;<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/><sp/>while<sp/>(tmpInode<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/><sp/><sp/><sp/>//cout<sp/>&lt;&lt;<sp/>&quot;node[&quot;<sp/>&lt;&lt;<sp/>i++<sp/>&lt;&lt;<sp/>&quot;]:<sp/>&quot;<sp/>&lt;&lt;<sp/>tmpInode-&gt;name<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/><sp/><sp/><sp/>cout<sp/>&lt;&lt;<sp/>tmpInode-&gt;name<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/><sp/><sp/><sp/>tmpInode<sp/>=<sp/>tmpInode-&gt;next.iPtr;</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/><sp/>}<sp/>//<sp/>while</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"></highlight></codeline>
+<codeline lineno="55"><highlight class="comment"></highlight></codeline>
+<codeline lineno="56"><highlight class="comment">//<sp/><sp/>tree-&gt;Info();</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/><sp/>tree-&gt;Save(&quot;tree.dat&quot;);</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/><sp/>free(inode);</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/><sp/>delete<sp/>tree;</highlight></codeline>
+<codeline lineno="60"><highlight class="comment">#endif</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/><sp/>cout<sp/>&lt;&lt;<sp/>&quot;sizeof(bNode):<sp/>&quot;<sp/>&lt;&lt;<sp/>sizeof(struct<sp/>bNode)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/><sp/>cout<sp/>&lt;&lt;<sp/>&quot;sizeof(ubixfsInode):<sp/>&quot;<sp/>&lt;&lt;<sp/>sizeof(struct<sp/>ubixfsInode)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/><sp/>cout<sp/>&lt;&lt;<sp/>&quot;sizeof(diskSuperBlock):<sp/>&quot;<sp/>&lt;&lt;<sp/>sizeof(struct<sp/>diskSuperBlock)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/><sp/>cout<sp/>&lt;&lt;<sp/>&quot;sizeof(bTreeHeader):<sp/>&quot;<sp/>&lt;&lt;<sp/>sizeof(struct<sp/>bTreeHeader)<sp/>&lt;&lt;<sp/>endl;</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/>return<sp/>0;</highlight></codeline>
+<codeline lineno="66"><highlight class="comment">}</highlight></codeline>
+<codeline lineno="67"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/main.cpp"/>
+    <location file="C:/Dev/git/UbixOS/sys/fs/ubixfsv2/main.cpp"/>
   </compounddef>
 </doxygen>

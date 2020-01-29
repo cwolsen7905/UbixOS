@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structstat" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structstat" kind="struct" language="C++" prot="public">
     <compoundname>stat</compoundname>
-    <includes refid="kern__descrip_8h" local="no">kern_descrip.h</includes>
+    <includes refid="stat_8h" local="no">stat.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structstat_18e7af7908cc5409963de8c2af581070c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structstat_1a8e7af7908cc5409963de8c2af581070c" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long stat::__st_atimensec</definition>
         <argsstring></argsstring>
@@ -15,9 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="119" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="53" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="53" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_168a4709b4a992cd2e1dfdfb630bfe6cb" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structstat_1a68a4709b4a992cd2e1dfdfb630bfe6cb" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long stat::__st_ctimensec</definition>
         <argsstring></argsstring>
@@ -28,9 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="123" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="57" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="57" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1d35fc3a664184cdc617b114cd25f5f67" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structstat_1ad35fc3a664184cdc617b114cd25f5f67" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long stat::__st_mtimensec</definition>
         <argsstring></argsstring>
@@ -41,24 +41,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="121" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="55" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="55" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1eadf0ca7bfa140ac64fa582f7765066b" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structstat_1aeadf0ca7bfa140ac64fa582f7765066b" prot="public" static="no" mutable="no">
         <type>unsigned</type>
         <definition>unsigned stat::int</definition>
         <argsstring></argsstring>
         <name>int</name>
-        <bitfield>(8 / 2) * (16 - (int)sizeof(struct __timespec))</bitfield>
+        <bitfield>(8 / 2) * (16 - (int) sizeof(struct __timespec))</bitfield>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="146" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="146" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="66" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="66" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1b74d1e7e345e88b9d0fb2688a97cba64" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+      <memberdef kind="variable" id="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
         <definition>time_t stat::st_atime</definition>
         <argsstring></argsstring>
         <name>st_atime</name>
@@ -68,10 +68,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="118" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="52" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1a7c8627ac57ce82bccc0b261d56a25e5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+      <memberdef kind="variable" id="structstat_1aa7c8627ac57ce82bccc0b261d56a25e5" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
         <definition>time_t stat::st_birthtime</definition>
         <argsstring></argsstring>
         <name>st_birthtime</name>
@@ -81,9 +84,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="144" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="64" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="64" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_10e919848cf78f7aacb30a7fb13e81acc" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structstat_1a0e919848cf78f7aacb30a7fb13e81acc" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long stat::st_birthtimensec</definition>
         <argsstring></argsstring>
@@ -94,10 +97,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="145" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="145" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="65" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="65" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_138d474e1ae3cf6fbdde89ac3c3e308f1" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1cac8eacbbc225743e88f8e5e8bf93581" kindref="member">blksize_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a38d474e1ae3cf6fbdde89ac3c3e308f1" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1acac8eacbbc225743e88f8e5e8bf93581" kindref="member">blksize_t</ref></type>
         <definition>blksize_t stat::st_blksize</definition>
         <argsstring></argsstring>
         <name>st_blksize</name>
@@ -107,11 +110,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="127" bodyend="-1"/>
-        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="60" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="60" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" compoundref="descrip_8c" startline="185" endline="197">fstat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_142dd716b2f9234f961d949fc9500eefb" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_17da4753cd6945c5ad91f41c00b474b3f" kindref="member">blkcnt_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a42dd716b2f9234f961d949fc9500eefb" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7da4753cd6945c5ad91f41c00b474b3f" kindref="member">blkcnt_t</ref></type>
         <definition>blkcnt_t stat::st_blocks</definition>
         <argsstring></argsstring>
         <name>st_blocks</name>
@@ -121,10 +124,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="126" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="126" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="59" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="59" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_11b4b858db1ebe79c3d6e0fc1ef721024" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
         <definition>time_t stat::st_ctime</definition>
         <argsstring></argsstring>
         <name>st_ctime</name>
@@ -134,10 +137,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="122" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="56" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="56" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1fb143a1534bf763afd6b353ea3cad102" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_145c90547fafad0ff956b06bb5245cdcf" kindref="member">__dev_t</ref></type>
+      <memberdef kind="variable" id="structstat_1afb143a1534bf763afd6b353ea3cad102" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a45c90547fafad0ff956b06bb5245cdcf" kindref="member">__dev_t</ref></type>
         <definition>__dev_t stat::st_dev</definition>
         <argsstring></argsstring>
         <name>st_dev</name>
@@ -147,10 +153,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="106" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="45" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_134bffc74ecab7594299064e953e5b20b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ee689fd681d6f52c910a90af380155af" kindref="member">fflags_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a34bffc74ecab7594299064e953e5b20b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1aee689fd681d6f52c910a90af380155af" kindref="member">fflags_t</ref></type>
         <definition>fflags_t stat::st_flags</definition>
         <argsstring></argsstring>
         <name>st_flags</name>
@@ -160,10 +169,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="128" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="61" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="61" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_196a89f0335e054637efa0eb7487e0682" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a96a89f0335e054637efa0eb7487e0682" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1acaa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
         <definition>__uint32_t stat::st_gen</definition>
         <argsstring></argsstring>
         <name>st_gen</name>
@@ -173,10 +182,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="129" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="129" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="62" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="62" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1b864f16f436cec370f0ced585d897698" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_19520fe38856d436aa8c5850ff21839ec" kindref="member">gid_t</ref></type>
+      <memberdef kind="variable" id="structstat_1ab864f16f436cec370f0ced585d897698" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a9520fe38856d436aa8c5850ff21839ec" kindref="member">gid_t</ref></type>
         <definition>gid_t stat::st_gid</definition>
         <argsstring></argsstring>
         <name>st_gid</name>
@@ -186,10 +195,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="111" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="111" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="50" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_19769ed8f0d4c5a9f329c32bc92479d56" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_173341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a73341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref></type>
         <definition>ino_t stat::st_ino</definition>
         <argsstring></argsstring>
         <name>st_ino</name>
@@ -199,10 +211,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="107" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="107" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="46" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_11823e5f33a019b1bdeb7a000d0d202fd" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_1479ed1d22a5d4badec9d1fa7246d05bf" kindref="member">__int32_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a1823e5f33a019b1bdeb7a000d0d202fd" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a479ed1d22a5d4badec9d1fa7246d05bf" kindref="member">__int32_t</ref></type>
         <definition>__int32_t stat::st_lspare</definition>
         <argsstring></argsstring>
         <name>st_lspare</name>
@@ -212,11 +227,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="130" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="130" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="63" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="63" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structstat_15cbdd829011af82ba61e83773bbcbc7d" prot="public" static="no" mutable="no">
-        <type><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref></type>
-        <definition>mode_t stat::st_mode</definition>
+      <memberdef kind="variable" id="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a633606f8a0f9a59b300c4947280d816f" kindref="member">__mode_t</ref></type>
+        <definition>__mode_t stat::st_mode</definition>
         <argsstring></argsstring>
         <name>st_mode</name>
         <briefdescription>
@@ -225,11 +240,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="108" bodyend="-1"/>
-        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="47" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" compoundref="descrip_8c" startline="185" endline="197">fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_177e235090f8cb6897f1c0ce65689006b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a77e235090f8cb6897f1c0ce65689006b" prot="public" static="no" mutable="no">
+        <type><ref refid="__timespec_8h_1ac8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref></type>
         <definition>time_t stat::st_mtime</definition>
         <argsstring></argsstring>
         <name>st_mtime</name>
@@ -239,11 +257,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="120" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="120" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="54" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_10ed9092fa6c77a3251b9b9a4738ef84f" prot="public" static="no" mutable="no">
-        <type><ref refid="kern__descrip_8h_1e6b499a9e117ca8d1d165c847c872cc0" kindref="member">nlink_t</ref></type>
-        <definition>nlink_t stat::st_nlink</definition>
+      <memberdef kind="variable" id="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1ac1789b464296a1bd0de1734e17d0a146" kindref="member">__nlink_t</ref></type>
+        <definition>__nlink_t stat::st_nlink</definition>
         <argsstring></argsstring>
         <name>st_nlink</name>
         <briefdescription>
@@ -252,10 +273,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="109" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="48" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_119878d2506fccbada6f99ff8351e54fc" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_145c90547fafad0ff956b06bb5245cdcf" kindref="member">__dev_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a19878d2506fccbada6f99ff8351e54fc" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a45c90547fafad0ff956b06bb5245cdcf" kindref="member">__dev_t</ref></type>
         <definition>__dev_t stat::st_rdev</definition>
         <argsstring></argsstring>
         <name>st_rdev</name>
@@ -265,10 +289,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="112" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="51" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_1040e19c8b9766f841fde8786ce9297bf" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a040e19c8b9766f841fde8786ce9297bf" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1afa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
         <definition>off_t stat::st_size</definition>
         <argsstring></argsstring>
         <name>st_size</name>
@@ -278,10 +305,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="125" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="125" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="58" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structstat_14a8708a3d18be60ee7b2f06c4cab0c70" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_11844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref></type>
+      <memberdef kind="variable" id="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a1844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref></type>
         <definition>uid_t stat::st_uid</definition>
         <argsstring></argsstring>
         <name>st_uid</name>
@@ -291,37 +321,46 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="110" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="49" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="stat_8c_1a450c63b2bbf7f46c54846f2b8a565587" compoundref="stat_8c" startline="36" endline="89">_sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="105" bodyend="149"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>stat</label>
+        <link refid="structstat"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" line="44" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/stat.h" bodystart="44" bodyend="68"/>
     <listofallmembers>
-      <member refid="structstat_18e7af7908cc5409963de8c2af581070c" prot="public" virt="non-virtual"><scope>stat</scope><name>__st_atimensec</name></member>
-      <member refid="structstat_168a4709b4a992cd2e1dfdfb630bfe6cb" prot="public" virt="non-virtual"><scope>stat</scope><name>__st_ctimensec</name></member>
-      <member refid="structstat_1d35fc3a664184cdc617b114cd25f5f67" prot="public" virt="non-virtual"><scope>stat</scope><name>__st_mtimensec</name></member>
-      <member refid="structstat_1eadf0ca7bfa140ac64fa582f7765066b" prot="public" virt="non-virtual"><scope>stat</scope><name>int</name></member>
-      <member refid="structstat_1b74d1e7e345e88b9d0fb2688a97cba64" prot="public" virt="non-virtual"><scope>stat</scope><name>st_atime</name></member>
-      <member refid="structstat_1a7c8627ac57ce82bccc0b261d56a25e5" prot="public" virt="non-virtual"><scope>stat</scope><name>st_birthtime</name></member>
-      <member refid="structstat_10e919848cf78f7aacb30a7fb13e81acc" prot="public" virt="non-virtual"><scope>stat</scope><name>st_birthtimensec</name></member>
-      <member refid="structstat_138d474e1ae3cf6fbdde89ac3c3e308f1" prot="public" virt="non-virtual"><scope>stat</scope><name>st_blksize</name></member>
-      <member refid="structstat_142dd716b2f9234f961d949fc9500eefb" prot="public" virt="non-virtual"><scope>stat</scope><name>st_blocks</name></member>
-      <member refid="structstat_11b4b858db1ebe79c3d6e0fc1ef721024" prot="public" virt="non-virtual"><scope>stat</scope><name>st_ctime</name></member>
-      <member refid="structstat_1fb143a1534bf763afd6b353ea3cad102" prot="public" virt="non-virtual"><scope>stat</scope><name>st_dev</name></member>
-      <member refid="structstat_134bffc74ecab7594299064e953e5b20b" prot="public" virt="non-virtual"><scope>stat</scope><name>st_flags</name></member>
-      <member refid="structstat_196a89f0335e054637efa0eb7487e0682" prot="public" virt="non-virtual"><scope>stat</scope><name>st_gen</name></member>
-      <member refid="structstat_1b864f16f436cec370f0ced585d897698" prot="public" virt="non-virtual"><scope>stat</scope><name>st_gid</name></member>
-      <member refid="structstat_19769ed8f0d4c5a9f329c32bc92479d56" prot="public" virt="non-virtual"><scope>stat</scope><name>st_ino</name></member>
-      <member refid="structstat_11823e5f33a019b1bdeb7a000d0d202fd" prot="public" virt="non-virtual"><scope>stat</scope><name>st_lspare</name></member>
-      <member refid="structstat_15cbdd829011af82ba61e83773bbcbc7d" prot="public" virt="non-virtual"><scope>stat</scope><name>st_mode</name></member>
-      <member refid="structstat_177e235090f8cb6897f1c0ce65689006b" prot="public" virt="non-virtual"><scope>stat</scope><name>st_mtime</name></member>
-      <member refid="structstat_10ed9092fa6c77a3251b9b9a4738ef84f" prot="public" virt="non-virtual"><scope>stat</scope><name>st_nlink</name></member>
-      <member refid="structstat_119878d2506fccbada6f99ff8351e54fc" prot="public" virt="non-virtual"><scope>stat</scope><name>st_rdev</name></member>
-      <member refid="structstat_1040e19c8b9766f841fde8786ce9297bf" prot="public" virt="non-virtual"><scope>stat</scope><name>st_size</name></member>
-      <member refid="structstat_14a8708a3d18be60ee7b2f06c4cab0c70" prot="public" virt="non-virtual"><scope>stat</scope><name>st_uid</name></member>
+      <member refid="structstat_1a8e7af7908cc5409963de8c2af581070c" prot="public" virt="non-virtual"><scope>stat</scope><name>__st_atimensec</name></member>
+      <member refid="structstat_1a68a4709b4a992cd2e1dfdfb630bfe6cb" prot="public" virt="non-virtual"><scope>stat</scope><name>__st_ctimensec</name></member>
+      <member refid="structstat_1ad35fc3a664184cdc617b114cd25f5f67" prot="public" virt="non-virtual"><scope>stat</scope><name>__st_mtimensec</name></member>
+      <member refid="structstat_1aeadf0ca7bfa140ac64fa582f7765066b" prot="public" virt="non-virtual"><scope>stat</scope><name>int</name></member>
+      <member refid="structstat_1ab74d1e7e345e88b9d0fb2688a97cba64" prot="public" virt="non-virtual"><scope>stat</scope><name>st_atime</name></member>
+      <member refid="structstat_1aa7c8627ac57ce82bccc0b261d56a25e5" prot="public" virt="non-virtual"><scope>stat</scope><name>st_birthtime</name></member>
+      <member refid="structstat_1a0e919848cf78f7aacb30a7fb13e81acc" prot="public" virt="non-virtual"><scope>stat</scope><name>st_birthtimensec</name></member>
+      <member refid="structstat_1a38d474e1ae3cf6fbdde89ac3c3e308f1" prot="public" virt="non-virtual"><scope>stat</scope><name>st_blksize</name></member>
+      <member refid="structstat_1a42dd716b2f9234f961d949fc9500eefb" prot="public" virt="non-virtual"><scope>stat</scope><name>st_blocks</name></member>
+      <member refid="structstat_1a1b4b858db1ebe79c3d6e0fc1ef721024" prot="public" virt="non-virtual"><scope>stat</scope><name>st_ctime</name></member>
+      <member refid="structstat_1afb143a1534bf763afd6b353ea3cad102" prot="public" virt="non-virtual"><scope>stat</scope><name>st_dev</name></member>
+      <member refid="structstat_1a34bffc74ecab7594299064e953e5b20b" prot="public" virt="non-virtual"><scope>stat</scope><name>st_flags</name></member>
+      <member refid="structstat_1a96a89f0335e054637efa0eb7487e0682" prot="public" virt="non-virtual"><scope>stat</scope><name>st_gen</name></member>
+      <member refid="structstat_1ab864f16f436cec370f0ced585d897698" prot="public" virt="non-virtual"><scope>stat</scope><name>st_gid</name></member>
+      <member refid="structstat_1a9769ed8f0d4c5a9f329c32bc92479d56" prot="public" virt="non-virtual"><scope>stat</scope><name>st_ino</name></member>
+      <member refid="structstat_1a1823e5f33a019b1bdeb7a000d0d202fd" prot="public" virt="non-virtual"><scope>stat</scope><name>st_lspare</name></member>
+      <member refid="structstat_1ad0ca66d10647cc5f8aaf1d06ab34ed54" prot="public" virt="non-virtual"><scope>stat</scope><name>st_mode</name></member>
+      <member refid="structstat_1a77e235090f8cb6897f1c0ce65689006b" prot="public" virt="non-virtual"><scope>stat</scope><name>st_mtime</name></member>
+      <member refid="structstat_1a1d8d4cf9b348a7f706fef29aabd9bd13" prot="public" virt="non-virtual"><scope>stat</scope><name>st_nlink</name></member>
+      <member refid="structstat_1a19878d2506fccbada6f99ff8351e54fc" prot="public" virt="non-virtual"><scope>stat</scope><name>st_rdev</name></member>
+      <member refid="structstat_1a040e19c8b9766f841fde8786ce9297bf" prot="public" virt="non-virtual"><scope>stat</scope><name>st_size</name></member>
+      <member refid="structstat_1a4a8708a3d18be60ee7b2f06c4cab0c70" prot="public" virt="non-virtual"><scope>stat</scope><name>st_uid</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

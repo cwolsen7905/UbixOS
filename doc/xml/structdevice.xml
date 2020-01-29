@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdevice" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdevice" kind="struct" language="C++" prot="public">
     <compoundname>device</compoundname>
     <includes refid="device_8old_8h" local="no">device.old.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdevice_19467302b748ed3627bae8e3ecee7af87" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structdevice_1a9467302b748ed3627bae8e3ecee7af87" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 device::ioAddr</definition>
         <argsstring></argsstring>
         <name>ioAddr</name>
@@ -15,16 +15,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" line="31" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" bodystart="31" bodyend="-1"/>
-        <referencedby refid="ne2k_8c_193484a1eaa8e1b265202c6cccfed65f3" compoundref="ne2k_8c" startline="223" endline="277">dp_recv</referencedby>
-        <referencedby refid="ne2k_8c_182ba0a2f0d1c6dc1381e5c15118bb5ef" compoundref="ne2k_8c" startline="279" endline="295">getblock</referencedby>
-        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
-        <referencedby refid="ne2k_8c_11e664af4b82fdc7971db793f0e9b3ebd" compoundref="ne2k_8c" startline="191" endline="221">ne2kHandler</referencedby>
-        <referencedby refid="ne2k_8c_145a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="164" endline="189">NICtoPC</referencedby>
-        <referencedby refid="ne2k_8c_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" line="36" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="ne2k_8c_1a45a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="162" endline="185">NICtoPC</referencedby>
+        <referencedby refid="ne2k_8c_1af6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="113" endline="160">PCtoNIC</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdevice_1893bc785f272d1fedb2b4c14e31a7f35" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdevice_1a893bc785f272d1fedb2b4c14e31a7f35" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 device::irq</definition>
         <argsstring></argsstring>
         <name>irq</name>
@@ -34,11 +30,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" line="32" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" bodystart="32" bodyend="-1"/>
-        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" line="37" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" bodystart="37" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice_1522f3e0ac6be64f3e88296e4ffb5a432" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdevice_1a522f3e0ac6be64f3e88296e4ffb5a432" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 device::mtu</definition>
         <argsstring></argsstring>
         <name>mtu</name>
@@ -48,10 +43,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" bodystart="34" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" line="39" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" bodystart="39" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice_11e9afdb59427b4b73cc24520388cad77" prot="public" static="no" mutable="no">
-        <type><ref refid="structnet" kindref="compound">net</ref> *</type>
+      <memberdef kind="variable" id="structdevice_1a1e9afdb59427b4b73cc24520388cad77" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structnet" kindref="compound">net</ref> *</type>
         <definition>struct net* device::net</definition>
         <argsstring></argsstring>
         <name>net</name>
@@ -61,10 +56,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" line="30" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" bodystart="30" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" line="35" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" bodystart="35" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevice_196818fecbf88d529c58a6c16531bfc64" prot="public" static="no" mutable="no">
-        <type><ref refid="structei__device" kindref="compound">ei_device</ref> *</type>
+      <memberdef kind="variable" id="structdevice_1a96818fecbf88d529c58a6c16531bfc64" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structei__device" kindref="compound">ei_device</ref> *</type>
         <definition>struct ei_device* device::priv</definition>
         <argsstring></argsstring>
         <name>priv</name>
@@ -74,7 +69,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" line="33" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" bodystart="33" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" line="38" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" bodystart="38" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -82,32 +77,32 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="407">
+      <node id="2">
         <label>ei_device</label>
         <link refid="structei__device"/>
       </node>
-      <node id="408">
+      <node id="3">
         <label>net</label>
         <link refid="structnet"/>
       </node>
-      <node id="406">
+      <node id="1">
         <label>device</label>
         <link refid="structdevice"/>
-        <childnode refid="407" relation="usage">
-          <edgelabel>priv</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+priv</edgelabel>
         </childnode>
-        <childnode refid="408" relation="usage">
-          <edgelabel>net</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+net</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" line="29" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.old.h" bodystart="29" bodyend="35"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" line="34" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/device.old.h" bodystart="34" bodyend="40"/>
     <listofallmembers>
-      <member refid="structdevice_19467302b748ed3627bae8e3ecee7af87" prot="public" virt="non-virtual"><scope>device</scope><name>ioAddr</name></member>
-      <member refid="structdevice_1893bc785f272d1fedb2b4c14e31a7f35" prot="public" virt="non-virtual"><scope>device</scope><name>irq</name></member>
-      <member refid="structdevice_1522f3e0ac6be64f3e88296e4ffb5a432" prot="public" virt="non-virtual"><scope>device</scope><name>mtu</name></member>
-      <member refid="structdevice_11e9afdb59427b4b73cc24520388cad77" prot="public" virt="non-virtual"><scope>device</scope><name>net</name></member>
-      <member refid="structdevice_196818fecbf88d529c58a6c16531bfc64" prot="public" virt="non-virtual"><scope>device</scope><name>priv</name></member>
+      <member refid="structdevice_1a9467302b748ed3627bae8e3ecee7af87" prot="public" virt="non-virtual"><scope>device</scope><name>ioAddr</name></member>
+      <member refid="structdevice_1a893bc785f272d1fedb2b4c14e31a7f35" prot="public" virt="non-virtual"><scope>device</scope><name>irq</name></member>
+      <member refid="structdevice_1a522f3e0ac6be64f3e88296e4ffb5a432" prot="public" virt="non-virtual"><scope>device</scope><name>mtu</name></member>
+      <member refid="structdevice_1a1e9afdb59427b4b73cc24520388cad77" prot="public" virt="non-virtual"><scope>device</scope><name>net</name></member>
+      <member refid="structdevice_1a96818fecbf88d529c58a6c16531bfc64" prot="public" virt="non-virtual"><scope>device</scope><name>priv</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

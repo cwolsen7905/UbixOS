@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structioctl__args" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structioctl__args" kind="struct" language="C++" prot="public">
     <compoundname>ioctl_args</compoundname>
-    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structioctl__args_1ffd1f0ddcb0576d2811ce631e9d2fb2b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_18f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+      <memberdef kind="variable" id="structioctl__args_1affd1f0ddcb0576d2811ce631e9d2fb2b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
         <definition>u_long ioctl_args::com</definition>
         <argsstring></argsstring>
         <name>com</name>
@@ -15,9 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="156" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="480" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="480" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_187571e46eb43200d9c86008d5ef074c1" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1a87571e46eb43200d9c86008d5ef074c1" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char ioctl_args::com_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -28,12 +28,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="156" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="479" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="479" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_16832f1ba0d0049d2b22ff087654fba18" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1af778d95cf5dad870251c5a84b4ea5c6d" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char ioctl_args::com_r_[(sizeof(register_t)&lt;=sizeof(u_long)?0:sizeof(register_t)-sizeof(u_long))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_long)?0:sizeof(register_t)-sizeof(u_long))]</argsstring>
+        <definition>char ioctl_args::com_r_[(sizeof(register_t)&lt;=sizeof(u_long) ? 0 :sizeof(register_t) - sizeof(u_long))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_long) ? 0 :sizeof(register_t) - sizeof(u_long))]</argsstring>
         <name>com_r_</name>
         <briefdescription>
         </briefdescription>
@@ -41,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="156" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="481" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="481" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_1eb632d2ac123fb63a619a7553f25fa0d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref></type>
+      <memberdef kind="variable" id="structioctl__args_1aeb632d2ac123fb63a619a7553f25fa0d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a06b0051d3f39d5cd5ad781e5871e49ee" kindref="member">caddr_t</ref></type>
         <definition>caddr_t ioctl_args::data</definition>
         <argsstring></argsstring>
         <name>data</name>
@@ -54,9 +54,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="157" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="483" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="483" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_1514813665cdeecb58d5ab0d18be73a39" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1a514813665cdeecb58d5ab0d18be73a39" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char ioctl_args::data_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -67,12 +67,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="157" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="482" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="482" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_1bec9b96a7a663f8c9c356380b16fabd7" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1a38e3fe38ca48e2bb109aeb8f2506639d" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char ioctl_args::data_r_[(sizeof(register_t)&lt;=sizeof(caddr_t)?0:sizeof(register_t)-sizeof(caddr_t))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(caddr_t)?0:sizeof(register_t)-sizeof(caddr_t))]</argsstring>
+        <definition>char ioctl_args::data_r_[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(caddr_t) ? 0 :sizeof(register_t) - sizeof(caddr_t))]</argsstring>
         <name>data_r_</name>
         <briefdescription>
         </briefdescription>
@@ -80,9 +80,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="157" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="484" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="484" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_114ff7d2d907d993df2c20b3ee623db01" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1a14ff7d2d907d993df2c20b3ee623db01" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int ioctl_args::fd</definition>
         <argsstring></argsstring>
@@ -93,9 +93,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="155" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="155" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="477" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="477" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_1c2352a7883adf0eedb3a4381579a75f9" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1ac2352a7883adf0eedb3a4381579a75f9" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char ioctl_args::fd_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -106,12 +106,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="155" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="155" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="476" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="476" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structioctl__args_11235dd1f8ecbe157da5c7a398653e4b2" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structioctl__args_1af3ed2b8cda43ee6662da9029d73bcd73" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char ioctl_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <definition>char ioctl_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
         <name>fd_r_</name>
         <briefdescription>
         </briefdescription>
@@ -119,24 +119,30 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="155" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="155" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="478" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="478" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="154" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="154" bodyend="158"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>ioctl_args</label>
+        <link refid="structioctl__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="475" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="475" bodyend="485"/>
     <listofallmembers>
-      <member refid="structioctl__args_1ffd1f0ddcb0576d2811ce631e9d2fb2b" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>com</name></member>
-      <member refid="structioctl__args_187571e46eb43200d9c86008d5ef074c1" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>com_l_</name></member>
-      <member refid="structioctl__args_16832f1ba0d0049d2b22ff087654fba18" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>com_r_</name></member>
-      <member refid="structioctl__args_1eb632d2ac123fb63a619a7553f25fa0d" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>data</name></member>
-      <member refid="structioctl__args_1514813665cdeecb58d5ab0d18be73a39" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>data_l_</name></member>
-      <member refid="structioctl__args_1bec9b96a7a663f8c9c356380b16fabd7" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>data_r_</name></member>
-      <member refid="structioctl__args_114ff7d2d907d993df2c20b3ee623db01" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>fd</name></member>
-      <member refid="structioctl__args_1c2352a7883adf0eedb3a4381579a75f9" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>fd_l_</name></member>
-      <member refid="structioctl__args_11235dd1f8ecbe157da5c7a398653e4b2" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>fd_r_</name></member>
+      <member refid="structioctl__args_1affd1f0ddcb0576d2811ce631e9d2fb2b" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>com</name></member>
+      <member refid="structioctl__args_1a87571e46eb43200d9c86008d5ef074c1" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>com_l_</name></member>
+      <member refid="structioctl__args_1af778d95cf5dad870251c5a84b4ea5c6d" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>com_r_</name></member>
+      <member refid="structioctl__args_1aeb632d2ac123fb63a619a7553f25fa0d" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>data</name></member>
+      <member refid="structioctl__args_1a514813665cdeecb58d5ab0d18be73a39" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>data_l_</name></member>
+      <member refid="structioctl__args_1a38e3fe38ca48e2bb109aeb8f2506639d" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>data_r_</name></member>
+      <member refid="structioctl__args_1a14ff7d2d907d993df2c20b3ee623db01" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>fd</name></member>
+      <member refid="structioctl__args_1ac2352a7883adf0eedb3a4381579a75f9" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>fd_l_</name></member>
+      <member refid="structioctl__args_1af3ed2b8cda43ee6662da9029d73bcd73" prot="public" virt="non-virtual"><scope>ioctl_args</scope><name>fd_r_</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

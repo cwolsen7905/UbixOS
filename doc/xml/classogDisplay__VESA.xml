@@ -1,28 +1,77 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="classogDisplay__VESA" kind="class" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="classogDisplay__VESA" kind="class" language="C++" prot="public">
     <compoundname>ogDisplay_VESA</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">ogSurface</basecompoundref>
     <includes refid="ogDisplay__VESA_8h" local="no">ogDisplay_VESA.h</includes>
-      <sectiondef kind="public-func">
-      <memberdef kind="function" id="classogDisplay__VESA_172572158ab03d0764a16e10eae6e07f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
-        <definition>virtual bool ogDisplay_VESA::ogAlias</definition>
-        <argsstring>(ogSurface &amp;, uInt32, uInt32, uInt32, uInt32)</argsstring>
-        <name>ogAlias</name>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classogDisplay__VESA_1a91bde55e81e026f1db469dbdb91081b6" prot="protected" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool ogDisplay_VESA::InGraphics</definition>
+        <argsstring></argsstring>
+        <name>InGraphics</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="94" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__VESA_1ad3462bf6c30907e939a16bd1db101b5b" prot="protected" static="no" mutable="no">
+        <type><ref refid="structTMode__Rec" kindref="compound">TMode_Rec</ref> *</type>
+        <definition>TMode_Rec* ogDisplay_VESA::ModeRec</definition>
+        <argsstring></argsstring>
+        <name>ModeRec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="93" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__VESA_1aef9cf61e9472cfd6f0679e3e0e103372" prot="protected" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 ogDisplay_VESA::ScreenSelector</definition>
+        <argsstring></argsstring>
+        <name>ScreenSelector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="91" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__VESA_1a2053355951e2506817f976e9e87d8288" prot="protected" static="no" mutable="no">
+        <type><ref refid="structTVESA__Rec" kindref="compound">TVESA_Rec</ref> *</type>
+        <definition>TVESA_Rec* ogDisplay_VESA::VESARec</definition>
+        <argsstring></argsstring>
+        <name>VESARec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="92" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classogDisplay__VESA_1a229bb408af8cc71bcd2417be1a78c17e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 ogDisplay_VESA::findMode</definition>
+        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
+        <name>findMode</name>
         <param>
-          <type>ogSurface &amp;</type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -30,10 +79,173 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="77"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="95" column="12"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_19a725f396979fd5d3f246c03b9ea2ad4" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+      <memberdef kind="function" id="classogDisplay__VESA_1a41e0b7bc522211a4597405aff970f491" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_VESA::getModeInfo</definition>
+        <argsstring>(uInt16)</argsstring>
+        <name>getModeInfo</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="96" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1a749c536839f6b7523bf436e892590a0c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_VESA::getVESAInfo</definition>
+        <argsstring>(void)</argsstring>
+        <name>getVESAInfo</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="97" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1ada5bdd89ff4a8970af6c68f619330b0e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>virtual uInt32 ogDisplay_VESA::rawGetPixel</definition>
+        <argsstring>(uInt32, uInt32)</argsstring>
+        <name>rawGetPixel</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="99" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1a901841845eaf5a0260ae732f65b6c03e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void ogDisplay_VESA::rawLine</definition>
+        <argsstring>(uInt32, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>rawLine</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="101" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1a4d34471ee193b0aaa443594deb511d1c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void ogDisplay_VESA::rawSetPixel</definition>
+        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
+        <name>rawSetPixel</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="100" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1acfad0818de6ad5bf355a680c5bce27a4" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_VESA::setMode</definition>
+        <argsstring>(uInt16)</argsstring>
+        <name>setMode</name>
+        <param>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="98" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1af32dff183cb6ab9fd33c8ce1a2f67056" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_VESA::setPal</definition>
+        <argsstring>(void)</argsstring>
+        <name>setPal</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="102" column="10"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classogDisplay__VESA_1a72572158ab03d0764a16e10eae6e07f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>virtual bool ogDisplay_VESA::ogAlias</definition>
+        <argsstring>(ogSurface &amp;, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>ogAlias</name>
+        <param>
+          <type>ogSurface &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="106" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__VESA_1a9a725f396979fd5d3f246c03b9ea2ad4" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
         <definition>virtual bool ogDisplay_VESA::ogAvail</definition>
         <argsstring>(void)</argsstring>
         <name>ogAvail</name>
@@ -46,15 +258,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="76"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="105" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_12e7bd63f0181a095dae290079fe52dbb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1a2e7bd63f0181a095dae290079fe52dbb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogClear</definition>
         <argsstring>(uInt32)</argsstring>
         <name>ogClear</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -62,10 +274,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="78"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="107" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1c5daa83688945e860f76b9a7cb1eb92f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+      <memberdef kind="function" id="classogDisplay__VESA_1ac5daa83688945e860f76b9a7cb1eb92f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
         <definition>virtual bool ogDisplay_VESA::ogClone</definition>
         <argsstring>(ogSurface &amp;)</argsstring>
         <name>ogClone</name>
@@ -78,24 +290,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="79"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="108" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1f2956bd891d1a6c2238dd059af091008" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1af2956bd891d1a6c2238dd059af091008" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogCopyLineFrom</definition>
         <argsstring>(uInt32, uInt32, void *, uInt32)</argsstring>
         <name>ogCopyLineFrom</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
           <type>void *</type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -103,24 +315,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="81"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="110" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_12a744af413480a1d47a6ccd19ce97a0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1a2a744af413480a1d47a6ccd19ce97a0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogCopyLineTo</definition>
         <argsstring>(uInt32, uInt32, const void *, uInt32)</argsstring>
         <name>ogCopyLineTo</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type>const void *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> void *</type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -128,9 +340,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="80"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="109" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1b006e28cd0c1d81d3e9ae001d7ef68fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1ab006e28cd0c1d81d3e9ae001d7ef68fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogCopyPal</definition>
         <argsstring>(ogSurface &amp;)</argsstring>
@@ -144,18 +356,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="82"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="111" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_11c3af24147db4f8f1afdf5e44688c314" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+      <memberdef kind="function" id="classogDisplay__VESA_1a1c3af24147db4f8f1afdf5e44688c314" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
         <definition>virtual bool ogDisplay_VESA::ogCreate</definition>
         <argsstring>(uInt32, uInt32, ogPixelFmt)</argsstring>
         <name>ogCreate</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
           <type>ogPixelFmt</type>
@@ -166,9 +378,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="83"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="112" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_15c779500df6d52c09db0114a2e742096" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1a5c779500df6d52c09db0114a2e742096" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>ogDisplay_VESA::ogDisplay_VESA</definition>
         <argsstring>(void)</argsstring>
@@ -182,10 +394,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="75"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="104" column="5"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_15e06a34a5af67c5be61f5eea2eecf9ca" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="classogDisplay__VESA_1a5e06a34a5af67c5be61f5eea2eecf9ca" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>virtual uInt32 ogDisplay_VESA::ogGetPixel</definition>
         <argsstring>(int32, int32)</argsstring>
         <name>ogGetPixel</name>
@@ -201,18 +413,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="84"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="113" column="20"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_14baacb20c49d341d4878e567c336eeba" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1a4baacb20c49d341d4878e567c336eeba" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void *</type>
         <definition>virtual void* ogDisplay_VESA::ogGetPtr</definition>
         <argsstring>(uInt32, uInt32)</argsstring>
         <name>ogGetPtr</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -220,9 +432,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="85"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="114" column="19"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1bef9358019a44a03c83ef13e4153bf51" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1abef9358019a44a03c83ef13e4153bf51" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogHLine</definition>
         <argsstring>(int32, int32, int32, uInt32)</argsstring>
@@ -237,7 +449,7 @@
           <type>int32</type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -245,15 +457,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="86"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="115" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1034291a3e17c89f10c1174fc2f815633" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+      <memberdef kind="function" id="classogDisplay__VESA_1a034291a3e17c89f10c1174fc2f815633" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
         <definition>virtual bool ogDisplay_VESA::ogLoadPal</definition>
         <argsstring>(const char *)</argsstring>
         <name>ogLoadPal</name>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -261,9 +473,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="87"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="116" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1709ae906057782c3949d0b9a1af2496f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1a709ae906057782c3949d0b9a1af2496f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogSetPixel</definition>
         <argsstring>(int32, int32, uInt32)</argsstring>
@@ -275,7 +487,7 @@
           <type>int32</type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -283,24 +495,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="88"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="117" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1e0c9f2a2b0ce7963934af447e58573fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1ae0c9f2a2b0ce7963934af447e58573fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogSetRGBPalette</definition>
         <argsstring>(uInt8, uInt8, uInt8, uInt8)</argsstring>
         <name>ogSetRGBPalette</name>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -308,9 +520,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="89"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="118" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1db09aaf7b83c0279818627f1d657b017" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1adb09aaf7b83c0279818627f1d657b017" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogVFlip</definition>
         <argsstring>(void)</argsstring>
@@ -324,9 +536,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="90"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="119" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_102f67a3a23f105e3c4582103a5727fb0" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+      <memberdef kind="function" id="classogDisplay__VESA_1a02f67a3a23f105e3c4582103a5727fb0" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
         <type>void</type>
         <definition>virtual void ogDisplay_VESA::ogVLine</definition>
         <argsstring>(int32, int32, int32, uInt32)</argsstring>
@@ -341,7 +553,7 @@
           <type>int32</type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -349,10 +561,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="91"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="120" column="18"/>
       </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_115d894c7759c4556b197445bd51ae4c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>virtual</type>
+      <memberdef kind="function" id="classogDisplay__VESA_1a15d894c7759c4556b197445bd51ae4c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
         <definition>virtual ogDisplay_VESA::~ogDisplay_VESA</definition>
         <argsstring>(void)</argsstring>
         <name>~ogDisplay_VESA</name>
@@ -365,276 +577,81 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="92"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-func">
-      <memberdef kind="function" id="classogDisplay__VESA_1229bb408af8cc71bcd2417be1a78c17e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 ogDisplay_VESA::findMode</definition>
-        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
-        <name>findMode</name>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="66"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_141e0b7bc522211a4597405aff970f491" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void ogDisplay_VESA::getModeInfo</definition>
-        <argsstring>(uInt16)</argsstring>
-        <name>getModeInfo</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="67"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1749c536839f6b7523bf436e892590a0c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void ogDisplay_VESA::getVESAInfo</definition>
-        <argsstring>(void)</argsstring>
-        <name>getVESAInfo</name>
-        <param>
-          <type>void</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="68"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1da5bdd89ff4a8970af6c68f619330b0e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>virtual uInt32 ogDisplay_VESA::rawGetPixel</definition>
-        <argsstring>(uInt32, uInt32)</argsstring>
-        <name>rawGetPixel</name>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="70"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1901841845eaf5a0260ae732f65b6c03e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void ogDisplay_VESA::rawLine</definition>
-        <argsstring>(uInt32, uInt32, uInt32, uInt32, uInt32)</argsstring>
-        <name>rawLine</name>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="72"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_14d34471ee193b0aaa443594deb511d1c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
-        <type>void</type>
-        <definition>virtual void ogDisplay_VESA::rawSetPixel</definition>
-        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
-        <name>rawSetPixel</name>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="71"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1cfad0818de6ad5bf355a680c5bce27a4" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void ogDisplay_VESA::setMode</definition>
-        <argsstring>(uInt16)</argsstring>
-        <name>setMode</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="69"/>
-      </memberdef>
-      <memberdef kind="function" id="classogDisplay__VESA_1f32dff183cb6ab9fd33c8ce1a2f67056" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void ogDisplay_VESA::setPal</definition>
-        <argsstring>(void)</argsstring>
-        <name>setPal</name>
-        <param>
-          <type>void</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="73"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-attrib">
-      <memberdef kind="variable" id="classogDisplay__VESA_191bde55e81e026f1db469dbdb91081b6" prot="protected" static="no" mutable="no">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
-        <definition>bool ogDisplay_VESA::InGraphics</definition>
-        <argsstring></argsstring>
-        <name>InGraphics</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="65" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="classogDisplay__VESA_1d3462bf6c30907e939a16bd1db101b5b" prot="protected" static="no" mutable="no">
-        <type><ref refid="structTMode__Rec" kindref="compound">TMode_Rec</ref> *</type>
-        <definition>TMode_Rec* ogDisplay_VESA::ModeRec</definition>
-        <argsstring></argsstring>
-        <name>ModeRec</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="64" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="classogDisplay__VESA_1ef9cf61e9472cfd6f0679e3e0e103372" prot="protected" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 ogDisplay_VESA::ScreenSelector</definition>
-        <argsstring></argsstring>
-        <name>ScreenSelector</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="62" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="classogDisplay__VESA_12053355951e2506817f976e9e87d8288" prot="protected" static="no" mutable="no">
-        <type><ref refid="structTVESA__Rec" kindref="compound">TVESA_Rec</ref> *</type>
-        <definition>TVESA_Rec* ogDisplay_VESA::VESARec</definition>
-        <argsstring></argsstring>
-        <name>VESARec</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="63" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="121" column="13"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>ogSurface</label>
+      </node>
+      <node id="1">
+        <label>ogDisplay_VESA</label>
+        <link refid="classogDisplay__VESA"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
     <collaborationgraph>
-      <node id="285">
+      <node id="3">
         <label>TMode_Rec</label>
         <link refid="structTMode__Rec"/>
       </node>
-      <node id="286">
+      <node id="2">
+        <label>ogSurface</label>
+      </node>
+      <node id="4">
         <label>TVESA_Rec</label>
         <link refid="structTVESA__Rec"/>
       </node>
-      <node id="284">
+      <node id="1">
         <label>ogDisplay_VESA</label>
         <link refid="classogDisplay__VESA"/>
-        <childnode refid="285" relation="usage">
-          <edgelabel>ModeRec</edgelabel>
+        <childnode refid="2" relation="public-inheritance">
         </childnode>
-        <childnode refid="286" relation="usage">
-          <edgelabel>VESARec</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>#ModeRec</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>#VESARec</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="60" bodyend="93"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="89" column="38" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" bodystart="89" bodyend="122"/>
     <listofallmembers>
-      <member refid="classogDisplay__VESA_1229bb408af8cc71bcd2417be1a78c17e" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>findMode</name></member>
-      <member refid="classogDisplay__VESA_141e0b7bc522211a4597405aff970f491" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>getModeInfo</name></member>
-      <member refid="classogDisplay__VESA_1749c536839f6b7523bf436e892590a0c" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>getVESAInfo</name></member>
-      <member refid="classogDisplay__VESA_191bde55e81e026f1db469dbdb91081b6" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>InGraphics</name></member>
-      <member refid="classogDisplay__VESA_1d3462bf6c30907e939a16bd1db101b5b" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>ModeRec</name></member>
-      <member refid="classogDisplay__VESA_172572158ab03d0764a16e10eae6e07f2" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogAlias</name></member>
-      <member refid="classogDisplay__VESA_19a725f396979fd5d3f246c03b9ea2ad4" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogAvail</name></member>
-      <member refid="classogDisplay__VESA_12e7bd63f0181a095dae290079fe52dbb" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogClear</name></member>
-      <member refid="classogDisplay__VESA_1c5daa83688945e860f76b9a7cb1eb92f" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogClone</name></member>
-      <member refid="classogDisplay__VESA_1f2956bd891d1a6c2238dd059af091008" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCopyLineFrom</name></member>
-      <member refid="classogDisplay__VESA_12a744af413480a1d47a6ccd19ce97a0a" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCopyLineTo</name></member>
-      <member refid="classogDisplay__VESA_1b006e28cd0c1d81d3e9ae001d7ef68fe" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCopyPal</name></member>
-      <member refid="classogDisplay__VESA_11c3af24147db4f8f1afdf5e44688c314" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCreate</name></member>
-      <member refid="classogDisplay__VESA_15c779500df6d52c09db0114a2e742096" prot="public" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>ogDisplay_VESA</name></member>
-      <member refid="classogDisplay__VESA_15e06a34a5af67c5be61f5eea2eecf9ca" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogGetPixel</name></member>
-      <member refid="classogDisplay__VESA_14baacb20c49d341d4878e567c336eeba" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogGetPtr</name></member>
-      <member refid="classogDisplay__VESA_1bef9358019a44a03c83ef13e4153bf51" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogHLine</name></member>
-      <member refid="classogDisplay__VESA_1034291a3e17c89f10c1174fc2f815633" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogLoadPal</name></member>
-      <member refid="classogDisplay__VESA_1709ae906057782c3949d0b9a1af2496f" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogSetPixel</name></member>
-      <member refid="classogDisplay__VESA_1e0c9f2a2b0ce7963934af447e58573fc" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogSetRGBPalette</name></member>
-      <member refid="classogDisplay__VESA_1db09aaf7b83c0279818627f1d657b017" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogVFlip</name></member>
-      <member refid="classogDisplay__VESA_102f67a3a23f105e3c4582103a5727fb0" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogVLine</name></member>
-      <member refid="classogDisplay__VESA_1da5bdd89ff4a8970af6c68f619330b0e" prot="protected" virt="virtual"><scope>ogDisplay_VESA</scope><name>rawGetPixel</name></member>
-      <member refid="classogDisplay__VESA_1901841845eaf5a0260ae732f65b6c03e" prot="protected" virt="virtual"><scope>ogDisplay_VESA</scope><name>rawLine</name></member>
-      <member refid="classogDisplay__VESA_14d34471ee193b0aaa443594deb511d1c" prot="protected" virt="virtual"><scope>ogDisplay_VESA</scope><name>rawSetPixel</name></member>
-      <member refid="classogDisplay__VESA_1ef9cf61e9472cfd6f0679e3e0e103372" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>ScreenSelector</name></member>
-      <member refid="classogDisplay__VESA_1cfad0818de6ad5bf355a680c5bce27a4" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>setMode</name></member>
-      <member refid="classogDisplay__VESA_1f32dff183cb6ab9fd33c8ce1a2f67056" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>setPal</name></member>
-      <member refid="classogDisplay__VESA_12053355951e2506817f976e9e87d8288" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>VESARec</name></member>
-      <member refid="classogDisplay__VESA_115d894c7759c4556b197445bd51ae4c4" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>~ogDisplay_VESA</name></member>
+      <member refid="classogDisplay__VESA_1a229bb408af8cc71bcd2417be1a78c17e" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>findMode</name></member>
+      <member refid="classogDisplay__VESA_1a41e0b7bc522211a4597405aff970f491" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>getModeInfo</name></member>
+      <member refid="classogDisplay__VESA_1a749c536839f6b7523bf436e892590a0c" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>getVESAInfo</name></member>
+      <member refid="classogDisplay__VESA_1a91bde55e81e026f1db469dbdb91081b6" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>InGraphics</name></member>
+      <member refid="classogDisplay__VESA_1ad3462bf6c30907e939a16bd1db101b5b" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>ModeRec</name></member>
+      <member refid="classogDisplay__VESA_1a72572158ab03d0764a16e10eae6e07f2" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogAlias</name></member>
+      <member refid="classogDisplay__VESA_1a9a725f396979fd5d3f246c03b9ea2ad4" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogAvail</name></member>
+      <member refid="classogDisplay__VESA_1a2e7bd63f0181a095dae290079fe52dbb" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogClear</name></member>
+      <member refid="classogDisplay__VESA_1ac5daa83688945e860f76b9a7cb1eb92f" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogClone</name></member>
+      <member refid="classogDisplay__VESA_1af2956bd891d1a6c2238dd059af091008" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCopyLineFrom</name></member>
+      <member refid="classogDisplay__VESA_1a2a744af413480a1d47a6ccd19ce97a0a" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCopyLineTo</name></member>
+      <member refid="classogDisplay__VESA_1ab006e28cd0c1d81d3e9ae001d7ef68fe" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCopyPal</name></member>
+      <member refid="classogDisplay__VESA_1a1c3af24147db4f8f1afdf5e44688c314" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogCreate</name></member>
+      <member refid="classogDisplay__VESA_1a5c779500df6d52c09db0114a2e742096" prot="public" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>ogDisplay_VESA</name></member>
+      <member refid="classogDisplay__VESA_1a5e06a34a5af67c5be61f5eea2eecf9ca" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogGetPixel</name></member>
+      <member refid="classogDisplay__VESA_1a4baacb20c49d341d4878e567c336eeba" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogGetPtr</name></member>
+      <member refid="classogDisplay__VESA_1abef9358019a44a03c83ef13e4153bf51" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogHLine</name></member>
+      <member refid="classogDisplay__VESA_1a034291a3e17c89f10c1174fc2f815633" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogLoadPal</name></member>
+      <member refid="classogDisplay__VESA_1a709ae906057782c3949d0b9a1af2496f" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogSetPixel</name></member>
+      <member refid="classogDisplay__VESA_1ae0c9f2a2b0ce7963934af447e58573fc" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogSetRGBPalette</name></member>
+      <member refid="classogDisplay__VESA_1adb09aaf7b83c0279818627f1d657b017" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogVFlip</name></member>
+      <member refid="classogDisplay__VESA_1a02f67a3a23f105e3c4582103a5727fb0" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>ogVLine</name></member>
+      <member refid="classogDisplay__VESA_1ada5bdd89ff4a8970af6c68f619330b0e" prot="protected" virt="virtual"><scope>ogDisplay_VESA</scope><name>rawGetPixel</name></member>
+      <member refid="classogDisplay__VESA_1a901841845eaf5a0260ae732f65b6c03e" prot="protected" virt="virtual"><scope>ogDisplay_VESA</scope><name>rawLine</name></member>
+      <member refid="classogDisplay__VESA_1a4d34471ee193b0aaa443594deb511d1c" prot="protected" virt="virtual"><scope>ogDisplay_VESA</scope><name>rawSetPixel</name></member>
+      <member refid="classogDisplay__VESA_1aef9cf61e9472cfd6f0679e3e0e103372" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>ScreenSelector</name></member>
+      <member refid="classogDisplay__VESA_1acfad0818de6ad5bf355a680c5bce27a4" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>setMode</name></member>
+      <member refid="classogDisplay__VESA_1af32dff183cb6ab9fd33c8ce1a2f67056" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>setPal</name></member>
+      <member refid="classogDisplay__VESA_1a2053355951e2506817f976e9e87d8288" prot="protected" virt="non-virtual"><scope>ogDisplay_VESA</scope><name>VESARec</name></member>
+      <member refid="classogDisplay__VESA_1a15d894c7759c4556b197445bd51ae4c4" prot="public" virt="virtual"><scope>ogDisplay_VESA</scope><name>~ogDisplay_VESA</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -82,7 +82,6 @@ void sys_sem_free(struct sys_sem **sem) {
   }
 #endif
 
-
 }
 
 /* Signal semaphore */
@@ -162,7 +161,7 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   struct sys_mbox *mbox = 0x0;
   LWIP_UNUSED_ARG(size);
 
-  mbox = (struct sys_mbox *) kmalloc(sizeof(struct sys_mbox));
+  mbox = (struct sys_mbox*) kmalloc(sizeof(struct sys_mbox));
 
   if (mbox == NULL)
     return (ERR_MEM);
@@ -195,14 +194,14 @@ void sys_mbox_free(struct sys_mbox **mb) {
   if ((mb != NULL) && (*mb != SYS_MBOX_NULL)) {
     struct sys_mbox *mbox = *mb;
     sys_arch_sem_wait(&mbox->lock, 0);
-/*
-    sys_sem_free_internal(mbox->full);
-    sys_sem_free_internal(mbox->empty);
-    sys_sem_free_internal(mbox->lock);
-*/
-  sem_destroy(mbox->full);
-  sem_destroy(mbox->empty);
-  sem_destroy(mbox->lock);
+    /*
+     sys_sem_free_internal(mbox->full);
+     sys_sem_free_internal(mbox->empty);
+     sys_sem_free_internal(mbox->lock);
+     */
+    sem_destroy(mbox->full);
+    sem_destroy(mbox->empty);
+    sem_destroy(mbox->lock);
 
     mbox->full = mbox->empty = mbox->lock = NULL;
     kfree(mbox);
@@ -257,7 +256,7 @@ err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
   sys_arch_sem_wait(&mbox->lock, 0);
 
   LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_trypost: mbox %p msg %p\n",
-      (void *)mbox, (void *)msg));
+          (void *)mbox, (void *)msg));
 
   if ((mbox->tail + 1) >= (mbox->head + SYS_MBOX_SIZE)) {
     sys_sem_signal(&mbox->lock);
@@ -367,9 +366,9 @@ uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
 int sys_mbox_valid(struct sys_mbox **mb) {
   struct sys_mbox *mbox = *mb;
   if (mbox == NULL)
-    return(0);
+    return (0);
   else
-    return(1);
+    return (1);
 }
 
 void sys_mbox_set_invalid(struct sys_mbox **mb) {
@@ -401,7 +400,7 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
    thread_param->arg = arg;
    thread_param->thread = thread;
    */
-  if (ubthread_create(&new_thread->ubthread, 0x0, (void *) (thread), arg) != 0x0) {
+  if (ubthread_create(&new_thread->ubthread, 0x0, (void*) (thread), arg) != 0x0) {
     kpanic("sys_thread_new: ubthread_create");
   }
   return (new_thread);
@@ -411,7 +410,7 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
 
 struct thread_start_param {
   struct sys_thread *thread;
-  void (*function)(void *);
+  void (*function)(void*);
   void *arg;
 };
 
@@ -454,7 +453,7 @@ static uint32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint32
   }
 }
 
-static struct sys_thread *current_thread(void) {
+static struct sys_thread* current_thread(void) {
   struct sys_thread *st;
   kTask_t *pt;
   pt = ubthread_self();
@@ -474,7 +473,7 @@ static struct sys_thread *current_thread(void) {
   return (0x0);
 }
 
-struct sys_timeouts *sys_arch_timeouts(void) {
+struct sys_timeouts* sys_arch_timeouts(void) {
   struct sys_thread *thread;
   thread = current_thread();
   return (&thread->timeouts);
@@ -498,7 +497,6 @@ uint32_t sys_now() {
   return (sys_unix_now());
 }
 
-
 int sys_socket(struct thread *td, struct sys_socket_args *args) {
   int error = 0x0;
   int fd = 0x0;
@@ -513,14 +511,15 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
   nfp->fd_type = 2;
   kprintf("socket(%i:%i): 0x%X:0x%X:0x%X", nfp->socket, fd, args->domain, args->type, args->protocol);
 
-  if (nfp->fd == 0x0  && nfp->socket) {
-    fdestroy(td, nfp, fd);
+  if (nfp->fd == 0x0 && nfp->socket) {
+    if (fdestroy(td, nfp, fd) != 0x0)
+      kprintf("[%s:%i] fdestroy() failed.", __FILE__, __LINE__);
 
     td->td_retval[0] = -1;
     error = -1;
   }
   else {
-    td->td_retval[0] = fd;//nfp->fd; //MrOlsen 2018index;
+    td->td_retval[0] = fd;  //nfp->fd; //MrOlsen 2018index;
   }
 
   return (error);
@@ -534,7 +533,7 @@ int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
   kprintf("SSO: %i:%i:%i", args->s, fd->socket, td->td_retval[0]);
   td->td_retval[0] = 0;
 
-  return(0);
+  return (0);
 }
 
 int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
@@ -543,6 +542,6 @@ int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
 
   lwip_sendto(fd->socket, args->buf, args->len, args->flags, args->to, args->tolen);
   td->td_retval[0] = 0x0;
-  
+
   return (0);
 }

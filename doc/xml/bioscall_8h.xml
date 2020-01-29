@@ -1,48 +1,107 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="bioscall_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="bioscall_8h" kind="file" language="C++">
     <compoundname>bioscall.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="bioscall_8c" local="no">src/sys/kernel/bioscall.c</includedby>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="armv6_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</includedby>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="ogDisplay__UbixOS_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/ogDisplay_UbixOS.cc</includedby>
     <incdepgraph>
-      <node id="3227">
-        <label>src/sys/include/lib/bioscall.h</label>
-        <link refid="bioscall.h"/>
-        <childnode refid="3228" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="3228">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3229" relation="include">
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="3229">
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/lib/bioscall.h</label>
+        <link refid="bioscall_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3230">
-        <label>src/sys/include/lib/bioscall.h</label>
-        <link refid="bioscall.h"/>
-        <childnode refid="3231" relation="include">
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/sde/ogDisplay_UbixOS.cc</label>
+        <link refid="ogDisplay__UbixOS_8cc"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</label>
+        <link refid="armv6_2bioscall_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/lib/bioscall.h</label>
+        <link refid="bioscall_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="3232" relation="include">
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
         </childnode>
       </node>
-      <node id="3232">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
       </node>
-      <node id="3231">
-        <label>src/sys/kernel/bioscall.c</label>
-        <link refid="bioscall_8c"/>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
       </node>
     </invincdepgraph>
       <sectiondef kind="define">
-      <memberdef kind="define" id="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" prot="public" static="no">
+      <memberdef kind="define" id="bioscall_8h_1a9e06d707701fc3d835d8d0d366476d77" prot="public" static="no">
         <name>EFLAG_IF</name>
         <initializer>0x200</initializer>
         <briefdescription>
@@ -51,11 +110,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" bodystart="36" bodyend="-1"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" bodystart="35" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="bioscall_8h_1fe40449df15f3e7b2514a8f742767e91" prot="public" static="no">
+      <memberdef kind="define" id="bioscall_8h_1afe40449df15f3e7b2514a8f742767e91" prot="public" static="no">
         <name>EFLAG_IOPL3</name>
         <initializer>0x3000</initializer>
         <briefdescription>
@@ -64,9 +121,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" bodystart="37" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" bodystart="36" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="bioscall_8h_1186a5896d65606ffa3211a7f4b2cfa82" prot="public" static="no">
+      <memberdef kind="define" id="bioscall_8h_1a186a5896d65606ffa3211a7f4b2cfa82" prot="public" static="no">
         <name>EFLAG_TF</name>
         <initializer>0x100</initializer>
         <briefdescription>
@@ -75,9 +132,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" bodystart="35" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" bodystart="34" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" prot="public" static="no">
+      <memberdef kind="define" id="bioscall_8h_1ac853c10e3eb19188c6b3b8d3ff6914e2" prot="public" static="no">
         <name>EFLAG_VM</name>
         <initializer>0x20000</initializer>
         <briefdescription>
@@ -86,13 +143,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" bodystart="37" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="bioscall_8h_1df2fd035ba4b30f8a71326f4685959d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="bioscall_8h_1adf2fd035ba4b30f8a71326f4685959d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void bios16Code</definition>
         <argsstring>()</argsstring>
@@ -103,10 +158,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" line="41"/>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" line="40" column="6" declfile="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" declline="40" declcolumn="6"/>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
       </memberdef>
-      <memberdef kind="function" id="bioscall_8h_156a172d2268fc10811a0bb180d7c3f49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void biosCall</definition>
         <argsstring>(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds)</argsstring>
@@ -153,49 +208,55 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/bioscall.c" bodystart="50" bodyend="97"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="36">tssStruct::back_link</references>
-        <references refid="bioscall_8h_1df2fd035ba4b30f8a71326f4685959d6">bios16Code</references>
-        <references refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="47">tssStruct::cr3</references>
-        <references refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="57">tssStruct::cs</references>
-        <references refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="61">tssStruct::ds</references>
-        <references refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" compoundref="tss_8h" startline="50">tssStruct::eax</references>
-        <references refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="52">tssStruct::ebp</references>
-        <references refid="structtssStruct_1d0df6b4fe61e708d94656809727747cb" compoundref="tss_8h" startline="50">tssStruct::ebx</references>
-        <references refid="structtssStruct_17ba37dceca6d9363ea799091138d4601" compoundref="tss_8h" startline="50">tssStruct::ecx</references>
-        <references refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="54">tssStruct::edi</references>
-        <references refid="structtssStruct_175825d1693047c99df1911b3af4d613f" compoundref="tss_8h" startline="50">tssStruct::edx</references>
-        <references refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" compoundref="bioscall_8h" startline="36">EFLAG_IF</references>
-        <references refid="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" compoundref="bioscall_8h" startline="38">EFLAG_VM</references>
-        <references refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="49">tssStruct::eflags</references>
-        <references refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="48">tssStruct::eip</references>
-        <references refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="55">tssStruct::es</references>
-        <references refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="53">tssStruct::esi</references>
-        <references refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="51">tssStruct::esp</references>
-        <references refid="structtssStruct_11017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="38">tssStruct::esp0</references>
-        <references refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="41">tssStruct::esp1</references>
-        <references refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="44">tssStruct::esp2</references>
-        <references refid="structtssStruct_18114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="63">tssStruct::fs</references>
-        <references refid="structtssStruct_18dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="65">tssStruct::gs</references>
-        <references refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="70">tssStruct::io_map</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="67">tssStruct::ldt</references>
-        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
-        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b96564f2f3e15be06b670547bbcaaf0798">READY</references>
-        <references refid="sched_8h_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</references>
-        <references refid="structtssStruct_1340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="59">tssStruct::ss</references>
-        <references refid="structtssStruct_126d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="39">tssStruct::ss0</references>
-        <references refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="42">tssStruct::ss1</references>
-        <references refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="45">tssStruct::ss2</references>
-        <references refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="62">taskStruct::state</references>
-        <references refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="69">tssStruct::trace_bitmap</references>
-        <references refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="58">taskStruct::tss</references>
-        <references refid="structosInfo_1befa906e51d2b28b2475a74e16219ded" compoundref="sched_8h" startline="45">osInfo::v86Task</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <references refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" compoundref="start_8S" startline="51">x2000</references>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" line="39" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c" bodystart="49" bodyend="96" declfile="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h" declline="39" declcolumn="6"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structtssStruct_1afecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="35">tssStruct::back_link</references>
+        <references refid="bioscall_8h_1adf2fd035ba4b30f8a71326f4685959d6">bios16Code</references>
+        <references refid="structtssStruct_1a8d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="46">tssStruct::cr3</references>
+        <references refid="structtssStruct_1a6d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="56">tssStruct::cs</references>
+        <references refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="60">tssStruct::ds</references>
+        <references refid="structtssStruct_1a6f6c9fdd54cd0da7f2331dc35f7d8fc7" compoundref="tss_8h" startline="49">tssStruct::eax</references>
+        <references refid="structtssStruct_1ac2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="51">tssStruct::ebp</references>
+        <references refid="structtssStruct_1ad0df6b4fe61e708d94656809727747cb" compoundref="tss_8h" startline="49">tssStruct::ebx</references>
+        <references refid="structtssStruct_1a7ba37dceca6d9363ea799091138d4601" compoundref="tss_8h" startline="49">tssStruct::ecx</references>
+        <references refid="structtssStruct_1aa52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="53">tssStruct::edi</references>
+        <references refid="structtssStruct_1a75825d1693047c99df1911b3af4d613f" compoundref="tss_8h" startline="49">tssStruct::edx</references>
+        <references refid="bioscall_8h_1a9e06d707701fc3d835d8d0d366476d77" compoundref="bioscall_8h" startline="35">EFLAG_IF</references>
+        <references refid="bioscall_8h_1ac853c10e3eb19188c6b3b8d3ff6914e2" compoundref="bioscall_8h" startline="37">EFLAG_VM</references>
+        <references refid="structtssStruct_1aa85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="48">tssStruct::eflags</references>
+        <references refid="structtssStruct_1a3e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="47">tssStruct::eip</references>
+        <references refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="54">tssStruct::es</references>
+        <references refid="structtssStruct_1a8beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="52">tssStruct::esi</references>
+        <references refid="structtssStruct_1a85412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="50">tssStruct::esp</references>
+        <references refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="37">tssStruct::esp0</references>
+        <references refid="structtssStruct_1ad5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="40">tssStruct::esp1</references>
+        <references refid="structtssStruct_1a60c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="43">tssStruct::esp2</references>
+        <references refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="62">tssStruct::fs</references>
+        <references refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="64">tssStruct::gs</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="structtssStruct_1a611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="69">tssStruct::io_map</references>
+        <references refid="paging_8h_1a7c58070dedac2ee9e1c73d8c8206b923" compoundref="paging_8c" startline="41">kernelPageDirectory</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structtssStruct_1ad7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="66">tssStruct::ldt</references>
+        <references refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="69">taskStruct::oInfo</references>
+        <references refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9a6564f2f3e15be06b670547bbcaaf0798" compoundref="sched_8h" startline="47">READY</references>
+        <references refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" compoundref="armv6_2sched_8c" startline="244" endline="246">sched_yield</references>
+        <references refid="armv6_2sched_8c_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</references>
+        <references refid="structtssStruct_1a340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="58">tssStruct::ss</references>
+        <references refid="structtssStruct_1a26d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="38">tssStruct::ss0</references>
+        <references refid="structtssStruct_1a6abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="41">tssStruct::ss1</references>
+        <references refid="structtssStruct_1a5a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="44">tssStruct::ss2</references>
+        <references refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="72">taskStruct::state</references>
+        <references refid="structtssStruct_1a52ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="68">tssStruct::trace_bitmap</references>
+        <references refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="67">taskStruct::tss</references>
+        <references refid="structosInfo_1abefa906e51d2b28b2475a74e16219ded" compoundref="sched_8h" startline="52">osInfo::v86Task</references>
+        <references refid="paging_8h_1a3615feeeee9f4038cd1070372ccba22e" compoundref="paging_8c" startline="291" endline="346">vmm_getFreeKernelPage</references>
+        <referencedby refid="classogDisplay__UbixOS_1ae2c8cf31425f915d10490902c2ffec10" compoundref="ogDisplay__UbixOS_8cc" startline="65" endline="68">ogDisplay_UbixOS::GetModeInfo</referencedby>
+        <referencedby refid="classogDisplay__UbixOS_1a93552b3a106e40d37292eff9104d8eed" compoundref="ogDisplay__UbixOS_8cc" startline="70" endline="77">ogDisplay_UbixOS::GetVESAInfo</referencedby>
+        <referencedby refid="ogDisplay__UbixOS_8cc_1aaf55dbf02ab342a68f3a4078403763a0" compoundref="ogDisplay__UbixOS_8cc" startline="47" endline="50">initVESAMode</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -203,71 +264,67 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: bioscall_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_BIOSCALL_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_BIOSCALL_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35" refid="bioscall_8h_1186a5896d65606ffa3211a7f4b2cfa82" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_TF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x100</highlight></codeline>
-<codeline lineno="36" refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_IF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x200</highlight></codeline>
-<codeline lineno="37" refid="bioscall_8h_1fe40449df15f3e7b2514a8f742767e91" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_IOPL3<sp/><sp/><sp/><sp/><sp/><sp/>0x3000</highlight></codeline>
-<codeline lineno="38" refid="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_VM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x20000</highlight></codeline>
-<codeline lineno="39"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="bioscall_8h_156a172d2268fc10811a0bb180d7c3f49" kindref="member">biosCall</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>biosInt,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ecx,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>esi,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>es,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ds);</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="bioscall_8h_1df2fd035ba4b30f8a71326f4685959d6" kindref="member">bios16Code</ref>();</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="46"><highlight class="comment"><sp/>$Log: bioscall_8h.xml,v $
-<codeline lineno="46"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:50  reddawg
-<codeline lineno="46"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="46"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="47"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="48"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="49"><highlight class="comment"></highlight></codeline>
-<codeline lineno="50"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="51"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="52"><highlight class="comment"></highlight></codeline>
-<codeline lineno="53"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:40<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="54"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="55"><highlight class="comment"></highlight></codeline>
-<codeline lineno="56"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:00:27<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="57"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_ISA_BIOSCALL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_ISA_BIOSCALL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="bioscall_8h_1a186a5896d65606ffa3211a7f4b2cfa82" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_TF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x100</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="bioscall_8h_1a9e06d707701fc3d835d8d0d366476d77" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_IF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x200</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="bioscall_8h_1afe40449df15f3e7b2514a8f742767e91" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_IOPL3<sp/><sp/><sp/><sp/><sp/><sp/>0x3000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="bioscall_8h_1ac853c10e3eb19188c6b3b8d3ff6914e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EFLAG_VM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x20000</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" kindref="member">biosCall</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>biosInt,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>eax,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ebx,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ecx,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>edx,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>esi,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>edi,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>es,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>ds);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="bioscall_8h_1adf2fd035ba4b30f8a71326f4685959d6" kindref="member">bios16Code</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>$Log:<sp/>bioscall.h,v<sp/>$</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"></highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"></highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:40<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"></highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:00:27<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"></highlight></codeline>
 <codeline lineno="58"><highlight class="comment"></highlight></codeline>
-<codeline lineno="59"><highlight class="comment"></highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/bioscall.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/lib/bioscall.h"/>
   </compounddef>
 </doxygen>

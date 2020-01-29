@@ -1,135 +1,132 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="page__fault_8S" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="page__fault_8S" kind="file" language="C++">
     <compoundname>page_fault.S</compoundname>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="page__fault_8S_1994f42aab7cc68c5c72a897b076a0f66" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>globl _vmm_pageFault text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref></type>
-        <definition>globl _vmm_pageFault text code32 esp movl</definition>
-        <argsstring>(%esp)</argsstring>
-        <name>movl</name>
-        <param>
-          <type>%</type>
-          <declname>esp</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" line="39"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" prot="public" static="no" mutable="no">
-        <type>globl _vmm_pageFault text code32</type>
-        <definition>globl _vmm_pageFault text code32 _vmm_pageFault</definition>
-        <argsstring></argsstring>
-        <name>_vmm_pageFault</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" bodystart="38" bodyend="-1"/>
-        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
-        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="page__fault_8S_14c6ccd9c1f963885a5adbf971109133b" prot="public" static="no" mutable="no">
-        <type>globl _vmm_pageFault text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> pushl <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> pushl ecx pushl <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> push <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> push <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl</type>
-        <definition>globl _vmm_pageFault text code32 esp eax pushl ebx ebx pushl ecx pushl edx push ebx push eax movl cr2</definition>
-        <argsstring></argsstring>
-        <name>cr2</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" bodystart="46" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="page__fault_8S_1fe08e109dba1476bd0d98621ec5e2821" prot="public" static="no" mutable="no">
-        <type>globl _vmm_pageFault text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> pushl <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> pushl ecx pushl <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> push <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> push <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> pushl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> sti call vmm_pageFault <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref></type>
-        <definition>globl _vmm_pageFault text code32 esp eax pushl ebx ebx pushl ecx pushl edx push ebx push eax movl eax pushl eax sti call vmm_pageFault addl xC</definition>
-        <argsstring></argsstring>
-        <name>xC</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S" bodystart="46" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: page__fault_8S.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="31"><highlight class="comment"><sp/><sp/><sp/>Page<sp/>fault<sp/>wrapper<sp/>this<sp/>will<sp/>aquire<sp/>some<sp/>values<sp/>we<sp/>need<sp/>for<sp/>later<sp/>use</highlight></codeline>
-<codeline lineno="32"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal">.globl<sp/><ref refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" kindref="member">_vmm_pageFault</ref></highlight></codeline>
-<codeline lineno="35"><highlight class="normal">.text</highlight></codeline>
-<codeline lineno="36"><highlight class="normal">.code32</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><ref refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" kindref="member">_vmm_pageFault</ref>:</highlight></codeline>
-<codeline lineno="38" refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1df1e49503579f877a12fa32eed02f088" kindref="member">xchgl</ref><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,(%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref>)<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>EAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/>4(%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref>),%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref><sp/><sp/></highlight><highlight class="comment">/*<sp/>Move<sp/>EIP<sp/>into<sp/>EAX<sp/>to<sp/>use<sp/>later<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/>pushl<sp/>%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>EBX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/>20(%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref>),%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>ESP<sp/>for<sp/>ring<sp/>3<sp/>to<sp/>use<sp/>later<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/>pushl<sp/>%ecx<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>ECX,EDX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/>pushl<sp/>%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/>push<sp/><sp/>%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Push<sp/>ESP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/>push<sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Push<sp/>EIP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="46" refid="page__fault_8S_1fe08e109dba1476bd0d98621ec5e2821" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/>%<ref refid="page__fault_8S_14c6ccd9c1f963885a5adbf971109133b" kindref="member">cr2</ref>,%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Push<sp/>the<sp/>faulted<sp/>address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/>pushl<sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/>sti<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Turn<sp/>interrupts<sp/>back<sp/>on<sp/>we<sp/>are<sp/>now<sp/>entrant<sp/>safe<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/>call<sp/><sp/><ref refid="paging_8h_1442adfc886cbfedfc3edadf45c5f89a6" kindref="member">vmm_pageFault</ref><sp/></highlight><highlight class="comment">/*<sp/>Call<sp/>our<sp/>page<sp/>fault<sp/>handler<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="sys__call__new_8S_1bf8ddf6928259c0057aa3377e79b093e" kindref="member">addl</ref><sp/><sp/>$0<ref refid="page__fault_8S_1fe08e109dba1476bd0d98621ec5e2821" kindref="member">xC</ref>,%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Adjust<sp/>the<sp/>stack<sp/>to<sp/>compensate<sp/>for<sp/>pushed<sp/>values<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/>popl<sp/><sp/>%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Restore<sp/>EAX,EBX,ECX,EDX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/>popl<sp/><sp/>%ecx</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/>popl<sp/><sp/>%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/>popl<sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>from<sp/>the<sp/>interrupt<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="59"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">/*-</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>Page<sp/>fault<sp/>wrapper<sp/>this<sp/>will<sp/>aquire<sp/>some<sp/>values<sp/>we<sp/>need<sp/>for<sp/>later<sp/>use</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">.globl<sp/>_vmm_pageFault2</highlight></codeline>
+<codeline><highlight class="normal">.text</highlight></codeline>
+<codeline><highlight class="normal">.code32</highlight></codeline>
+<codeline><highlight class="normal">_vmm_pageFault2:</highlight></codeline>
+<codeline><highlight class="normal">xchgl<sp/>%eax,(%esp)<sp/>/*<sp/>Save<sp/>EAX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">movl<sp/>4(%esp),%eax<sp/>/*<sp/>Move<sp/>EIP<sp/>into<sp/>EAX<sp/>to<sp/>use<sp/>later<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">pushl<sp/>%ebx<sp/>/*<sp/>Save<sp/>EBX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">movl<sp/>20(%esp),%ebx<sp/>/*<sp/>Save<sp/>ESP<sp/>for<sp/>ring<sp/>3<sp/>to<sp/>use<sp/>later<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">pushl<sp/>%ecx<sp/>/*<sp/>Save<sp/>ECX,EDX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">pushl<sp/>%edx</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%ebx<sp/>/*<sp/>Push<sp/>ESP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%eax<sp/>/*<sp/>Push<sp/>EIP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">movl<sp/>%cr2,%eax<sp/>/*<sp/>Push<sp/>the<sp/>faulted<sp/>address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">pushl<sp/>%eax</highlight></codeline>
+<codeline><highlight class="normal">sti<sp/>/*<sp/>Turn<sp/>interrupts<sp/>back<sp/>on<sp/>we<sp/>are<sp/>now<sp/>entrant<sp/>safe<sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">call<sp/>vmm_pageFault<sp/>/*<sp/>Call<sp/>our<sp/>page<sp/>fault<sp/>handler<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">addl<sp/>$0xC,%esp<sp/>/*<sp/>Adjust<sp/>the<sp/>stack<sp/>to<sp/>compensate<sp/>for<sp/>pushed<sp/>values<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">popl<sp/>%edx<sp/>/*<sp/>Restore<sp/>EAX,EBX,ECX,EDX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">popl<sp/>%ecx</highlight></codeline>
+<codeline><highlight class="normal">popl<sp/>%ebx</highlight></codeline>
+<codeline><highlight class="normal">popl<sp/>%eax</highlight></codeline>
+<codeline><highlight class="normal">iret<sp/>/*<sp/>Return<sp/>from<sp/>the<sp/>interrupt<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">.globl<sp/>_vmm_pageFault</highlight></codeline>
+<codeline><highlight class="normal">.text</highlight></codeline>
+<codeline><highlight class="normal">.code32</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">_B4:</highlight></codeline>
+<codeline><highlight class="normal">_B3:</highlight></codeline>
+<codeline><highlight class="normal">nop</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">_ast:</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">_astRet:</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">_vmm_pageFault:</highlight></codeline>
+<codeline><highlight class="normal">pushl<sp/>$0xC</highlight></codeline>
+<codeline><highlight class="normal">pushal</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%ds</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%es</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%fs</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%gs</highlight></codeline>
+<codeline><highlight class="normal">mov<sp/>$0x10,%eax</highlight></codeline>
+<codeline><highlight class="normal">mov<sp/>%eax,%ds</highlight></codeline>
+<codeline><highlight class="normal">mov<sp/>%eax,%es</highlight></codeline>
+<codeline><highlight class="normal">mov<sp/>%eax,%fs</highlight></codeline>
+<codeline><highlight class="normal">cld</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%esp</highlight></codeline>
+<codeline><highlight class="normal">call<sp/>trap</highlight></codeline>
+<codeline><highlight class="normal">notyet:</highlight></codeline>
+<codeline><highlight class="normal">pushl<sp/>%eax</highlight></codeline>
+<codeline><highlight class="normal">sti</highlight></codeline>
+<codeline><highlight class="normal">call<sp/>vmm_pageFault</highlight></codeline>
+<codeline><highlight class="normal">/*<sp/>call<sp/>syscall<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">add<sp/>$0x4,%esp</highlight></codeline>
+<codeline><highlight class="normal">cmpb<sp/>$0x13,0x38(%esp)</highlight></codeline>
+<codeline><highlight class="normal">je<sp/>_B4</highlight></codeline>
+<codeline><highlight class="normal">testl<sp/>$0x2000,0x3c(%esp)<sp/>/*<sp/>Test<sp/>If<sp/>VM<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">jz<sp/>_notVM</highlight></codeline>
+<codeline><highlight class="normal">jmp<sp/>_isVM</highlight></codeline>
+<codeline><highlight class="normal">_notVM:</highlight></codeline>
+<codeline><highlight class="normal">testb<sp/>$0x3,0x38(%esp)<sp/>/*<sp/>See<sp/>If<sp/>We&apos;re<sp/>In<sp/>User<sp/>CS<sp/>(GDT<sp/>Entry<sp/>5)<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">jz<sp/>_popFS</highlight></codeline>
+<codeline><highlight class="normal">cli</highlight></codeline>
+<codeline><highlight class="normal">mov<sp/>%fs:0x0,%eax</highlight></codeline>
+<codeline><highlight class="normal">testl<sp/>$0x10800,0x80(%eax)<sp/>/*<sp/>Document<sp/>This<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal">je<sp/>_popFS</highlight></codeline>
+<codeline><highlight class="normal">sti</highlight></codeline>
+<codeline><highlight class="normal">push<sp/>%esp</highlight></codeline>
+<codeline><highlight class="normal">call<sp/>_ast</highlight></codeline>
+<codeline><highlight class="normal">add<sp/>$0x4,%esp</highlight></codeline>
+<codeline><highlight class="normal">jmp<sp/>_astRet</highlight></codeline>
+<codeline><highlight class="normal">_isVM:</highlight></codeline>
+<codeline><highlight class="normal">hlt</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">_popFS:</highlight></codeline>
+<codeline><highlight class="normal">pop<sp/>%gs</highlight></codeline>
+<codeline><highlight class="normal">pop<sp/>%fs</highlight></codeline>
+<codeline><highlight class="normal">pop<sp/>%es</highlight></codeline>
+<codeline><highlight class="normal">pop<sp/>%ds</highlight></codeline>
+<codeline><highlight class="normal">popa</highlight></codeline>
+<codeline><highlight class="normal">add<sp/>$0x8,%esp</highlight></codeline>
+<codeline><highlight class="normal">iret</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/***</highlight></codeline>
+<codeline><highlight class="normal"><sp/>END</highlight></codeline>
+<codeline><highlight class="normal"><sp/>***/</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/page_fault.S"/>
+    <location file="C:/Dev/git/UbixOS/sys/vmm/page_fault.S"/>
   </compounddef>
 </doxygen>

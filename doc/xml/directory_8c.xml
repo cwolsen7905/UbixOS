@@ -1,184 +1,491 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="directory_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="directory_8c" kind="file" language="C++">
     <compoundname>directory.c</compoundname>
-    <includes refid="ubixfs_8h" local="no">ubixfs/ubixfs.h</includes>
-    <includes refid="file_8h" local="no">vfs/file.h</includes>
+    <includes refid="include_2ubixfs_2ubixfs_8h" local="no">ubixfs/ubixfs.h</includes>
+    <includes refid="include_2vfs_2file_8h" local="no">vfs/file.h</includes>
     <includes refid="mount_8h" local="no">vfs/mount.h</includes>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
     <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
-    <includes refid="lib_2string_8h" local="no">lib/string.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
     <incdepgraph>
-      <node id="5946">
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="37">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="52">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="43">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="42">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="5938" relation="include">
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
         </childnode>
       </node>
-      <node id="5949">
+      <node id="47">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="33">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
         <label>ubixos/sched.h</label>
         <link refid="sched_8h"/>
-        <childnode refid="5938" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="5950" relation="include">
+        <childnode refid="11" relation="include">
         </childnode>
-        <childnode refid="5941" relation="include">
+        <childnode refid="51" relation="include">
         </childnode>
-        <childnode refid="5951" relation="include">
+        <childnode refid="52" relation="include">
         </childnode>
-        <childnode refid="5946" relation="include">
-        </childnode>
-      </node>
-      <node id="5936">
-        <label>src/sys/ubixfs/directory.c</label>
-        <link refid="directory.c"/>
-        <childnode refid="5937" relation="include">
-        </childnode>
-        <childnode refid="5941" relation="include">
-        </childnode>
-        <childnode refid="5943" relation="include">
-        </childnode>
-        <childnode refid="5938" relation="include">
-        </childnode>
-        <childnode refid="5952" relation="include">
-        </childnode>
-        <childnode refid="5953" relation="include">
-        </childnode>
-        <childnode refid="5954" relation="include">
+        <childnode refid="13" relation="include">
         </childnode>
       </node>
-      <node id="5938">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5939" relation="include">
-        </childnode>
-      </node>
-      <node id="5939">
+      <node id="4">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="5954">
-        <label>lib/string.h</label>
-        <link refid="lib_2string_8h"/>
-        <childnode refid="5938" relation="include">
+      <node id="38">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
         </childnode>
       </node>
-      <node id="5941">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="5938" relation="include">
-        </childnode>
-        <childnode refid="5942" relation="include">
-        </childnode>
-        <childnode refid="5943" relation="include">
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="5951">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="5938" relation="include">
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5952">
-        <label>lib/kmalloc.h</label>
-        <link refid="kmalloc_8h"/>
-        <childnode refid="5938" relation="include">
+      <node id="25">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
         </childnode>
       </node>
-      <node id="5948">
-        <label>mpi/mpi.h</label>
-        <link refid="mpi_8h"/>
-        <childnode refid="5938" relation="include">
-        </childnode>
-        <childnode refid="5949" relation="include">
-        </childnode>
-      </node>
-      <node id="5940">
-        <label>vfs/vfs.h</label>
-        <link refid="vfs_8h"/>
-        <childnode refid="5938" relation="include">
-        </childnode>
-        <childnode refid="5941" relation="include">
-        </childnode>
-        <childnode refid="5943" relation="include">
-        </childnode>
-        <childnode refid="5944" relation="include">
-        </childnode>
-        <childnode refid="5946" relation="include">
-        </childnode>
-      </node>
-      <node id="5943">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="5938" relation="include">
-        </childnode>
-      </node>
-      <node id="5953">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5938" relation="include">
-        </childnode>
-      </node>
-      <node id="5937">
-        <label>ubixfs/ubixfs.h</label>
-        <link refid="ubixfs_8h"/>
-        <childnode refid="5938" relation="include">
-        </childnode>
-        <childnode refid="5940" relation="include">
-        </childnode>
-        <childnode refid="5947" relation="include">
-        </childnode>
-        <childnode refid="5948" relation="include">
-        </childnode>
-        <childnode refid="5942" relation="include">
-        </childnode>
-      </node>
-      <node id="5942">
+      <node id="12">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="5938" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5944">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="5945" relation="include">
-        </childnode>
-        <childnode refid="5946" relation="include">
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="5945">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="5938" relation="include">
+      <node id="46">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="28" relation="include">
         </childnode>
-      </node>
-      <node id="5950">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="5938" relation="include">
+        <childnode refid="47" relation="include">
         </childnode>
-      </node>
-      <node id="5947">
-        <label>sys/device.h</label>
-        <link refid="device_8h"/>
-        <childnode refid="5938" relation="include">
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
         </childnode>
       </node>
     </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="directory_8c_1ac58a1f5b454f2ce5ce3619fd470583a2" prot="public" static="yes" mutable="no">
+        <type><ref refid="include_2ubixfs_2ubixfs_8h_1ad04230b24061b77cd5971ef2ce2b2b1d" kindref="member">dirList_t</ref></type>
+        <definition>dirList_t dirList</definition>
+        <argsstring></argsstring>
+        <name>dirList</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" line="36" column="18" bodyfile="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="directory_8c_1756e1f497c4d9fed64ac0a2256f9fa46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="directory_8c_1a58993494728ce5af573cd51322735210" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int addDirEntry</definition>
-        <argsstring>(struct directoryEntry *dir, fileDescriptor *fd)</argsstring>
+        <argsstring>(struct directoryEntry *dir, fileDescriptor_t *fd)</argsstring>
         <name>addDirEntry</name>
         <param>
           <type>struct <ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref> *</type>
           <declname>dir</declname>
         </param>
         <param>
-          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
           <declname>fd</declname>
         </param>
         <briefdescription>
@@ -187,19 +494,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" bodystart="66" bodyend="91"/>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="structfileDescriptorStruct_1eedbb6c79fc5a34c4b8cf4ebbf6a0658" compoundref="file_8h" startline="52">fileDescriptorStruct::offset</references>
-        <references refid="ubixfs_8h_13882cc85dc373eba13315dfb0da4c578" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</references>
-        <references refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" compoundref="file_8h" startline="53">fileDescriptorStruct::size</references>
-        <references refid="ubixfs_8h_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" line="64" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" bodystart="64" bodyend="89"/>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structfileDescriptor_1a09c5cd0d4979a70b8d7098319cd00b7c" compoundref="include_2vfs_2file_8h" startline="69">fileDescriptor::offset</references>
+        <references refid="ubixfs_8c_1acbf342e4662a8d4904cdb627dc995822" compoundref="ubixfs_8c" startline="192" endline="220">readUbixFS</references>
+        <references refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" compoundref="include_2vfs_2file_8h" startline="70">fileDescriptor::size</references>
+        <references refid="ubixfs_8c_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</references>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
       </memberdef>
-      <memberdef kind="function" id="directory_8c_17cac3d485d20bce5cf642f767769dfcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structdirectoryList" kindref="compound">dirList_t</ref></type>
+      <memberdef kind="function" id="directory_8c_1a7cac3d485d20bce5cf642f767769dfcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixfs_2ubixfs_8h_1ad04230b24061b77cd5971ef2ce2b2b1d" kindref="member">dirList_t</ref></type>
         <definition>dirList_t ubixFSLoadDir</definition>
         <argsstring>(char *data)</argsstring>
         <name>ubixFSLoadDir</name>
@@ -213,27 +519,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" bodystart="41" bodyend="63"/>
-        <references refid="structdirectoryList_13dcc1ef7098c5f3718dd1f61b485a43a" compoundref="ubixfs_8h" startline="59">directoryList::dirCache</references>
-        <references refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" compoundref="directory_8c" startline="38">dirList</references>
-        <references refid="structdirectoryList_115d4445988606706d7d28c6b5957b03f" compoundref="ubixfs_8h" startline="58">directoryList::dirName</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="structdirectoryList_12b552b5117f837b6165f1c5355d65ae8" compoundref="ubixfs_8h" startline="61">directoryList::next</references>
-        <references refid="structdirectoryList_1752b12564cb98504c28f81adda2c3620" compoundref="ubixfs_8h" startline="62">directoryList::prev</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <location file="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" line="39" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" bodystart="39" bodyend="61"/>
+        <references refid="structdirectoryList_1a15d4445988606706d7d28c6b5957b03f" compoundref="include_2ubixfs_2ubixfs_8h" startline="54">directoryList::dirName</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="278" endline="286">sprintf</references>
       </memberdef>
-      <memberdef kind="function" id="directory_8c_119ed96e270f8c904857e2fe1651ea325" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="directory_8c_1a18c0137bd371c76eb4723b6d1ae39162" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int ubixFSmkDir</definition>
-        <argsstring>(char *directory, fileDescriptor *fd)</argsstring>
+        <argsstring>(char *directory, fileDescriptor_t *fd)</argsstring>
         <name>ubixFSmkDir</name>
         <param>
           <type>char *</type>
           <declname>directory</declname>
         </param>
         <param>
-          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
           <declname>fd</declname>
         </param>
         <briefdescription>
@@ -242,51 +543,32 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" bodystart="94" bodyend="127"/>
-        <references refid="ubixfs_8h_1756e1f497c4d9fed64ac0a2256f9fa46" compoundref="directory_8c" startline="66" endline="91">addDirEntry</references>
-        <references refid="structdirectoryEntry_1eb3d1582fa3240c4847e52b7142ab801" compoundref="ubixfs_8h" startline="110">directoryEntry::attributes</references>
-        <references refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" compoundref="ubixfs_8h" startline="131">ubixFSInfo::blockAllocationTable</references>
-        <references refid="ubixfs_8h_1d4eebb29e7c75230c032b1e6f71e061d" compoundref="ubixfs_8h" startline="45">blockSize</references>
-        <references refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="39">vfs_mountPoint::device</references>
-        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
-        <references refid="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" compoundref="mount_8h" startline="40">vfs_mountPoint::diskLabel</references>
-        <references refid="structdirectoryEntry_161e77c256eaf6c4e7fe56d2574f16f98" compoundref="ubixfs_8h" startline="112">directoryEntry::fileName</references>
-        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
-        <references refid="ubixfs_8h_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</references>
-        <references refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" compoundref="device_8h" startline="52">device_interface::info</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" compoundref="file_8h" startline="49">fileDescriptorStruct::mp</references>
-        <references refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" compoundref="mount_8h" startline="42">vfs_mountPoint::partition</references>
-        <references refid="structubixDiskLabel_1a97973cf7f0b67811080656e11c6385f">ubixDiskLabel::partitions</references>
-        <references refid="structdirectoryEntry_1a948f64fa7c34827ef1eca6c044002df" compoundref="ubixfs_8h" startline="111">directoryEntry::permissions</references>
-        <references refid="structblockAllocationTableEntry_147b0210bbfb05977d7d5fed3b24718b4" compoundref="ubixfs_8h" startline="97">blockAllocationTableEntry::realSector</references>
-        <references refid="structdirectoryEntry_19571030f709f6926b925e552660a65ab" compoundref="ubixfs_8h" startline="105">directoryEntry::size</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-        <references refid="structdirectoryEntry_183e91977e7db1dc36d3e81183ac8965c" compoundref="ubixfs_8h" startline="104">directoryEntry::startCluster</references>
-        <references refid="ubixfs_8h_1c3414f1c06fc8a9d01787cde437ec5b9" compoundref="ubixfs_8h" startline="53">typeDirectory</references>
-        <references refid="ubixfs_8h_1dab92bc23023fba8f349eb34bf5acf46" compoundref="ubixfs_8h" startline="40">UBIXFS_BLOCKSIZE_BYTES</references>
-        <references refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df">device_interface::write</references>
-        <referencedby refid="ubixfs_8c_11d4159e0eb816b6b23c214d7c601dcb4" compoundref="ubixfs_8c" startline="456" endline="480">ubixfs_init</referencedby>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" prot="public" static="yes" mutable="no">
-        <type><ref refid="structdirectoryList" kindref="compound">dirList_t</ref></type>
-        <definition>dirList_t dirList</definition>
-        <argsstring></argsstring>
-        <name>dirList</name>
-        <initializer> 0x0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c" bodystart="38" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1ee88b75cf4360a46adb5021e358625d3" compoundref="dirCache_8c" startline="43" endline="52">ubixfs_findName</referencedby>
-        <referencedby refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" compoundref="directory_8c" startline="41" endline="63">ubixFSLoadDir</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" line="92" column="1" bodyfile="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c" bodystart="92" bodyend="125"/>
+        <references refid="directory_8c_1a58993494728ce5af573cd51322735210" compoundref="directory_8c" startline="64" endline="89">addDirEntry</references>
+        <references refid="structdirectoryEntry_1aeb3d1582fa3240c4847e52b7142ab801" compoundref="include_2ubixfs_2ubixfs_8h" startline="105">directoryEntry::attributes</references>
+        <references refid="structubixFSInfo_1a03867f147dbbdf3c1d6cdd16a7a33097" compoundref="include_2ubixfs_2ubixfs_8h" startline="126">ubixFSInfo::blockAllocationTable</references>
+        <references refid="include_2ubixfs_2ubixfs_8h_1ad4eebb29e7c75230c032b1e6f71e061d" compoundref="include_2ubixfs_2ubixfs_8h" startline="43">blockSize</references>
+        <references refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="70">vfs_mountPoint::device</references>
+        <references refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" compoundref="include_2sys_2device_8h" startline="37">device_node::devInfo</references>
+        <references refid="structvfs__mountPoint_1ae5ddbb2d1c7a01716a481bc5462d6c8f" compoundref="mount_8h" startline="71">vfs_mountPoint::diskLabel</references>
+        <references refid="structdirectoryEntry_1a61e77c256eaf6c4e7fe56d2574f16f98" compoundref="include_2ubixfs_2ubixfs_8h" startline="107">directoryEntry::fileName</references>
+        <references refid="structvfs__mountPoint_1a9771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="72">vfs_mountPoint::fsInfo</references>
+        <references refid="block_8c_1aa74ff712a9d02bb08f6421ce73358654" compoundref="block_8c" startline="95" endline="123">getFreeBlocks</references>
+        <references refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" compoundref="include_2sys_2device_8h" startline="51">device_interface::info</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" compoundref="include_2vfs_2file_8h" startline="65">fileDescriptor::mp</references>
+        <references refid="structvfs__mountPoint_1a26cf95c23f79647d61dc6396bbeb94a6" compoundref="mount_8h" startline="73">vfs_mountPoint::partition</references>
+        <references refid="structubixDiskLabel_1aa97973cf7f0b67811080656e11c6385f">ubixDiskLabel::partitions</references>
+        <references refid="structdirectoryEntry_1aa948f64fa7c34827ef1eca6c044002df" compoundref="include_2ubixfs_2ubixfs_8h" startline="106">directoryEntry::permissions</references>
+        <references refid="structubixDiskLabel_1_1ubixPartitions_1aa4f5df0b0d915aae3fe2f53449395065" compoundref="include_2ubixfs_2ubixfs_8h" startline="74">ubixDiskLabel::ubixPartitions::pOffset</references>
+        <references refid="structblockAllocationTableEntry_1a47b0210bbfb05977d7d5fed3b24718b4" compoundref="include_2ubixfs_2ubixfs_8h" startline="92">blockAllocationTableEntry::realSector</references>
+        <references refid="structdirectoryEntry_1a9571030f709f6926b925e552660a65ab" compoundref="include_2ubixfs_2ubixfs_8h" startline="100">directoryEntry::size</references>
+        <references refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="278" endline="286">sprintf</references>
+        <references refid="structdirectoryEntry_1a83e91977e7db1dc36d3e81183ac8965c" compoundref="include_2ubixfs_2ubixfs_8h" startline="99">directoryEntry::startCluster</references>
+        <references refid="include_2ubixfs_2ubixfs_8h_1ac3414f1c06fc8a9d01787cde437ec5b9" compoundref="include_2ubixfs_2ubixfs_8h" startline="49">typeDirectory</references>
+        <references refid="include_2ubixfs_2ubixfs_8h_1adab92bc23023fba8f349eb34bf5acf46" compoundref="include_2ubixfs_2ubixfs_8h" startline="38">UBIXFS_BLOCKSIZE_BYTES</references>
+        <references refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" compoundref="include_2sys_2device_8h" startline="53">device_interface::write</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -319,170 +601,166 @@
 <codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
 <codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
 <codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: directory_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id:<sp/>directory.c<sp/>79<sp/>2016-01-11<sp/>16:21:27Z<sp/>reddawg<sp/>$</highlight></codeline>
 <codeline lineno="27"><highlight class="comment"></highlight></codeline>
 <codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubixfs_8h" kindref="compound">ubixfs/ubixfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2ubixfs_2ubixfs_8h" kindref="compound">ubixfs/ubixfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lib_2string_8h" kindref="compound">lib/string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structdirectoryList" kindref="compound">dirList_t</ref><sp/><ref refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" kindref="member">dirList</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><ref refid="structdirectoryList" kindref="compound">dirList_t</ref><sp/></highlight></codeline>
-<codeline lineno="41" refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" refkind="member"><highlight class="normal"><ref refid="ubixfs_8h_13f7a88e7f709a200096c93c0deb13ec2" kindref="member">ubixFSLoadDir</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data)<sp/>{</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><ref refid="structdirectoryList" kindref="compound">dirList_t</ref><sp/>tmpDir<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/>tmpDir<sp/>=<sp/>(<ref refid="structdirectoryList" kindref="compound">dirList_t</ref>)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryList" kindref="compound">directoryList</ref>));</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpDir-&gt;<ref refid="structdirectoryList_115d4445988606706d7d28c6b5957b03f" kindref="member">dirName</ref>,</highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,data);</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(0x0<sp/>==<sp/><ref refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" kindref="member">dirList</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" kindref="member">dirList</ref><sp/>=<sp/>tmpDir;</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpDir-&gt;<ref refid="structdirectoryList_12b552b5117f837b6165f1c5355d65ae8" kindref="member">next</ref><sp/>=<sp/><ref refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" kindref="member">dirList</ref>;</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpDir-&gt;<ref refid="structdirectoryList_1752b12564cb98504c28f81adda2c3620" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" kindref="member">dirList</ref>-&gt;<ref refid="structdirectoryList_1752b12564cb98504c28f81adda2c3620" kindref="member">prev</ref><sp/>=<sp/>tmpDir;</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="directory_8c_1c58a1f5b454f2ce5ce3619fd470583a2" kindref="member">dirList</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpDir;</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(</highlight><highlight class="stringliteral">&quot;:&quot;</highlight><highlight class="normal">,data))<sp/>{</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpDir-&gt;<ref refid="structdirectoryList_13dcc1ef7098c5f3718dd1f61b485a43a" kindref="member">dirCache</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(0x4000);</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpDir);</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="66" refid="directory_8c_1756e1f497c4d9fed64ac0a2256f9fa46" refkind="member"><highlight class="normal"><ref refid="ubixfs_8h_1756e1f497c4d9fed64ac0a2256f9fa46" kindref="member">addDirEntry</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*dir,<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd)<sp/>{</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>entries<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*tmp<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/>tmp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(fd-&gt;<ref refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" kindref="member">size</ref>);</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="ubixfs_8h_13882cc85dc373eba13315dfb0da4c578" kindref="member">readUbixFS</ref>(fd,(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)tmp,fd-&gt;<ref refid="structfileDescriptorStruct_1eedbb6c79fc5a34c4b8cf4ebbf6a0658" kindref="member">offset</ref>,fd-&gt;<ref refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" kindref="member">size</ref>);</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/>entries<sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" kindref="member">size</ref>/</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref>);</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;(tmp[i].attributes<sp/>!=<sp/>0x0)<sp/>&amp;&amp;<sp/>(i<sp/>&lt;<sp/>entries);i++);</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(i<sp/>==<sp/>entries)<sp/>{</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(0<ref refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" kindref="member">x1000</ref>);</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1eedbb6c79fc5a34c4b8cf4ebbf6a0658" kindref="member">offset</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(&amp;tmp[i],dir,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref>));</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="ubixfs_8h_1ba0435c266346dd10ac3cbc68655b20c" kindref="member">writeUbixFS</ref>(fd,(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)tmp,fd-&gt;<ref refid="structfileDescriptorStruct_1eedbb6c79fc5a34c4b8cf4ebbf6a0658" kindref="member">offset</ref>,fd-&gt;<ref refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" kindref="member">size</ref>)<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>Creating<sp/>Directory\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight></codeline>
-<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="94" refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" refkind="member"><highlight class="normal"><ref refid="ubixfs_8h_1a3a7f1d4d6f7d2477798e933acf2cb3f" kindref="member">ubixFSmkDir</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*directory,<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd)<sp/>{</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"></highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*dir<sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*entry<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixFSInfo" kindref="compound">ubixFSInfo</ref><sp/>*fsInfo<sp/><sp/><sp/><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"></highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;Creating<sp/>Directory:<sp/>%s&quot;,directory);</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/>block<sp/>=<sp/><ref refid="ubixfs_8h_1d2880707d0f942f5119f946db4e13e4e" kindref="member">getFreeBlocks</ref>(1,fd);</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(block<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>dir<sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(<ref refid="ubixfs_8h_1dab92bc23023fba8f349eb34bf5acf46" kindref="member">UBIXFS_BLOCKSIZE_BYTES</ref>);</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>entry<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref>));</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_183e91977e7db1dc36d3e81183ac8965c" kindref="member">startCluster</ref><sp/>=<sp/>block;</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_19571030f709f6926b925e552660a65ab" kindref="member">size</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="ubixfs_8h_1dab92bc23023fba8f349eb34bf5acf46" kindref="member">UBIXFS_BLOCKSIZE_BYTES</ref>;</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_1eb3d1582fa3240c4847e52b7142ab801" kindref="member">attributes</ref><sp/><sp/><sp/>=<sp/><ref refid="ubixfs_8h_1c3414f1c06fc8a9d01787cde437ec5b9" kindref="member">typeDirectory</ref>;</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_1a948f64fa7c34827ef1eca6c044002df" kindref="member">permissions</ref><sp/><sp/>=<sp/>0xEAA;</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(entry-&gt;<ref refid="structdirectoryEntry_161e77c256eaf6c4e7fe56d2574f16f98" kindref="member">fileName</ref>,<sp/>directory);</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//dir-&gt;attributes<sp/>=<sp/>typeDirectory;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//sprintf(dir-&gt;fileName,&quot;Test<sp/>Entry&quot;);</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df" kindref="member">write</ref>(fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dir,</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" kindref="member">diskLabel</ref>-&gt;<ref refid="structubixDiskLabel_1a97973cf7f0b67811080656e11c6385f" kindref="member">partitions</ref>[fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref>].pOffset+fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[block].<ref refid="structblockAllocationTableEntry_147b0210bbfb05977d7d5fed3b24718b4" kindref="member">realSector</ref>,</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ubixfs_8h_1d4eebb29e7c75230c032b1e6f71e061d" kindref="member">blockSize</ref>);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ubixfs_8h_1756e1f497c4d9fed64ac0a2256f9fa46" kindref="member">addDirEntry</ref>(entry,fd);</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(dir);</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(entry);</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"></highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="128"><highlight class="normal"></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="130"><highlight class="comment"><sp/>$Log: directory_8c.xml,v $
-<codeline lineno="130"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
-<codeline lineno="130"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="130"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="131"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:17<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="132"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="133"><highlight class="comment"></highlight></codeline>
-<codeline lineno="134"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="135"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="136"><highlight class="comment"></highlight></codeline>
-<codeline lineno="137"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:41<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="138"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="139"><highlight class="comment"></highlight></codeline>
-<codeline lineno="140"><highlight class="comment"><sp/>Revision<sp/>1.12<sp/><sp/>2004/08/14<sp/>11:23:02<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="141"><highlight class="comment"><sp/>Changes</highlight></codeline>
-<codeline lineno="142"><highlight class="comment"></highlight></codeline>
-<codeline lineno="143"><highlight class="comment"><sp/>Revision<sp/>1.11<sp/><sp/>2004/08/01<sp/>17:58:39<sp/><sp/>flameshadow</highlight></codeline>
-<codeline lineno="144"><highlight class="comment"><sp/>chg:<sp/>fixed<sp/>string<sp/>allocation<sp/>bug<sp/>in<sp/>ubixfs_cacheNew()</highlight></codeline>
-<codeline lineno="145"><highlight class="comment"></highlight></codeline>
-<codeline lineno="146"><highlight class="comment"><sp/>Revision<sp/>1.10<sp/><sp/>2004/07/23<sp/>09:10:06<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="147"><highlight class="comment"><sp/>ubixfs:<sp/>cleaned<sp/>up<sp/>some<sp/>functions<sp/>played<sp/>with<sp/>the<sp/>caching<sp/>a<sp/>bit</highlight></codeline>
-<codeline lineno="148"><highlight class="comment"><sp/>vfs:<sp/><sp/><sp/><sp/>renamed<sp/>a<sp/>bunch<sp/>of<sp/>functions</highlight></codeline>
-<codeline lineno="149"><highlight class="comment"><sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>misc<sp/>bugs</highlight></codeline>
-<codeline lineno="150"><highlight class="comment"></highlight></codeline>
-<codeline lineno="151"><highlight class="comment"><sp/>Revision<sp/>1.9<sp/><sp/>2004/07/16<sp/>20:17:29<sp/><sp/>flameshadow</highlight></codeline>
-<codeline lineno="152"><highlight class="comment"><sp/>chg:<sp/>broke<sp/>the<sp/>ufs<sp/>stuff</highlight></codeline>
-<codeline lineno="153"><highlight class="comment"><sp/>chg:<sp/>changed<sp/>vfsRegisterFS()<sp/>to<sp/>accept<sp/>a<sp/>fileSystem<sp/>struct</highlight></codeline>
-<codeline lineno="154"><highlight class="comment"><sp/>chg:<sp/>modified<sp/>calls<sp/>to<sp/>vfsRegisterFS()<sp/>to<sp/>pass<sp/>fileSystem<sp/>struct</highlight></codeline>
-<codeline lineno="155"><highlight class="comment"></highlight></codeline>
-<codeline lineno="156"><highlight class="comment"><sp/>Revision<sp/>1.8<sp/><sp/>2004/06/29<sp/>03:59:47<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="157"><highlight class="comment"><sp/>Fixed<sp/>a<sp/>few<sp/>issues<sp/>with<sp/>subdirectories<sp/>they<sp/>are<sp/>working<sp/>much<sp/>better<sp/>now</highlight></codeline>
-<codeline lineno="158"><highlight class="comment"></highlight></codeline>
-<codeline lineno="159"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/06/28<sp/>23:12:58<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="160"><highlight class="comment"><sp/>file<sp/>format<sp/>now<sp/>container:/path/to/file</highlight></codeline>
-<codeline lineno="161"><highlight class="comment"></highlight></codeline>
-<codeline lineno="162"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/06/04<sp/>13:20:22<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="163"><highlight class="comment"><sp/>ubixFSmkDir():<sp/>played<sp/>with<sp/>it<sp/>a<sp/>bit<sp/>to<sp/>see<sp/>if<sp/>it<sp/>still<sp/>worked</highlight></codeline>
-<codeline lineno="164"><highlight class="comment"></highlight></codeline>
-<codeline lineno="165"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/06/04<sp/>10:19:42<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="166"><highlight class="comment"><sp/>notes:<sp/>we<sp/>compile<sp/>again,<sp/>thank<sp/>g-d<sp/>anyways<sp/>i<sp/>was<sp/>about<sp/>to<sp/>cry</highlight></codeline>
-<codeline lineno="167"><highlight class="comment"></highlight></codeline>
-<codeline lineno="168"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/05/19<sp/>15:20:06<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="169"><highlight class="comment"><sp/>Fixed<sp/>reference<sp/>problems<sp/>due<sp/>to<sp/>changes<sp/>in<sp/>drive<sp/>subsystem</highlight></codeline>
-<codeline lineno="170"><highlight class="comment"></highlight></codeline>
-<codeline lineno="171"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/19<sp/>04:07:43<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="172"><highlight class="comment"><sp/>kmalloc(size,pid)<sp/>no<sp/>more<sp/>it<sp/>is<sp/>no<sp/>kmalloc(size);<sp/>the<sp/>way<sp/>it<sp/>should<sp/>of<sp/>been</highlight></codeline>
-<codeline lineno="173"><highlight class="comment"></highlight></codeline>
-<codeline lineno="174"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/04/28<sp/>02:22:55<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="175"><highlight class="comment"><sp/>This<sp/>is<sp/>a<sp/>fiarly<sp/>large<sp/>commit<sp/>but<sp/>we<sp/>are<sp/>starting<sp/>to<sp/>use<sp/>new<sp/>driver<sp/>model</highlight></codeline>
-<codeline lineno="176"><highlight class="comment"><sp/>all<sp/>around</highlight></codeline>
-<codeline lineno="177"><highlight class="comment"></highlight></codeline>
-<codeline lineno="178"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:07<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="179"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
-<codeline lineno="180"><highlight class="comment"></highlight></codeline>
-<codeline lineno="181"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/04/13<sp/>16:36:34<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="182"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
-<codeline lineno="183"><highlight class="comment"></highlight></codeline>
-<codeline lineno="184"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="185"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structdirectoryList" kindref="compound">dirList_t</ref><sp/>dirList<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="include_2ubixfs_2ubixfs_8h_1a3f7a88e7f709a200096c93c0deb13ec2" refkind="member"><highlight class="normal"><ref refid="structdirectoryList" kindref="compound">dirList_t</ref><sp/></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><ref refid="directory_8c_1a7cac3d485d20bce5cf642f767769dfcf" kindref="member">ubixFSLoadDir</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data)<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><ref refid="structdirectoryList" kindref="compound">dirList_t</ref><sp/>tmpDir<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/>tmpDir<sp/>=<sp/>(<ref refid="include_2ubixfs_2ubixfs_8h_1ad04230b24061b77cd5971ef2ce2b2b1d" kindref="member">dirList_t</ref>)<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryList" kindref="compound">directoryList</ref>));</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpDir-&gt;<ref refid="structdirectoryList_1a15d4445988606706d7d28c6b5957b03f" kindref="member">dirName</ref>,</highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,data);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(0x0<sp/>==<sp/>dirList)<sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>dirList<sp/>=<sp/>tmpDir;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpDir-&gt;<ref refid="structdirectoryList_1a2b552b5117f837b6165f1c5355d65ae8" kindref="member">next</ref><sp/>=<sp/>dirList;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpDir-&gt;<ref refid="structdirectoryList_1a752b12564cb98504c28f81adda2c3620" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>dirList-&gt;<ref refid="structdirectoryList_1a752b12564cb98504c28f81adda2c3620" kindref="member">prev</ref><sp/>=<sp/>tmpDir;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>dirList<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpDir;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(</highlight><highlight class="stringliteral">&quot;:&quot;</highlight><highlight class="normal">,data))<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpDir-&gt;<ref refid="structdirectoryList_1a3dcc1ef7098c5f3718dd1f61b485a43a" kindref="member">dirCache</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(0x4000);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpDir);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="include_2ubixfs_2ubixfs_8h_1a58993494728ce5af573cd51322735210" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><ref refid="directory_8c_1a58993494728ce5af573cd51322735210" kindref="member">addDirEntry</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*dir,<ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*fd)<sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>entries<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*tmp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>tmp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(fd-&gt;<ref refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" kindref="member">size</ref>);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="ubixfs_8c_1acbf342e4662a8d4904cdb627dc995822" kindref="member">readUbixFS</ref>(fd,(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)tmp,fd-&gt;<ref refid="structfileDescriptor_1a09c5cd0d4979a70b8d7098319cd00b7c" kindref="member">offset</ref>,fd-&gt;<ref refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" kindref="member">size</ref>);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>entries<sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" kindref="member">size</ref>/</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref>);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;(tmp[i].attributes<sp/>!=<sp/>0x0)<sp/>&amp;&amp;<sp/>(i<sp/>&lt;<sp/>entries);i++);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(i<sp/>==<sp/>entries)<sp/>{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(0x1000);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1a09c5cd0d4979a70b8d7098319cd00b7c" kindref="member">offset</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(&amp;tmp[i],dir,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref>));</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="ubixfs_8c_1ab4c558016c9b29b63d6f8c8ba5fe7384" kindref="member">writeUbixFS</ref>(fd,(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)tmp,fd-&gt;<ref refid="structfileDescriptor_1a09c5cd0d4979a70b8d7098319cd00b7c" kindref="member">offset</ref>,fd-&gt;<ref refid="structfileDescriptor_1ac8c9ca78af4599be9bbba7fa8a37eee8" kindref="member">size</ref>)<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>Creating<sp/>Directory\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><ref refid="directory_8c_1a18c0137bd371c76eb4723b6d1ae39162" kindref="member">ubixFSmkDir</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*directory,<ref refid="structfileDescriptor" kindref="compound">fileDescriptor_t</ref><sp/>*fd)<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*dir<sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*entry<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixFSInfo" kindref="compound">ubixFSInfo</ref><sp/>*fsInfo<sp/><sp/><sp/><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a9771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;Creating<sp/>Directory:<sp/>%s&quot;,directory);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/>block<sp/>=<sp/><ref refid="block_8c_1aa74ff712a9d02bb08f6421ce73358654" kindref="member">getFreeBlocks</ref>(1,fd);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(block<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>dir<sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(<ref refid="include_2ubixfs_2ubixfs_8h_1adab92bc23023fba8f349eb34bf5acf46" kindref="member">UBIXFS_BLOCKSIZE_BYTES</ref>);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>entry<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref><sp/>*)<ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirectoryEntry" kindref="compound">directoryEntry</ref>));</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_1a83e91977e7db1dc36d3e81183ac8965c" kindref="member">startCluster</ref><sp/>=<sp/>block;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_1a9571030f709f6926b925e552660a65ab" kindref="member">size</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="include_2ubixfs_2ubixfs_8h_1adab92bc23023fba8f349eb34bf5acf46" kindref="member">UBIXFS_BLOCKSIZE_BYTES</ref>;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_1aeb3d1582fa3240c4847e52b7142ab801" kindref="member">attributes</ref><sp/><sp/><sp/>=<sp/><ref refid="include_2ubixfs_2ubixfs_8h_1ac3414f1c06fc8a9d01787cde437ec5b9" kindref="member">typeDirectory</ref>;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>entry-&gt;<ref refid="structdirectoryEntry_1aa948f64fa7c34827ef1eca6c044002df" kindref="member">permissions</ref><sp/><sp/>=<sp/>0xEAA;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(entry-&gt;<ref refid="structdirectoryEntry_1a61e77c256eaf6c4e7fe56d2574f16f98" kindref="member">fileName</ref>,<sp/>directory);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//dir-&gt;attributes<sp/>=<sp/>typeDirectory;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//sprintf(dir-&gt;fileName,&quot;Test<sp/>Entry&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a9d8ffee6ef57616ca48d1f7cfc54e461" kindref="member">write</ref>(fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1aeacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dir,</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1ae5ddbb2d1c7a01716a481bc5462d6c8f" kindref="member">diskLabel</ref>-&gt;<ref refid="structubixDiskLabel_1aa97973cf7f0b67811080656e11c6385f" kindref="member">partitions</ref>[fd-&gt;<ref refid="structfileDescriptor_1ab912b7f3f302a2f71d40f3b3810e90e8" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_1a26cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref>].<ref refid="structubixDiskLabel_1_1ubixPartitions_1aa4f5df0b0d915aae3fe2f53449395065" kindref="member">pOffset</ref>+fsInfo-&gt;<ref refid="structubixFSInfo_1a03867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[block].<ref refid="structblockAllocationTableEntry_1a47b0210bbfb05977d7d5fed3b24718b4" kindref="member">realSector</ref>,</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixfs_2ubixfs_8h_1ad4eebb29e7c75230c032b1e6f71e061d" kindref="member">blockSize</ref>);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="directory_8c_1a58993494728ce5af573cd51322735210" kindref="member">addDirEntry</ref>(entry,fd);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(dir);</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(entry);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"><sp/>$Log:<sp/>directory.c,v<sp/>$</highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:17<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"></highlight></codeline>
+<codeline lineno="133"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="135"><highlight class="comment"></highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:41<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="137"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="138"><highlight class="comment"></highlight></codeline>
+<codeline lineno="139"><highlight class="comment"><sp/>Revision<sp/>1.12<sp/><sp/>2004/08/14<sp/>11:23:02<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="140"><highlight class="comment"><sp/>Changes</highlight></codeline>
+<codeline lineno="141"><highlight class="comment"></highlight></codeline>
+<codeline lineno="142"><highlight class="comment"><sp/>Revision<sp/>1.11<sp/><sp/>2004/08/01<sp/>17:58:39<sp/><sp/>flameshadow</highlight></codeline>
+<codeline lineno="143"><highlight class="comment"><sp/>chg:<sp/>fixed<sp/>string<sp/>allocation<sp/>bug<sp/>in<sp/>ubixfs_cacheNew()</highlight></codeline>
+<codeline lineno="144"><highlight class="comment"></highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/>Revision<sp/>1.10<sp/><sp/>2004/07/23<sp/>09:10:06<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="146"><highlight class="comment"><sp/>ubixfs:<sp/>cleaned<sp/>up<sp/>some<sp/>functions<sp/>played<sp/>with<sp/>the<sp/>caching<sp/>a<sp/>bit</highlight></codeline>
+<codeline lineno="147"><highlight class="comment"><sp/>vfs:<sp/><sp/><sp/><sp/>renamed<sp/>a<sp/>bunch<sp/>of<sp/>functions</highlight></codeline>
+<codeline lineno="148"><highlight class="comment"><sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>misc<sp/>bugs</highlight></codeline>
+<codeline lineno="149"><highlight class="comment"></highlight></codeline>
+<codeline lineno="150"><highlight class="comment"><sp/>Revision<sp/>1.9<sp/><sp/>2004/07/16<sp/>20:17:29<sp/><sp/>flameshadow</highlight></codeline>
+<codeline lineno="151"><highlight class="comment"><sp/>chg:<sp/>broke<sp/>the<sp/>ufs<sp/>stuff</highlight></codeline>
+<codeline lineno="152"><highlight class="comment"><sp/>chg:<sp/>changed<sp/>vfsRegisterFS()<sp/>to<sp/>accept<sp/>a<sp/>fileSystem<sp/>struct</highlight></codeline>
+<codeline lineno="153"><highlight class="comment"><sp/>chg:<sp/>modified<sp/>calls<sp/>to<sp/>vfsRegisterFS()<sp/>to<sp/>pass<sp/>fileSystem<sp/>struct</highlight></codeline>
+<codeline lineno="154"><highlight class="comment"></highlight></codeline>
+<codeline lineno="155"><highlight class="comment"><sp/>Revision<sp/>1.8<sp/><sp/>2004/06/29<sp/>03:59:47<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="156"><highlight class="comment"><sp/>Fixed<sp/>a<sp/>few<sp/>issues<sp/>with<sp/>subdirectories<sp/>they<sp/>are<sp/>working<sp/>much<sp/>better<sp/>now</highlight></codeline>
+<codeline lineno="157"><highlight class="comment"></highlight></codeline>
+<codeline lineno="158"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/06/28<sp/>23:12:58<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="159"><highlight class="comment"><sp/>file<sp/>format<sp/>now<sp/>container:/path/to/file</highlight></codeline>
+<codeline lineno="160"><highlight class="comment"></highlight></codeline>
+<codeline lineno="161"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/06/04<sp/>13:20:22<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="162"><highlight class="comment"><sp/>ubixFSmkDir():<sp/>played<sp/>with<sp/>it<sp/>a<sp/>bit<sp/>to<sp/>see<sp/>if<sp/>it<sp/>still<sp/>worked</highlight></codeline>
+<codeline lineno="163"><highlight class="comment"></highlight></codeline>
+<codeline lineno="164"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/06/04<sp/>10:19:42<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="165"><highlight class="comment"><sp/>notes:<sp/>we<sp/>compile<sp/>again,<sp/>thank<sp/>g-d<sp/>anyways<sp/>i<sp/>was<sp/>about<sp/>to<sp/>cry</highlight></codeline>
+<codeline lineno="166"><highlight class="comment"></highlight></codeline>
+<codeline lineno="167"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/05/19<sp/>15:20:06<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="168"><highlight class="comment"><sp/>Fixed<sp/>reference<sp/>problems<sp/>due<sp/>to<sp/>changes<sp/>in<sp/>drive<sp/>subsystem</highlight></codeline>
+<codeline lineno="169"><highlight class="comment"></highlight></codeline>
+<codeline lineno="170"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/19<sp/>04:07:43<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="171"><highlight class="comment"><sp/>kmalloc(size,pid)<sp/>no<sp/>more<sp/>it<sp/>is<sp/>no<sp/>kmalloc(size);<sp/>the<sp/>way<sp/>it<sp/>should<sp/>of<sp/>been</highlight></codeline>
+<codeline lineno="172"><highlight class="comment"></highlight></codeline>
+<codeline lineno="173"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/04/28<sp/>02:22:55<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="174"><highlight class="comment"><sp/>This<sp/>is<sp/>a<sp/>fiarly<sp/>large<sp/>commit<sp/>but<sp/>we<sp/>are<sp/>starting<sp/>to<sp/>use<sp/>new<sp/>driver<sp/>model</highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/>all<sp/>around</highlight></codeline>
+<codeline lineno="176"><highlight class="comment"></highlight></codeline>
+<codeline lineno="177"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:07<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="178"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
+<codeline lineno="179"><highlight class="comment"></highlight></codeline>
+<codeline lineno="180"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/04/13<sp/>16:36:34<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="181"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
+<codeline lineno="182"><highlight class="comment"></highlight></codeline>
+<codeline lineno="183"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="184"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/directory.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c"/>
   </compounddef>
 </doxygen>

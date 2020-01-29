@@ -1,528 +1,447 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structTMode__Rec" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structTMode__Rec" kind="struct" language="C++" prot="public">
     <compoundname>TMode_Rec</compoundname>
-    <includes refid="ogDisplay__VESA_8h" local="no">ogDisplay_VESA.h</includes>
+    <includes refid="objgfx30_8h" local="no">objgfx30.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structTMode__Rec_1ae26231cc9e3a31594eb0bae769cf6e15" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::AlphaFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>AlphaFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="96" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ab76a27b7a0dab771436fcd18ef2040a7" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::AlphaMaskSize</definition>
+        <argsstring></argsstring>
+        <name>AlphaMaskSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="95" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1acef9fd2f7ecfa740ecbfeef1964b3c59" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::BankSize</definition>
+        <argsstring></argsstring>
+        <name>BankSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="85" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a1781ec66535683e7e7cf91f6e4036f27" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* TMode_Rec::BankSwitch</definition>
+        <argsstring></argsstring>
+        <name>BankSwitch</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="76" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ac961716fdfa16eddb820b407b87ce964" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::BitsPerPixel</definition>
+        <argsstring></argsstring>
+        <name>BitsPerPixel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="82" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ad52a71b09f9cf16685c706563c437295" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::BlueFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>BlueFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="94" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ad08a1705fdd1c28f5c80058b2d3966ad" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::BlueMaskSize</definition>
+        <argsstring></argsstring>
+        <name>BlueMaskSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="93" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a1d3219dbf4e058aa45582e6fbf1d0349" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::BytesPerLine</definition>
+        <argsstring></argsstring>
+        <name>BytesPerLine</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="77" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ad661f40af7efee1b81a77d33ea0dd5d8" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::CharHeight</definition>
+        <argsstring></argsstring>
+        <name>CharHeight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="80" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a2970ac8388b0d027891c2c2bda0ab652" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::CharWidth</definition>
+        <argsstring></argsstring>
+        <name>CharWidth</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="79" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1aa6c7431136b907bece94df99809aad75" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::DirectColourMode</definition>
+        <argsstring></argsstring>
+        <name>DirectColourMode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="97" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a0aee28a8c061723a9078deae222e4424" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::Granularity</definition>
+        <argsstring></argsstring>
+        <name>Granularity</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="72" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a399c39aedde68e7d47ab4d7af068ffb1" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::GreenFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>GreenFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="92" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a71010ab26fd0efae91dd49b4b7aa3cae" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::GreenMaskSize</definition>
+        <argsstring></argsstring>
+        <name>GreenMaskSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="91" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a525f23bf50f81c495997dc9e97abdecd" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::MemoryModel</definition>
+        <argsstring></argsstring>
+        <name>MemoryModel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="84" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ae241a04fcd9b74d19e7c20071cefb21e" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::ModeAttributes</definition>
+        <argsstring></argsstring>
+        <name>ModeAttributes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="69" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a7d1bb1decd6f1690bd1472107ddebb78" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::NumberOfBanks</definition>
+        <argsstring></argsstring>
+        <name>NumberOfBanks</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="83" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1add2e0bfe5d3b452d126f1707bf1bc405" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::NumBitPlanes</definition>
+        <argsstring></argsstring>
+        <name>NumBitPlanes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="81" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a57e1b464f163a694df0889595963c64f" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::NumOfImagePages</definition>
+        <argsstring></argsstring>
+        <name>NumOfImagePages</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="86" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1acd73eb6a7812eebd95fc2b0b472ecc48" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* TMode_Rec::OffScreenMemOffset</definition>
+        <argsstring></argsstring>
+        <name>OffScreenMemOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="100" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a915325aeec11cda300b621c9dad559f7" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::OffScreenMemSize</definition>
+        <argsstring></argsstring>
+        <name>OffScreenMemSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="101" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a804e25c5f31dd7420bfee59f1b0efec9" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::paddington[461]</definition>
+        <argsstring>[461]</argsstring>
+        <name>paddington</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="102" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1aa107a1ea87f632ae2af8605ca3977369" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 TMode_Rec::PhysBasePtr</definition>
+        <argsstring></argsstring>
+        <name>PhysBasePtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="99" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a0ea949d700a9d963ee9729a5ce89a762" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::RedFieldPosition</definition>
+        <argsstring></argsstring>
+        <name>RedFieldPosition</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="90" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a9000159872f08a660e0242a486456960" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::RedMaskSize</definition>
+        <argsstring></argsstring>
+        <name>RedMaskSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="89" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1ac64f4b2ea3c11f3888ae8fa57ef13021" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::Reserved</definition>
+        <argsstring></argsstring>
+        <name>Reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="87" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1afd7635a77ace5997b093aa2c47e6902f" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::WindowAFlags</definition>
+        <argsstring></argsstring>
+        <name>WindowAFlags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="70" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a84697e5e9c3003f2662e10f1f531f048" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::WindowASeg</definition>
+        <argsstring></argsstring>
+        <name>WindowASeg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="74" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a607928928e0d9867aa71dd5ebfe5a837" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 TMode_Rec::WindowBFlags</definition>
+        <argsstring></argsstring>
+        <name>WindowBFlags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="71" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1acf42b9784ed1d54f13cf69d3031fcfb3" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::WindowBSeg</definition>
+        <argsstring></argsstring>
+        <name>WindowBSeg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="75" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1aac4ed324d90c11833672c46f88f905ef" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::WindowSize</definition>
+        <argsstring></argsstring>
+        <name>WindowSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="73" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a7728e3a91df1bf02285a6a72d451d744" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::xRes</definition>
+        <argsstring></argsstring>
+        <name>xRes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="78" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structTMode__Rec_1a2853e93257786feed9510a40ba59e87f" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
+        <definition>uInt16 TMode_Rec::yRes</definition>
+        <argsstring></argsstring>
+        <name>yRes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="78" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="structTMode__Rec_105d8e5f52b16616865af0d5b271fe69e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> paddington[461]</type>
-        <definition>uInt8 paddington [461] TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="41"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_154a0a9d23ed3429d62e894b4250fe820" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> OffScreenMemSize</type>
-        <definition>uInt16 OffScreenMemSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="40"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1d372c18054d1048d33b5c28be735ed71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *OffScreenMemOffset</type>
-        <definition>void* OffScreenMemOffset TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="39"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1b5efe65471d72344d854a70b40eaba99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> physBasePtr</type>
-        <definition>uInt32 physBasePtr TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="38"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1f76b73ff19acc50125391d6766386cd8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> DirectColourMode</type>
-        <definition>uInt8 DirectColourMode TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="36"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1ad5bf417d856432dcc4a86c0c7ffadb5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> AlphaFieldPosition</type>
-        <definition>uInt8 AlphaFieldPosition TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="35"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1c71d10e38045cda5d65ae171c6918143" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> AlphaMaskSize</type>
-        <definition>uInt8 AlphaMaskSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="34"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1199032a3764f1fa1a4d324a249b71ba3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> BlueFieldPosition</type>
-        <definition>uInt8 BlueFieldPosition TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="33"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_13c3685f5dbbca99a368c662ed8f9e7c3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> BlueMaskSize</type>
-        <definition>uInt8 BlueMaskSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="32"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_185f8ad3fe63d2016ca0dffffa34b8d60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> GreenFieldPosition</type>
-        <definition>uInt8 GreenFieldPosition TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="31"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_15117d6391ccd2dc55cb28aba3fdb6ce6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> GreenMaskSize</type>
-        <definition>uInt8 GreenMaskSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="30"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_135eac74b657fe6c2cbe798237f25e785" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> RedFieldPosition</type>
-        <definition>uInt8 RedFieldPosition TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="29"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_145871bec4b578cc4d64921de94974a6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> RedMaskSize</type>
-        <definition>uInt8 RedMaskSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="28"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_15cb592503944054b01e83975cf839152" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> Reserved</type>
-        <definition>uInt8 Reserved TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="26"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_189495302f8f892332051ff9261d2d3e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> NumOfImagePages</type>
-        <definition>uInt8 NumOfImagePages TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="25"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_14cdc12e211a5aabfcc02336c01903976" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> BankSize</type>
-        <definition>uInt8 BankSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="24"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1125797d70158593a7425c8f7bbe4d736" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> MemoryModel</type>
-        <definition>uInt8 MemoryModel TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="23"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1cbc3259455bdf90b5ffeaaa0cd4f0992" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> NumberOfBanks</type>
-        <definition>uInt8 NumberOfBanks TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="22"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_13e6f5e3a27ebc259c1e85a848bc3ba7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> BitsPerPixel</type>
-        <definition>uInt8 BitsPerPixel TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="21"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_184c2f4412611104b9107df080f40e1e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> NumBitPlanes</type>
-        <definition>uInt8 NumBitPlanes TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="20"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_156e3e47eb73b15047cd6d8fccef42ce5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> CharHeight</type>
-        <definition>uInt8 CharHeight TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="19"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_192bf207ffbf5187b2ca01080f167b577" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> CharWidth</type>
-        <definition>uInt8 CharWidth TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="18"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1e920d77d6e596e2f140266d37f8279d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> yRes</type>
-        <definition>uInt16 yRes TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="17"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1274470c187a04b9eea71e9787ed05445" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> xRes</type>
-        <definition>uInt16 xRes TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="16"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1f6e0e84d342425740ee93734ba136e87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> BytesPerLine</type>
-        <definition>uInt16 BytesPerLine TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="15"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_13956a9341e90b60f044356b0efd984cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *BankSwitch</type>
-        <definition>void* BankSwitch TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="14"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_16fdf315f3dadee0fbd41131696804a23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> WindowBSeg</type>
-        <definition>uInt16 WindowBSeg TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="13"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_19e129ad4a0ed484f26b6c7762aa1dde1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> WindowASeg</type>
-        <definition>uInt16 WindowASeg TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="12"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_12ec855b40b7c43d995c9b1dab8c9601e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> WindowSize</type>
-        <definition>uInt16 WindowSize TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="11"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_149e3258f358e8c9533908eebd2249971" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> Granularity</type>
-        <definition>uInt16 Granularity TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="10"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_1d2c4bde5ae404fa62ad15a6700798b04" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> WindowBFlags</type>
-        <definition>uInt8 WindowBFlags TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="9"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_18ccd25ee892c9c729640256a1fc984d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> WindowAFlags</type>
-        <definition>uInt8 WindowAFlags TMode_Rec::__attribute__</definition>
-        <argsstring>((packed))</argsstring>
-        <name>__attribute__</name>
-        <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="8"/>
-      </memberdef>
-      <memberdef kind="function" id="structTMode__Rec_14cba5fbc4197a9c70502307caa4b2e77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> ModeAttributes</type>
+      <memberdef kind="function" id="structTMode__Rec_1a4cba5fbc4197a9c70502307caa4b2e77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1ae241a04fcd9b74d19e7c20071cefb21e" kindref="member">ModeAttributes</ref></type>
         <definition>uInt16 ModeAttributes TMode_Rec::__attribute__</definition>
         <argsstring>((packed))</argsstring>
         <name>__attribute__</name>
         <param>
-          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+          <type>(packed)</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -530,48 +449,599 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="7"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="36" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a8ccd25ee892c9c729640256a1fc984d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1afd7635a77ace5997b093aa2c47e6902f" kindref="member">WindowAFlags</ref></type>
+        <definition>uInt8 WindowAFlags TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="37" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1ad2c4bde5ae404fa62ad15a6700798b04" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a607928928e0d9867aa71dd5ebfe5a837" kindref="member">WindowBFlags</ref></type>
+        <definition>uInt8 WindowBFlags TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="38" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a49e3258f358e8c9533908eebd2249971" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1a0aee28a8c061723a9078deae222e4424" kindref="member">Granularity</ref></type>
+        <definition>uInt16 Granularity TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="39" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a2ec855b40b7c43d995c9b1dab8c9601e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1aac4ed324d90c11833672c46f88f905ef" kindref="member">WindowSize</ref></type>
+        <definition>uInt16 WindowSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="40" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a9e129ad4a0ed484f26b6c7762aa1dde1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1a84697e5e9c3003f2662e10f1f531f048" kindref="member">WindowASeg</ref></type>
+        <definition>uInt16 WindowASeg TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="41" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a6fdf315f3dadee0fbd41131696804a23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1acf42b9784ed1d54f13cf69d3031fcfb3" kindref="member">WindowBSeg</ref></type>
+        <definition>uInt16 WindowBSeg TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="42" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a3956a9341e90b60f044356b0efd984cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *<ref refid="structTMode__Rec_1a1781ec66535683e7e7cf91f6e4036f27" kindref="member">BankSwitch</ref></type>
+        <definition>void* BankSwitch TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="43" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1af6e0e84d342425740ee93734ba136e87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1a1d3219dbf4e058aa45582e6fbf1d0349" kindref="member">BytesPerLine</ref></type>
+        <definition>uInt16 BytesPerLine TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="44" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a274470c187a04b9eea71e9787ed05445" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1a7728e3a91df1bf02285a6a72d451d744" kindref="member">xRes</ref></type>
+        <definition>uInt16 xRes TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="45" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1ae920d77d6e596e2f140266d37f8279d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1a2853e93257786feed9510a40ba59e87f" kindref="member">yRes</ref></type>
+        <definition>uInt16 yRes TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="46" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a92bf207ffbf5187b2ca01080f167b577" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a2970ac8388b0d027891c2c2bda0ab652" kindref="member">CharWidth</ref></type>
+        <definition>uInt8 CharWidth TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="47" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a56e3e47eb73b15047cd6d8fccef42ce5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ad661f40af7efee1b81a77d33ea0dd5d8" kindref="member">CharHeight</ref></type>
+        <definition>uInt8 CharHeight TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="48" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a84c2f4412611104b9107df080f40e1e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1add2e0bfe5d3b452d126f1707bf1bc405" kindref="member">NumBitPlanes</ref></type>
+        <definition>uInt8 NumBitPlanes TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="49" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a3e6f5e3a27ebc259c1e85a848bc3ba7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ac961716fdfa16eddb820b407b87ce964" kindref="member">BitsPerPixel</ref></type>
+        <definition>uInt8 BitsPerPixel TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="50" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1acbc3259455bdf90b5ffeaaa0cd4f0992" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a7d1bb1decd6f1690bd1472107ddebb78" kindref="member">NumberOfBanks</ref></type>
+        <definition>uInt8 NumberOfBanks TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="51" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a125797d70158593a7425c8f7bbe4d736" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a525f23bf50f81c495997dc9e97abdecd" kindref="member">MemoryModel</ref></type>
+        <definition>uInt8 MemoryModel TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="52" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a4cdc12e211a5aabfcc02336c01903976" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1acef9fd2f7ecfa740ecbfeef1964b3c59" kindref="member">BankSize</ref></type>
+        <definition>uInt8 BankSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="53" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a89495302f8f892332051ff9261d2d3e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a57e1b464f163a694df0889595963c64f" kindref="member">NumOfImagePages</ref></type>
+        <definition>uInt8 NumOfImagePages TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="54" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a5cb592503944054b01e83975cf839152" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ac64f4b2ea3c11f3888ae8fa57ef13021" kindref="member">Reserved</ref></type>
+        <definition>uInt8 Reserved TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="55" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a45871bec4b578cc4d64921de94974a6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a9000159872f08a660e0242a486456960" kindref="member">RedMaskSize</ref></type>
+        <definition>uInt8 RedMaskSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="57" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a35eac74b657fe6c2cbe798237f25e785" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a0ea949d700a9d963ee9729a5ce89a762" kindref="member">RedFieldPosition</ref></type>
+        <definition>uInt8 RedFieldPosition TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="58" column="28"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a5117d6391ccd2dc55cb28aba3fdb6ce6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a71010ab26fd0efae91dd49b4b7aa3cae" kindref="member">GreenMaskSize</ref></type>
+        <definition>uInt8 GreenMaskSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="59" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a85f8ad3fe63d2016ca0dffffa34b8d60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a399c39aedde68e7d47ab4d7af068ffb1" kindref="member">GreenFieldPosition</ref></type>
+        <definition>uInt8 GreenFieldPosition TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="60" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a3c3685f5dbbca99a368c662ed8f9e7c3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ad08a1705fdd1c28f5c80058b2d3966ad" kindref="member">BlueMaskSize</ref></type>
+        <definition>uInt8 BlueMaskSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="61" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a199032a3764f1fa1a4d324a249b71ba3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ad52a71b09f9cf16685c706563c437295" kindref="member">BlueFieldPosition</ref></type>
+        <definition>uInt8 BlueFieldPosition TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="62" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1ac71d10e38045cda5d65ae171c6918143" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ab76a27b7a0dab771436fcd18ef2040a7" kindref="member">AlphaMaskSize</ref></type>
+        <definition>uInt8 AlphaMaskSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="63" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1aad5bf417d856432dcc4a86c0c7ffadb5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1ae26231cc9e3a31594eb0bae769cf6e15" kindref="member">AlphaFieldPosition</ref></type>
+        <definition>uInt8 AlphaFieldPosition TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="64" column="30"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1af76b73ff19acc50125391d6766386cd8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1aa6c7431136b907bece94df99809aad75" kindref="member">DirectColourMode</ref></type>
+        <definition>uInt8 DirectColourMode TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="65" column="28"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1ab5efe65471d72344d854a70b40eaba99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> physBasePtr</type>
+        <definition>uInt32 physBasePtr TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="67" column="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1ad372c18054d1048d33b5c28be735ed71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *<ref refid="structTMode__Rec_1acd73eb6a7812eebd95fc2b0b472ecc48" kindref="member">OffScreenMemOffset</ref></type>
+        <definition>void* OffScreenMemOffset TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="68" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a54a0a9d23ed3429d62e894b4250fe820" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> <ref refid="structTMode__Rec_1a915325aeec11cda300b621c9dad559f7" kindref="member">OffScreenMemSize</ref></type>
+        <definition>uInt16 OffScreenMemSize TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="69" column="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structTMode__Rec_1a05d8e5f52b16616865af0d5b271fe69e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> <ref refid="structTMode__Rec_1a804e25c5f31dd7420bfee59f1b0efec9" kindref="member">paddington</ref>[461]</type>
+        <definition>uInt8 paddington [461] TMode_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(packed)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/objgfx/ogDisplay_VESA.h" line="70" column="22"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="6" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="6" bodyend="42"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>TMode_Rec</label>
+        <link refid="structTMode__Rec"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" line="68" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/objgfx/objgfx30.h" bodystart="68" bodyend="103"/>
     <listofallmembers>
-      <member refid="structTMode__Rec_14cba5fbc4197a9c70502307caa4b2e77" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_18ccd25ee892c9c729640256a1fc984d6" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1d2c4bde5ae404fa62ad15a6700798b04" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_149e3258f358e8c9533908eebd2249971" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_12ec855b40b7c43d995c9b1dab8c9601e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_19e129ad4a0ed484f26b6c7762aa1dde1" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_16fdf315f3dadee0fbd41131696804a23" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_13956a9341e90b60f044356b0efd984cf" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1f6e0e84d342425740ee93734ba136e87" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1274470c187a04b9eea71e9787ed05445" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1e920d77d6e596e2f140266d37f8279d6" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_192bf207ffbf5187b2ca01080f167b577" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_156e3e47eb73b15047cd6d8fccef42ce5" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_184c2f4412611104b9107df080f40e1e1" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_13e6f5e3a27ebc259c1e85a848bc3ba7e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1cbc3259455bdf90b5ffeaaa0cd4f0992" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1125797d70158593a7425c8f7bbe4d736" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_14cdc12e211a5aabfcc02336c01903976" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_189495302f8f892332051ff9261d2d3e4" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_15cb592503944054b01e83975cf839152" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_145871bec4b578cc4d64921de94974a6a" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_135eac74b657fe6c2cbe798237f25e785" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_15117d6391ccd2dc55cb28aba3fdb6ce6" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_185f8ad3fe63d2016ca0dffffa34b8d60" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_13c3685f5dbbca99a368c662ed8f9e7c3" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1199032a3764f1fa1a4d324a249b71ba3" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1c71d10e38045cda5d65ae171c6918143" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1ad5bf417d856432dcc4a86c0c7ffadb5" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1f76b73ff19acc50125391d6766386cd8" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1b5efe65471d72344d854a70b40eaba99" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_1d372c18054d1048d33b5c28be735ed71" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_154a0a9d23ed3429d62e894b4250fe820" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
-      <member refid="structTMode__Rec_105d8e5f52b16616865af0d5b271fe69e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a4cba5fbc4197a9c70502307caa4b2e77" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a8ccd25ee892c9c729640256a1fc984d6" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1ad2c4bde5ae404fa62ad15a6700798b04" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a49e3258f358e8c9533908eebd2249971" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a2ec855b40b7c43d995c9b1dab8c9601e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a9e129ad4a0ed484f26b6c7762aa1dde1" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a6fdf315f3dadee0fbd41131696804a23" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a3956a9341e90b60f044356b0efd984cf" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1af6e0e84d342425740ee93734ba136e87" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a274470c187a04b9eea71e9787ed05445" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1ae920d77d6e596e2f140266d37f8279d6" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a92bf207ffbf5187b2ca01080f167b577" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a56e3e47eb73b15047cd6d8fccef42ce5" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a84c2f4412611104b9107df080f40e1e1" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a3e6f5e3a27ebc259c1e85a848bc3ba7e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1acbc3259455bdf90b5ffeaaa0cd4f0992" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a125797d70158593a7425c8f7bbe4d736" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a4cdc12e211a5aabfcc02336c01903976" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a89495302f8f892332051ff9261d2d3e4" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a5cb592503944054b01e83975cf839152" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a45871bec4b578cc4d64921de94974a6a" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a35eac74b657fe6c2cbe798237f25e785" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a5117d6391ccd2dc55cb28aba3fdb6ce6" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a85f8ad3fe63d2016ca0dffffa34b8d60" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a3c3685f5dbbca99a368c662ed8f9e7c3" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a199032a3764f1fa1a4d324a249b71ba3" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1ac71d10e38045cda5d65ae171c6918143" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1aad5bf417d856432dcc4a86c0c7ffadb5" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1af76b73ff19acc50125391d6766386cd8" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1ab5efe65471d72344d854a70b40eaba99" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1ad372c18054d1048d33b5c28be735ed71" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a54a0a9d23ed3429d62e894b4250fe820" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1a05d8e5f52b16616865af0d5b271fe69e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTMode__Rec_1ae26231cc9e3a31594eb0bae769cf6e15" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>AlphaFieldPosition</name></member>
+      <member refid="structTMode__Rec_1ab76a27b7a0dab771436fcd18ef2040a7" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>AlphaMaskSize</name></member>
+      <member refid="structTMode__Rec_1acef9fd2f7ecfa740ecbfeef1964b3c59" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>BankSize</name></member>
+      <member refid="structTMode__Rec_1a1781ec66535683e7e7cf91f6e4036f27" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>BankSwitch</name></member>
+      <member refid="structTMode__Rec_1ac961716fdfa16eddb820b407b87ce964" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>BitsPerPixel</name></member>
+      <member refid="structTMode__Rec_1ad52a71b09f9cf16685c706563c437295" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>BlueFieldPosition</name></member>
+      <member refid="structTMode__Rec_1ad08a1705fdd1c28f5c80058b2d3966ad" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>BlueMaskSize</name></member>
+      <member refid="structTMode__Rec_1a1d3219dbf4e058aa45582e6fbf1d0349" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>BytesPerLine</name></member>
+      <member refid="structTMode__Rec_1ad661f40af7efee1b81a77d33ea0dd5d8" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>CharHeight</name></member>
+      <member refid="structTMode__Rec_1a2970ac8388b0d027891c2c2bda0ab652" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>CharWidth</name></member>
+      <member refid="structTMode__Rec_1aa6c7431136b907bece94df99809aad75" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>DirectColourMode</name></member>
+      <member refid="structTMode__Rec_1a0aee28a8c061723a9078deae222e4424" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>Granularity</name></member>
+      <member refid="structTMode__Rec_1a399c39aedde68e7d47ab4d7af068ffb1" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>GreenFieldPosition</name></member>
+      <member refid="structTMode__Rec_1a71010ab26fd0efae91dd49b4b7aa3cae" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>GreenMaskSize</name></member>
+      <member refid="structTMode__Rec_1a525f23bf50f81c495997dc9e97abdecd" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>MemoryModel</name></member>
+      <member refid="structTMode__Rec_1ae241a04fcd9b74d19e7c20071cefb21e" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>ModeAttributes</name></member>
+      <member refid="structTMode__Rec_1a7d1bb1decd6f1690bd1472107ddebb78" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>NumberOfBanks</name></member>
+      <member refid="structTMode__Rec_1add2e0bfe5d3b452d126f1707bf1bc405" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>NumBitPlanes</name></member>
+      <member refid="structTMode__Rec_1a57e1b464f163a694df0889595963c64f" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>NumOfImagePages</name></member>
+      <member refid="structTMode__Rec_1acd73eb6a7812eebd95fc2b0b472ecc48" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>OffScreenMemOffset</name></member>
+      <member refid="structTMode__Rec_1a915325aeec11cda300b621c9dad559f7" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>OffScreenMemSize</name></member>
+      <member refid="structTMode__Rec_1a804e25c5f31dd7420bfee59f1b0efec9" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>paddington</name></member>
+      <member refid="structTMode__Rec_1aa107a1ea87f632ae2af8605ca3977369" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>PhysBasePtr</name></member>
+      <member refid="structTMode__Rec_1a0ea949d700a9d963ee9729a5ce89a762" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>RedFieldPosition</name></member>
+      <member refid="structTMode__Rec_1a9000159872f08a660e0242a486456960" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>RedMaskSize</name></member>
+      <member refid="structTMode__Rec_1ac64f4b2ea3c11f3888ae8fa57ef13021" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>Reserved</name></member>
+      <member refid="structTMode__Rec_1afd7635a77ace5997b093aa2c47e6902f" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>WindowAFlags</name></member>
+      <member refid="structTMode__Rec_1a84697e5e9c3003f2662e10f1f531f048" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>WindowASeg</name></member>
+      <member refid="structTMode__Rec_1a607928928e0d9867aa71dd5ebfe5a837" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>WindowBFlags</name></member>
+      <member refid="structTMode__Rec_1acf42b9784ed1d54f13cf69d3031fcfb3" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>WindowBSeg</name></member>
+      <member refid="structTMode__Rec_1aac4ed324d90c11833672c46f88f905ef" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>WindowSize</name></member>
+      <member refid="structTMode__Rec_1a7728e3a91df1bf02285a6a72d451d744" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>xRes</name></member>
+      <member refid="structTMode__Rec_1a2853e93257786feed9510a40ba59e87f" prot="public" virt="non-virtual"><scope>TMode_Rec</scope><name>yRes</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

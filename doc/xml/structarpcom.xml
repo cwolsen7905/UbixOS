@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structarpcom" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structarpcom" kind="struct" language="C++" prot="public">
     <compoundname>arpcom</compoundname>
     <includes refid="lnc_8h" local="no">lnc.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structarpcom_18335c2422b63415a71353f12d70b1e05" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 arpcom::ac_enaddr[6]</definition>
+      <memberdef kind="variable" id="structarpcom_1a33db97a0b3650089799388e5f47adc9d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t arpcom::ac_enaddr[6]</definition>
         <argsstring>[6]</argsstring>
         <name>ac_enaddr</name>
         <briefdescription>
@@ -15,11 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="143" bodyend="-1"/>
-        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
-        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="93" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="93" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structarpcom_11a87d8675dd64e8b9cc75fbdde92c689" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structarpcom_1a1a87d8675dd64e8b9cc75fbdde92c689" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int arpcom::ac_multicnt</definition>
         <argsstring></argsstring>
@@ -30,9 +29,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="144" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="94" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="94" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structarpcom_1371d1dc4612203c828b6d17d829ac9eb" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structarpcom_1a371d1dc4612203c828b6d17d829ac9eb" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* arpcom::ac_netgraph</definition>
         <argsstring></argsstring>
@@ -43,18 +42,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="145" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="145" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="95" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="95" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="141" bodyend="146"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>arpcom</label>
+        <link refid="structarpcom"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="91" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="91" bodyend="96"/>
     <listofallmembers>
-      <member refid="structarpcom_18335c2422b63415a71353f12d70b1e05" prot="public" virt="non-virtual"><scope>arpcom</scope><name>ac_enaddr</name></member>
-      <member refid="structarpcom_11a87d8675dd64e8b9cc75fbdde92c689" prot="public" virt="non-virtual"><scope>arpcom</scope><name>ac_multicnt</name></member>
-      <member refid="structarpcom_1371d1dc4612203c828b6d17d829ac9eb" prot="public" virt="non-virtual"><scope>arpcom</scope><name>ac_netgraph</name></member>
+      <member refid="structarpcom_1a33db97a0b3650089799388e5f47adc9d" prot="public" virt="non-virtual"><scope>arpcom</scope><name>ac_enaddr</name></member>
+      <member refid="structarpcom_1a1a87d8675dd64e8b9cc75fbdde92c689" prot="public" virt="non-virtual"><scope>arpcom</scope><name>ac_multicnt</name></member>
+      <member refid="structarpcom_1a371d1dc4612203c828b6d17d829ac9eb" prot="public" virt="non-virtual"><scope>arpcom</scope><name>ac_netgraph</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,44 +1,82 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="divdi3_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="divdi3_8c" kind="file" language="C++">
     <compoundname>divdi3.c</compoundname>
     <includes refid="math_8h" local="no">math.h</includes>
     <incdepgraph>
-      <node id="5668">
-        <label>src/sys/lib/divdi3.c</label>
-        <link refid="divdi3.c"/>
-        <childnode refid="5669" relation="include">
+      <node id="2">
+        <label>math.h</label>
+        <link refid="math_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5670">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5671" relation="include">
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
         </childnode>
       </node>
-      <node id="5671">
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/lib/divdi3.c</label>
+        <link refid="divdi3_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="5669">
-        <label>math.h</label>
-        <link refid="math_8h"/>
-        <childnode refid="5670" relation="include">
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="divdi3_8c_14a8c5f9eac2f7dbabb3b6eefb0da4e80" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref></type>
+      <memberdef kind="function" id="divdi3_8c_1a4a8c5f9eac2f7dbabb3b6eefb0da4e80" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref></type>
         <definition>quad_t __divdi3</definition>
         <argsstring>(quad_t a, quad_t b)</argsstring>
         <name>__divdi3</name>
         <param>
-          <type><ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref></type>
           <declname>a</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref></type>
           <declname>b</declname>
         </param>
         <briefdescription>
@@ -47,19 +85,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/divdi3.c" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/divdi3.c" bodystart="36" bodyend="38"/>
+        <location file="C:/Dev/git/UbixOS/sys/lib/divdi3.c" line="35" column="8" bodyfile="C:/Dev/git/UbixOS/sys/lib/divdi3.c" bodystart="35" bodyend="37"/>
       </memberdef>
-      <memberdef kind="function" id="divdi3_8c_1a99260684308a8f99235c4cff39c9e92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="math_8h_1b6313c23192f39c2165545e050d01bb3" kindref="member">u_quad_t</ref></type>
+      <memberdef kind="function" id="divdi3_8c_1aa99260684308a8f99235c4cff39c9e92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a289ae7cf9c95157e99202b0057d4935c" kindref="member">u_quad_t</ref></type>
         <definition>u_quad_t __udivdi3</definition>
         <argsstring>(u_quad_t a, u_quad_t b)</argsstring>
         <name>__udivdi3</name>
         <param>
-          <type><ref refid="math_8h_1b6313c23192f39c2165545e050d01bb3" kindref="member">u_quad_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a289ae7cf9c95157e99202b0057d4935c" kindref="member">u_quad_t</ref></type>
           <declname>a</declname>
         </param>
         <param>
-          <type><ref refid="math_8h_1b6313c23192f39c2165545e050d01bb3" kindref="member">u_quad_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a289ae7cf9c95157e99202b0057d4935c" kindref="member">u_quad_t</ref></type>
           <declname>b</declname>
         </param>
         <briefdescription>
@@ -68,7 +106,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/divdi3.c" line="32" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/divdi3.c" bodystart="32" bodyend="34"/>
+        <location file="C:/Dev/git/UbixOS/sys/lib/divdi3.c" line="31" column="10" bodyfile="C:/Dev/git/UbixOS/sys/lib/divdi3.c" bodystart="31" bodyend="33"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -76,72 +114,68 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: divdi3_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="math_8h" kindref="compound">math.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight></codeline>
-<codeline lineno="32" refid="divdi3_8c_1a99260684308a8f99235c4cff39c9e92" refkind="member"><highlight class="normal"><ref refid="math_8h_1b6313c23192f39c2165545e050d01bb3" kindref="member">u_quad_t</ref><sp/><ref refid="math_8h_1a99260684308a8f99235c4cff39c9e92" kindref="member">__udivdi3</ref>(<ref refid="math_8h_1b6313c23192f39c2165545e050d01bb3" kindref="member">u_quad_t</ref><sp/>a,<ref refid="math_8h_1b6313c23192f39c2165545e050d01bb3" kindref="member">u_quad_t</ref><sp/>b)<sp/>{</highlight></codeline>
-<codeline lineno="33"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0);<sp/></highlight><highlight class="comment">/*<sp/>Quick<sp/>Hack<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="divdi3_8c_14a8c5f9eac2f7dbabb3b6eefb0da4e80" refkind="member"><highlight class="normal"><ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref><sp/><ref refid="math_8h_14a8c5f9eac2f7dbabb3b6eefb0da4e80" kindref="member">__divdi3</ref>(<ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref><sp/>a,<ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref><sp/>b)<sp/>{</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0);<sp/></highlight><highlight class="comment">/*<sp/>Quick<sp/>Hack<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="41"><highlight class="comment"><sp/>$Log: divdi3_8c.xml,v $
-<codeline lineno="41"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
-<codeline lineno="41"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="41"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="42"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:16<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="44"><highlight class="comment"></highlight></codeline>
-<codeline lineno="45"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="46"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="47"><highlight class="comment"></highlight></codeline>
-<codeline lineno="48"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:10<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="49"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="50"><highlight class="comment"></highlight></codeline>
-<codeline lineno="51"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/19<sp/>03:46:32<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="52"><highlight class="comment"><sp/>A<sp/>Few<sp/>Quick<sp/>Hacks<sp/>To<sp/>Make<sp/>Things<sp/>Work</highlight></codeline>
-<codeline lineno="53"><highlight class="comment"></highlight></codeline>
-<codeline lineno="54"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:10<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="55"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
-<codeline lineno="56"><highlight class="comment"></highlight></codeline>
-<codeline lineno="57"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/04/13<sp/>16:36:33<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="58"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
-<codeline lineno="59"><highlight class="comment"></highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="math_8h" kindref="compound">math.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="divdi3_8c_1aa99260684308a8f99235c4cff39c9e92" refkind="member"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a289ae7cf9c95157e99202b0057d4935c" kindref="member">u_quad_t</ref><sp/><ref refid="divdi3_8c_1aa99260684308a8f99235c4cff39c9e92" kindref="member">__udivdi3</ref>(<ref refid="include_2sys_2types_8h_1a289ae7cf9c95157e99202b0057d4935c" kindref="member">u_quad_t</ref><sp/>a,<sp/><ref refid="include_2sys_2types_8h_1a289ae7cf9c95157e99202b0057d4935c" kindref="member">u_quad_t</ref><sp/>b)<sp/>{</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);<sp/></highlight><highlight class="comment">/*<sp/>Quick<sp/>Hack<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="divdi3_8c_1a4a8c5f9eac2f7dbabb3b6eefb0da4e80" refkind="member"><highlight class="normal"><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref><sp/><ref refid="divdi3_8c_1a4a8c5f9eac2f7dbabb3b6eefb0da4e80" kindref="member">__divdi3</ref>(<ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref><sp/>a,<sp/><ref refid="include_2sys_2types_8h_1aed1098ccbc33ac9e2fe61c0feed081bc" kindref="member">quad_t</ref><sp/>b)<sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);<sp/></highlight><highlight class="comment">/*<sp/>Quick<sp/>Hack<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>$Log:<sp/>divdi3.c,v<sp/>$</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"></highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"></highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:10<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"></highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/19<sp/>03:46:32<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>A<sp/>Few<sp/>Quick<sp/>Hacks<sp/>To<sp/>Make<sp/>Things<sp/>Work</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"></highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:10<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"></highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/04/13<sp/>16:36:33<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"></highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/divdi3.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/lib/divdi3.c"/>
   </compounddef>
 </doxygen>

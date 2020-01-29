@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdirectoryEntry" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdirectoryEntry" kind="struct" language="C++" prot="public">
     <compoundname>directoryEntry</compoundname>
-    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+    <includes refid="include_2ubixfs_2ubixfs_8h" local="no">ubixfs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdirectoryEntry_1eb3d1582fa3240c4847e52b7142ab801" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1aeb3d1582fa3240c4847e52b7142ab801" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 directoryEntry::attributes</definition>
         <argsstring></argsstring>
         <name>attributes</name>
@@ -15,11 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="110" bodyend="-1"/>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="105" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="105" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_11daf9472a2fd74cb5ff8cacae052a140" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1a1daf9472a2fd74cb5ff8cacae052a140" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 directoryEntry::creationDate</definition>
         <argsstring></argsstring>
         <name>creationDate</name>
@@ -29,9 +29,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="106" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="101" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="101" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_161e77c256eaf6c4e7fe56d2574f16f98" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdirectoryEntry_1a61e77c256eaf6c4e7fe56d2574f16f98" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char directoryEntry::fileName[256]</definition>
         <argsstring>[256]</argsstring>
@@ -42,14 +42,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="112" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_1ee88b75cf4360a46adb5021e358625d3" compoundref="dirCache_8c" startline="43" endline="52">ubixfs_findName</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="107" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="107" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_135604b07f0b9c9230ca2c0566132e661" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1a35604b07f0b9c9230ca2c0566132e661" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 directoryEntry::gid</definition>
         <argsstring></argsstring>
         <name>gid</name>
@@ -59,10 +58,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="109" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="104" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="104" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_19fd8ddf94af123a6b8209fe59aabe7ef" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1a9fd8ddf94af123a6b8209fe59aabe7ef" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 directoryEntry::lastModified</definition>
         <argsstring></argsstring>
         <name>lastModified</name>
@@ -72,10 +71,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="107" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="107" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="102" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="102" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_1a948f64fa7c34827ef1eca6c044002df" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1aa948f64fa7c34827ef1eca6c044002df" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 directoryEntry::permissions</definition>
         <argsstring></argsstring>
         <name>permissions</name>
@@ -85,11 +84,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="111" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="111" bodyend="-1"/>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="106" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="106" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_19571030f709f6926b925e552660a65ab" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1a9571030f709f6926b925e552660a65ab" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 directoryEntry::size</definition>
         <argsstring></argsstring>
         <name>size</name>
@@ -99,12 +98,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="105" bodyend="-1"/>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="100" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="100" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_183e91977e7db1dc36d3e81183ac8965c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1a83e91977e7db1dc36d3e81183ac8965c" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 directoryEntry::startCluster</definition>
         <argsstring></argsstring>
         <name>startCluster</name>
@@ -114,12 +114,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="104" bodyend="-1"/>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="99" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="99" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structdirectoryEntry_155932700e138f68b3b27d2a2bca923fa" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structdirectoryEntry_1a55932700e138f68b3b27d2a2bca923fa" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 directoryEntry::uid</definition>
         <argsstring></argsstring>
         <name>uid</name>
@@ -129,24 +129,30 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="108" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="103" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="103" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="103" bodyend="113"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>directoryEntry</label>
+        <link refid="structdirectoryEntry"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="98" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="98" bodyend="108"/>
     <listofallmembers>
-      <member refid="structdirectoryEntry_1eb3d1582fa3240c4847e52b7142ab801" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>attributes</name></member>
-      <member refid="structdirectoryEntry_11daf9472a2fd74cb5ff8cacae052a140" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>creationDate</name></member>
-      <member refid="structdirectoryEntry_161e77c256eaf6c4e7fe56d2574f16f98" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>fileName</name></member>
-      <member refid="structdirectoryEntry_135604b07f0b9c9230ca2c0566132e661" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>gid</name></member>
-      <member refid="structdirectoryEntry_19fd8ddf94af123a6b8209fe59aabe7ef" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>lastModified</name></member>
-      <member refid="structdirectoryEntry_1a948f64fa7c34827ef1eca6c044002df" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>permissions</name></member>
-      <member refid="structdirectoryEntry_19571030f709f6926b925e552660a65ab" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>size</name></member>
-      <member refid="structdirectoryEntry_183e91977e7db1dc36d3e81183ac8965c" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>startCluster</name></member>
-      <member refid="structdirectoryEntry_155932700e138f68b3b27d2a2bca923fa" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>uid</name></member>
+      <member refid="structdirectoryEntry_1aeb3d1582fa3240c4847e52b7142ab801" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>attributes</name></member>
+      <member refid="structdirectoryEntry_1a1daf9472a2fd74cb5ff8cacae052a140" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>creationDate</name></member>
+      <member refid="structdirectoryEntry_1a61e77c256eaf6c4e7fe56d2574f16f98" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>fileName</name></member>
+      <member refid="structdirectoryEntry_1a35604b07f0b9c9230ca2c0566132e661" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>gid</name></member>
+      <member refid="structdirectoryEntry_1a9fd8ddf94af123a6b8209fe59aabe7ef" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>lastModified</name></member>
+      <member refid="structdirectoryEntry_1aa948f64fa7c34827ef1eca6c044002df" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>permissions</name></member>
+      <member refid="structdirectoryEntry_1a9571030f709f6926b925e552660a65ab" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>size</name></member>
+      <member refid="structdirectoryEntry_1a83e91977e7db1dc36d3e81183ac8965c" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>startCluster</name></member>
+      <member refid="structdirectoryEntry_1a55932700e138f68b3b27d2a2bca923fa" prot="public" virt="non-virtual"><scope>directoryEntry</scope><name>uid</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

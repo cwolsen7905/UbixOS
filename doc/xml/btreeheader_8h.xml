@@ -1,58 +1,26 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="btreeheader_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="btreeheader_8h" kind="file" language="C++">
     <compoundname>btreeheader.h</compoundname>
-    <includedby refid="btree_8h" local="yes">src/sys/ubixfsv2/btree.h</includedby>
-    <invincdepgraph>
-      <node id="4550">
-        <label>src/sys/ubixfsv2/ubixfs.cpp</label>
-        <link refid="ubixfs_8cpp"/>
-      </node>
-      <node id="4547">
-        <label>src/sys/ubixfsv2/btree.h</label>
-        <link refid="btree_8h"/>
-        <childnode refid="4548" relation="include">
-        </childnode>
-        <childnode refid="4549" relation="include">
-        </childnode>
-        <childnode refid="4550" relation="include">
-        </childnode>
-      </node>
-      <node id="4549">
-        <label>src/sys/ubixfsv2/main.cpp</label>
-        <link refid="main_8cpp"/>
-      </node>
-      <node id="4546">
-        <label>src/sys/ubixfsv2/btreeheader.h</label>
-        <link refid="btreeheader.h"/>
-        <childnode refid="4547" relation="include">
-        </childnode>
-      </node>
-      <node id="4548">
-        <label>src/sys/ubixfsv2/btree.cpp</label>
-        <link refid="btree_8cpp"/>
-      </node>
-    </invincdepgraph>
-    <innerclass refid="structbTreeHeader" prot="public">bTreeHeader</innerclass>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>BTREEHEADER_H</highlight></codeline>
-<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>BTREEHEADER_H</highlight></codeline>
-<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="4" refid="structbTreeHeader" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbTreeHeader" kindref="compound">bTreeHeader</ref><sp/>{</highlight></codeline>
-<codeline lineno="5" refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" kindref="member">treeDepth</ref>;</highlight></codeline>
-<codeline lineno="6" refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" kindref="member">treeWidth</ref>;</highlight></codeline>
-<codeline lineno="7" refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" kindref="member">treeLeafCount</ref>;</highlight></codeline>
-<codeline lineno="8" refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><ref refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" kindref="member">firstNodeOffset</ref>;<sp/></highlight><highlight class="comment">//<sp/>used<sp/>when<sp/>tree<sp/>is<sp/>on<sp/>disk</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="9" refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><ref refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" kindref="member">firstDeleted</ref>;<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>used<sp/>to<sp/>point<sp/>to<sp/>an<sp/>empty<sp/>node</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="10" refid="structbTreeHeader_127e8ebd33f79e514541924cca765f7da" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structbTreeHeader_127e8ebd33f79e514541924cca765f7da" kindref="member">paddington</ref>[4068];</highlight></codeline>
-<codeline lineno="11"><highlight class="normal">}<sp/><ref refid="structbTreeHeader" kindref="compound">bTreeHeader</ref>;<sp/></highlight><highlight class="comment">//<sp/>bTreeHeader</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!BTREEHEADER_H<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*#ifndef<sp/>BTREEHEADER_H</highlight></codeline>
+<codeline lineno="2"><highlight class="comment">#define<sp/>BTREEHEADER_H</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"></highlight></codeline>
+<codeline lineno="4"><highlight class="comment">typedef<sp/>struct<sp/>bTreeHeader<sp/>{</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/><sp/>uInt32<sp/>treeDepth;</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/><sp/>uInt32<sp/>treeWidth;</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/><sp/>uInt32<sp/>treeLeafCount;</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/><sp/>off_t<sp/><sp/>firstNodeOffset;<sp/>//<sp/>used<sp/>when<sp/>tree<sp/>is<sp/>on<sp/>disk</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/><sp/>off_t<sp/><sp/>firstDeleted;<sp/><sp/><sp/><sp/>//<sp/>used<sp/>to<sp/>point<sp/>to<sp/>an<sp/>empty<sp/>node</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/><sp/>char<sp/>paddington[4068];</highlight></codeline>
+<codeline lineno="11"><highlight class="comment">}<sp/>bTreeHeader;<sp/>//<sp/>bTreeHeader</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"></highlight></codeline>
+<codeline lineno="13"><highlight class="comment">#endif*/</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>!BTREEHEADER_H<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/fs/ubixfsv2/btreeheader.h"/>
   </compounddef>
 </doxygen>

@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structubthread__cond" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structubthread__cond" kind="struct" language="C++" prot="public">
     <compoundname>ubthread_cond</compoundname>
     <includes refid="ubthread_8h" local="no">ubthread.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structubthread__cond_19557e920c79c936de8ce6b9f9a65a245" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structubthread__cond_1a9557e920c79c936de8ce6b9f9a65a245" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int ubthread_cond::id</definition>
         <argsstring></argsstring>
@@ -15,35 +15,40 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="ubthread_8c_1cbb7170a68758468ab5b02512a320112" compoundref="ubthread_8c" startline="48" endline="54">ubthread_cond_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="ubthread_8c_1a57168ab258d780168b7334a387651133" compoundref="ubthread_8c" startline="49" endline="58">ubthread_cond_init</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 ubthread_cond::locked</definition>
+      <memberdef kind="variable" id="structubthread__cond_1aae369fe44ca2aee0e9e0df01a5dda323" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool ubthread_cond::lock</definition>
         <argsstring></argsstring>
-        <name>locked</name>
+        <name>lock</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="52" bodyend="-1"/>
-        <referencedby refid="ubthread_8c_1cbb7170a68758468ab5b02512a320112" compoundref="ubthread_8c" startline="48" endline="54">ubthread_cond_init</referencedby>
-        <referencedby refid="ubthread_8c_164fb8f5f2da2564a6cae8c9f2c3bde10" compoundref="ubthread_8c" startline="125" endline="129">ubthread_cond_signal</referencedby>
-        <referencedby refid="ubthread_8c_1996be9a927447a62f7168a082a046c54" compoundref="ubthread_8c" startline="105" endline="115">ubthread_cond_timedwait</referencedby>
-        <referencedby refid="ubthread_8c_130eb7c156c2422801ddb86326dbc3d81" compoundref="ubthread_8c" startline="117" endline="123">ubthread_cond_wait</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="49" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="ubthread_8c_1a57168ab258d780168b7334a387651133" compoundref="ubthread_8c" startline="49" endline="58">ubthread_cond_init</referencedby>
+        <referencedby refid="ubthread_8c_1a996be9a927447a62f7168a082a046c54" compoundref="ubthread_8c" startline="129" endline="146">ubthread_cond_timedwait</referencedby>
+        <referencedby refid="ubthread_8c_1a30eb7c156c2422801ddb86326dbc3d81" compoundref="ubthread_8c" startline="148" endline="155">ubthread_cond_wait</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="50" bodyend="53"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>ubthread_cond</label>
+        <link refid="structubthread__cond"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="47" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="47" bodyend="50"/>
     <listofallmembers>
-      <member refid="structubthread__cond_19557e920c79c936de8ce6b9f9a65a245" prot="public" virt="non-virtual"><scope>ubthread_cond</scope><name>id</name></member>
-      <member refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" prot="public" virt="non-virtual"><scope>ubthread_cond</scope><name>locked</name></member>
+      <member refid="structubthread__cond_1a9557e920c79c936de8ce6b9f9a65a245" prot="public" virt="non-virtual"><scope>ubthread_cond</scope><name>id</name></member>
+      <member refid="structubthread__cond_1aae369fe44ca2aee0e9e0df01a5dda323" prot="public" virt="non-virtual"><scope>ubthread_cond</scope><name>lock</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

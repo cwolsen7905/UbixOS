@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structsdeWindows" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsdeWindows" kind="struct" language="C++" prot="public">
     <compoundname>sdeWindows</compoundname>
     <includes refid="sde_8h" local="no">sde.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structsdeWindows_12585673aa370729dbdcab42cbcc3c194" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsdeWindows_1a2585673aa370729dbdcab42cbcc3c194" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* sdeWindows::buf</definition>
         <argsstring></argsstring>
@@ -15,10 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="47" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="51" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structsdeWindows_1f008683ce89047f27f58653f2f5afb07" prot="public" static="no" mutable="no">
-        <type><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
+      <memberdef kind="variable" id="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
         <definition>struct sdeWindows* sdeWindows::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -28,10 +29,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="45" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="49" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structsdeWindows_10cb99c5d505a61eca246f095da2a5a67" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+      <memberdef kind="variable" id="structsdeWindows_1a0cb99c5d505a61eca246f095da2a5a67" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
         <definition>pidType sdeWindows::pid</definition>
         <argsstring></argsstring>
         <name>pid</name>
@@ -41,10 +44,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="48" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="52" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structsdeWindows_1efa6d50e32f5dfa4c6556c65a067be6d" prot="public" static="no" mutable="no">
-        <type><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
+      <memberdef kind="variable" id="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
         <definition>struct sdeWindows* sdeWindows::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -54,11 +58,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="46" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="50" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structsdeWindows_1445103adec37d00174102a06bddd94f5" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 sdeWindows::status</definition>
+      <memberdef kind="variable" id="structsdeWindows_1af0f947e022d294f15fb30574e9555614" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t sdeWindows::status</definition>
         <argsstring></argsstring>
         <name>status</name>
         <briefdescription>
@@ -67,7 +73,8 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="49" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="53" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -75,22 +82,22 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="580">
+      <node id="1">
         <label>sdeWindows</label>
         <link refid="structsdeWindows"/>
-        <childnode refid="580" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="44" bodyend="50"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="48" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="48" bodyend="54"/>
     <listofallmembers>
-      <member refid="structsdeWindows_12585673aa370729dbdcab42cbcc3c194" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>buf</name></member>
-      <member refid="structsdeWindows_1f008683ce89047f27f58653f2f5afb07" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>next</name></member>
-      <member refid="structsdeWindows_10cb99c5d505a61eca246f095da2a5a67" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>pid</name></member>
-      <member refid="structsdeWindows_1efa6d50e32f5dfa4c6556c65a067be6d" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>prev</name></member>
-      <member refid="structsdeWindows_1445103adec37d00174102a06bddd94f5" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>status</name></member>
+      <member refid="structsdeWindows_1a2585673aa370729dbdcab42cbcc3c194" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>buf</name></member>
+      <member refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>next</name></member>
+      <member refid="structsdeWindows_1a0cb99c5d505a61eca246f095da2a5a67" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>pid</name></member>
+      <member refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>prev</name></member>
+      <member refid="structsdeWindows_1af0f947e022d294f15fb30574e9555614" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>status</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,101 +1,368 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="syscalls_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="syscalls_8h" kind="file" language="C++">
     <compoundname>syscalls.h</compoundname>
     <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
-    <includes refid="file_8h" local="no">vfs/file.h</includes>
-    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
+    <includes refid="include_2vfs_2file_8h" local="no">vfs/file.h</includes>
+    <includes refid="syscall_8h" local="no">ubixos/syscall.h</includes>
+    <includedby refid="arch_2armv6_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</includedby>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <includedby refid="kernel_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscall.c</includedby>
+    <includedby refid="syscall__posix_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</includedby>
+    <includedby refid="syscalls_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscalls.c</includedby>
+    <includedby refid="syscalls__posix_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscalls_posix.c</includedby>
     <incdepgraph>
-      <node id="4440">
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h</label>
+        <link refid="syscalls_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>ubixos/syscall.h</label>
+        <link refid="syscall_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="12">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="4433" relation="include">
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
         </childnode>
       </node>
-      <node id="4432">
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="2">
         <label>ubixos/sched.h</label>
         <link refid="sched_8h"/>
-        <childnode refid="4433" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="4435" relation="include">
+        <childnode refid="10" relation="include">
         </childnode>
-        <childnode refid="4436" relation="include">
+        <childnode refid="24" relation="include">
         </childnode>
-        <childnode refid="4439" relation="include">
+        <childnode refid="25" relation="include">
         </childnode>
-        <childnode refid="4440" relation="include">
-        </childnode>
-      </node>
-      <node id="4433">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4434" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="4434">
+      <node id="4">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="4436">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="4433" relation="include">
-        </childnode>
-        <childnode refid="4437" relation="include">
-        </childnode>
-        <childnode refid="4438" relation="include">
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="4439">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="4433" relation="include">
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="4438">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="4433" relation="include">
-        </childnode>
-      </node>
-      <node id="4437">
+      <node id="11">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="4433" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="4431">
-        <label>src/sys/include/ubixos/syscalls.h</label>
-        <link refid="syscalls.h"/>
-        <childnode refid="4432" relation="include">
-        </childnode>
-        <childnode refid="4436" relation="include">
-        </childnode>
-      </node>
-      <node id="4435">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="4433" relation="include">
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4442">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
       </node>
-      <node id="4441">
-        <label>src/sys/include/ubixos/syscalls.h</label>
-        <link refid="syscalls.h"/>
-        <childnode refid="4442" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h</label>
+        <link refid="syscalls_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls_posix.c</label>
+        <link refid="syscalls__posix_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls.c</label>
+        <link refid="syscalls_8c"/>
+      </node>
     </invincdepgraph>
+    <innerclass refid="structsyscall__entry" prot="public">syscall_entry</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="syscalls_8h_1a2260a1ca7ad058c00353126a5c996d40" prot="public" static="no">
+        <name>ARG_COUNT</name>
+        <param><defname>name</defname></param>
+        <initializer>(sizeof(struct <ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>) / sizeof(<ref refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a6bad9f3eaf40b0161bc52e3fe8aa0575" prot="public" static="no">
+        <name>EJUSTRETURN</name>
+        <initializer>(-2)            /* don&apos;t modify regs, just return */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="39" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a0e5993319c80d5a93ed10b6253878ae5" prot="public" static="no">
+        <name>ERESTART</name>
+        <initializer>(-1)            /* restart syscall */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="40" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a9547f658d81341fdf691bb24c6243b74" prot="public" static="no">
+        <name>PSL_C</name>
+        <initializer>0x00000001      /* carry bit */</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="38" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1afa9ccac1e67742f71f026012e2c482c6" prot="public" static="no">
+        <name>SYSCALL_DUMMY</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a128d1a590746d75087f6018dc46c69a4" prot="public" static="no">
+        <name>SYSCALL_INVALID</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a93401fbfd55a8c0c8ae53ab7fc9b3e07" prot="public" static="no">
+        <name>SYSCALL_NOTIMP</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a80d3a43c3d48dd3b0e009597209ad581" prot="public" static="no">
+        <name>SYSCALL_VALID</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="syscalls_8h_1a964e5bfaea39a13ac463bbfad638c7f8" prot="public" static="no">
+        <name>SYSCALLS_MAX</name>
+        <initializer>1024</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="syscalls_8h_16c87aacd458e47a674e2fc9ce9379028" prot="public" static="no">
-        <type>void(*)</type>
-        <definition>typedef void(*) functionPTR()</definition>
-        <argsstring>()</argsstring>
+      <memberdef kind="typedef" id="syscalls_8h_1a0883cd577daa8cf52dcc7930783b5634" prot="public" static="no">
+        <type>int(*</type>
+        <definition>typedef int(* functionPTR) ()</definition>
+        <argsstring>)()</argsstring>
         <name>functionPTR</name>
         <briefdescription>
         </briefdescription>
@@ -103,13 +370,85 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" bodystart="74" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="95" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="syscalls_8h_1a5cc1a9cc9c2ff693ecb7982c3a4b506d" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef int sys_call_t(struct thread *, void *)</definition>
+        <argsstring>(struct thread *, void *)</argsstring>
+        <name>sys_call_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="49" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsyscall__entry" kindref="compound">syscall_entry</ref></type>
+        <definition>struct syscall_entry systemCalls[]</definition>
+        <argsstring>[]</argsstring>
+        <name>systemCalls</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="97" column="12" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscalls.c" bodystart="34" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="97" declcolumn="12"/>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="syscalls_8h_1ac093ecf7c6a544746f255e656ced3eb4" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsyscall__entry" kindref="compound">syscall_entry</ref></type>
+        <definition>struct syscall_entry systemCalls_posix[]</definition>
+        <argsstring>[]</argsstring>
+        <name>systemCalls_posix</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="100" column="12" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscalls_posix.c" bodystart="33" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="100" declcolumn="12"/>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="syscalls_8h_1a8c4ca6f2d558ed8247697c76ed1cbc94" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int totalCalls</definition>
+        <argsstring></argsstring>
+        <name>totalCalls</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="97" column="12" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscalls.c" bodystart="92" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="97" declcolumn="12"/>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="syscalls_8h_1a9a58a1a19acb364c296487ac03f9407b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int totalCalls_posix</definition>
+        <argsstring></argsstring>
+        <name>totalCalls_posix</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="100" column="12" bodyfile="C:/Dev/git/UbixOS/sys/kernel/syscalls_posix.c" bodystart="2791" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="100" declcolumn="12"/>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="syscalls_8h_15242d291fc024663a9035376f70a9938" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysAddModule</definition>
+      <memberdef kind="function" id="syscalls_8h_1af3e2ba7368b2e372ed3c5f6d78d92abb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysAddModule</definition>
         <argsstring>()</argsstring>
         <name>sysAddModule</name>
         <briefdescription>
@@ -118,11 +457,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="119" bodyend="122"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="65" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="117" bodyend="119" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="65" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_19680bfc8a1e734b484f941001ccb3623" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysAuth</definition>
+      <memberdef kind="function" id="syscalls_8h_1a611df7df6b1c820bfdc148463d50053e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysAuth</definition>
         <argsstring>()</argsstring>
         <name>sysAuth</name>
         <briefdescription>
@@ -131,11 +470,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="36"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="63" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="63" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1e728e0554b245825d8fbb97d1f542844" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysChDir</definition>
+      <memberdef kind="function" id="syscalls_8h_1afd39a116b29cece2b72fdb2921687e0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysChDir</definition>
         <argsstring>()</argsstring>
         <name>sysChDir</name>
         <briefdescription>
@@ -144,11 +483,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="63"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="84" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="84" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1174e0378ada12f961fadf4e4bce0e985" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysCheckPid</definition>
+      <memberdef kind="function" id="syscalls_8h_1a05480aa3bd0f251889042247f1b3c3f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysCheckPid</definition>
         <argsstring>()</argsstring>
         <name>sysCheckPid</name>
         <briefdescription>
@@ -157,11 +496,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="44"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="71" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="71" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1067d373ad2682affb9b8b093b5e5c97a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysExec</definition>
+      <memberdef kind="function" id="syscalls_8h_1a57f7531b33741e47f1b292cf69d6c2fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysExec</definition>
         <argsstring>()</argsstring>
         <name>sysExec</name>
         <briefdescription>
@@ -170,11 +509,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="42"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="69" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="69" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1eebd2b785b9e3499937a27b83d54adb3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysExit</definition>
+      <memberdef kind="function" id="syscalls_8h_1a46dec62ec03dac441cbebd7f2ee59b1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysExit</definition>
         <argsstring>()</argsstring>
         <name>sysExit</name>
         <briefdescription>
@@ -183,11 +522,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="41"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="68" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="68" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_144dd82b342d548f461bf69eaea24467c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFclose</definition>
+      <memberdef kind="function" id="syscalls_8h_1aa3befad1747a572e927e26449110b302" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysFclose</definition>
         <argsstring>()</argsstring>
         <name>sysFclose</name>
         <briefdescription>
@@ -196,11 +535,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="51"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="76" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="76" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_16f44f7787a1f24847ae4d5dc701159df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFgetc</definition>
+      <memberdef kind="function" id="syscalls_8h_1a46647a4476130d2617fdf8fd183ec921" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysFgetc</definition>
         <argsstring>()</argsstring>
         <name>sysFgetc</name>
         <briefdescription>
@@ -209,11 +548,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="48"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="74" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="74" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1f0ad6deac3d7f77820114d678741acb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFopen</definition>
+      <memberdef kind="function" id="syscalls_8h_1ac795bc2610902fcb85bf9f1ecc4328aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysFopen</definition>
         <argsstring>()</argsstring>
         <name>sysFopen</name>
         <briefdescription>
@@ -222,37 +561,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="49"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="75" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="75" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1b040b4ede8b649f2b158ba107867cb45" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFork</definition>
-        <argsstring>()</argsstring>
-        <name>sysFork</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="43"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1386959ece5e0ce3b251767f17a3829ca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFread</definition>
-        <argsstring>()</argsstring>
-        <name>sysFread</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="50"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_138bf31c893b410d0fac9399ef85ad497" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFseek</definition>
+      <memberdef kind="function" id="syscalls_8h_1a5cdd8af4cffff796d72f24fcef849c59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysFseek</definition>
         <argsstring>()</argsstring>
         <name>sysFseek</name>
         <briefdescription>
@@ -261,24 +574,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="53"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="77" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="77" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1fcdd895987386f8804e7ac7af37b6e7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysFwrite</definition>
-        <argsstring>()</argsstring>
-        <name>sysFwrite</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="47"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1346de7f91280ba7856d11e1ae095cbe2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetCwd</definition>
+      <memberdef kind="function" id="syscalls_8h_1a182bc73b79718c32a27a3e119d7c7cce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetCwd</definition>
         <argsstring>()</argsstring>
         <name>sysGetCwd</name>
         <briefdescription>
@@ -287,11 +587,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="62"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="83" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="83" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1d3fba35894d9b2e491af366070a98856" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetDrives</definition>
+      <memberdef kind="function" id="syscalls_8h_1ac4de62ece95c03a49358de87d350a1f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetDrives</definition>
         <argsstring>()</argsstring>
         <name>sysGetDrives</name>
         <briefdescription>
@@ -300,11 +600,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="61"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="82" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="82" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_133eb6110c8584f43637d317a979d3d48" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetFreePage</definition>
+      <memberdef kind="function" id="syscalls_8h_1a5fb104e3f35729d1441c4c9ddce1370e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetFreePage</definition>
         <argsstring>()</argsstring>
         <name>sysGetFreePage</name>
         <briefdescription>
@@ -313,24 +613,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="45"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="72" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="72" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_12de82ca63c0a95cc80cb77693a87d2dc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetGid</definition>
-        <argsstring>()</argsstring>
-        <name>sysGetGid</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="57"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_14fb278cb4dd09b77ba260d04f2a41456" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetpid</definition>
+      <memberdef kind="function" id="syscalls_8h_1a312f7904a6fea0080640fd8086248356" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetpid</definition>
         <argsstring>()</argsstring>
         <name>sysGetpid</name>
         <briefdescription>
@@ -339,11 +626,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="40"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="67" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="67" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_155aa396fbf042df1eedcf30f368b243a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetTime</definition>
+      <memberdef kind="function" id="syscalls_8h_1a3da0ea30480316b3daa5b8b29f41669e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetTime</definition>
         <argsstring>()</argsstring>
         <name>sysGetTime</name>
         <briefdescription>
@@ -352,24 +639,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="65"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="86" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="86" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_180fc8211f2e3bc35fdde3224f764cd33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetUid</definition>
-        <argsstring>()</argsstring>
-        <name>sysGetUid</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="56"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_16eb6cfba94f3cd7edc2d20fb97f63aca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysGetUptime</definition>
+      <memberdef kind="function" id="syscalls_8h_1a0ee5cadf3b19f1f526f8e90f6e97522e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysGetUptime</definition>
         <argsstring>()</argsstring>
         <name>sysGetUptime</name>
         <briefdescription>
@@ -378,11 +652,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="64"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="85" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="85" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_18e5c364725bc054dd66a5a50e6ac0b0c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysMkDir</definition>
+      <memberdef kind="function" id="syscalls_8h_1a75addec7b11c0b13a0c05c9154bc6231" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysMkDir</definition>
         <argsstring>()</argsstring>
         <name>sysMkDir</name>
         <briefdescription>
@@ -391,11 +665,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="54"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="78" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="78" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1d6dd1c7b8815050395851548645d8ca4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysMpiCreateMbox</definition>
+      <memberdef kind="function" id="syscalls_8h_1ab8feba60d74651325d06a7579a292e45" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysMpiCreateMbox</definition>
         <argsstring>()</argsstring>
         <name>sysMpiCreateMbox</name>
         <briefdescription>
@@ -404,11 +678,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="68"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="89" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="89" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_15c2d9cfc93350a9672b05f1d306c9aed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysMpiDestroyMbox</definition>
+      <memberdef kind="function" id="syscalls_8h_1af061bcbb59d35e43181cff5f46371e56" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysMpiDestroyMbox</definition>
         <argsstring>()</argsstring>
         <name>sysMpiDestroyMbox</name>
         <briefdescription>
@@ -417,11 +691,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="69"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="90" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="90" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_104cb651f232b2cc26a84fd33555359c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysMpiFetchMessage</definition>
+      <memberdef kind="function" id="syscalls_8h_1af350c636a470d5c511787b468ba890a9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysMpiFetchMessage</definition>
         <argsstring>()</argsstring>
         <name>sysMpiFetchMessage</name>
         <briefdescription>
@@ -430,11 +704,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="71"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="92" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="92" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1a7a77be95cc658ec8c8dc20c7327cb37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysMpiPostMessage</definition>
+      <memberdef kind="function" id="syscalls_8h_1a16ffc79bdd09b42cb5437c098398de16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysMpiPostMessage</definition>
         <argsstring>()</argsstring>
         <name>sysMpiPostMessage</name>
         <briefdescription>
@@ -443,11 +717,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="70"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="91" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="91" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_10cd368b14dff07e3a33b037ce4b39021" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysMpiSpam</definition>
+      <memberdef kind="function" id="syscalls_8h_1a0907a24dbe15fdcbeee137a17aeeb844" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysMpiSpam</definition>
         <argsstring>()</argsstring>
         <name>sysMpiSpam</name>
         <briefdescription>
@@ -456,11 +730,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="72"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="93" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="93" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1cedb04f8af77c9c29305438d57099133" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysPasswd</definition>
+      <memberdef kind="function" id="syscalls_8h_1a89e5ffa0eafa2440ceb44154efe4c1d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysPasswd</definition>
         <argsstring>()</argsstring>
         <name>sysPasswd</name>
         <briefdescription>
@@ -469,11 +743,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="37"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="64" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="64" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_16db05e27ce2d54b4d2b5202c2d4282df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysRmDir</definition>
+      <memberdef kind="function" id="syscalls_8h_1a8f4f96a1b41076561eed24755be468b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysRmDir</definition>
         <argsstring>()</argsstring>
         <name>sysRmDir</name>
         <briefdescription>
@@ -482,11 +756,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vfs/file.c" bodystart="88" bodyend="90"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="79" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/file.c" bodystart="115" bodyend="117" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="79" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_115cbe3f603b53d632faf25bce7f0a7ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysRmModule</definition>
+      <memberdef kind="function" id="syscalls_8h_1a572c5cdbb579acd6cd998b2d1ef4fc38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysRmModule</definition>
         <argsstring>()</argsstring>
         <name>sysRmModule</name>
         <briefdescription>
@@ -495,64 +769,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="124" bodyend="127"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="66" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="121" bodyend="123" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="66" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_14fe050b57d00373f9f9810f1934244e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysSchedYield</definition>
-        <argsstring>()</argsstring>
-        <name>sysSchedYield</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="235" bodyend="237"/>
-        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1d227817b8f881288d3a542a7d2afa525" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysSDE</definition>
-        <argsstring>()</argsstring>
-        <name>sysSDE</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="60"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_16535c97d0fce8b2bb3dec26e7bfa4833" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysSetGid</definition>
-        <argsstring>()</argsstring>
-        <name>sysSetGid</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="59"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1856c89e41713c0b568a4909c9f82c34c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysSetUid</definition>
-        <argsstring>()</argsstring>
-        <name>sysSetUid</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="58"/>
-      </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1fb14ed929bdc2c68714da3685e650c6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysStartSDE</definition>
+      <memberdef kind="function" id="syscalls_8h_1a19fd41bb2de651eeb58e7324e09bdbb7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysStartSDE</definition>
         <argsstring>()</argsstring>
         <name>sysStartSDE</name>
         <briefdescription>
@@ -561,11 +782,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="239" bodyend="249"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="87" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="226" bodyend="236" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="87" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="syscalls_8h_1aec6e18d80f7508900cd4e828edc0151" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysUnlink</definition>
+      <memberdef kind="function" id="syscalls_8h_1ae6e47046eb59eea26667f55533e3b85c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysUnlink</definition>
         <argsstring>()</argsstring>
         <name>sysUnlink</name>
         <briefdescription>
@@ -574,94 +795,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="67"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="syscalls_8h_1fd1dfeee7c994f633faad4b6f4dd964b" prot="public" static="no" mutable="no">
-        <type><ref refid="syscalls__new_8h_17bc59e2edd1b1bfdded9f966f7d34e21" kindref="member">functionPTR</ref></type>
-        <definition>functionPTR systemCalls[]</definition>
-        <argsstring>[]</argsstring>
-        <name>systemCalls</name>
-        <initializer> {
-  invalidCall,      
-  sysGetpid,        
-  sysExit,          
-  sysExec,          
-  sysFork,          
-  sysFgetc,         
-  sysCheckPid,      
-  sysGetFreePage,   
-  sysFopen,         
-  invalidCall,      
-  sysFclose,        
-  sysSchedYield,    
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  sysFopen,         
-  sysFclose,        
-  sysFread,         
-  sysFwrite,        
-  sysMkDir,         
-  sysRmDir,         
-  sysGetCwd,        
-  sysFseek,         
-  sysChDir,         
-  sysMkDir,         
-  sysUnlink,        
-  sysGetUid,        
-  sysGetGid,        
-  sysSetUid,        
-  sysSetGid,        
-  sysAuth,    	    
-  sysPasswd,        
-  sysAddModule,     
-  sysRmModule,      
-  invalidCall,      
-  
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  invalidCall,      
-  sysGetDrives,           
-  sysGetUptime,     
-  sysGetTime,       
-  sysStartSDE,      
-  invalidCall,      
-  sysMpiCreateMbox,   
-  sysMpiDestroyMbox,  
-  sysMpiPostMessage,  
-  sysMpiFetchMessage, 
-  sysMpiSpam,         
-  }</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" bodystart="76" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="syscalls_8h_18c4ca6f2d558ed8247697c76ed1cbc94" prot="public" static="no" mutable="no">
-        <type>int</type>
-        <definition>int totalCalls</definition>
-        <argsstring></argsstring>
-        <name>totalCalls</name>
-        <initializer> sizeof(<ref refid="syscalls_8h_1fd1dfeee7c994f633faad4b6f4dd964b" kindref="member">systemCalls</ref>)/sizeof(<ref refid="syscalls__new_8h_17bc59e2edd1b1bfdded9f966f7d34e21" kindref="member">functionPTR</ref>)</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" line="135" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h" bodystart="135" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" line="88" column="5" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h" declline="88" declcolumn="5"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -669,178 +803,110 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: syscalls_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYSCALLS_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SYSCALLS_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYSCALLS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYSCALLS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="syscall_8h" kindref="compound">ubixos/syscall.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_19680bfc8a1e734b484f941001ccb3623" kindref="member">sysAuth</ref>();</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1cedb04f8af77c9c29305438d57099133" kindref="member">sysPasswd</ref>();</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_15242d291fc024663a9035376f70a9938" kindref="member">sysAddModule</ref>();</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_115cbe3f603b53d632faf25bce7f0a7ce" kindref="member">sysRmModule</ref>();</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_14fb278cb4dd09b77ba260d04f2a41456" kindref="member">sysGetpid</ref>();</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1eebd2b785b9e3499937a27b83d54adb3" kindref="member">sysExit</ref>();</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1067d373ad2682affb9b8b093b5e5c97a" kindref="member">sysExec</ref>();</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fork_8h_1b040b4ede8b649f2b158ba107867cb45" kindref="member">sysFork</ref>();</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1174e0378ada12f961fadf4e4bce0e985" kindref="member">sysCheckPid</ref>();</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_133eb6110c8584f43637d317a979d3d48" kindref="member">sysGetFreePage</ref>();</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1fcdd895987386f8804e7ac7af37b6e7d" kindref="member">sysFwrite</ref>();</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_16f44f7787a1f24847ae4d5dc701159df" kindref="member">sysFgetc</ref>();</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1f0ad6deac3d7f77820114d678741acb2" kindref="member">sysFopen</ref>();</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1386959ece5e0ce3b251767f17a3829ca" kindref="member">sysFread</ref>();</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_144dd82b342d548f461bf69eaea24467c" kindref="member">sysFclose</ref>();</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_14fe050b57d00373f9f9810f1934244e7" kindref="member">sysSchedYield</ref>();</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_138bf31c893b410d0fac9399ef85ad497" kindref="member">sysFseek</ref>();</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_18e5c364725bc054dd66a5a50e6ac0b0c" kindref="member">sysMkDir</ref>();</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_16db05e27ce2d54b4d2b5202c2d4282df" kindref="member">sysRmDir</ref>();</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_180fc8211f2e3bc35fdde3224f764cd33" kindref="member">sysGetUid</ref>();</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_12de82ca63c0a95cc80cb77693a87d2dc" kindref="member">sysGetGid</ref>();</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1856c89e41713c0b568a4909c9f82c34c" kindref="member">sysSetUid</ref>();</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_16535c97d0fce8b2bb3dec26e7bfa4833" kindref="member">sysSetGid</ref>();</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sde_8h_136ee3564247e8b4aaea26be96aafa813" kindref="member">sysSDE</ref>();</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1d3fba35894d9b2e491af366070a98856" kindref="member">sysGetDrives</ref>();</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1346de7f91280ba7856d11e1ae095cbe2" kindref="member">sysGetCwd</ref>();</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1e728e0554b245825d8fbb97d1f542844" kindref="member">sysChDir</ref>();</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_16eb6cfba94f3cd7edc2d20fb97f63aca" kindref="member">sysGetUptime</ref>();</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_155aa396fbf042df1eedcf30f368b243a" kindref="member">sysGetTime</ref>();</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1fb14ed929bdc2c68714da3685e650c6c" kindref="member">sysStartSDE</ref>();</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1aec6e18d80f7508900cd4e828edc0151" kindref="member">sysUnlink</ref>();</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1d6dd1c7b8815050395851548645d8ca4" kindref="member">sysMpiCreateMbox</ref>();</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_15c2d9cfc93350a9672b05f1d306c9aed" kindref="member">sysMpiDestroyMbox</ref>();</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a7a77be95cc658ec8c8dc20c7327cb37" kindref="member">sysMpiPostMessage</ref>();</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_104cb651f232b2cc26a84fd33555359c4" kindref="member">sysMpiFetchMessage</ref>();</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_10cd368b14dff07e3a33b037ce4b39021" kindref="member">sysMpiSpam</ref>();</highlight></codeline>
+<codeline lineno="36" refid="syscalls_8h_1a964e5bfaea39a13ac463bbfad638c7f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYSCALLS_MAX<sp/>1024</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="syscalls_8h_1a9547f658d81341fdf691bb24c6243b74" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>PSL_C<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000001<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>carry<sp/>bit<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="syscalls_8h_1a6bad9f3eaf40b0161bc52e3fe8aa0575" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>EJUSTRETURN<sp/><sp/><sp/><sp/><sp/>(-2)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>don&apos;t<sp/>modify<sp/>regs,<sp/>just<sp/>return<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="syscalls_8h_1a0e5993319c80d5a93ed10b6253878ae5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/>ERESTART<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(-1)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>restart<sp/>syscall<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="syscalls_8h_1a2260a1ca7ad058c00353126a5c996d40" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ARG_COUNT(name)<sp/>(sizeof(struct<sp/>name)<sp/>/<sp/>sizeof(register_t))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="syscalls_8h_1a128d1a590746d75087f6018dc46c69a4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYSCALL_INVALID<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="syscalls_8h_1a80d3a43c3d48dd3b0e009597209ad581" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYSCALL_VALID<sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="syscalls_8h_1afa9ccac1e67742f71f026012e2c482c6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYSCALL_DUMMY<sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="syscalls_8h_1a93401fbfd55a8c0c8ae53ab7fc9b3e07" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYSCALL_NOTIMP<sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="syscalls_8h_1a5cc1a9cc9c2ff693ecb7982c3a4b506d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a5cc1a9cc9c2ff693ecb7982c3a4b506d" kindref="member">sys_call_t</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="structsyscall__entry" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsyscall__entry" kindref="compound">syscall_entry</ref><sp/>{</highlight></codeline>
+<codeline lineno="52" refid="structsyscall__entry_1a000a8c7d695eca7f877ac79c2c6108ce" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structsyscall__entry_1a000a8c7d695eca7f877ac79c2c6108ce" kindref="member">sc_args</ref>;</highlight></codeline>
+<codeline lineno="53" refid="structsyscall__entry_1a1ec13625ae86125bbac17514955e8332" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structsyscall__entry_1a1ec13625ae86125bbac17514955e8332" kindref="member">sc_name</ref>;</highlight></codeline>
+<codeline lineno="54" refid="structsyscall__entry_1a90285e9d1c3dcc6f72b95934681f5cd2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="syscalls_8h_1a5cc1a9cc9c2ff693ecb7982c3a4b506d" kindref="member">sys_call_t</ref><sp/>*<ref refid="structsyscall__entry_1a90285e9d1c3dcc6f72b95934681f5cd2" kindref="member">sc_entry</ref>;</highlight></codeline>
+<codeline lineno="55" refid="structsyscall__entry_1a6410cbc15e1b5fee0d2ee276fc5f52cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structsyscall__entry_1a6410cbc15e1b5fee0d2ee276fc5f52cb" kindref="member">sc_status</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>Old<sp/>Style<sp/>Calls<sp/>Need<sp/>Updates</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a611df7df6b1c820bfdc148463d50053e" kindref="member">sysAuth</ref>();</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a89e5ffa0eafa2440ceb44154efe4c1d6" kindref="member">sysPasswd</ref>();</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1af3e2ba7368b2e372ed3c5f6d78d92abb" kindref="member">sysAddModule</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a572c5cdbb579acd6cd998b2d1ef4fc38" kindref="member">sysRmModule</ref>();</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a312f7904a6fea0080640fd8086248356" kindref="member">sysGetpid</ref>();</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a46dec62ec03dac441cbebd7f2ee59b1b" kindref="member">sysExit</ref>();</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a57f7531b33741e47f1b292cf69d6c2fe" kindref="member">sysExec</ref>();</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a05480aa3bd0f251889042247f1b3c3f9" kindref="member">sysCheckPid</ref>();</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a5fb104e3f35729d1441c4c9ddce1370e" kindref="member">sysGetFreePage</ref>();</highlight></codeline>
 <codeline lineno="73"><highlight class="normal"></highlight></codeline>
-<codeline lineno="74" refid="syscalls_8h_16c87aacd458e47a674e2fc9ce9379028" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="syscalls_8h_16c87aacd458e47a674e2fc9ce9379028" kindref="member">functionPTR</ref>)();</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight></codeline>
-<codeline lineno="76" refid="syscalls_8h_1fd1dfeee7c994f633faad4b6f4dd964b" refkind="member"><highlight class="normal"><ref refid="syscalls_8h_16c87aacd458e47a674e2fc9ce9379028" kindref="member">functionPTR</ref><sp/><ref refid="syscalls_8h_1fd1dfeee7c994f633faad4b6f4dd964b" kindref="member">systemCalls</ref>[]<sp/>=<sp/>{</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="syscall_8h_19e2ae445f23217d134a21e636a16b101" kindref="member">invalidCall</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_14fb278cb4dd09b77ba260d04f2a41456" kindref="member">sysGetpid</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1eebd2b785b9e3499937a27b83d54adb3" kindref="member">sysExit</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1067d373ad2682affb9b8b093b5e5c97a" kindref="member">sysExec</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="fork_8h_1b040b4ede8b649f2b158ba107867cb45" kindref="member">sysFork</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_16f44f7787a1f24847ae4d5dc701159df" kindref="member">sysFgetc</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1174e0378ada12f961fadf4e4bce0e985" kindref="member">sysCheckPid</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_133eb6110c8584f43637d317a979d3d48" kindref="member">sysGetFreePage</ref>,<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1f0ad6deac3d7f77820114d678741acb2" kindref="member">sysFopen</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="syscall_8h_19e2ae445f23217d134a21e636a16b101" kindref="member">invalidCall</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_144dd82b342d548f461bf69eaea24467c" kindref="member">sysFclose</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_14fe050b57d00373f9f9810f1934244e7" kindref="member">sysSchedYield</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/>sysFopen,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/>sysFclose,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1386959ece5e0ce3b251767f17a3829ca" kindref="member">sysFread</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1fcdd895987386f8804e7ac7af37b6e7d" kindref="member">sysFwrite</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_18e5c364725bc054dd66a5a50e6ac0b0c" kindref="member">sysMkDir</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_16db05e27ce2d54b4d2b5202c2d4282df" kindref="member">sysRmDir</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1346de7f91280ba7856d11e1ae095cbe2" kindref="member">sysGetCwd</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_138bf31c893b410d0fac9399ef85ad497" kindref="member">sysFseek</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1e728e0554b245825d8fbb97d1f542844" kindref="member">sysChDir</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/>sysMkDir,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1aec6e18d80f7508900cd4e828edc0151" kindref="member">sysUnlink</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_180fc8211f2e3bc35fdde3224f764cd33" kindref="member">sysGetUid</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_12de82ca63c0a95cc80cb77693a87d2dc" kindref="member">sysGetGid</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1856c89e41713c0b568a4909c9f82c34c" kindref="member">sysSetUid</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_16535c97d0fce8b2bb3dec26e7bfa4833" kindref="member">sysSetGid</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_19680bfc8a1e734b484f941001ccb3623" kindref="member">sysAuth</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1cedb04f8af77c9c29305438d57099133" kindref="member">sysPasswd</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_15242d291fc024663a9035376f70a9938" kindref="member">sysAddModule</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_115cbe3f603b53d632faf25bce7f0a7ce" kindref="member">sysRmModule</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//sysSDE,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/**<sp/><sp/>40<sp/>SDE<sp/>Kernel<sp/>Interface<sp/><sp/><sp/><sp/>**/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1d3fba35894d9b2e491af366070a98856" kindref="member">sysGetDrives</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_16eb6cfba94f3cd7edc2d20fb97f63aca" kindref="member">sysGetUptime</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_155aa396fbf042df1eedcf30f368b243a" kindref="member">sysGetTime</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1fb14ed929bdc2c68714da3685e650c6c" kindref="member">sysStartSDE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/>invalidCall,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1d6dd1c7b8815050395851548645d8ca4" kindref="member">sysMpiCreateMbox</ref>,<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_15c2d9cfc93350a9672b05f1d306c9aed" kindref="member">sysMpiDestroyMbox</ref>,<sp/><sp/></highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_1a7a77be95cc658ec8c8dc20c7327cb37" kindref="member">sysMpiPostMessage</ref>,<sp/><sp/></highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_104cb651f232b2cc26a84fd33555359c4" kindref="member">sysMpiFetchMessage</ref>,<sp/></highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="syscalls_8h_10cd368b14dff07e3a33b037ce4b39021" kindref="member">sysMpiSpam</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"></highlight></codeline>
-<codeline lineno="135" refid="syscalls_8h_18c4ca6f2d558ed8247697c76ed1cbc94" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_18c4ca6f2d558ed8247697c76ed1cbc94" kindref="member">totalCalls</ref><sp/>=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="syscalls_8h_1fd1dfeee7c994f633faad4b6f4dd964b" kindref="member">systemCalls</ref>)/</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="syscalls_8h_16c87aacd458e47a674e2fc9ce9379028" kindref="member">functionPTR</ref>);</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"></highlight></codeline>
-<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="138"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="139"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="140"><highlight class="comment"><sp/>$Log: syscalls_8h.xml,v $
-<codeline lineno="140"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:53  reddawg
-<codeline lineno="140"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="140"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="141"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2006/10/12<sp/>17:05:44<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="142"><highlight class="comment"><sp/>Removing<sp/>SDE</highlight></codeline>
-<codeline lineno="143"><highlight class="comment"></highlight></codeline>
-<codeline lineno="144"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="145"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="146"><highlight class="comment"></highlight></codeline>
-<codeline lineno="147"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="148"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="149"><highlight class="comment"></highlight></codeline>
-<codeline lineno="150"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:56<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="151"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="152"><highlight class="comment"></highlight></codeline>
-<codeline lineno="153"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2005/08/04<sp/>22:48:39<sp/><sp/>fsdfs</highlight></codeline>
-<codeline lineno="154"><highlight class="comment"></highlight></codeline>
-<codeline lineno="155"><highlight class="comment"><sp/>added<sp/>4<sp/>new<sp/>syscalls:<sp/>sysAuth(),<sp/>sysPasswd(),<sp/>sysAddModule(),<sp/>sysRmModule()</highlight></codeline>
-<codeline lineno="156"><highlight class="comment"></highlight></codeline>
-<codeline lineno="157"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/05/26<sp/>15:39:22<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="158"><highlight class="comment"><sp/>mpi:<sp/>brought<sp/>mpiDestroyMbox(char<sp/>*name)<sp/>in<sp/>to<sp/>the<sp/>userland</highlight></codeline>
-<codeline lineno="159"><highlight class="comment"></highlight></codeline>
-<codeline lineno="160"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/25<sp/>15:42:19<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="161"><highlight class="comment"><sp/>Enabled<sp/>mpiSpam();</highlight></codeline>
-<codeline lineno="162"><highlight class="comment"></highlight></codeline>
-<codeline lineno="163"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="164"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="165"><highlight class="comment"></highlight></codeline>
-<codeline lineno="166"><highlight class="comment"></highlight></codeline>
-<codeline lineno="167"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="168"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a46647a4476130d2617fdf8fd183ec921" kindref="member">sysFgetc</ref>();</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1ac795bc2610902fcb85bf9f1ecc4328aa" kindref="member">sysFopen</ref>();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1aa3befad1747a572e927e26449110b302" kindref="member">sysFclose</ref>();</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a5cdd8af4cffff796d72f24fcef849c59" kindref="member">sysFseek</ref>();</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a75addec7b11c0b13a0c05c9154bc6231" kindref="member">sysMkDir</ref>();</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a8f4f96a1b41076561eed24755be468b1" kindref="member">sysRmDir</ref>();</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="comment">//int<sp/>sysSDE();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1ac4de62ece95c03a49358de87d350a1f0" kindref="member">sysGetDrives</ref>();</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a182bc73b79718c32a27a3e119d7c7cce" kindref="member">sysGetCwd</ref>();</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1afd39a116b29cece2b72fdb2921687e0d" kindref="member">sysChDir</ref>();</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a0ee5cadf3b19f1f526f8e90f6e97522e" kindref="member">sysGetUptime</ref>();</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a3da0ea30480316b3daa5b8b29f41669e" kindref="member">sysGetTime</ref>();</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a19fd41bb2de651eeb58e7324e09bdbb7" kindref="member">sysStartSDE</ref>();</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1ae6e47046eb59eea26667f55533e3b85c" kindref="member">sysUnlink</ref>();</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1ab8feba60d74651325d06a7579a292e45" kindref="member">sysMpiCreateMbox</ref>();</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1af061bcbb59d35e43181cff5f46371e56" kindref="member">sysMpiDestroyMbox</ref>();</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a16ffc79bdd09b42cb5437c098398de16" kindref="member">sysMpiPostMessage</ref>();</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1af350c636a470d5c511787b468ba890a9" kindref="member">sysMpiFetchMessage</ref>();</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a0907a24dbe15fdcbeee137a17aeeb844" kindref="member">sysMpiSpam</ref>();</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="syscalls_8h_1a0883cd577daa8cf52dcc7930783b5634" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>int<sp/>(*<ref refid="syscalls_8h_1a0883cd577daa8cf52dcc7930783b5634" kindref="member">functionPTR</ref>)();</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a8c4ca6f2d558ed8247697c76ed1cbc94" kindref="member">totalCalls</ref>;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsyscall__entry" kindref="compound">syscall_entry</ref><sp/><ref refid="syscalls_8h_1af9dddaf18cb637317c2c1a4a75f9feb0" kindref="member">systemCalls</ref>[];</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls_8h_1a9a58a1a19acb364c296487ac03f9407b" kindref="member">totalCalls_posix</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsyscall__entry" kindref="compound">syscall_entry</ref><sp/><ref refid="syscalls_8h_1ac093ecf7c6a544746f255e656ced3eb4" kindref="member">systemCalls_posix</ref>[];</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/syscalls.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h"/>
   </compounddef>
 </doxygen>

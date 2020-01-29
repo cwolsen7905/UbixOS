@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structtty__termNode" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtty__termNode" kind="struct" language="C++" prot="public">
     <compoundname>tty_termNode</compoundname>
     <includes refid="tty_8h" local="no">tty.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structtty__termNode_1f8e2ad49f523044768d8e768bfe531e4" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+      <memberdef kind="variable" id="structtty__termNode_1af8e2ad49f523044768d8e768bfe531e4" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
         <definition>pidType tty_termNode::owner</definition>
         <argsstring></argsstring>
         <name>owner</name>
@@ -15,11 +15,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="43" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="42" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_139b59f0bd823a6c86eaac17a80d9c360" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtty__termNode_1a39b59f0bd823a6c86eaac17a80d9c360" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char tty_termNode::stdin[512]</definition>
         <argsstring>[512]</argsstring>
@@ -30,11 +31,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="44" bodyend="-1"/>
-        <referencedby refid="atkbd_8c_19e32494b8c0797b73c41a50c698f0c04" compoundref="atkbd_8c" startline="329" endline="375">getch</referencedby>
-        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="43" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="43" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_129b1eedda11ef5e0cc7e069c0324afd9" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtty__termNode_1a29b1eedda11ef5e0cc7e069c0324afd9" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int tty_termNode::stdinSize</definition>
         <argsstring></argsstring>
@@ -45,11 +44,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="45" bodyend="-1"/>
-        <referencedby refid="atkbd_8c_19e32494b8c0797b73c41a50c698f0c04" compoundref="atkbd_8c" startline="329" endline="375">getch</referencedby>
-        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="44" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtty__termNode_1ad7d6c2241ad060df43036b02a9a6ac26" prot="public" static="no" mutable="no">
         <type>char *</type>
         <definition>char* tty_termNode::tty_buffer</definition>
         <argsstring></argsstring>
@@ -60,13 +57,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="37" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="tty_8c_1a52a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="84" endline="113">tty_change</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_113a559749639b1ebd5429e76c5588632" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 tty_termNode::tty_colour</definition>
+      <memberdef kind="variable" id="structtty__termNode_1a06bfeceb1a07aa6c0602745a12be05b0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t tty_termNode::tty_colour</definition>
         <argsstring></argsstring>
         <name>tty_colour</name>
         <briefdescription>
@@ -75,11 +71,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="40" bodyend="-1"/>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="39" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="39" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtty__termNode_1ac0868dddca6832ef5f791dd8d2606c7c" prot="public" static="no" mutable="no">
         <type>char *</type>
         <definition>char* tty_termNode::tty_pointer</definition>
         <argsstring></argsstring>
@@ -90,14 +84,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="39" bodyend="-1"/>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="38" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="38" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_1b4da0597e471d572404510d113cf91a9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 tty_termNode::tty_x</definition>
+      <memberdef kind="variable" id="structtty__termNode_1a22e444939c17fda952c5924c8780aa8b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t tty_termNode::tty_x</definition>
         <argsstring></argsstring>
         <name>tty_x</name>
         <briefdescription>
@@ -106,15 +97,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="40" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 tty_termNode::tty_y</definition>
+      <memberdef kind="variable" id="structtty__termNode_1a9440a0dd6d9f9402e84725a303946bb9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t tty_termNode::tty_y</definition>
         <argsstring></argsstring>
         <name>tty_y</name>
         <briefdescription>
@@ -123,27 +110,29 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="41" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="41" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="37" bodyend="46"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>tty_termNode</label>
+        <link refid="structtty__termNode"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="36" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="36" bodyend="45"/>
     <listofallmembers>
-      <member refid="structtty__termNode_1f8e2ad49f523044768d8e768bfe531e4" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>owner</name></member>
-      <member refid="structtty__termNode_139b59f0bd823a6c86eaac17a80d9c360" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>stdin</name></member>
-      <member refid="structtty__termNode_129b1eedda11ef5e0cc7e069c0324afd9" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>stdinSize</name></member>
-      <member refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_buffer</name></member>
-      <member refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_colour</name></member>
-      <member refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_pointer</name></member>
-      <member refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_x</name></member>
-      <member refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_y</name></member>
+      <member refid="structtty__termNode_1af8e2ad49f523044768d8e768bfe531e4" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>owner</name></member>
+      <member refid="structtty__termNode_1a39b59f0bd823a6c86eaac17a80d9c360" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>stdin</name></member>
+      <member refid="structtty__termNode_1a29b1eedda11ef5e0cc7e069c0324afd9" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>stdinSize</name></member>
+      <member refid="structtty__termNode_1ad7d6c2241ad060df43036b02a9a6ac26" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_buffer</name></member>
+      <member refid="structtty__termNode_1a06bfeceb1a07aa6c0602745a12be05b0" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_colour</name></member>
+      <member refid="structtty__termNode_1ac0868dddca6832ef5f791dd8d2606c7c" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_pointer</name></member>
+      <member refid="structtty__termNode_1a22e444939c17fda952c5924c8780aa8b" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_x</name></member>
+      <member refid="structtty__termNode_1a9440a0dd6d9f9402e84725a303946bb9" prot="public" virt="non-virtual"><scope>tty_termNode</scope><name>tty_y</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structpartitionInformation" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structpartitionInformation" kind="struct" language="C++" prot="public">
     <compoundname>partitionInformation</compoundname>
-    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+    <includes refid="include_2ubixfs_2ubixfs_8h" local="no">ubixfs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structpartitionInformation_1d3d33c51fecdc57b01f0577076f5888b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structpartitionInformation_1ad3d33c51fecdc57b01f0577076f5888b" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 partitionInformation::blockAllocationTable</definition>
         <argsstring></argsstring>
         <name>blockAllocationTable</name>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="90" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="90" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="85" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="85" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structpartitionInformation_10077f37eb5dd106e56f69e046cf21b11" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structpartitionInformation_1a0077f37eb5dd106e56f69e046cf21b11" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 partitionInformation::rootDirectory</definition>
         <argsstring></argsstring>
         <name>rootDirectory</name>
@@ -28,10 +28,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="91" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="86" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="86" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structpartitionInformation_1bdfd7fa7f5f6fb27516f07590a56f806" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structpartitionInformation_1abdfd7fa7f5f6fb27516f07590a56f806" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 partitionInformation::size</definition>
         <argsstring></argsstring>
         <name>size</name>
@@ -41,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="88" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="83" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="83" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structpartitionInformation_1cd3dbb24d1a864968aba02edda70a777" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structpartitionInformation_1acd3dbb24d1a864968aba02edda70a777" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 partitionInformation::startSector</definition>
         <argsstring></argsstring>
         <name>startSector</name>
@@ -54,19 +54,25 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="89" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="89" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="84" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="84" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="87" bodyend="92"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>partitionInformation</label>
+        <link refid="structpartitionInformation"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="82" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="82" bodyend="87"/>
     <listofallmembers>
-      <member refid="structpartitionInformation_1d3d33c51fecdc57b01f0577076f5888b" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>blockAllocationTable</name></member>
-      <member refid="structpartitionInformation_10077f37eb5dd106e56f69e046cf21b11" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>rootDirectory</name></member>
-      <member refid="structpartitionInformation_1bdfd7fa7f5f6fb27516f07590a56f806" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>size</name></member>
-      <member refid="structpartitionInformation_1cd3dbb24d1a864968aba02edda70a777" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>startSector</name></member>
+      <member refid="structpartitionInformation_1ad3d33c51fecdc57b01f0577076f5888b" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>blockAllocationTable</name></member>
+      <member refid="structpartitionInformation_1a0077f37eb5dd106e56f69e046cf21b11" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>rootDirectory</name></member>
+      <member refid="structpartitionInformation_1abdfd7fa7f5f6fb27516f07590a56f806" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>size</name></member>
+      <member refid="structpartitionInformation_1acd3dbb24d1a864968aba02edda70a777" prot="public" virt="non-virtual"><scope>partitionInformation</scope><name>startSector</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

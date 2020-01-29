@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structnicInfo" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structnicInfo" kind="struct" language="C++" prot="public">
     <compoundname>nicInfo</compoundname>
     <includes refid="lnc_8h" local="no">lnc.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnicInfo_1ace0bfd3296cc049fa333e59b1b272072" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int nicInfo::ic</definition>
         <argsstring></argsstring>
@@ -15,11 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="150" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="150" bodyend="-1"/>
-        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
-        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="100" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="100" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnicInfo_1bc40ed67a91dece36218837e90a90218" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnicInfo_1abc40ed67a91dece36218837e90a90218" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int nicInfo::ident</definition>
         <argsstring></argsstring>
@@ -30,11 +30,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="149" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="149" bodyend="-1"/>
-        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
-        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="99" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnicInfo_143f563787f5316ee79ca6bdf04c0b6df" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnicInfo_1a43f563787f5316ee79ca6bdf04c0b6df" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int nicInfo::iobase</definition>
         <argsstring></argsstring>
@@ -45,9 +44,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="152" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="102" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="102" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnicInfo_1a1260a18062e5cb16aac9b3f2b253409c" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int nicInfo::memMode</definition>
         <argsstring></argsstring>
@@ -58,11 +57,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="151" bodyend="-1"/>
-        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
-        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="101" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="101" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnicInfo_1a3dc304d78fecc9112cf979b7b1fc3525" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int nicInfo::mode</definition>
         <argsstring></argsstring>
@@ -73,21 +72,27 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="153" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="153" bodyend="-1"/>
-        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="103" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="103" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="148" bodyend="154"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>nicInfo</label>
+        <link refid="structnicInfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="98" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="98" bodyend="104"/>
     <listofallmembers>
-      <member refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>ic</name></member>
-      <member refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>ident</name></member>
-      <member refid="structnicInfo_143f563787f5316ee79ca6bdf04c0b6df" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>iobase</name></member>
-      <member refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>memMode</name></member>
-      <member refid="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>mode</name></member>
+      <member refid="structnicInfo_1ace0bfd3296cc049fa333e59b1b272072" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>ic</name></member>
+      <member refid="structnicInfo_1abc40ed67a91dece36218837e90a90218" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>ident</name></member>
+      <member refid="structnicInfo_1a43f563787f5316ee79ca6bdf04c0b6df" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>iobase</name></member>
+      <member refid="structnicInfo_1a1260a18062e5cb16aac9b3f2b253409c" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>memMode</name></member>
+      <member refid="structnicInfo_1a3dc304d78fecc9112cf979b7b1fc3525" prot="public" virt="non-virtual"><scope>nicInfo</scope><name>mode</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

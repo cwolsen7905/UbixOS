@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structi386__frame" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structi386__frame" kind="struct" language="C++" prot="public">
     <compoundname>i386_frame</compoundname>
     <includes refid="tss_8h" local="no">tss.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structi386__frame_19f6fc16fdbb8b50c1bb918752f24b4bd" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::cs</definition>
+      <memberdef kind="variable" id="structi386__frame_1af1046cdf3670b054d9d6e0c482cac2c5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::cs</definition>
         <argsstring></argsstring>
         <name>cs</name>
         <briefdescription>
@@ -15,11 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="104" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="103" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="103" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_10a9212f678429305f296862a065eae28" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::ds</definition>
+      <memberdef kind="variable" id="structi386__frame_1a453b37f2301fdc5018ac4a2b4577a48e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::ds</definition>
         <argsstring></argsstring>
         <name>ds</name>
         <briefdescription>
@@ -28,11 +28,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="89" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="89" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="88" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="88" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_16bdccd94414ae6d4bbcab072c246d3f3" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::eax</definition>
+      <memberdef kind="variable" id="structi386__frame_1a99f494972f50e39ae9a68efe43994a15" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::eax</definition>
         <argsstring></argsstring>
         <name>eax</name>
         <briefdescription>
@@ -41,11 +41,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="98" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="97" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="97" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_1dcf6812a951acee52fce378a3c935b1f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::ebp</definition>
+      <memberdef kind="variable" id="structi386__frame_1a41628a27790fd3a5e7841964e2cfb567" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::ebp</definition>
         <argsstring></argsstring>
         <name>ebp</name>
         <briefdescription>
@@ -54,12 +54,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="93" bodyend="-1"/>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="92" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_153a7ba5ffb902f7f1cfa1bbfaad9caba" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::ebx</definition>
+      <memberdef kind="variable" id="structi386__frame_1a9b8ab2ce067172be7f7b47dd1fdff33b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::ebx</definition>
         <argsstring></argsstring>
         <name>ebx</name>
         <briefdescription>
@@ -68,11 +68,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="95" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="94" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="94" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_19c070d809c0e3a61dae1e627e2175194" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::ecx</definition>
+      <memberdef kind="variable" id="structi386__frame_1a5894cb5ead4ba1d3f560436bb626824e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::ecx</definition>
         <argsstring></argsstring>
         <name>ecx</name>
         <briefdescription>
@@ -81,11 +81,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="97" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="96" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="96" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_161c0ccde421dc6aac659dda5236b2593" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::edi</definition>
+      <memberdef kind="variable" id="structi386__frame_1adb872c338754cf34f31c3237c0744c5a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::edi</definition>
         <argsstring></argsstring>
         <name>edi</name>
         <briefdescription>
@@ -94,11 +94,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="91" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="90" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="90" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_108c82da73c44988b8a0f922c53d57cd8" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::edx</definition>
+      <memberdef kind="variable" id="structi386__frame_1a49cc86b5a4cfc70acf54b6cc7e8c4799" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::edx</definition>
         <argsstring></argsstring>
         <name>edx</name>
         <briefdescription>
@@ -107,11 +107,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="96" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="95" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="95" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_1ef87f1d1d6f1ad030c95773e7eedfa16" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::eip</definition>
+      <memberdef kind="variable" id="structi386__frame_1a031746b975400ea26eac2e8dcbc2bb13" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::eip</definition>
         <argsstring></argsstring>
         <name>eip</name>
         <briefdescription>
@@ -120,13 +120,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="103" bodyend="-1"/>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="102" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="102" bodyend="-1"/>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_1c02b314c7392943613915ce20b0b6c29" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::es</definition>
+      <memberdef kind="variable" id="structi386__frame_1ae516ad326b1adfc190ccfcbd878fab88" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::es</definition>
         <argsstring></argsstring>
         <name>es</name>
         <briefdescription>
@@ -135,11 +134,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="88" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="87" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="87" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_14e207fc8d3fe3eb3024826fd73774b74" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::esi</definition>
+      <memberdef kind="variable" id="structi386__frame_1a695259228feafd38874d23d1d1c1f94c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::esi</definition>
         <argsstring></argsstring>
         <name>esi</name>
         <briefdescription>
@@ -148,11 +147,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="92" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="91" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="91" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_1ecdc0871fc77e76675a61310e1c67f92" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::esp</definition>
+      <memberdef kind="variable" id="structi386__frame_1a0638834b0dfdb225a01af4c6fa50574c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::esp</definition>
         <argsstring></argsstring>
         <name>esp</name>
         <briefdescription>
@@ -161,11 +160,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="94" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="93" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="93" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_163e8e0c4531c08958e53b3748b48b082" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::flags</definition>
+      <memberdef kind="variable" id="structi386__frame_1ac11c20ed9037e398c478834c9c1aa381" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::flags</definition>
         <argsstring></argsstring>
         <name>flags</name>
         <briefdescription>
@@ -174,11 +173,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="105" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="104" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="104" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_158f8fbea4a52a31f59304fab00a31608" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::fs</definition>
+      <memberdef kind="variable" id="structi386__frame_1a280f931d25a3013787d6872f29844446" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::fs</definition>
         <argsstring></argsstring>
         <name>fs</name>
         <briefdescription>
@@ -187,11 +186,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="87" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="86" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="86" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_10ce9046ede02346b13eeb84668b88600" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::gs</definition>
+      <memberdef kind="variable" id="structi386__frame_1a394facbd47407a0a660e9a2ac486ae41" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::gs</definition>
         <argsstring></argsstring>
         <name>gs</name>
         <briefdescription>
@@ -200,11 +199,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="86" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="85" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="85" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_14f72b16e5f2ff034afa82de9229face6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::ss</definition>
+      <memberdef kind="variable" id="structi386__frame_1a1b45e07b3d1a843351d2775f7a9f8b36" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::ss</definition>
         <argsstring></argsstring>
         <name>ss</name>
         <briefdescription>
@@ -213,11 +212,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="90" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="90" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="89" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="89" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_1bbfc7b0ada36bd69608adfa39f5fc133" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::user_esp</definition>
+      <memberdef kind="variable" id="structi386__frame_1aae0679acc1998f636b00761b546ed656" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::user_esp</definition>
         <argsstring></argsstring>
         <name>user_esp</name>
         <briefdescription>
@@ -226,12 +225,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="106" bodyend="-1"/>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="105" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="105" bodyend="-1"/>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structi386__frame_13b8a869c050932532940fd73c32ea4d2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 i386_frame::user_ss</definition>
+      <memberdef kind="variable" id="structi386__frame_1a9476e37c269008baa66d60171b6aaf8d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t i386_frame::user_ss</definition>
         <argsstring></argsstring>
         <name>user_ss</name>
         <briefdescription>
@@ -240,33 +239,39 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="107" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="107" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="106" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="106" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="85" bodyend="108"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>i386_frame</label>
+        <link refid="structi386__frame"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="84" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="84" bodyend="107"/>
     <listofallmembers>
-      <member refid="structi386__frame_19f6fc16fdbb8b50c1bb918752f24b4bd" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>cs</name></member>
-      <member refid="structi386__frame_10a9212f678429305f296862a065eae28" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ds</name></member>
-      <member refid="structi386__frame_16bdccd94414ae6d4bbcab072c246d3f3" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>eax</name></member>
-      <member refid="structi386__frame_1dcf6812a951acee52fce378a3c935b1f" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ebp</name></member>
-      <member refid="structi386__frame_153a7ba5ffb902f7f1cfa1bbfaad9caba" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ebx</name></member>
-      <member refid="structi386__frame_19c070d809c0e3a61dae1e627e2175194" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ecx</name></member>
-      <member refid="structi386__frame_161c0ccde421dc6aac659dda5236b2593" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>edi</name></member>
-      <member refid="structi386__frame_108c82da73c44988b8a0f922c53d57cd8" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>edx</name></member>
-      <member refid="structi386__frame_1ef87f1d1d6f1ad030c95773e7eedfa16" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>eip</name></member>
-      <member refid="structi386__frame_1c02b314c7392943613915ce20b0b6c29" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>es</name></member>
-      <member refid="structi386__frame_14e207fc8d3fe3eb3024826fd73774b74" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>esi</name></member>
-      <member refid="structi386__frame_1ecdc0871fc77e76675a61310e1c67f92" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>esp</name></member>
-      <member refid="structi386__frame_163e8e0c4531c08958e53b3748b48b082" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>flags</name></member>
-      <member refid="structi386__frame_158f8fbea4a52a31f59304fab00a31608" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>fs</name></member>
-      <member refid="structi386__frame_10ce9046ede02346b13eeb84668b88600" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>gs</name></member>
-      <member refid="structi386__frame_14f72b16e5f2ff034afa82de9229face6" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ss</name></member>
-      <member refid="structi386__frame_1bbfc7b0ada36bd69608adfa39f5fc133" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>user_esp</name></member>
-      <member refid="structi386__frame_13b8a869c050932532940fd73c32ea4d2" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>user_ss</name></member>
+      <member refid="structi386__frame_1af1046cdf3670b054d9d6e0c482cac2c5" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>cs</name></member>
+      <member refid="structi386__frame_1a453b37f2301fdc5018ac4a2b4577a48e" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ds</name></member>
+      <member refid="structi386__frame_1a99f494972f50e39ae9a68efe43994a15" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>eax</name></member>
+      <member refid="structi386__frame_1a41628a27790fd3a5e7841964e2cfb567" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ebp</name></member>
+      <member refid="structi386__frame_1a9b8ab2ce067172be7f7b47dd1fdff33b" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ebx</name></member>
+      <member refid="structi386__frame_1a5894cb5ead4ba1d3f560436bb626824e" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ecx</name></member>
+      <member refid="structi386__frame_1adb872c338754cf34f31c3237c0744c5a" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>edi</name></member>
+      <member refid="structi386__frame_1a49cc86b5a4cfc70acf54b6cc7e8c4799" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>edx</name></member>
+      <member refid="structi386__frame_1a031746b975400ea26eac2e8dcbc2bb13" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>eip</name></member>
+      <member refid="structi386__frame_1ae516ad326b1adfc190ccfcbd878fab88" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>es</name></member>
+      <member refid="structi386__frame_1a695259228feafd38874d23d1d1c1f94c" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>esi</name></member>
+      <member refid="structi386__frame_1a0638834b0dfdb225a01af4c6fa50574c" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>esp</name></member>
+      <member refid="structi386__frame_1ac11c20ed9037e398c478834c9c1aa381" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>flags</name></member>
+      <member refid="structi386__frame_1a280f931d25a3013787d6872f29844446" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>fs</name></member>
+      <member refid="structi386__frame_1a394facbd47407a0a660e9a2ac486ae41" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>gs</name></member>
+      <member refid="structi386__frame_1a1b45e07b3d1a843351d2775f7a9f8b36" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>ss</name></member>
+      <member refid="structi386__frame_1aae0679acc1998f636b00761b546ed656" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>user_esp</name></member>
+      <member refid="structi386__frame_1a9476e37c269008baa66d60171b6aaf8d" prot="public" virt="non-virtual"><scope>i386_frame</scope><name>user_ss</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

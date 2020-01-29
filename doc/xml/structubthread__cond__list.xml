@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structubthread__cond__list" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structubthread__cond__list" kind="struct" language="C++" prot="public">
     <compoundname>ubthread_cond_list</compoundname>
     <includes refid="ubthread_8h" local="no">ubthread.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structubthread__cond__list_1c6a0b68879515ad2121d705aa7571c7e" prot="public" static="no" mutable="no">
-        <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+      <memberdef kind="variable" id="structubthread__cond__list_1ac6a0b68879515ad2121d705aa7571c7e" prot="public" static="no" mutable="no">
+        <type><ref refid="ubthread_8h_1a96521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref> *</type>
         <definition>ubthread_cond_t* ubthread_cond_list::cond</definition>
         <argsstring></argsstring>
         <name>cond</name>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="68" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="65" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="65" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structubthread__cond__list_1d5cf73bd503d8318feca31d8d3e86c89" prot="public" static="no" mutable="no">
-        <type><ref refid="structubthread__cond__list" kindref="compound">ubthread_cond_list</ref> *</type>
+      <memberdef kind="variable" id="structubthread__cond__list_1ad5cf73bd503d8318feca31d8d3e86c89" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structubthread__cond__list" kindref="compound">ubthread_cond_list</ref> *</type>
         <definition>struct ubthread_cond_list* ubthread_cond_list::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -28,7 +28,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="67" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="64" column="29" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="64" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -36,25 +36,25 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="659">
+      <node id="1">
         <label>ubthread_cond_list</label>
         <link refid="structubthread__cond__list"/>
-        <childnode refid="659" relation="usage">
-          <edgelabel>next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+next</edgelabel>
         </childnode>
-        <childnode refid="660" relation="usage">
-          <edgelabel>cond</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+cond</edgelabel>
         </childnode>
       </node>
-      <node id="660">
+      <node id="2">
         <label>ubthread_cond</label>
         <link refid="structubthread__cond"/>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="66" bodyend="69"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="63" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="63" bodyend="66"/>
     <listofallmembers>
-      <member refid="structubthread__cond__list_1c6a0b68879515ad2121d705aa7571c7e" prot="public" virt="non-virtual"><scope>ubthread_cond_list</scope><name>cond</name></member>
-      <member refid="structubthread__cond__list_1d5cf73bd503d8318feca31d8d3e86c89" prot="public" virt="non-virtual"><scope>ubthread_cond_list</scope><name>next</name></member>
+      <member refid="structubthread__cond__list_1ac6a0b68879515ad2121d705aa7571c7e" prot="public" virt="non-virtual"><scope>ubthread_cond_list</scope><name>cond</name></member>
+      <member refid="structubthread__cond__list_1ad5cf73bd503d8318feca31d8d3e86c89" prot="public" virt="non-virtual"><scope>ubthread_cond_list</scope><name>next</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

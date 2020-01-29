@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdriverType" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdriverType" kind="struct" language="C++" prot="public">
     <compoundname>driverType</compoundname>
     <includes refid="driver_8h" local="no">driver.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdriverType_19a111e8c92d4cdf35caa13928f4f625b" prot="public" static="no" mutable="no">
-        <type>const char *</type>
+      <memberdef kind="variable" id="structdriverType_1a9a111e8c92d4cdf35caa13928f4f625b" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
         <definition>const char* driverType::devName</definition>
         <argsstring></argsstring>
         <name>devName</name>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" bodystart="42" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/driver.h" line="40" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/driver.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdriverType_1f74155103608482968ce4425d4f64a88" prot="public" static="no" mutable="no">
-        <type><ref refid="structdevMethodType" kindref="compound">devMethod</ref> *</type>
+      <memberdef kind="variable" id="structdriverType_1af74155103608482968ce4425d4f64a88" prot="public" static="no" mutable="no">
+        <type><ref refid="driver_8h_1ac1e4d93960b9c26611536ec6b2ee4c62" kindref="member">devMethod</ref> *</type>
         <definition>devMethod* driverType::methods</definition>
         <argsstring></argsstring>
         <name>methods</name>
@@ -28,7 +28,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" bodystart="43" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/driver.h" line="41" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/driver.h" bodystart="41" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -36,22 +36,22 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="435">
+      <node id="2">
         <label>devMethodType</label>
         <link refid="structdevMethodType"/>
       </node>
-      <node id="434">
+      <node id="1">
         <label>driverType</label>
         <link refid="structdriverType"/>
-        <childnode refid="435" relation="usage">
-          <edgelabel>methods</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+methods</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" bodystart="41" bodyend="44"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/driver.h" line="39" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/driver.h" bodystart="39" bodyend="42"/>
     <listofallmembers>
-      <member refid="structdriverType_19a111e8c92d4cdf35caa13928f4f625b" prot="public" virt="non-virtual"><scope>driverType</scope><name>devName</name></member>
-      <member refid="structdriverType_1f74155103608482968ce4425d4f64a88" prot="public" virt="non-virtual"><scope>driverType</scope><name>methods</name></member>
+      <member refid="structdriverType_1a9a111e8c92d4cdf35caa13928f4f625b" prot="public" virt="non-virtual"><scope>driverType</scope><name>devName</name></member>
+      <member refid="structdriverType_1af74155103608482968ce4425d4f64a88" prot="public" virt="non-virtual"><scope>driverType</scope><name>methods</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

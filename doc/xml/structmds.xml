@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structmds" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmds" kind="struct" language="C++" prot="public">
     <compoundname>mds</compoundname>
     <includes refid="lnc_8h" local="no">lnc.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structmds_1b918a9e27f5f2db9a390a87bda010994" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 mds::md0</definition>
+      <memberdef kind="variable" id="structmds_1a0a2a60d2b1112b38a2a3767b22be1fb3" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t mds::md0</definition>
         <argsstring></argsstring>
         <name>md0</name>
         <briefdescription>
@@ -15,11 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="127" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="70" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="70" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmds_103497b545351e713101ef485bb613e29" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 mds::md1</definition>
+      <memberdef kind="variable" id="structmds_1a8d960bef043945dd755272b914974e0a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t mds::md1</definition>
         <argsstring></argsstring>
         <name>md1</name>
         <briefdescription>
@@ -28,9 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="128" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="71" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="71" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmds_18e97b48b0e792936110351265e5d8c2b" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structmds_1a8e97b48b0e792936110351265e5d8c2b" prot="public" static="no" mutable="no">
         <type>short</type>
         <definition>short mds::md2</definition>
         <argsstring></argsstring>
@@ -41,11 +41,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="129" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="129" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="72" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="72" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmds_155560d24569d20aff12528e4c4ec6a1e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 mds::md3</definition>
+      <memberdef kind="variable" id="structmds_1ad9b5ef0000d1004d3cbd2071c3fbd8a9" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t mds::md3</definition>
         <argsstring></argsstring>
         <name>md3</name>
         <briefdescription>
@@ -54,19 +54,25 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="130" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="130" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="73" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="73" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="126" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="126" bodyend="131"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>mds</label>
+        <link refid="structmds"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="69" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="69" bodyend="74"/>
     <listofallmembers>
-      <member refid="structmds_1b918a9e27f5f2db9a390a87bda010994" prot="public" virt="non-virtual"><scope>mds</scope><name>md0</name></member>
-      <member refid="structmds_103497b545351e713101ef485bb613e29" prot="public" virt="non-virtual"><scope>mds</scope><name>md1</name></member>
-      <member refid="structmds_18e97b48b0e792936110351265e5d8c2b" prot="public" virt="non-virtual"><scope>mds</scope><name>md2</name></member>
-      <member refid="structmds_155560d24569d20aff12528e4c4ec6a1e" prot="public" virt="non-virtual"><scope>mds</scope><name>md3</name></member>
+      <member refid="structmds_1a0a2a60d2b1112b38a2a3767b22be1fb3" prot="public" virt="non-virtual"><scope>mds</scope><name>md0</name></member>
+      <member refid="structmds_1a8d960bef043945dd755272b914974e0a" prot="public" virt="non-virtual"><scope>mds</scope><name>md1</name></member>
+      <member refid="structmds_1a8e97b48b0e792936110351265e5d8c2b" prot="public" virt="non-virtual"><scope>mds</scope><name>md2</name></member>
+      <member refid="structmds_1ad9b5ef0000d1004d3cbd2071c3fbd8a9" prot="public" virt="non-virtual"><scope>mds</scope><name>md3</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,68 +1,142 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="device_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="device_8c" kind="file" language="C++">
     <compoundname>device.c</compoundname>
-    <includes refid="device_8h" local="no">sys/device.h</includes>
+    <includes refid="include_2sys_2device_8h" local="no">sys/device.h</includes>
     <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
     <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
     <includes refid="assert_8h" local="no">assert.h</includes>
     <incdepgraph>
-      <node id="5850">
+      <node id="13">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
         <label>ubixos/spinlock.h</label>
         <link refid="spinlock_8h"/>
-        <childnode refid="5848" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5848">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5849" relation="include">
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="5849">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="5851">
+      <node id="11">
         <label>lib/kmalloc.h</label>
         <link refid="kmalloc_8h"/>
-        <childnode refid="5848" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5852">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5848" relation="include">
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="5846">
-        <label>src/sys/sys/device.c</label>
-        <link refid="device.c"/>
-        <childnode refid="5847" relation="include">
-        </childnode>
-        <childnode refid="5850" relation="include">
-        </childnode>
-        <childnode refid="5851" relation="include">
-        </childnode>
-        <childnode refid="5852" relation="include">
-        </childnode>
-        <childnode refid="5853" relation="include">
-        </childnode>
-      </node>
-      <node id="5853">
+      <node id="14">
         <label>assert.h</label>
         <link refid="assert_8h"/>
       </node>
-      <node id="5847">
+      <node id="12">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
         <label>sys/device.h</label>
-        <link refid="device_8h"/>
-        <childnode refid="5848" relation="include">
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/sys/device.c</label>
+        <link refid="device_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
         </childnode>
       </node>
     </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="device_8c_1a90d9a2a00434982169ff5710b19a4c1c" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
+        <definition>struct device_node* devices</definition>
+        <argsstring></argsstring>
+        <name>devices</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/sys/device.c" line="36" column="25" bodyfile="C:/Dev/git/UbixOS/sys/sys/device.c" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="device_8c_1a91ad81751367905ec10bcb09929debd4" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structspinLock" kindref="compound">spinLock</ref></type>
+        <definition>struct spinLock deviceSpinLock</definition>
+        <argsstring></argsstring>
+        <name>deviceSpinLock</name>
+        <initializer>= <ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/sys/device.c" line="36" column="25" bodyfile="C:/Dev/git/UbixOS/sys/sys/device.c" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="device_8c_124bac04b529afec40daa960bd7e7b8ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="device_8c_1a24bac04b529afec40daa960bd7e7b8ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int device_add</definition>
         <argsstring>(int minor, char type, struct device_interface *devInfo)</argsstring>
@@ -85,26 +159,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" bodystart="51" bodyend="73"/>
-        <references refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" compoundref="device_8c" startline="37">devices</references>
-        <references refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" compoundref="device_8c" startline="38">deviceSpinLock</references>
-        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
-        <references refid="structdevice__interface_192620413c2580ea3cf01e121bb54c254">device_interface::init</references>
-        <references refid="structdevice__interface_1561678212ee39a09ce43c1a3567c64e2" compoundref="device_8h" startline="49">device_interface::initialized</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" compoundref="device_8h" startline="41">device_node::minor</references>
-        <references refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" compoundref="device_8h" startline="37">device_node::next</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
-        <references refid="structdevice__node_17ec9182b21c0911760a148ac77a7e2a2" compoundref="device_8h" startline="36">device_node::prev</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="structdevice__node_1431c348cd0c27dceca9b3cd14ec6659d" compoundref="device_8h" startline="40">device_node::type</references>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/device.c" line="49" column="5" bodyfile="C:/Dev/git/UbixOS/sys/sys/device.c" bodystart="49" bodyend="70"/>
+        <references refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" compoundref="include_2sys_2device_8h" startline="37">device_node::devInfo</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" compoundref="include_2sys_2device_8h" startline="40">device_node::minor</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structdevice__node_1a7ec9182b21c0911760a148ac77a7e2a2" compoundref="include_2sys_2device_8h" startline="35">device_node::prev</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <references refid="structdevice__node_1a431c348cd0c27dceca9b3cd14ec6659d" compoundref="include_2sys_2device_8h" startline="39">device_node::type</references>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="device_8c_10002a4ec01ee11597c6751602f3e4c3d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
+      <memberdef kind="function" id="device_8c_1a0002a4ec01ee11597c6751602f3e4c3d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
         <definition>struct device_node* device_find</definition>
         <argsstring>(int major, int minor)</argsstring>
         <name>device_find</name>
@@ -122,21 +189,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" bodystart="86" bodyend="100"/>
-        <references refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" compoundref="device_8c" startline="37">devices</references>
-        <references refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" compoundref="device_8c" startline="38">deviceSpinLock</references>
-        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
-        <references refid="structdevice__interface_17eb42b0bb3e06dbc9183531a5e59ddb8" compoundref="device_8h" startline="51">device_interface::major</references>
-        <references refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" compoundref="device_8h" startline="41">device_node::minor</references>
-        <references refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" compoundref="device_8h" startline="37">device_node::next</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
-        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
-        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/device.c" line="82" column="18" bodyfile="C:/Dev/git/UbixOS/sys/sys/device.c" bodystart="82" bodyend="96"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
       </memberdef>
-      <memberdef kind="function" id="device_8c_1b6cc746d95021f087eb5aef767050e71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="device_8c_1ab6cc746d95021f087eb5aef767050e71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int device_remove</definition>
         <argsstring>(struct device_node *deviceToDelete)</argsstring>
@@ -151,50 +208,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" line="111" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" bodystart="110" bodyend="145"/>
-        <references refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" compoundref="device_8c" startline="37">devices</references>
-        <references refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" compoundref="device_8c" startline="38">deviceSpinLock</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" compoundref="device_8h" startline="37">device_node::next</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="device_8c_190d9a2a00434982169ff5710b19a4c1c" prot="public" static="yes" mutable="no">
-        <type>struct <ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
-        <definition>struct device_node* devices</definition>
-        <argsstring></argsstring>
-        <name>devices</name>
-        <initializer> 0x0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" bodystart="37" bodyend="-1"/>
-        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
-        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
-        <referencedby refid="device_8c_1b6cc746d95021f087eb5aef767050e71" compoundref="device_8c" startline="110" endline="145">device_remove</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" prot="public" static="yes" mutable="no">
-        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
-        <definition>spinLock_t deviceSpinLock</definition>
-        <argsstring></argsstring>
-        <name>deviceSpinLock</name>
-        <initializer> SPIN_LOCK_INITIALIZER</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c" bodystart="38" bodyend="-1"/>
-        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
-        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
-        <referencedby refid="device_8c_1b6cc746d95021f087eb5aef767050e71" compoundref="device_8c" startline="110" endline="145">device_remove</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/device.c" line="104" column="5" bodyfile="C:/Dev/git/UbixOS/sys/sys/device.c" bodystart="104" bodyend="134"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -202,157 +216,144 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: device_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Linked<sp/>list<sp/>of<sp/>drivers<sp/>loaded<sp/>in<sp/>the<sp/>system<sp/>accessable<sp/>by<sp/>the<sp/>subsystem<sp/>only<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37" refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*<ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="38" refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="41"><highlight class="comment"></highlight></codeline>
-<codeline lineno="42"><highlight class="comment"><sp/>Function:<sp/>int<sp/>deviceAdd(int<sp/>minor,char<sp/>type,struct<sp/>device_interface<sp/>*devInfo);</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"></highlight></codeline>
-<codeline lineno="44"><highlight class="comment"><sp/>Description:<sp/>This<sp/>will<sp/>add<sp/>a<sp/>device<sp/>to<sp/>the<sp/>system</highlight></codeline>
-<codeline lineno="45"><highlight class="comment"></highlight></codeline>
-<codeline lineno="46"><highlight class="comment"><sp/>Notes:<sp/></highlight></codeline>
-<codeline lineno="47"><highlight class="comment"></highlight></codeline>
-<codeline lineno="48"><highlight class="comment"><sp/>05/19/2004<sp/>-<sp/>Improving<sp/>Upon<sp/>the<sp/>spec</highlight></codeline>
-<codeline lineno="49"><highlight class="comment"></highlight></codeline>
-<codeline lineno="50"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="51" refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="device_8h_1256b750ab99e3be9b83a9bfd37a22388" kindref="member">device_add</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref>,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdevice__node_1431c348cd0c27dceca9b3cd14ec6659d" kindref="member">type</ref>,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*tmpDev<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/>tmpDev<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__node" kindref="compound">device_node</ref>));</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(tmpDev<sp/>==<sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>Adding<sp/>Device:<sp/>memory<sp/>failure\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_17ec9182b21c0911760a148ac77a7e2a2" kindref="member">prev</ref><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref><sp/><sp/><sp/>=<sp/>minor;</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1431c348cd0c27dceca9b3cd14ec6659d" kindref="member">type</ref><sp/><sp/><sp/><sp/>=<sp/>type;</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref><sp/>=<sp/><ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>;</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref><sp/><sp/><sp/><sp/>=<sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref>;</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpDev;</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpDev-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1561678212ee39a09ce43c1a3567c64e2" kindref="member">initialized</ref><sp/>==<sp/>0x0)</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpDev-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_192620413c2580ea3cf01e121bb54c254" kindref="member">init</ref>(tmpDev));</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Linked<sp/>list<sp/>of<sp/>drivers<sp/>loaded<sp/>in<sp/>the<sp/>system<sp/>accessable<sp/>by<sp/>the<sp/>subsystem<sp/>only<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*devices<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspinLock" kindref="compound">spinLock</ref><sp/>deviceSpinLock<sp/>=<sp/><ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"></highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>Function:<sp/>int<sp/>deviceAdd(int<sp/>minor,char<sp/>type,struct<sp/>device_interface<sp/>*devInfo);</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>Description:<sp/>This<sp/>will<sp/>add<sp/>a<sp/>device<sp/>to<sp/>the<sp/>system</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"></highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"></highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>05/19/2004<sp/>-<sp/>Improving<sp/>Upon<sp/>the<sp/>spec</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"></highlight></codeline>
+<codeline lineno="49" refid="device_8c_1a24bac04b529afec40daa960bd7e7b8ee" refkind="member"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="device_8c_1a24bac04b529afec40daa960bd7e7b8ee" kindref="member">device_add</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>minor,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>type,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__interface" kindref="compound">device_interface</ref><sp/>*devInfo)<sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*tmpDev<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>tmpDev<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__node" kindref="compound">device_node</ref>));</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpDev<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>Adding<sp/>Device:<sp/>memory<sp/>failure\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1a7ec9182b21c0911760a148ac77a7e2a2" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref><sp/>=<sp/><ref refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1a431c348cd0c27dceca9b3cd14ec6659d" kindref="member">type</ref><sp/>=<sp/><ref refid="structdevice__node_1a431c348cd0c27dceca9b3cd14ec6659d" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref><sp/>=<sp/><ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevice__node_1a747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref><sp/>=<sp/>devices;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>devices<sp/>=<sp/>tmpDev;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpDev-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a561678212ee39a09ce43c1a3567c64e2" kindref="member">initialized</ref><sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(tmpDev-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a5a20c2397cc4ac3fbb9afe36bea1cfd1" kindref="member">init</ref>(tmpDev));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"></highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>Function:<sp/>struct<sp/>device_node<sp/>*deviceFind(int<sp/>major,int<sp/>minor);</highlight></codeline>
 <codeline lineno="76"><highlight class="comment"></highlight></codeline>
-<codeline lineno="77"><highlight class="comment"><sp/>Function:<sp/>struct<sp/>device_node<sp/>*deviceFind(int<sp/>major,int<sp/>minor);</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>Description:<sp/>This<sp/>will<sp/>find<sp/>a<sp/>device<sp/>based<sp/>on<sp/>major<sp/>minor</highlight></codeline>
 <codeline lineno="78"><highlight class="comment"></highlight></codeline>
-<codeline lineno="79"><highlight class="comment"><sp/>Description:<sp/>This<sp/>will<sp/>find<sp/>a<sp/>device<sp/>based<sp/>on<sp/>major<sp/>minor</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>Notes:</highlight></codeline>
 <codeline lineno="80"><highlight class="comment"></highlight></codeline>
-<codeline lineno="81"><highlight class="comment"><sp/>Notes:<sp/></highlight></codeline>
-<codeline lineno="82"><highlight class="comment"></highlight></codeline>
-<codeline lineno="83"><highlight class="comment"><sp/>05/19/2004<sp/>-<sp/>Improving<sp/>Upon<sp/>the<sp/>spec</highlight></codeline>
-<codeline lineno="84"><highlight class="comment"></highlight></codeline>
-<codeline lineno="85"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="86" refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*<ref refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>major,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*tmpDev<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpDev<sp/>=<sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref>;tmpDev;tmpDev=tmpDev-&gt;<ref refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((tmpDev-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_17eb42b0bb3e06dbc9183531a5e59ddb8" kindref="member">major</ref><sp/>==<sp/>major)<sp/>&amp;&amp;<sp/>(tmpDev-&gt;<ref refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref><sp/>==<sp/>minor))<sp/>{</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpDev);</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"></highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/>}<sp/><sp/></highlight></codeline>
-<codeline lineno="101"><highlight class="normal"></highlight></codeline>
-<codeline lineno="102"><highlight class="normal"></highlight></codeline>
-<codeline lineno="103"><highlight class="normal"></highlight><highlight class="comment">/********************************************************************************************</highlight></codeline>
-<codeline lineno="104"><highlight class="comment"></highlight></codeline>
-<codeline lineno="105"><highlight class="comment">Function:<sp/>int<sp/>deviceRemove(struct<sp/>*device_node);</highlight></codeline>
-<codeline lineno="106"><highlight class="comment"></highlight></codeline>
-<codeline lineno="107"><highlight class="comment">Description:<sp/>This<sp/>will<sp/>remove<sp/>a<sp/>device<sp/>based<sp/>on<sp/>it&apos;s<sp/>pointer</highlight></codeline>
-<codeline lineno="108"><highlight class="comment"></highlight></codeline>
-<codeline lineno="109"><highlight class="comment">*********************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="110" refid="device_8c_1b6cc746d95021f087eb5aef767050e71" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="device_8h_137fc0f624e03e0998fd2dd5922505ada" kindref="member">device_remove</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*deviceToDelete)</highlight></codeline>
-<codeline lineno="111"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*current,<sp/>*previous;</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal">current<sp/>=<sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref>;</highlight></codeline>
-<codeline lineno="116"><highlight class="normal">previous=<ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal">(current<sp/>!=<sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(current==deviceToDelete)<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>previous<sp/>=<sp/>current;</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current<sp/>=<sp/>current-&gt;<ref refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(current<sp/>==<sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/></highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(current<sp/>==<sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref>)<sp/></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref><sp/>=<sp/><ref refid="device_8c_190d9a2a00434982169ff5710b19a4c1c" kindref="member">devices</ref>-&gt;<ref refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>previous-&gt;<ref refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref><sp/>=<sp/>current-&gt;<ref refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(current);</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"></highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="device_8c_19c7fbb38f0fb266ba997f51da7cf8a50" kindref="member">deviceSpinLock</ref>);</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
-<codeline lineno="145"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="146"><highlight class="normal"></highlight></codeline>
-<codeline lineno="147"><highlight class="normal"></highlight></codeline>
-<codeline lineno="148"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="149"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="150"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/>05/19/2004<sp/>-<sp/>Improving<sp/>Upon<sp/>the<sp/>spec</highlight></codeline>
+<codeline lineno="82" refid="device_8c_1a0002a4ec01ee11597c6751602f3e4c3d" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*<ref refid="device_8c_1a0002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>major,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*tmpDev<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpDev<sp/>=<sp/>devices;<sp/>tmpDev;<sp/>tmpDev<sp/>=<sp/>tmpDev-&gt;<ref refid="structdevice__node_1a747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((tmpDev-&gt;<ref refid="structdevice__node_1a588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1a7eb42b0bb3e06dbc9183531a5e59ddb8" kindref="member">major</ref><sp/>==<sp/>major)<sp/>&amp;&amp;<sp/>(tmpDev-&gt;<ref refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref><sp/>==<sp/><ref refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(tmpDev);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">/********************************************************************************************</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"></highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>Function:<sp/>int<sp/>deviceRemove(struct<sp/>*device_node);</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"></highlight></codeline>
+<codeline lineno="104" refid="device_8c_1ab6cc746d95021f087eb5aef767050e71" refkind="member"><highlight class="comment"><sp/>Description:<sp/>This<sp/>will<sp/>remove<sp/>a<sp/>device<sp/>based<sp/>on<sp/>it&apos;s<sp/>pointer</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"></highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>*********************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="device_8c_1ab6cc746d95021f087eb5aef767050e71" kindref="member">device_remove</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*deviceToDelete)<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*current,<sp/>*previous;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>current<sp/>=<sp/>devices;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>previous<sp/>=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(current<sp/>!=<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(current<sp/>==<sp/>deviceToDelete)</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>previous<sp/>=<sp/>current;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>current<sp/>=<sp/>current-&gt;<ref refid="structdevice__node_1a747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(current<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(current<sp/>==<sp/>devices)</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>devices<sp/>=<sp/>devices-&gt;<ref refid="structdevice__node_1a747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>previous-&gt;<ref refid="structdevice__node_1a747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref><sp/>=<sp/>current-&gt;<ref refid="structdevice__node_1a747f88b0cd43b7b710d8fb86ea50fbaf" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(current);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;deviceSpinLock);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal">}</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/device.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/sys/device.c"/>
   </compounddef>
 </doxygen>

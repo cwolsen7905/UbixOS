@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structubthread__mutex__list" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structubthread__mutex__list" kind="struct" language="C++" prot="public">
     <compoundname>ubthread_mutex_list</compoundname>
     <includes refid="ubthread_8h" local="no">ubthread.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structubthread__mutex__list_1020fa0de30d24e5984a2715a8f3a3c9c" prot="public" static="no" mutable="no">
-        <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+      <memberdef kind="variable" id="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" prot="public" static="no" mutable="no">
+        <type><ref refid="ubthread_8h_1a2b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref> *</type>
         <definition>ubthread_mutex_t* ubthread_mutex_list::mutex</definition>
         <argsstring></argsstring>
         <name>mutex</name>
@@ -15,10 +15,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="73" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="70" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="70" bodyend="-1"/>
+        <referencedby refid="group__sys__mutex_1ga16336ce68b741e98204102ca4bc84dd9" compoundref="sys__arch_8c" startline="149" endline="151">sys_mutex_free</referencedby>
+        <referencedby refid="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" compoundref="sys__arch_8c" startline="153" endline="155">sys_mutex_lock</referencedby>
+        <referencedby refid="group__sys__mutex_1ga38e7dae1fd88b338eb1cd97f110f3897" compoundref="sys__arch_8c" startline="144" endline="147">sys_mutex_new</referencedby>
+        <referencedby refid="group__sys__mutex_1ga5568f68898fe9d5735f9ce2f665624fb" compoundref="sys__arch_8c" startline="157" endline="159">sys_mutex_unlock</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structubthread__mutex__list_16095ff6c862e822ada5e3706bf538c46" prot="public" static="no" mutable="no">
-        <type><ref refid="structubthread__mutex__list" kindref="compound">ubthread_mutex_list</ref> *</type>
+      <memberdef kind="variable" id="structubthread__mutex__list_1a6095ff6c862e822ada5e3706bf538c46" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structubthread__mutex__list" kindref="compound">ubthread_mutex_list</ref> *</type>
         <definition>struct ubthread_mutex_list* ubthread_mutex_list::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -28,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="72" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="69" column="30" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="69" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -36,25 +40,25 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="683">
+      <node id="1">
         <label>ubthread_mutex_list</label>
         <link refid="structubthread__mutex__list"/>
-        <childnode refid="684" relation="usage">
-          <edgelabel>mutex</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+mutex</edgelabel>
         </childnode>
-        <childnode refid="683" relation="usage">
-          <edgelabel>next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="684">
+      <node id="2">
         <label>ubthread_mutex</label>
         <link refid="structubthread__mutex"/>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="71" bodyend="74"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" line="68" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h" bodystart="68" bodyend="71"/>
     <listofallmembers>
-      <member refid="structubthread__mutex__list_1020fa0de30d24e5984a2715a8f3a3c9c" prot="public" virt="non-virtual"><scope>ubthread_mutex_list</scope><name>mutex</name></member>
-      <member refid="structubthread__mutex__list_16095ff6c862e822ada5e3706bf538c46" prot="public" virt="non-virtual"><scope>ubthread_mutex_list</scope><name>next</name></member>
+      <member refid="structubthread__mutex__list_1a020fa0de30d24e5984a2715a8f3a3c9c" prot="public" virt="non-virtual"><scope>ubthread_mutex_list</scope><name>mutex</name></member>
+      <member refid="structubthread__mutex__list_1a6095ff6c862e822ada5e3706bf538c46" prot="public" virt="non-virtual"><scope>ubthread_mutex_list</scope><name>next</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

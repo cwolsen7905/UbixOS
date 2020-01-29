@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structi387Struct" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structi387Struct" kind="struct" language="C++" prot="public">
     <compoundname>i387Struct</compoundname>
     <includes refid="tss_8h" local="no">tss.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structi387Struct_18749a1a1ac484b27a99f0761f463be00" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a8749a1a1ac484b27a99f0761f463be00" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::cwd</definition>
         <argsstring></argsstring>
@@ -15,9 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="75" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="74" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="74" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_173816f32b26fba0bc195abaf3ce473f5" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a73816f32b26fba0bc195abaf3ce473f5" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::fcs</definition>
         <argsstring></argsstring>
@@ -28,9 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="79" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="78" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="78" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_14f318581c995247dc97b4983437259d6" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a4f318581c995247dc97b4983437259d6" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::fip</definition>
         <argsstring></argsstring>
@@ -41,9 +41,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="78" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="77" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="77" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_150982bb78021968b7e2b63f541fc5366" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a50982bb78021968b7e2b63f541fc5366" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::foo</definition>
         <argsstring></argsstring>
@@ -54,9 +54,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="80" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="79" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="79" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_1900260a0885da80f5e6ad017c583fa29" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a900260a0885da80f5e6ad017c583fa29" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::fos</definition>
         <argsstring></argsstring>
@@ -67,9 +67,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="81" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="80" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="80" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_138dacb0d88798eb06da9e5969d134e8a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a38dacb0d88798eb06da9e5969d134e8a" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::st_space[20]</definition>
         <argsstring>[20]</argsstring>
@@ -80,9 +80,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="82" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="81" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="81" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_1478ea6e724fd053ec82f996d5e17892b" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1a478ea6e724fd053ec82f996d5e17892b" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::swd</definition>
         <argsstring></argsstring>
@@ -93,9 +93,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="76" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="75" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="75" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structi387Struct_1f95c8955b91ef8f937f5074f91a719ae" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structi387Struct_1af95c8955b91ef8f937f5074f91a719ae" prot="public" static="no" mutable="no">
         <type>long</type>
         <definition>long i387Struct::twd</definition>
         <argsstring></argsstring>
@@ -106,23 +106,29 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="77" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="76" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="76" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h" bodystart="74" bodyend="83"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>i387Struct</label>
+        <link refid="structi387Struct"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h" line="73" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/tss.h" bodystart="73" bodyend="82"/>
     <listofallmembers>
-      <member refid="structi387Struct_18749a1a1ac484b27a99f0761f463be00" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>cwd</name></member>
-      <member refid="structi387Struct_173816f32b26fba0bc195abaf3ce473f5" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>fcs</name></member>
-      <member refid="structi387Struct_14f318581c995247dc97b4983437259d6" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>fip</name></member>
-      <member refid="structi387Struct_150982bb78021968b7e2b63f541fc5366" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>foo</name></member>
-      <member refid="structi387Struct_1900260a0885da80f5e6ad017c583fa29" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>fos</name></member>
-      <member refid="structi387Struct_138dacb0d88798eb06da9e5969d134e8a" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>st_space</name></member>
-      <member refid="structi387Struct_1478ea6e724fd053ec82f996d5e17892b" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>swd</name></member>
-      <member refid="structi387Struct_1f95c8955b91ef8f937f5074f91a719ae" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>twd</name></member>
+      <member refid="structi387Struct_1a8749a1a1ac484b27a99f0761f463be00" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>cwd</name></member>
+      <member refid="structi387Struct_1a73816f32b26fba0bc195abaf3ce473f5" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>fcs</name></member>
+      <member refid="structi387Struct_1a4f318581c995247dc97b4983437259d6" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>fip</name></member>
+      <member refid="structi387Struct_1a50982bb78021968b7e2b63f541fc5366" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>foo</name></member>
+      <member refid="structi387Struct_1a900260a0885da80f5e6ad017c583fa29" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>fos</name></member>
+      <member refid="structi387Struct_1a38dacb0d88798eb06da9e5969d134e8a" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>st_space</name></member>
+      <member refid="structi387Struct_1a478ea6e724fd053ec82f996d5e17892b" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>swd</name></member>
+      <member refid="structi387Struct_1af95c8955b91ef8f937f5074f91a719ae" prot="public" virt="non-virtual"><scope>i387Struct</scope><name>twd</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

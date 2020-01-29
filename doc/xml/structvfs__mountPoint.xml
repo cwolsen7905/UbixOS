@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structvfs__mountPoint" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structvfs__mountPoint" kind="struct" language="C++" prot="public">
     <compoundname>vfs_mountPoint</compoundname>
     <includes refid="mount_8h" local="no">mount.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" prot="public" static="no" mutable="no">
-        <type><ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
+      <memberdef kind="variable" id="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
         <definition>struct device_node* vfs_mountPoint::device</definition>
         <argsstring></argsstring>
         <name>device</name>
@@ -15,19 +15,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="39" bodyend="-1"/>
-        <referencedby refid="ufs_8c_127a0276d7cf729f1a89bd46dac8a9650" compoundref="ufs_8c" startline="51" endline="54">dskread</referencedby>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="70" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="70" bodyend="-1"/>
+        <referencedby refid="fat_8c_1ac965e81e4e0f54efcfda500850a3c2aa" compoundref="fat_8c" startline="44" endline="48">media_read</referencedby>
+        <referencedby refid="fat_8c_1a6840e26b7167186163560ab960cb7530" compoundref="fat_8c" startline="50" endline="54">media_write</referencedby>
+        <referencedby refid="fat_8c_1abcabf6d92d9d68a4dda0b0f8a8a803b5" compoundref="fat_8c" startline="131" endline="169">open_fat</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a99dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="73" endline="76">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" prot="public" static="no" mutable="no">
-        <type><ref refid="structubixDiskLabel" kindref="compound">ubixDiskLabel</ref> *</type>
+      <memberdef kind="variable" id="structvfs__mountPoint_1ae5ddbb2d1c7a01716a481bc5462d6c8f" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structubixDiskLabel" kindref="compound">ubixDiskLabel</ref> *</type>
         <definition>struct ubixDiskLabel* vfs_mountPoint::diskLabel</definition>
         <argsstring></argsstring>
         <name>diskLabel</name>
@@ -37,17 +37,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="40" bodyend="-1"/>
-        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="71" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="71" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a99dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="73" endline="76">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_1654fe61c60a0044082a7651cb2e29b8e" prot="public" static="no" mutable="no">
-        <type><ref refid="structfileSystem" kindref="compound">fileSystem</ref> *</type>
+      <memberdef kind="variable" id="structvfs__mountPoint_1a654fe61c60a0044082a7651cb2e29b8e" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfileSystem" kindref="compound">fileSystem</ref> *</type>
         <definition>struct fileSystem* vfs_mountPoint::fs</definition>
         <argsstring></argsstring>
         <name>fs</name>
@@ -57,17 +55,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="file_8c_1dfedd6c658c329d13d5a90a7462f5979" compoundref="file_8c" startline="251" endline="262">fgetc</referencedby>
-        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
-        <referencedby refid="file_8c_1c49e133f264f7aa16d63ba1f404be8ac" compoundref="file_8c" startline="234" endline="242">fputc</referencedby>
-        <referencedby refid="file_8c_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</referencedby>
-        <referencedby refid="file_8c_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" compoundref="file_8c" startline="200" endline="206">fwrite</referencedby>
-        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
-        <referencedby refid="file_8c_1da4d877b19c34ce3137e0c35dab6e947" compoundref="file_8c" startline="480" endline="498">unlink</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="69" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="69" bodyend="-1"/>
+        <referencedby refid="include_2vfs_2file_8h_1af3ae9aab3fa1a25c0b0cde40aa97f2d0" compoundref="file_8c" startline="366" endline="377">fgetc</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="file_8c_1aeedf75b4010ae4e12e9743744a3b20f0" compoundref="file_8c" startline="350" endline="358">fputc</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1ac539f57edd90fcd088fd3baa10319166" compoundref="file_8c" startline="291" endline="309">fread</referencedby>
+        <referencedby refid="file_8c_1a81e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="576" endline="609">sysMkDir</referencedby>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structvfs__mountPoint_1a9771ecae1bc4482ad0282aee5766bd9b" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* vfs_mountPoint::fsInfo</definition>
         <argsstring></argsstring>
@@ -78,23 +74,17 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" compoundref="devfs_8c" startline="50" endline="62">devfs_initialize</referencedby>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
-        <referencedby refid="block_8c_1182b9be545371d2fcda6981134de2b44" compoundref="block_8c" startline="79" endline="94">freeBlocks</referencedby>
-        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
-        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="72" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a9611956bb9ed5acb26ab7bc9927f4ebb" compoundref="block_8c" startline="78" endline="93">freeBlocks</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1aa74ff712a9d02bb08f6421ce73358654" compoundref="block_8c" startline="95" endline="123">getFreeBlocks</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a6b56b9893c2a4b04598034085d8cee8c" compoundref="ubixfs_8c" startline="192" endline="220">readUbixFS</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a99dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="73" endline="76">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char vfs_mountPoint::mountPoint[1024]</definition>
         <argsstring>[1024]</argsstring>
@@ -105,13 +95,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="43" bodyend="-1"/>
-        <referencedby refid="file_8c_1da4d877b19c34ce3137e0c35dab6e947" compoundref="file_8c" startline="480" endline="498">unlink</referencedby>
-        <referencedby refid="mount_8c_1a8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="132" endline="142">vfs_findMount</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="74" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="74" bodyend="-1"/>
+        <referencedby refid="mount_8h_1aa8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="128" endline="138">vfs_findMount</referencedby>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" prot="public" static="no" mutable="no">
-        <type><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+      <memberdef kind="variable" id="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
         <definition>struct vfs_mountPoint* vfs_mountPoint::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -121,11 +110,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="37" bodyend="-1"/>
-        <referencedby refid="mount_8c_17404fbe67653dda57672539b003deecd" compoundref="mount_8c" startline="105" endline="121">vfs_addMount</referencedby>
-        <referencedby refid="mount_8c_1a8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="132" endline="142">vfs_findMount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="68" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="68" bodyend="-1"/>
+        <referencedby refid="mount_8h_1a7404fbe67653dda57672539b003deecd" compoundref="mount_8c" startline="102" endline="118">vfs_addMount</referencedby>
+        <referencedby refid="mount_8h_1aa8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="128" endline="138">vfs_findMount</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structvfs__mountPoint_1a26cf95c23f79647d61dc6396bbeb94a6" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int vfs_mountPoint::partition</definition>
         <argsstring></argsstring>
@@ -136,17 +125,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
-        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
-        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
-        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
-        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
-        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="73" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a99dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="73" endline="76">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a55ee126c39c4bb7e875cc82f317e5aee" compoundref="directory_8c" startline="92" endline="125">ubixFSmkDir</referencedby>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a65f42c9b6ca7c526642fa1c168272b03" compoundref="ubixfs_8c" startline="116" endline="187">writeFileByte</referencedby>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1ab4c558016c9b29b63d6f8c8ba5fe7384" compoundref="ubixfs_8c" startline="229" endline="304">writeUbixFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_19fc7cfceb0706b0d4aa835a6efbb1295" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structvfs__mountPoint_1a9fc7cfceb0706b0d4aa835a6efbb1295" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char vfs_mountPoint::perms</definition>
         <argsstring></argsstring>
@@ -157,11 +144,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="44" bodyend="-1"/>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="75" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="75" bodyend="-1"/>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structvfs__mountPoint_1e283964876a0043b3dd91b5596621439" prot="public" static="no" mutable="no">
-        <type><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+      <memberdef kind="variable" id="structvfs__mountPoint_1ae283964876a0043b3dd91b5596621439" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
         <definition>struct vfs_mountPoint* vfs_mountPoint::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -171,8 +158,8 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="36" bodyend="-1"/>
-        <referencedby refid="mount_8c_17404fbe67653dda57672539b003deecd" compoundref="mount_8c" startline="105" endline="121">vfs_addMount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="67" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="67" bodyend="-1"/>
+        <referencedby refid="mount_8h_1a7404fbe67653dda57672539b003deecd" compoundref="mount_8c" startline="102" endline="118">vfs_addMount</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -180,76 +167,76 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="706">
+      <node id="5">
         <label>device_resource</label>
         <link refid="structdevice__resource"/>
       </node>
-      <node id="705">
+      <node id="4">
         <label>device_node</label>
         <link refid="structdevice__node"/>
-        <childnode refid="706" relation="usage">
-          <edgelabel>devRec</edgelabel>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+devRec</edgelabel>
         </childnode>
-        <childnode refid="707" relation="usage">
-          <edgelabel>devInfo</edgelabel>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+devInfo</edgelabel>
         </childnode>
-        <childnode refid="705" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="703">
+      <node id="2">
         <label>ubixDiskLabel</label>
         <link refid="structubixDiskLabel"/>
-        <childnode refid="704" relation="usage">
-          <edgelabel>partitions</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+partitions</edgelabel>
         </childnode>
       </node>
-      <node id="704">
+      <node id="3">
         <label>ubixDiskLabel::ubixPartitions</label>
         <link refid="structubixDiskLabel_1_1ubixPartitions"/>
       </node>
-      <node id="702">
+      <node id="1">
         <label>vfs_mountPoint</label>
         <link refid="structvfs__mountPoint"/>
-        <childnode refid="703" relation="usage">
-          <edgelabel>diskLabel</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+diskLabel</edgelabel>
         </childnode>
-        <childnode refid="705" relation="usage">
-          <edgelabel>device</edgelabel>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+device</edgelabel>
         </childnode>
-        <childnode refid="708" relation="usage">
-          <edgelabel>fs</edgelabel>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+fs</edgelabel>
         </childnode>
-        <childnode refid="702" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="707">
+      <node id="6">
         <label>device_interface</label>
         <link refid="structdevice__interface"/>
       </node>
-      <node id="708">
+      <node id="7">
         <label>fileSystem</label>
         <link refid="structfileSystem"/>
-        <childnode refid="708" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/mount.h" bodystart="35" bodyend="45"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" line="66" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/mount.h" bodystart="66" bodyend="76"/>
     <listofallmembers>
-      <member refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>device</name></member>
-      <member refid="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>diskLabel</name></member>
-      <member refid="structvfs__mountPoint_1654fe61c60a0044082a7651cb2e29b8e" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>fs</name></member>
-      <member refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>fsInfo</name></member>
-      <member refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>mountPoint</name></member>
-      <member refid="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>next</name></member>
-      <member refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>partition</name></member>
-      <member refid="structvfs__mountPoint_19fc7cfceb0706b0d4aa835a6efbb1295" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>perms</name></member>
-      <member refid="structvfs__mountPoint_1e283964876a0043b3dd91b5596621439" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>prev</name></member>
+      <member refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>device</name></member>
+      <member refid="structvfs__mountPoint_1ae5ddbb2d1c7a01716a481bc5462d6c8f" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>diskLabel</name></member>
+      <member refid="structvfs__mountPoint_1a654fe61c60a0044082a7651cb2e29b8e" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>fs</name></member>
+      <member refid="structvfs__mountPoint_1a9771ecae1bc4482ad0282aee5766bd9b" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>fsInfo</name></member>
+      <member refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>mountPoint</name></member>
+      <member refid="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>next</name></member>
+      <member refid="structvfs__mountPoint_1a26cf95c23f79647d61dc6396bbeb94a6" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>partition</name></member>
+      <member refid="structvfs__mountPoint_1a9fc7cfceb0706b0d4aa835a6efbb1295" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>perms</name></member>
+      <member refid="structvfs__mountPoint_1ae283964876a0043b3dd91b5596621439" prot="public" virt="non-virtual"><scope>vfs_mountPoint</scope><name>prev</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

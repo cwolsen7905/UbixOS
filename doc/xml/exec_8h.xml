@@ -1,148 +1,297 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="exec_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="exec_8h" kind="file" language="C++">
     <compoundname>exec.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
     <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
-    <includedby refid="main_8c" local="no">src/sys/init/main.c</includedby>
-    <includedby refid="exec_8c" local="no">src/sys/kernel/exec.c</includedby>
-    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
-    <includedby refid="ubthread_8c" local="no">src/sys/kernel/ubthread.c</includedby>
-    <includedby refid="ubixfs_8c" local="no">src/sys/ubixfs/ubixfs.c</includedby>
+    <includedby refid="exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</includedby>
+    <includedby refid="arch_2armv6_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</includedby>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386__exec_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="fat_8c" local="no">C:/Dev/git/UbixOS/sys/fs/fat/fat.c</includedby>
+    <includedby refid="ubixfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</includedby>
+    <includedby refid="main_8c" local="no">C:/Dev/git/UbixOS/sys/init/main.c</includedby>
+    <includedby refid="ubthread_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/ubthread.c</includedby>
+    <includedby refid="net_2init_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/init.c</includedby>
+    <includedby refid="main_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/main.cc</includedby>
     <incdepgraph>
-      <node id="4217">
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="12">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="4209" relation="include">
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
         </childnode>
       </node>
-      <node id="4211">
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="9">
         <label>ubixos/sched.h</label>
         <link refid="sched_8h"/>
-        <childnode refid="4209" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="4212" relation="include">
+        <childnode refid="10" relation="include">
         </childnode>
-        <childnode refid="4213" relation="include">
+        <childnode refid="24" relation="include">
         </childnode>
-        <childnode refid="4216" relation="include">
+        <childnode refid="25" relation="include">
         </childnode>
-        <childnode refid="4217" relation="include">
-        </childnode>
-      </node>
-      <node id="4209">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4210" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="4210">
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="4213">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="4209" relation="include">
-        </childnode>
-        <childnode refid="4214" relation="include">
-        </childnode>
-        <childnode refid="4215" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="4216">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="4209" relation="include">
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="4215">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="4209" relation="include">
-        </childnode>
-      </node>
-      <node id="4214">
+      <node id="11">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="4209" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="4208">
-        <label>src/sys/include/ubixos/exec.h</label>
-        <link refid="exec.h"/>
-        <childnode refid="4209" relation="include">
-        </childnode>
-        <childnode refid="4211" relation="include">
-        </childnode>
-      </node>
-      <node id="4212">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="4209" relation="include">
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4223">
-        <label>src/sys/kernel/ubthread.c</label>
-        <link refid="ubthread_8c"/>
-      </node>
-      <node id="4222">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="4224">
-        <label>src/sys/ubixfs/ubixfs.c</label>
-        <link refid="ubixfs_8c"/>
-      </node>
-      <node id="4219">
-        <label>src/sys/init/main.c</label>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
       </node>
-      <node id="4221">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
       </node>
-      <node id="4218">
-        <label>src/sys/include/ubixos/exec.h</label>
-        <link refid="exec.h"/>
-        <childnode refid="4219" relation="include">
-        </childnode>
-        <childnode refid="4220" relation="include">
-        </childnode>
-        <childnode refid="4221" relation="include">
-        </childnode>
-        <childnode refid="4222" relation="include">
-        </childnode>
-        <childnode refid="4223" relation="include">
-        </childnode>
-        <childnode refid="4224" relation="include">
-        </childnode>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
       </node>
-      <node id="4220">
-        <label>src/sys/kernel/exec.c</label>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
         <link refid="exec_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
       </node>
     </invincdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="exec_8h_1f80d4412d42ed1b5bf9a1b9774230f33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="exec_8h_1aaff6720506bf63686b0c962ea31439d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void execFile</definition>
-        <argsstring>(char *file, int argc, char **argv, int console)</argsstring>
+        <argsstring>(char *file, char **argv, char **envp, int console)</argsstring>
         <name>execFile</name>
         <param>
           <type>char *</type>
           <declname>file</declname>
         </param>
         <param>
-          <type>int</type>
-          <declname>argc</declname>
+          <type>char **</type>
+          <declname>argv</declname>
         </param>
         <param>
           <type>char **</type>
-          <declname>argv</declname>
+          <declname>envp</declname>
         </param>
         <param>
           <type>int</type>
@@ -154,91 +303,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/exec.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/exec.c" bodystart="143" bodyend="323"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="36">tssStruct::back_link</references>
-        <references refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="47">tssStruct::cr3</references>
-        <references refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="57">tssStruct::cs</references>
-        <references refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="61">tssStruct::ds</references>
-        <references refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="52">tssStruct::ebp</references>
-        <references refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="54">tssStruct::edi</references>
-        <references refid="structelfHeader_18ff3dd1b27053bc5a2f01afe5403e53b" compoundref="elf_8h" startline="102">elfHeader::eEntry</references>
-        <references refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="49">tssStruct::eflags</references>
-        <references refid="structelfHeader_1ec74b71d266bdbfaed95a9241343c28c" compoundref="elf_8h" startline="98">elfHeader::eIdent</references>
-        <references refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="48">tssStruct::eip</references>
-        <references refid="structelfHeader_14635401868104caa04fcb5bb60840df6" compoundref="elf_8h" startline="108">elfHeader::ePhnum</references>
-        <references refid="structelfHeader_1aff1ff2cb64932f1e1a1f6cf3b881787" compoundref="elf_8h" startline="103">elfHeader::ePhoff</references>
-        <references refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="55">tssStruct::es</references>
-        <references refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="53">tssStruct::esi</references>
-        <references refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="51">tssStruct::esp</references>
-        <references refid="structtssStruct_11017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="38">tssStruct::esp0</references>
-        <references refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="41">tssStruct::esp1</references>
-        <references refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="44">tssStruct::esp2</references>
-        <references refid="structelfHeader_134e52f945d79cca21dc50a8aef79f9e8" compoundref="elf_8h" startline="99">elfHeader::eType</references>
-        <references refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
-        <references refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
-        <references refid="file_8h_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</references>
-        <references refid="structtssStruct_18114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="63">tssStruct::fs</references>
-        <references refid="file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
-        <references refid="structtaskStruct_13cf9920106f9b0d96dff475faf7aa0d6" compoundref="sched_8h" startline="63">taskStruct::gid</references>
-        <references refid="structtssStruct_18dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="65">tssStruct::gs</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="70">tssStruct::io_map</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" compoundref="paging_8c" startline="40">kernelPageDirectory</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="67">tssStruct::ldt</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
-        <references refid="structtty__termNode_1f8e2ad49f523044768d8e768bfe531e4" compoundref="tty_8h" startline="43">tty_termNode::owner</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="49">PAGE_PRESENT</references>
-        <references refid="paging_8h_11532db17068ba8d409b8ffe066414af2" compoundref="paging_8h" startline="47">PAGE_STACK</references>
-        <references refid="paging_8h_12d0253527ea5080d6befe0ee3bde473f" compoundref="paging_8h" startline="51">PAGE_USER</references>
-        <references refid="structfileDescriptorStruct_111626b5d99a5da968f43bc37d2591c5c" compoundref="file_8h" startline="60">fileDescriptorStruct::perms</references>
-        <references refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" compoundref="elf_8h" startline="120">elfProgramHeader::phMemsz</references>
-        <references refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" compoundref="elf_8h" startline="117">elfProgramHeader::phVaddr</references>
-        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b96564f2f3e15be06b670547bbcaaf0798">READY</references>
-        <references refid="sched_8h_151101e12c9236ea1286477695c110482" compoundref="sched_8c" startline="281" endline="287">sched_setStatus</references>
-        <references refid="sched_8h_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</references>
-        <references refid="structtssStruct_1340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="59">tssStruct::ss</references>
-        <references refid="structtssStruct_126d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="39">tssStruct::ss0</references>
-        <references refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="42">tssStruct::ss1</references>
-        <references refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="45">tssStruct::ss2</references>
-        <references refid="exec_8c_1d93dccba62fb5241c0b7cebcd097794a" compoundref="exec_8c" startline="42">STACK_ADDR</references>
-        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
-        <references refid="structtaskStruct_14563a310626d4f4ea885f4532356abb3" compoundref="sched_8h" startline="66">taskStruct::term</references>
-        <references refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="69">tssStruct::trace_bitmap</references>
-        <references refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="58">taskStruct::tss</references>
-        <references refid="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" compoundref="tty_8c" startline="170" endline="172">tty_find</references>
-        <references refid="structtaskStruct_11f9e02ebf24ff1cd76fab75e4c6b0fe1" compoundref="sched_8h" startline="64">taskStruct::uid</references>
-        <references refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" compoundref="thread_8h" startline="40">thread::vm_daddr</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_11913e8607a69ecf446b18fa1cd36c9cc" compoundref="setpageattributes_8c" startline="41" endline="68">vmm_setPageAttributes</references>
-        <references refid="paging_8h_139ac9b6ea58fc8b6f129775642077c99" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="47">osInfo::vmStart</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <references refid="start_8S_10c48af311abb843beb7bb6c5e295d1db" compoundref="start_8S" startline="51">x18</references>
-        <references refid="ap-boot_8S_1c2a218176530ced267bbcc8042da1000" compoundref="ap-boot_8S" startline="52">x30</references>
-        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h" line="36" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c" bodystart="244" bodyend="489" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h" declline="36" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="exec_8h_1e9945e606ad208cb00dc9166d06452b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 execThread</definition>
-        <argsstring>(void(*tproc)(void), uInt32, char *)</argsstring>
+      <memberdef kind="function" id="exec_8h_1a82087e9a98b3a265b5a19266d0fc5970" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t execThread</definition>
+        <argsstring>(void(*tproc)(void), uint32_t, char *)</argsstring>
         <name>execThread</name>
         <param>
           <type>void(*)(void)</type>
           <declname>tproc</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         </param>
         <param>
           <type>char *</type>
@@ -249,105 +326,69 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/exec.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/exec.c" bodystart="55" bodyend="125"/>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="36">tssStruct::back_link</references>
-        <references refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="47">tssStruct::cr3</references>
-        <references refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="57">tssStruct::cs</references>
-        <references refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="61">tssStruct::ds</references>
-        <references refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="52">tssStruct::ebp</references>
-        <references refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="54">tssStruct::edi</references>
-        <references refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="49">tssStruct::eflags</references>
-        <references refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="48">tssStruct::eip</references>
-        <references refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="55">tssStruct::es</references>
-        <references refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="53">tssStruct::esi</references>
-        <references refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="51">tssStruct::esp</references>
-        <references refid="structtssStruct_11017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="38">tssStruct::esp0</references>
-        <references refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="41">tssStruct::esp1</references>
-        <references refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="44">tssStruct::esp2</references>
-        <references refid="structtssStruct_18114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="63">tssStruct::fs</references>
-        <references refid="structtssStruct_18dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="65">tssStruct::gs</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="structtaskStruct_17930577bf37a9eb337761a9374def70e" compoundref="sched_8h" startline="61">taskStruct::imageFd</references>
-        <references refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="70">tssStruct::io_map</references>
-        <references refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" compoundref="paging_8c" startline="40">kernelPageDirectory</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="67">tssStruct::ldt</references>
-        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
-        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b96564f2f3e15be06b670547bbcaaf0798">READY</references>
-        <references refid="sched_8h_151101e12c9236ea1286477695c110482" compoundref="sched_8c" startline="281" endline="287">sched_setStatus</references>
-        <references refid="sched_8h_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</references>
-        <references refid="structtssStruct_1340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="59">tssStruct::ss</references>
-        <references refid="structtssStruct_126d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="39">tssStruct::ss0</references>
-        <references refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="42">tssStruct::ss1</references>
-        <references refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="45">tssStruct::ss2</references>
-        <references refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="69">tssStruct::trace_bitmap</references>
-        <references refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="58">taskStruct::tss</references>
-        <references refid="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="47">osInfo::vmStart</references>
-        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
-        <referencedby refid="ubthread_8c_1a0af177ef44888f3c93883294207328e" compoundref="ubthread_8c" startline="76" endline="79">ubthread_create</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h" line="35" column="10" bodyfile="C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c" bodystart="148" bodyend="227" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h" declline="35" declcolumn="10"/>
+        <references refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structtssStruct_1afecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="35">tssStruct::back_link</references>
+        <references refid="structtssStruct_1a8d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="46">tssStruct::cr3</references>
+        <references refid="structtssStruct_1a6d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="56">tssStruct::cs</references>
+        <references refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="60">tssStruct::ds</references>
+        <references refid="structtssStruct_1ac2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="51">tssStruct::ebp</references>
+        <references refid="structtssStruct_1aa52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="53">tssStruct::edi</references>
+        <references refid="structtssStruct_1aa85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="48">tssStruct::eflags</references>
+        <references refid="structtssStruct_1a3e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="47">tssStruct::eip</references>
+        <references refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="54">tssStruct::es</references>
+        <references refid="structtssStruct_1a8beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="52">tssStruct::esi</references>
+        <references refid="structtssStruct_1a85412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="50">tssStruct::esp</references>
+        <references refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="37">tssStruct::esp0</references>
+        <references refid="structtssStruct_1ad5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="40">tssStruct::esp1</references>
+        <references refid="structtssStruct_1a60c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="43">tssStruct::esp2</references>
+        <references refid="structtaskStruct_1a8900c1caf1b8c278e981464a68b0e53f" compoundref="sched_8h" startline="71">taskStruct::files</references>
+        <references refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="62">tssStruct::fs</references>
+        <references refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="64">tssStruct::gs</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="structtssStruct_1a611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="69">tssStruct::io_map</references>
+        <references refid="paging_8h_1a7c58070dedac2ee9e1c73d8c8206b923" compoundref="paging_8c" startline="41">kernelPageDirectory</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="structtssStruct_1ad7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="66">tssStruct::ldt</references>
+        <references refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="69">taskStruct::oInfo</references>
+        <references refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" compoundref="paging_8h" startline="37">PAGE_SIZE</references>
+        <references refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9a6564f2f3e15be06b670547bbcaaf0798" compoundref="sched_8h" startline="47">READY</references>
+        <references refid="armv6_2sched_8c_1a2cbadd034400c65dbd11fd4892ddf26e" compoundref="armv6_2sched_8c" startline="265" endline="271">sched_setStatus</references>
+        <references refid="armv6_2sched_8c_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</references>
+        <references refid="structtssStruct_1a340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="58">tssStruct::ss</references>
+        <references refid="structtssStruct_1a26d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="38">tssStruct::ss0</references>
+        <references refid="structtssStruct_1a6abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="41">tssStruct::ss1</references>
+        <references refid="structtssStruct_1a5a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="44">tssStruct::ss2</references>
+        <references refid="structtssStruct_1a52ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="68">tssStruct::trace_bitmap</references>
+        <references refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="67">taskStruct::tss</references>
+        <references refid="paging_8h_1a3615feeeee9f4038cd1070372ccba22e" compoundref="paging_8c" startline="291" endline="346">vmm_getFreeKernelPage</references>
+        <references refid="structosInfo_1a2833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="54">osInfo::vmStart</references>
       </memberdef>
-      <memberdef kind="function" id="exec_8h_1094c23346b6d226a03866a54b755ed64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sys_exec</definition>
-        <argsstring>(char *file, char *ap)</argsstring>
+      <memberdef kind="function" id="exec_8h_1a61302088712929af86b255393411366c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sys_exec</definition>
+        <argsstring>(struct thread *, char *, char **, char **)</argsstring>
         <name>sys_exec</name>
         <param>
-          <type>char *</type>
-          <declname>file</declname>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
         </param>
         <param>
           <type>char *</type>
-          <declname>ap</declname>
+        </param>
+        <param>
+          <type>char **</type>
+        </param>
+        <param>
+          <type>char **</type>
         </param>
         <briefdescription>
-<para>New exec... </para>        </briefdescription>
+        </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
-<para>Clean the virtual of COW pages left over from the fork</para><para>Adjust iframe</para><para>build argc and argv[]</para><para>Start of Env </para>        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/exec.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/exec.c" bodystart="552" bodyend="716"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structelfHeader_18ff3dd1b27053bc5a2f01afe5403e53b" compoundref="elf_8h" startline="102">elfHeader::eEntry</references>
-        <references refid="structelfHeader_1ec74b71d266bdbfaed95a9241343c28c" compoundref="elf_8h" startline="98">elfHeader::eIdent</references>
-        <references refid="structi386__frame_1ef87f1d1d6f1ad030c95773e7eedfa16" compoundref="tss_8h" startline="103">i386_frame::eip</references>
-        <references refid="structelfHeader_14635401868104caa04fcb5bb60840df6" compoundref="elf_8h" startline="108">elfHeader::ePhnum</references>
-        <references refid="structelfHeader_1aff1ff2cb64932f1e1a1f6cf3b881787" compoundref="elf_8h" startline="103">elfHeader::ePhoff</references>
-        <references refid="elf_8h_1942478985eb016311380dee473cc8c3e" compoundref="elf_8h" startline="55">ET_EXEC</references>
-        <references refid="structelfHeader_134e52f945d79cca21dc50a8aef79f9e8" compoundref="elf_8h" startline="99">elfHeader::eType</references>
-        <references refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
-        <references refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
-        <references refid="file_8h_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</references>
-        <references refid="file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="structtaskStruct_17930577bf37a9eb337761a9374def70e" compoundref="sched_8h" startline="61">taskStruct::imageFd</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="49">PAGE_PRESENT</references>
-        <references refid="paging_8h_1850d80ca2291d26b40dc6b25c419f81a" compoundref="paging_8h" startline="55">PAGE_SHIFT</references>
-        <references refid="paging_8h_12d0253527ea5080d6befe0ee3bde473f" compoundref="paging_8h" startline="51">PAGE_USER</references>
-        <references refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" compoundref="elf_8h" startline="120">elfProgramHeader::phMemsz</references>
-        <references refid="structelfProgramHeader_193a7c0296fe86a429cf58989956d28ff" compoundref="elf_8h" startline="116">elfProgramHeader::phOffset</references>
-        <references refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" compoundref="elf_8h" startline="117">elfProgramHeader::phVaddr</references>
-        <references refid="elf_8h_1bcd3aa15bc567949c1ab6b1abc137710" compoundref="elf_8h" startline="82">PT_INTERP</references>
-        <references refid="elf_8h_184d7768fd6c6ece599d297090900cf92" compoundref="elf_8h" startline="80">PT_LOAD</references>
-        <references refid="elf_8h_158ff00be749ca4000074f9b9066a1056" compoundref="elf_8h" startline="85">PT_PHDR</references>
-        <references refid="paging_8h_12702263fcf2b3b026cb26c6d895cb0ee" compoundref="paging_8h" startline="60">round_page</references>
-        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
-        <references refid="paging_8h_1bd636a9b61ad98f4fc23b1f4a9210d78" compoundref="paging_8h" startline="59">trunc_page</references>
-        <references refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" compoundref="thread_8h" startline="40">thread::vm_daddr</references>
-        <references refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" compoundref="thread_8h" startline="41">thread::vm_dsize</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_11913e8607a69ecf446b18fa1cd36c9cc" compoundref="setpageattributes_8c" startline="41" endline="68">vmm_setPageAttributes</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="47">osInfo::vmStart</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+<para>Clean the virtual of COW pages left over from the fork</para>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h" line="38" column="5" bodyfile="C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c" bodystart="491" bodyend="898" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h" declline="38" declcolumn="5"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -355,51 +396,47 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: exec_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_EXEC_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_EXEC_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="exec_8h_1e9945e606ad208cb00dc9166d06452b4" kindref="member">execThread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*<sp/>tproc)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">),<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="exec_8h_1f80d4412d42ed1b5bf9a1b9774230f33" kindref="member">execFile</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>argc,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**argv,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>console);</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="exec_8h_1094c23346b6d226a03866a54b755ed64" kindref="member">sys_exec</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*ap);</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UBIXOS_EXEC_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UBIXOS_EXEC_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="exec_8h_1a82087e9a98b3a265b5a19266d0fc5970" kindref="member">execThread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*tproc)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">),<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="exec_8h_1aaff6720506bf63686b0c962ea31439d3" kindref="member">execFile</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**argv,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**envp,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>console);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="exec_8h_1a61302088712929af86b255393411366c" kindref="member">sys_exec</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**);</highlight></codeline>
 <codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="41"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="44"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_UBIXOS_EXEC_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/exec.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/exec.h"/>
   </compounddef>
 </doxygen>

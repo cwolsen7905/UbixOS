@@ -1,50 +1,16 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structip__hdr" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structip__hdr" kind="struct" language="C++" prot="public">
     <compoundname>ip_hdr</compoundname>
-    <includes refid="ipv4_2ip_8h" local="no">ip.h</includes>
+    <includes refid="prot_2ip4_8h" local="no">ip4.h</includes>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="structip__hdr_16c5cf010b37e08aa60a657bbd7df4e9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structip__hdr_1a620275dbd7f7b8f02cf3f90fa035eb62" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(struct ip_addr dest)</argsstring>
+        <argsstring>(u16_t _chksum)</argsstring>
         <name>PACK_STRUCT_FIELD</name>
         <param>
-          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref></type>
-          <declname>dest</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="91"/>
-      </memberdef>
-      <memberdef kind="function" id="structip__hdr_1237265a6a91e55f216c94491b8d60d1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(struct ip_addr src)</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
-        <param>
-          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref></type>
-          <declname>src</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="90"/>
-      </memberdef>
-      <memberdef kind="function" id="structip__hdr_1eb9d49c40ea5a96e355690bdb7920553" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _chksum)</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
           <declname>_chksum</declname>
         </param>
         <briefdescription>
@@ -53,49 +19,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="88"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="91" column="3"/>
       </memberdef>
-      <memberdef kind="function" id="structip__hdr_19e3c25fd5027ac9c3075ed9f652c5999" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structip__hdr_1a6d3aca5e6bdd354c377836c67d93575b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _ttl_proto)</argsstring>
+        <argsstring>(u16_t _id)</argsstring>
         <name>PACK_STRUCT_FIELD</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>_ttl_proto</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="86"/>
-      </memberdef>
-      <memberdef kind="function" id="structip__hdr_1616fa15465f2e229d9aa7680a358ea81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _offset)</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>_offset</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="80"/>
-      </memberdef>
-      <memberdef kind="function" id="structip__hdr_189322c2db49c48663ce8b8808e73b73d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _id)</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
           <declname>_id</declname>
         </param>
         <briefdescription>
@@ -104,15 +36,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="78"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="79" column="3"/>
       </memberdef>
-      <memberdef kind="function" id="structip__hdr_1775da6a62003a7d1fe34144fd88f5ee7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structip__hdr_1aa3905f2613b3ce0994d3a04cf22ce2d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _len)</argsstring>
+        <argsstring>(u16_t _len)</argsstring>
         <name>PACK_STRUCT_FIELD</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
           <declname>_len</declname>
         </param>
         <briefdescription>
@@ -121,16 +53,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="76"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="77" column="3"/>
       </memberdef>
-      <memberdef kind="function" id="structip__hdr_13fef89164693599490d3bfcd3faf25df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structip__hdr_1a2c93d9f414cb5e3bd727799393b3688a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>ip_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _v_hl_tos)</argsstring>
+        <argsstring>(u16_t _offset)</argsstring>
         <name>PACK_STRUCT_FIELD</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>_v_hl_tos</declname>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>_offset</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -138,130 +70,109 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="74"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="81" column="3"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structip__hdr_1815e233e57dabbb88731c7454498286c" prot="public" static="no" mutable="no">
-        <type><ref refid="structip__addr" kindref="compound">ip_addr</ref> src</type>
-        <definition>struct ip_addr src ip_hdr::dest</definition>
-        <argsstring></argsstring>
-        <name>dest</name>
+      <memberdef kind="function" id="structip__hdr_1a28e5be553013157549c28a6bfab2eb41" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t _proto)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>_proto</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="74" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="89" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structip__hdr_14c540b15f84a9ee0290f277f896b913c" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t ip_hdr::flow1</definition>
-        <argsstring></argsstring>
-        <name>flow1</name>
-        <bitfield>4</bitfield>
+      <memberdef kind="function" id="structip__hdr_1a953cbb979026c774b58ea336959fdca6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t _tos)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>_tos</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="65" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="75" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structip__hdr_1cb46c4fbc7cabb2da0c328a712ff8ff3" prot="public" static="no" mutable="no">
-        <type>u16_t</type>
-        <definition>u16_t ip_hdr::flow2</definition>
-        <argsstring></argsstring>
-        <name>flow2</name>
+      <memberdef kind="function" id="structip__hdr_1afbce37d4a49ca634d234158f0e0783ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t _ttl)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>_ttl</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="70" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="87" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structip__hdr_1c6ac97fa9cc364ca7cc9f0ae3713567c" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t ip_hdr::hoplim</definition>
-        <argsstring></argsstring>
-        <name>hoplim</name>
+      <memberdef kind="function" id="structip__hdr_1a2e9a57bb4e23ad0b3b9b949890b2607e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t _v_hl)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>_v_hl</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="73" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="73" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structip__hdr_153f3a7eb476a9667f23f1edbc0b94aca" prot="public" static="no" mutable="no">
-        <type>u16_t</type>
-        <definition>u16_t ip_hdr::len</definition>
-        <argsstring></argsstring>
-        <name>len</name>
+      <memberdef kind="function" id="structip__hdr_1ab8c3ee74d121d94a735076773af41b9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_hdr::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t dest)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>dest</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="71" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="94" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structip__hdr_1e659b31431947366639063f917b1864b" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t ip_hdr::nexthdr</definition>
-        <argsstring></argsstring>
-        <name>nexthdr</name>
+      <memberdef kind="function" id="structip__hdr_1a963b0932198484088775c5aa7446f0c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_hdr::PACK_STRUCT_FLD_S</definition>
+        <argsstring>(ip4_addr_p_t src)</argsstring>
+        <name>PACK_STRUCT_FLD_S</name>
+        <param>
+          <type><ref refid="prot_2ip4_8h_1ae5011654fcbadf6b6582b8d49446107f" kindref="member">ip4_addr_p_t</ref></type>
+          <declname>src</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="72" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structip__hdr_1ff59fbc114853a1d9bc44da83c04765e" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t ip_hdr::tclass1</definition>
-        <argsstring></argsstring>
-        <name>tclass1</name>
-        <bitfield>4</bitfield>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="64" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structip__hdr_1f40d1bf6005169510fb0c4910abe0ecf" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t ip_hdr::tclass2</definition>
-        <argsstring></argsstring>
-        <name>tclass2</name>
-        <bitfield>4</bitfield>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="65" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structip__hdr_13066d68a8a36f1de8c79db2f5b67e425" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t ip_hdr::v</definition>
-        <argsstring></argsstring>
-        <name>v</name>
-        <bitfield>4</bitfield>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip.h" bodystart="64" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="93" column="3"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -269,37 +180,23 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="211">
-        <label>ip_addr</label>
-        <link refid="structip__addr"/>
-      </node>
-      <node id="210">
+      <node id="1">
         <label>ip_hdr</label>
         <link refid="structip__hdr"/>
-        <childnode refid="211" relation="usage">
-          <edgelabel>dest</edgelabel>
-        </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip.h" bodystart="72" bodyend="92"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" line="71" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h" bodystart="71" bodyend="95"/>
     <listofallmembers>
-      <member refid="structip__hdr_1815e233e57dabbb88731c7454498286c" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>dest</name></member>
-      <member refid="structip__hdr_14c540b15f84a9ee0290f277f896b913c" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>flow1</name></member>
-      <member refid="structip__hdr_1cb46c4fbc7cabb2da0c328a712ff8ff3" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>flow2</name></member>
-      <member refid="structip__hdr_1c6ac97fa9cc364ca7cc9f0ae3713567c" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>hoplim</name></member>
-      <member refid="structip__hdr_153f3a7eb476a9667f23f1edbc0b94aca" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>len</name></member>
-      <member refid="structip__hdr_1e659b31431947366639063f917b1864b" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>nexthdr</name></member>
-      <member refid="structip__hdr_13fef89164693599490d3bfcd3faf25df" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_1775da6a62003a7d1fe34144fd88f5ee7" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_189322c2db49c48663ce8b8808e73b73d" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_1616fa15465f2e229d9aa7680a358ea81" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_19e3c25fd5027ac9c3075ed9f652c5999" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_1eb9d49c40ea5a96e355690bdb7920553" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_1237265a6a91e55f216c94491b8d60d1f" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_16c5cf010b37e08aa60a657bbd7df4e9a" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structip__hdr_1ff59fbc114853a1d9bc44da83c04765e" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>tclass1</name></member>
-      <member refid="structip__hdr_1f40d1bf6005169510fb0c4910abe0ecf" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>tclass2</name></member>
-      <member refid="structip__hdr_13066d68a8a36f1de8c79db2f5b67e425" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>v</name></member>
+      <member refid="structip__hdr_1aa3905f2613b3ce0994d3a04cf22ce2d7" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structip__hdr_1a6d3aca5e6bdd354c377836c67d93575b" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structip__hdr_1a2c93d9f414cb5e3bd727799393b3688a" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structip__hdr_1a620275dbd7f7b8f02cf3f90fa035eb62" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structip__hdr_1a2e9a57bb4e23ad0b3b9b949890b2607e" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structip__hdr_1a953cbb979026c774b58ea336959fdca6" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structip__hdr_1afbce37d4a49ca634d234158f0e0783ee" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structip__hdr_1a28e5be553013157549c28a6bfab2eb41" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structip__hdr_1a963b0932198484088775c5aa7446f0c1" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FLD_S</name></member>
+      <member refid="structip__hdr_1ab8c3ee74d121d94a735076773af41b9a" prot="public" virt="non-virtual"><scope>ip_hdr</scope><name>PACK_STRUCT_FLD_S</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

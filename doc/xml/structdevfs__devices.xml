@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdevfs__devices" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdevfs__devices" kind="struct" language="C++" prot="public">
     <compoundname>devfs_devices</compoundname>
     <includes refid="devfs_8h" local="no">devfs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structdevfs__devices_1a646beef3e609fb306cd3ddb202daf694" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 devfs_devices::devMajor</definition>
         <argsstring></argsstring>
         <name>devMajor</name>
@@ -15,14 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="40" bodyend="-1"/>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
-        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
-        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="39" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="39" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structdevfs__devices_1a5e53f9e07fd166b03c4cc94cb7ba6cf6" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 devfs_devices::devMinor</definition>
         <argsstring></argsstring>
         <name>devMinor</name>
@@ -32,13 +28,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
-        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
-        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="40" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevfs__devices_10200a09acd1456819501f7238df52474" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdevfs__devices_1a0200a09acd1456819501f7238df52474" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char devfs_devices::devName[32]</definition>
         <argsstring>[32]</argsstring>
@@ -49,12 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="41" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="41" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevfs__devices_13316a35e21232bab1603df7426dded2d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="variable" id="structdevfs__devices_1a3316a35e21232bab1603df7426dded2d" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 devfs_devices::devType</definition>
         <argsstring></argsstring>
         <name>devType</name>
@@ -64,11 +54,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="39" bodyend="-1"/>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="38" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="38" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" prot="public" static="no" mutable="no">
-        <type><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref> *</type>
+      <memberdef kind="variable" id="structdevfs__devices_1a8da644e221d63a17be9b429f67b6de1d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref> *</type>
         <definition>struct devfs_devices* devfs_devices::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -78,12 +67,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="37" bodyend="-1"/>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="36" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="36" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" prot="public" static="no" mutable="no">
-        <type><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref> *</type>
+      <memberdef kind="variable" id="structdevfs__devices_1a249566533e1645abb22645cbe47b4bf2" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref> *</type>
         <definition>struct devfs_devices* devfs_devices::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -93,8 +80,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="37" column="24" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="37" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -102,23 +88,23 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="401">
+      <node id="1">
         <label>devfs_devices</label>
         <link refid="structdevfs__devices"/>
-        <childnode refid="401" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" bodystart="36" bodyend="43"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="35" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" bodystart="35" bodyend="42"/>
     <listofallmembers>
-      <member refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devMajor</name></member>
-      <member refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devMinor</name></member>
-      <member refid="structdevfs__devices_10200a09acd1456819501f7238df52474" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devName</name></member>
-      <member refid="structdevfs__devices_13316a35e21232bab1603df7426dded2d" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devType</name></member>
-      <member refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>next</name></member>
-      <member refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>prev</name></member>
+      <member refid="structdevfs__devices_1a646beef3e609fb306cd3ddb202daf694" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devMajor</name></member>
+      <member refid="structdevfs__devices_1a5e53f9e07fd166b03c4cc94cb7ba6cf6" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devMinor</name></member>
+      <member refid="structdevfs__devices_1a0200a09acd1456819501f7238df52474" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devName</name></member>
+      <member refid="structdevfs__devices_1a3316a35e21232bab1603df7426dded2d" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>devType</name></member>
+      <member refid="structdevfs__devices_1a8da644e221d63a17be9b429f67b6de1d" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>next</name></member>
+      <member refid="structdevfs__devices_1a249566533e1645abb22645cbe47b4bf2" prot="public" virt="non-virtual"><scope>devfs_devices</scope><name>prev</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

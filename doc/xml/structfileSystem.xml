@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structfileSystem" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structfileSystem" kind="struct" language="C++" prot="public">
     <compoundname>fileSystem</compoundname>
-    <includes refid="vfs_8h" local="no">vfs.h</includes>
+    <includes refid="include_2vfs_2vfs_8h" local="no">vfs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structfileSystem_1a53ac2dce5c23d729ca2e49907a542de" prot="public" static="no" mutable="no">
-        <type><ref refid="structfileSystem" kindref="compound">fileSystem</ref> *</type>
+      <memberdef kind="variable" id="structfileSystem_1aa53ac2dce5c23d729ca2e49907a542de" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfileSystem" kindref="compound">fileSystem</ref> *</type>
         <definition>struct fileSystem* fileSystem::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -15,12 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" bodystart="58" bodyend="-1"/>
-        <referencedby refid="vfs_8c_1c49aa10a62b250834a055476c849b7b3" compoundref="vfs_8c" startline="59" endline="72">vfsFindFS</referencedby>
-        <referencedby refid="vfs_8c_1d8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="61" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="vfs_8c_1ac49aa10a62b250834a055476c849b7b3" compoundref="vfs_8c" startline="57" endline="70">vfsFindFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_1385cd52ba55b3ed318ee54f3f42b5a54" prot="public" static="no" mutable="no">
-        <type><ref refid="structfileSystem" kindref="compound">fileSystem</ref> *</type>
+      <memberdef kind="variable" id="structfileSystem_1a385cd52ba55b3ed318ee54f3f42b5a54" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structfileSystem" kindref="compound">fileSystem</ref> *</type>
         <definition>struct fileSystem* fileSystem::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -30,93 +29,98 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" bodystart="57" bodyend="-1"/>
-        <referencedby refid="vfs_8c_1d8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="60" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="60" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_163cc4eb02c498b7ae04d3cedba288822" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1a1a162bc57655bb47dbbdc2e1285f08e5" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsInitFS)(void *)</definition>
+        <definition>int(* fileSystem::vfsInitFS) (void *)</definition>
         <argsstring>)(void *)</argsstring>
         <name>vfsInitFS</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to inialization routine </para>        </detaileddescription>
+<para>pointer to inialization routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="59"/>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="62" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_120da59647c97bc603d6d447984f335d7" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1a4cd903f29e242ecc35938b91d43c4ba5" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsMakeDir)(char *, void *)</definition>
+        <definition>int(* fileSystem::vfsMakeDir) (char *, void *)</definition>
         <argsstring>)(char *, void *)</argsstring>
         <name>vfsMakeDir</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to makedir routine </para>        </detaileddescription>
+<para>pointer to makedir routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="64"/>
-        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="67" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="67" bodyend="-1"/>
+        <referencedby refid="file_8c_1a81e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="576" endline="609">sysMkDir</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_10fdae1689e7c9d514c635f790b11635d" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1af2816f106f39d0355faf5689d92a9b8b" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsOpenFile)(void *, void *)</definition>
+        <definition>int(* fileSystem::vfsOpenFile) (void *, void *)</definition>
         <argsstring>)(void *, void *)</argsstring>
         <name>vfsOpenFile</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to openfile routine </para>        </detaileddescription>
+<para>pointer to openfile routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="62"/>
-        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="65" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="65" bodyend="-1"/>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_1c5639f8b5425e84b0e25b183f18dbb7a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1a0ae6c56aba90970c49df0fe24d82c864" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsRead)(void *, char *, long, long)</definition>
+        <definition>int(* fileSystem::vfsRead) (void *, char *, long, long)</definition>
         <argsstring>)(void *, char *, long, long)</argsstring>
         <name>vfsRead</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to read routine </para>        </detaileddescription>
+<para>pointer to read routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="60"/>
-        <referencedby refid="file_8c_1dfedd6c658c329d13d5a90a7462f5979" compoundref="file_8c" startline="251" endline="262">fgetc</referencedby>
-        <referencedby refid="file_8c_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="63" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="63" bodyend="-1"/>
+        <referencedby refid="include_2vfs_2file_8h_1af3ae9aab3fa1a25c0b0cde40aa97f2d0" compoundref="file_8c" startline="366" endline="377">fgetc</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1ac539f57edd90fcd088fd3baa10319166" compoundref="file_8c" startline="291" endline="309">fread</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_117425293e60c94966742873b8033513c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1a74c0d3cf3df39d9227bcd98cf73ef6ba" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsRemDir)(char *)</definition>
+        <definition>int(* fileSystem::vfsRemDir) (char *)</definition>
         <argsstring>)(char *)</argsstring>
         <name>vfsRemDir</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to remdir routine </para>        </detaileddescription>
+<para>pointer to remdir routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="65"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="68" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="68" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_13395853e7bdf63a37eb2c7056c8bd3a5" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1af66a5069337e4e257e517f6823b9c178" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsSync)(void)</definition>
+        <definition>int(* fileSystem::vfsSync) (void)</definition>
         <argsstring>)(void)</argsstring>
         <name>vfsSync</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to sync routine </para>        </detaileddescription>
+<para>pointer to sync routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="66"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="69" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="69" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_1a1b7987f710ba203dffb15590ff58ce0" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1aa1b7987f710ba203dffb15590ff58ce0" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int fileSystem::vfsType</definition>
         <argsstring></argsstring>
@@ -124,70 +128,73 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>vfs type id </para>        </detaileddescription>
+<para>vfs type id </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" bodystart="67" bodyend="-1"/>
-        <referencedby refid="vfs_8c_1c49aa10a62b250834a055476c849b7b3" compoundref="vfs_8c" startline="59" endline="72">vfsFindFS</referencedby>
-        <referencedby refid="vfs_8c_1d8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="70" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="70" bodyend="-1"/>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
+        <referencedby refid="vfs_8c_1ac49aa10a62b250834a055476c849b7b3" compoundref="vfs_8c" startline="57" endline="70">vfsFindFS</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_1215822943f3048f49e56579c11ca55d7" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1ad8f269aaf16c2ed5b2171b18a0bee418" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsUnlink)(char *, void *)</definition>
+        <definition>int(* fileSystem::vfsUnlink) (char *, void *)</definition>
         <argsstring>)(char *, void *)</argsstring>
         <name>vfsUnlink</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to unlink routine </para>        </detaileddescription>
+<para>pointer to unlink routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="63"/>
-        <referencedby refid="file_8c_1da4d877b19c34ce3137e0c35dab6e947" compoundref="file_8c" startline="480" endline="498">unlink</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="66" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="66" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structfileSystem_10a4a469c38583399be85b1b9d63875c3" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structfileSystem_1adcbc968dbf271d2fbdf1b3e75e5b5685" prot="public" static="no" mutable="no">
         <type>int(*</type>
-        <definition>int(* fileSystem::vfsWrite)(void *, char *, long, long)</definition>
+        <definition>int(* fileSystem::vfsWrite) (void *, char *, long, long)</definition>
         <argsstring>)(void *, char *, long, long)</argsstring>
         <name>vfsWrite</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
-<para>pointer to write routine </para>        </detaileddescription>
+<para>pointer to write routine </para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="61"/>
-        <referencedby refid="file_8c_1c49e133f264f7aa16d63ba1f404be8ac" compoundref="file_8c" startline="234" endline="242">fputc</referencedby>
-        <referencedby refid="file_8c_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" compoundref="file_8c" startline="200" endline="206">fwrite</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="64" column="5" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="file_8c_1aeedf75b4010ae4e12e9743744a3b20f0" compoundref="file_8c" startline="350" endline="358">fputc</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
-<para>filesSystem Structure </para>    </briefdescription>
+<para>filesSystem Structure </para>
+    </briefdescription>
     <detaileddescription>
-<para>not sure if we should allow function to point to NULL </para>    </detaileddescription>
+<para>not sure if we should allow function to point to NULL </para>
+    </detaileddescription>
     <collaborationgraph>
-      <node id="486">
+      <node id="1">
         <label>fileSystem</label>
         <link refid="structfileSystem"/>
-        <childnode refid="486" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/vfs.h" bodystart="56" bodyend="68"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" line="59" column="17" bodyfile="C:/Dev/git/UbixOS/sys/include/vfs/vfs.h" bodystart="59" bodyend="71"/>
     <listofallmembers>
-      <member refid="structfileSystem_1a53ac2dce5c23d729ca2e49907a542de" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>next</name></member>
-      <member refid="structfileSystem_1385cd52ba55b3ed318ee54f3f42b5a54" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>prev</name></member>
-      <member refid="structfileSystem_163cc4eb02c498b7ae04d3cedba288822" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsInitFS</name></member>
-      <member refid="structfileSystem_120da59647c97bc603d6d447984f335d7" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsMakeDir</name></member>
-      <member refid="structfileSystem_10fdae1689e7c9d514c635f790b11635d" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsOpenFile</name></member>
-      <member refid="structfileSystem_1c5639f8b5425e84b0e25b183f18dbb7a" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsRead</name></member>
-      <member refid="structfileSystem_117425293e60c94966742873b8033513c" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsRemDir</name></member>
-      <member refid="structfileSystem_13395853e7bdf63a37eb2c7056c8bd3a5" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsSync</name></member>
-      <member refid="structfileSystem_1a1b7987f710ba203dffb15590ff58ce0" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsType</name></member>
-      <member refid="structfileSystem_1215822943f3048f49e56579c11ca55d7" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsUnlink</name></member>
-      <member refid="structfileSystem_10a4a469c38583399be85b1b9d63875c3" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsWrite</name></member>
+      <member refid="structfileSystem_1aa53ac2dce5c23d729ca2e49907a542de" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>next</name></member>
+      <member refid="structfileSystem_1a385cd52ba55b3ed318ee54f3f42b5a54" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>prev</name></member>
+      <member refid="structfileSystem_1a1a162bc57655bb47dbbdc2e1285f08e5" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsInitFS</name></member>
+      <member refid="structfileSystem_1a4cd903f29e242ecc35938b91d43c4ba5" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsMakeDir</name></member>
+      <member refid="structfileSystem_1af2816f106f39d0355faf5689d92a9b8b" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsOpenFile</name></member>
+      <member refid="structfileSystem_1a0ae6c56aba90970c49df0fe24d82c864" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsRead</name></member>
+      <member refid="structfileSystem_1a74c0d3cf3df39d9227bcd98cf73ef6ba" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsRemDir</name></member>
+      <member refid="structfileSystem_1af66a5069337e4e257e517f6823b9c178" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsSync</name></member>
+      <member refid="structfileSystem_1aa1b7987f710ba203dffb15590ff58ce0" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsType</name></member>
+      <member refid="structfileSystem_1ad8f269aaf16c2ed5b2171b18a0bee418" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsUnlink</name></member>
+      <member refid="structfileSystem_1adcbc968dbf271d2fbdf1b3e75e5b5685" prot="public" virt="non-virtual"><scope>fileSystem</scope><name>vfsWrite</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="struct__UbixUser" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="struct__UbixUser" kind="struct" language="C++" prot="public">
     <compoundname>_UbixUser</compoundname>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="struct__UbixUser_1a0779ab57c9c43976b09c01c2eaab5cb" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__UbixUser_1aa0779ab57c9c43976b09c01c2eaab5cb" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int _UbixUser::gid</definition>
         <argsstring></argsstring>
@@ -14,12 +14,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="95" bodyend="-1"/>
-        <referencedby refid="syscall_8c_1f53171b36a238440fc8e757c0d00a91f" compoundref="syscall_8c" startline="100" endline="111">sysAuth</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="92" column="7" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="92" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="struct__UbixUser_1a4f6a9076bbd4555c8f395d14d82eb7d" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__UbixUser_1ae7db3a1be08e4f64b3393847d205ac13" prot="public" static="no" mutable="no">
         <type>char *</type>
-        <definition>char* _UbixUser::home</definition>
+        <definition>char * _UbixUser::home</definition>
         <argsstring></argsstring>
         <name>home</name>
         <briefdescription>
@@ -28,11 +27,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="96" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="93" column="8" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="93" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="struct__UbixUser_121648dbd731b4320943eff8de2084f5a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__UbixUser_1a0abee881b70e504823fc70a6a2b93de4" prot="public" static="no" mutable="no">
         <type>char *</type>
-        <definition>char* _UbixUser::password</definition>
+        <definition>char * _UbixUser::password</definition>
         <argsstring></argsstring>
         <name>password</name>
         <briefdescription>
@@ -41,12 +40,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="93" bodyend="-1"/>
-        <referencedby refid="syscall_8c_1f53171b36a238440fc8e757c0d00a91f" compoundref="syscall_8c" startline="100" endline="111">sysAuth</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="90" column="8" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="90" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="struct__UbixUser_18311b0ea0ff08f86dc899128987f0274" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__UbixUser_1aa813c8e6c03091fd69653fd436af0c75" prot="public" static="no" mutable="no">
         <type>char *</type>
-        <definition>char* _UbixUser::shell</definition>
+        <definition>char * _UbixUser::shell</definition>
         <argsstring></argsstring>
         <name>shell</name>
         <briefdescription>
@@ -55,9 +53,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="97" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="94" column="8" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="94" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="struct__UbixUser_18d21d76e84a85aa49edf8109c138dfe9" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__UbixUser_1a8d21d76e84a85aa49edf8109c138dfe9" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int _UbixUser::uid</definition>
         <argsstring></argsstring>
@@ -68,12 +66,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="94" bodyend="-1"/>
-        <referencedby refid="syscall_8c_1f53171b36a238440fc8e757c0d00a91f" compoundref="syscall_8c" startline="100" endline="111">sysAuth</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="91" column="7" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="91" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="struct__UbixUser_1759468c4ab67b1251e94c1d9ac1c4b9f" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="struct__UbixUser_1a939885035625b337a1362e635b2a0cbe" prot="public" static="no" mutable="no">
         <type>char *</type>
-        <definition>char* _UbixUser::username</definition>
+        <definition>char * _UbixUser::username</definition>
         <argsstring></argsstring>
         <name>username</name>
         <briefdescription>
@@ -82,22 +79,27 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="92" bodyend="-1"/>
-        <referencedby refid="syscall_8c_1f53171b36a238440fc8e757c0d00a91f" compoundref="syscall_8c" startline="100" endline="111">sysAuth</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="89" column="8" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="89" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall.c" bodystart="90" bodyend="98"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>_UbixUser</label>
+        <link refid="struct__UbixUser"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" line="88" column="16" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c" bodystart="88" bodyend="95"/>
     <listofallmembers>
-      <member refid="struct__UbixUser_1a0779ab57c9c43976b09c01c2eaab5cb" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>gid</name></member>
-      <member refid="struct__UbixUser_1a4f6a9076bbd4555c8f395d14d82eb7d" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>home</name></member>
-      <member refid="struct__UbixUser_121648dbd731b4320943eff8de2084f5a" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>password</name></member>
-      <member refid="struct__UbixUser_18311b0ea0ff08f86dc899128987f0274" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>shell</name></member>
-      <member refid="struct__UbixUser_18d21d76e84a85aa49edf8109c138dfe9" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>uid</name></member>
-      <member refid="struct__UbixUser_1759468c4ab67b1251e94c1d9ac1c4b9f" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>username</name></member>
+      <member refid="struct__UbixUser_1aa0779ab57c9c43976b09c01c2eaab5cb" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>gid</name></member>
+      <member refid="struct__UbixUser_1ae7db3a1be08e4f64b3393847d205ac13" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>home</name></member>
+      <member refid="struct__UbixUser_1a0abee881b70e504823fc70a6a2b93de4" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>password</name></member>
+      <member refid="struct__UbixUser_1aa813c8e6c03091fd69653fd436af0c75" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>shell</name></member>
+      <member refid="struct__UbixUser_1a8d21d76e84a85aa49edf8109c138dfe9" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>uid</name></member>
+      <member refid="struct__UbixUser_1a939885035625b337a1362e635b2a0cbe" prot="public" virt="non-virtual"><scope>_UbixUser</scope><name>username</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

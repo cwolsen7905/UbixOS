@@ -1,412 +1,754 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="err_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="err_8h" kind="file" language="C++">
     <compoundname>err.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includes refid="debug_8h" local="yes">net/debug.h</includes>
-    <includes refid="cc_8h" local="yes">net/arch/cc.h</includes>
-    <includedby refid="api_8h" local="yes">src/sys/include/net/api.h</includedby>
-    <includedby refid="ipv4_2ip_8h" local="yes">src/sys/include/net/ipv4/ip.h</includedby>
-    <includedby refid="netif_8h" local="yes">src/sys/include/net/netif.h</includedby>
-    <includedby refid="tcp_8h" local="yes">src/sys/include/net/tcp.h</includedby>
-    <includedby refid="udp_8h" local="yes">src/sys/include/net/udp.h</includedby>
-    <includedby refid="err_8c" local="yes">src/sys/net/api/err.c</includedby>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includes refid="arch_8h" local="no">net/arch.h</includes>
+    <includedby refid="ip_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/ip.h</includedby>
+    <includedby refid="ip4__frag_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</includedby>
+    <includedby refid="netif_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/netif.h</includedby>
+    <includedby refid="pbuf_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/pbuf.h</includedby>
+    <includedby refid="sys_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/sys.h</includedby>
+    <includedby refid="tcpip_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/tcpip.h</includedby>
+    <includedby refid="timeouts_8h" local="yes">C:/Dev/git/UbixOS/sys/include/net/timeouts.h</includedby>
+    <includedby refid="err_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/err.c</includedby>
+    <includedby refid="mem_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/mem.c</includedby>
     <incdepgraph>
-      <node id="623">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="624" relation="include">
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="624">
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="622">
-        <label>src/sys/include/net/err.h</label>
-        <link refid="err.h"/>
-        <childnode refid="623" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="625" relation="include">
-        </childnode>
-        <childnode refid="626" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="625">
-        <label>net/debug.h</label>
-        <link refid="debug_8h"/>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
       </node>
-      <node id="626">
-        <label>net/arch/cc.h</label>
-        <link refid="cc_8h"/>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="638">
-        <label>src/sys/net/net/udpecho.c</label>
+      <node id="78">
+        <label>C:/Dev/git/UbixOS/sys/net/net/udpecho.c</label>
         <link refid="udpecho_8c"/>
       </node>
-      <node id="639">
-        <label>src/sys/include/net/ipv4/ip.h</label>
-        <link refid="ipv4_2ip_8h"/>
-        <childnode refid="628" relation="include">
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/include/net/igmp.h</label>
+        <link refid="igmp_8h"/>
+        <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="629" relation="include">
+        <childnode refid="4" relation="include">
         </childnode>
-        <childnode refid="640" relation="include">
+        <childnode refid="9" relation="include">
         </childnode>
-        <childnode refid="643" relation="include">
-        </childnode>
-        <childnode refid="632" relation="include">
-        </childnode>
-        <childnode refid="644" relation="include">
-        </childnode>
-        <childnode refid="641" relation="include">
-        </childnode>
-        <childnode refid="642" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="642">
-        <label>src/sys/net/netif/tcpdump.c</label>
-        <link refid="tcpdump_8c"/>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
       </node>
-      <node id="645">
-        <label>src/sys/include/net/netif.h</label>
-        <link refid="netif_8h"/>
-        <childnode refid="646" relation="include">
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
+        <link refid="block_8c"/>
+      </node>
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</label>
+        <link refid="inet__chksum_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="75">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/include/net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="11" relation="include">
         </childnode>
-        <childnode refid="639" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
-        <childnode refid="647" relation="include">
+        <childnode refid="13" relation="include">
         </childnode>
-        <childnode refid="649" relation="include">
+        <childnode refid="69" relation="include">
         </childnode>
-        <childnode refid="650" relation="include">
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
         </childnode>
       </node>
-      <node id="641">
-        <label>src/sys/net/netif/loopif.c</label>
-        <link refid="loopif_8c"/>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
       </node>
-      <node id="643">
-        <label>src/sys/include/net/udp.h</label>
-        <link refid="udp_8h"/>
-        <childnode refid="628" relation="include">
-        </childnode>
-        <childnode refid="629" relation="include">
-        </childnode>
-        <childnode refid="632" relation="include">
-        </childnode>
-        <childnode refid="642" relation="include">
-        </childnode>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
       </node>
-      <node id="647">
-        <label>src/sys/include/netif/arp.h</label>
-        <link refid="arp_8h"/>
-        <childnode refid="644" relation="include">
-        </childnode>
-        <childnode refid="648" relation="include">
-        </childnode>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
       </node>
-      <node id="640">
-        <label>src/sys/include/net/tcp.h</label>
-        <link refid="tcp_8h"/>
-        <childnode refid="628" relation="include">
-        </childnode>
-        <childnode refid="629" relation="include">
-        </childnode>
-        <childnode refid="632" relation="include">
-        </childnode>
-        <childnode refid="641" relation="include">
-        </childnode>
-        <childnode refid="642" relation="include">
-        </childnode>
-      </node>
-      <node id="648">
-        <label>src/sys/net/netif/ethernetif.c</label>
-        <link refid="ethernetif_8c"/>
-      </node>
-      <node id="644">
-        <label>src/sys/net/netif/arp.c</label>
-        <link refid="arp_8c"/>
-      </node>
-      <node id="646">
-        <label>src/sys/include/net/ipv4/icmp.h</label>
-        <link refid="ipv4_2icmp_8h"/>
-        <childnode refid="640" relation="include">
-        </childnode>
-      </node>
-      <node id="636">
-        <label>src/sys/net/net/bot.c</label>
-        <link refid="bot_8c"/>
-      </node>
-      <node id="651">
-        <label>src/sys/net/api/err.c</label>
-        <link refid="err_8c"/>
-      </node>
-      <node id="632">
-        <label>src/sys/net/api/tcpip.c</label>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
         <link refid="tcpip_8c"/>
       </node>
-      <node id="630">
-        <label>src/sys/include/net/tcpip.h</label>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/slipif.h</label>
+        <link refid="slipif_8h"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/include/net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp.h</label>
+        <link refid="icmp_8h"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp6.h</label>
+        <link refid="icmp6_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/include/net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="74">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/include/vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="76">
+        <label>C:/Dev/git/UbixOS/sys/net/core/sys.c</label>
+        <link refid="sys_8c"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
         <link refid="tcpip_8h"/>
-        <childnode refid="631" relation="include">
+        <childnode refid="62" relation="include">
         </childnode>
-        <childnode refid="632" relation="include">
+        <childnode refid="63" relation="include">
         </childnode>
-        <childnode refid="633" relation="include">
-        </childnode>
-      </node>
-      <node id="629">
-        <label>src/sys/include/net/api_msg.h</label>
-        <link refid="api__msg_8h"/>
-        <childnode refid="630" relation="include">
-        </childnode>
-        <childnode refid="634" relation="include">
-        </childnode>
-        <childnode refid="631" relation="include">
+        <childnode refid="64" relation="include">
         </childnode>
       </node>
-      <node id="649">
-        <label>src/sys/include/netif/ethernetif.h</label>
-        <link refid="ethernetif_8h"/>
-        <childnode refid="633" relation="include">
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
         </childnode>
       </node>
-      <node id="637">
-        <label>src/sys/net/net/shell.c</label>
-        <link refid="shell_8c"/>
-      </node>
-      <node id="634">
-        <label>src/sys/net/api/api_lib.c</label>
-        <link refid="api__lib_8c"/>
-      </node>
-      <node id="633">
-        <label>src/sys/net/net/init.c</label>
-        <link refid="init_8c"/>
-      </node>
-      <node id="627">
-        <label>src/sys/include/net/err.h</label>
-        <link refid="err.h"/>
-        <childnode refid="628" relation="include">
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_frag.h</label>
+        <link refid="ip6__frag_8h"/>
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="639" relation="include">
+        <childnode refid="4" relation="include">
         </childnode>
-        <childnode refid="645" relation="include">
-        </childnode>
-        <childnode refid="640" relation="include">
-        </childnode>
-        <childnode refid="643" relation="include">
-        </childnode>
-        <childnode refid="651" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="628">
-        <label>src/sys/include/net/api.h</label>
-        <link refid="api_8h"/>
-        <childnode refid="629" relation="include">
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</label>
+        <link refid="ip4__frag_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
-        <childnode refid="634" relation="include">
-        </childnode>
-        <childnode refid="635" relation="include">
-        </childnode>
-        <childnode refid="636" relation="include">
-        </childnode>
-        <childnode refid="637" relation="include">
-        </childnode>
-        <childnode refid="638" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="650">
-        <label>src/sys/include/netif/loopif.h</label>
-        <link refid="loopif_8h"/>
-        <childnode refid="633" relation="include">
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="641" relation="include">
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
         </childnode>
       </node>
-      <node id="635">
-        <label>src/sys/net/api/sockets.c</label>
-        <link refid="sockets_8c"/>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
       </node>
-      <node id="631">
-        <label>src/sys/net/api/api_msg.c</label>
-        <link refid="api__msg_8c"/>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</label>
+        <link refid="f_2ethernet_8h"/>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/etharp.h</label>
+        <link refid="f_2etharp_8h"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet_chksum.h</label>
+        <link refid="inet__chksum_8h"/>
+        <childnode refid="70" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
       </node>
     </invincdepgraph>
       <sectiondef kind="define">
-      <memberdef kind="define" id="err_8h_10629f0c91a328ccf469923287db34d7f" prot="public" static="no">
-        <name>ERR_ABRT</name>
-        <initializer>-3</initializer>
+      <memberdef kind="define" id="group__infrastructure__errors_1gac36f9cda08ffce1f67529a432a046248" prot="public" static="no">
+        <name>ERR_IS_FATAL</name>
+        <param><defname>e</defname></param>
+        <initializer>((e) &lt;= <ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaf316b2c5eee4079820f7100849115142" kindref="member">ERR_ABRT</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="53" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="99" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="99" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="err_8h_18700518a3e3d0c7a4439a37dcbcf2143" prot="public" static="no">
-        <name>ERR_ARG</name>
-        <initializer>-8</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="60" bodyend="-1"/>
-        <referencedby refid="sockets_8c_1cb3ba0c7f21116c629f116e15e40ce2b" compoundref="sockets_8c" startline="305" endline="351">lwip_send</referencedby>
-        <referencedby refid="sockets_8c_1e3d92ccb1ddfafe7df89185dbc881ec2" compoundref="sockets_8c" startline="417" endline="445">lwip_write</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_1e1dcf352601ec4d3b700910df24f863d" prot="public" static="no">
-        <name>ERR_BUF</name>
-        <initializer>-2</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="50" bodyend="-1"/>
-        <referencedby refid="api__lib_8c_1b47d915f31d9e5d1218ed238f0428386" compoundref="api__lib_8c" startline="128" endline="136">netbuf_data</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_1f26c7107aefe53fdfef57965fd9b937d" prot="public" static="no">
-        <name>ERR_CLSD</name>
-        <initializer>-5</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="55" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_188c4da0bf5d6a4410f6cfb864a5f04ce" prot="public" static="no">
-        <name>ERR_CONN</name>
-        <initializer>-6</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="56" bodyend="-1"/>
-        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_16ab63185cc5dff3c50c61d99bdf98369" prot="public" static="no">
-        <name>ERR_MEM</name>
-        <initializer>-1</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="49" bodyend="-1"/>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
-        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
-        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
-        <referencedby refid="loopif_8c_172717f7b688d6aea03dacce84437632c" compoundref="loopif_8c" startline="46" endline="68">loopif_output</referencedby>
-        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
-        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
-        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
-        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
-        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="tcpip_8c_1e510f195171bed8499ae94e264a92717" compoundref="tcpip_8c" startline="101" endline="118">tcpip_input</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_198c763adfeea8e9831c46ec269e47ae9" prot="public" static="no">
-        <name>ERR_OK</name>
-        <initializer>0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="48" bodyend="-1"/>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__msg_8c_117dd70d363c3f70a12d629bfdae64f97" compoundref="api__msg_8c" startline="284" endline="302">do_connected</referencedby>
-        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
-        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
-        <referencedby refid="loopif_8c_172717f7b688d6aea03dacce84437632c" compoundref="loopif_8c" startline="46" endline="68">loopif_output</referencedby>
-        <referencedby refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" compoundref="ethernetif_8c" startline="113" endline="130">low_level_output</referencedby>
-        <referencedby refid="sockets_8c_11675042812d3bc6d5f9eeaa28c8f37a7" compoundref="sockets_8c" startline="121" endline="144">lwip_bind</referencedby>
-        <referencedby refid="sockets_8c_19688d733f4d571cef85948fe74e0f6c7" compoundref="sockets_8c" startline="169" endline="192">lwip_connect</referencedby>
-        <referencedby refid="sockets_8c_1bee6ee286147cf334a1ba19f19b2e08b" compoundref="sockets_8c" startline="195" endline="213">lwip_listen</referencedby>
-        <referencedby refid="sockets_8c_1cb3ba0c7f21116c629f116e15e40ce2b" compoundref="sockets_8c" startline="305" endline="351">lwip_send</referencedby>
-        <referencedby refid="sockets_8c_1e3d92ccb1ddfafe7df89185dbc881ec2" compoundref="sockets_8c" startline="417" endline="445">lwip_write</referencedby>
-        <referencedby refid="api__lib_8c_1b47d915f31d9e5d1218ed238f0428386" compoundref="api__lib_8c" startline="128" endline="136">netbuf_data</referencedby>
-        <referencedby refid="api__lib_8c_1fcf7f4195b699c039de37b4dd3f563b7" compoundref="api__lib_8c" startline="306" endline="322">netconn_addr</referencedby>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</referencedby>
-        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
-        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="api__msg_8c_1cfa8c3089ec7810a74fea8d004197343" compoundref="api__msg_8c" startline="96" endline="107">poll_tcp</referencedby>
-        <referencedby refid="api__msg_8c_15271a23a432de3322f8fa228a3f3a11f" compoundref="api__msg_8c" startline="47" endline="63">recv_tcp</referencedby>
-        <referencedby refid="api__msg_8c_1603b715a121557dc45c821caab18efc2" compoundref="api__msg_8c" startline="110" endline="119">sent_tcp</referencedby>
-        <referencedby refid="tcpip_8c_1e510f195171bed8499ae94e264a92717" compoundref="tcpip_8c" startline="101" endline="118">tcpip_input</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_11ef610d9fa2a04aef05d5410a2b3b65a" prot="public" static="no">
-        <name>ERR_RST</name>
-        <initializer>-4</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="54" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_199462c1105f849cc0db4c87261e0b63d" prot="public" static="no">
-        <name>ERR_RTE</name>
-        <initializer>-9</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="62" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_17a7ef5bec7c4a01857f4430b82915a0a" prot="public" static="no">
-        <name>ERR_USE</name>
-        <initializer>-10</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="64" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_1a803bb0b2c462e8b1f60459dd1f54bc9" prot="public" static="no">
-        <name>ERR_VAL</name>
-        <initializer>-7</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="58" bodyend="-1"/>
-        <referencedby refid="api__msg_8c_117dd70d363c3f70a12d629bfdae64f97" compoundref="api__msg_8c" startline="284" endline="302">do_connected</referencedby>
-        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
-        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
-        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
-        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
-        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
-        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="api__msg_8c_15271a23a432de3322f8fa228a3f3a11f" compoundref="api__msg_8c" startline="47" endline="63">recv_tcp</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="err_8h_1b58c2561ad3b133e625183721b25ba27" prot="public" static="no">
+      <memberdef kind="define" id="err_8h_1ab58c2561ad3b133e625183721b25ba27" prot="public" static="no">
         <name>lwip_strerr</name>
         <param><defname>x</defname></param>
         <initializer>&quot;&quot;</initializer>
@@ -416,103 +758,320 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="71" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="108" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__infrastructure__errors_1gae2e66c7d13afc90ffecd6151680fbadc" prot="public" static="no" strong="no">
+        <type></type>
+        <name>err_enum_t</name>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" prot="public">
+          <name>ERR_OK</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>No error, everything OK. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaaaeafdbf3aecc46864daa3cd829c7e05" prot="public">
+          <name>ERR_MEM</name>
+          <initializer>= -1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Out of memory error. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca05c91366f1b5203a5db9a241b415cd63" prot="public">
+          <name>ERR_BUF</name>
+          <initializer>= -2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Buffer error. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcac568baeb6407ef5e2630084ccbc34be8" prot="public">
+          <name>ERR_TIMEOUT</name>
+          <initializer>= -3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Timeout. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca9448893187313c0c5a502ca9a9ad1c2a" prot="public">
+          <name>ERR_RTE</name>
+          <initializer>= -4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Routing problem. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca13e1dd0edca8a27b6abdf1524bde7929" prot="public">
+          <name>ERR_INPROGRESS</name>
+          <initializer>= -5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Operation in progress <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa9a1c5a6fdeed0aad7fe41d538482bbd" prot="public">
+          <name>ERR_VAL</name>
+          <initializer>= -6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Illegal value. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab9dcf89d46668b072192278fb907b7ad" prot="public">
+          <name>ERR_WOULDBLOCK</name>
+          <initializer>= -7</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Operation would block. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca4ebdc2aa1dbd75f927845733a3fb1f8b" prot="public">
+          <name>ERR_USE</name>
+          <initializer>= -8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Address in use. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcae6f9c1e4c18ca844f7934307d4cc30e5" prot="public">
+          <name>ERR_ALREADY</name>
+          <initializer>= -9</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Already connecting. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca8543e1d6422fed7b318d97e08dcbaa33" prot="public">
+          <name>ERR_ISCONN</name>
+          <initializer>= -10</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Conn already established. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab0036c51817b5200bfe8157cc4115b27" prot="public">
+          <name>ERR_CONN</name>
+          <initializer>= -11</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Not connected. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca7d61d90449ae6788575e8e46d5d3bbc6" prot="public">
+          <name>ERR_IF</name>
+          <initializer>= -12</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Low-level netif error <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaf316b2c5eee4079820f7100849115142" prot="public">
+          <name>ERR_ABRT</name>
+          <initializer>= -13</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Connection aborted. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca759030525f1768a23dc086a5fd45b4e5" prot="public">
+          <name>ERR_RST</name>
+          <initializer>= -14</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Connection reset. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa5176d9fecf8ec43d3bc49f4e6c3f7f5" prot="public">
+          <name>ERR_CLSD</name>
+          <initializer>= -15</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Connection closed. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab508ce0ebdf3ca735208b00a80a45c91" prot="public">
+          <name>ERR_ARG</name>
+          <initializer>= -16</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+<para>Illegal argument. <linebreak/>
+ </para>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Definitions for error constants. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="61" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="61" bodyend="97"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="err_8h_1b7190f3da5c85931fc059e0312bc1407" prot="public" static="no">
-        <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref></type>
-        <definition>typedef Int8 err_t</definition>
+      <memberdef kind="typedef" id="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" prot="public" static="no">
+        <type><ref refid="group__compiler__abstraction_1ga9cd1d7891fe315de1201e2c6e45f4f57" kindref="member">s8_t</ref></type>
+        <definition>typedef s8_t err_t</definition>
         <argsstring></argsstring>
         <name>err_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Define LWIP_ERR_T in <ref refid="cc_8h" kindref="compound">cc.h</ref> if you want to use a different type for your platform (must be signed). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="57" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/err.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="err_8h_1af6382b3192357c2fb582c84c48bdda40" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int err_to_errno</definition>
+        <argsstring>(err_t err)</argsstring>
+        <name>err_to_errno</name>
+        <param>
+          <type><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref></type>
+          <declname>err</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h" bodystart="44" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/err.h" line="112" column="5" bodyfile="C:/Dev/git/UbixOS/sys/net/api/err.c" bodystart="71" bodyend="77" declfile="C:/Dev/git/UbixOS/sys/include/net/err.h" declline="112" declcolumn="5"/>
+        <references refid="def_8h_1a4abb61f4c9339d8a0a0c63b4fbfe6a37" compoundref="def_8h" startline="58">LWIP_ARRAYSIZE</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
+<para>lwIP Error codes </para>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
-<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
-<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
-<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
-<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
-<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
-<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
-<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
-<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="1"></codeline>
+<codeline lineno="5"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
 <codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: err_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_ERR_H__</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_ERR_H__</highlight></codeline>
-<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_ERR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_ERR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="41"><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="cc_8h" kindref="compound">net/arch/cc.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44" refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Definitions<sp/>for<sp/>error<sp/>constants.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight></codeline>
-<codeline lineno="48" refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_OK<sp/><sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>No<sp/>error,<sp/>everything<sp/>OK.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="49" refid="err_8h_16ab63185cc5dff3c50c61d99bdf98369" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_MEM<sp/><sp/>-1<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Out<sp/>of<sp/>memory<sp/>error.<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50" refid="err_8h_1e1dcf352601ec4d3b700910df24f863d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_BUF<sp/><sp/>-2<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Buffer<sp/>error.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53" refid="err_8h_10629f0c91a328ccf469923287db34d7f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_ABRT<sp/>-3<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Connection<sp/>aborted.<sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="54" refid="err_8h_11ef610d9fa2a04aef05d5410a2b3b65a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_RST<sp/><sp/>-4<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Connection<sp/>reset.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="55" refid="err_8h_1f26c7107aefe53fdfef57965fd9b937d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_CLSD<sp/>-5<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Connection<sp/>closed.<sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56" refid="err_8h_188c4da0bf5d6a4410f6cfb864a5f04ce" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_CONN<sp/>-6<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>connected.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight></codeline>
-<codeline lineno="58" refid="err_8h_1a803bb0b2c462e8b1f60459dd1f54bc9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_VAL<sp/><sp/>-7<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Illegal<sp/>value.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="preprocessor">#ifdef<sp/>LWIP_ERR_T</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="cc_8h_1ab6940f44dbd3b2e36ce906087f882dc0" kindref="member">LWIP_ERR_T</ref><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ERR_T<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga9cd1d7891fe315de1201e2c6e45f4f57" kindref="member">s8_t</ref><sp/><ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref>;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_ERR_T*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="59"><highlight class="normal"></highlight></codeline>
-<codeline lineno="60" refid="err_8h_18700518a3e3d0c7a4439a37dcbcf2143" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_ARG<sp/><sp/>-8<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Illegal<sp/>argument.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight></codeline>
-<codeline lineno="62" refid="err_8h_199462c1105f849cc0db4c87261e0b63d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_RTE<sp/><sp/>-9<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Routing<sp/>problem.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight></codeline>
-<codeline lineno="64" refid="err_8h_17a7ef5bec7c4a01857f4430b82915a0a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_USE<sp/><sp/>-10<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Address<sp/>in<sp/>use.<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_DEBUG</highlight></codeline>
-<codeline lineno="69"><highlight class="preprocessor"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="err_8h_1b58c2561ad3b133e625183721b25ba27" kindref="member">lwip_strerr</ref>(<ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/>err);</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight></codeline>
-<codeline lineno="71" refid="err_8h_1b58c2561ad3b133e625183721b25ba27" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>lwip_strerr(x)<sp/>&quot;&quot;</highlight></codeline>
-<codeline lineno="72"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_ERR_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="group__infrastructure__errors_1gae2e66c7d13afc90ffecd6151680fbadc" refkind="member"><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="63" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa26c163b80b1f6786ca81dadc14b00fb" kindref="member">ERR_OK</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="65" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaaaeafdbf3aecc46864daa3cd829c7e05" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaaaeafdbf3aecc46864daa3cd829c7e05" kindref="member">ERR_MEM</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-1,</highlight></codeline>
+<codeline lineno="67" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca05c91366f1b5203a5db9a241b415cd63" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca05c91366f1b5203a5db9a241b415cd63" kindref="member">ERR_BUF</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-2,</highlight></codeline>
+<codeline lineno="69" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcac568baeb6407ef5e2630084ccbc34be8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcac568baeb6407ef5e2630084ccbc34be8" kindref="member">ERR_TIMEOUT</ref><sp/><sp/><sp/><sp/>=<sp/>-3,</highlight></codeline>
+<codeline lineno="71" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca9448893187313c0c5a502ca9a9ad1c2a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca9448893187313c0c5a502ca9a9ad1c2a" kindref="member">ERR_RTE</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-4,</highlight></codeline>
+<codeline lineno="73" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca13e1dd0edca8a27b6abdf1524bde7929" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca13e1dd0edca8a27b6abdf1524bde7929" kindref="member">ERR_INPROGRESS</ref><sp/>=<sp/>-5,</highlight></codeline>
+<codeline lineno="75" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa9a1c5a6fdeed0aad7fe41d538482bbd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa9a1c5a6fdeed0aad7fe41d538482bbd" kindref="member">ERR_VAL</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-6,</highlight></codeline>
+<codeline lineno="77" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab9dcf89d46668b072192278fb907b7ad" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab9dcf89d46668b072192278fb907b7ad" kindref="member">ERR_WOULDBLOCK</ref><sp/>=<sp/>-7,</highlight></codeline>
+<codeline lineno="79" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca4ebdc2aa1dbd75f927845733a3fb1f8b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca4ebdc2aa1dbd75f927845733a3fb1f8b" kindref="member">ERR_USE</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-8,</highlight></codeline>
+<codeline lineno="81" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcae6f9c1e4c18ca844f7934307d4cc30e5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcae6f9c1e4c18ca844f7934307d4cc30e5" kindref="member">ERR_ALREADY</ref><sp/><sp/><sp/><sp/>=<sp/>-9,</highlight></codeline>
+<codeline lineno="83" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca8543e1d6422fed7b318d97e08dcbaa33" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca8543e1d6422fed7b318d97e08dcbaa33" kindref="member">ERR_ISCONN</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>-10,</highlight></codeline>
+<codeline lineno="85" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab0036c51817b5200bfe8157cc4115b27" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab0036c51817b5200bfe8157cc4115b27" kindref="member">ERR_CONN</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-11,</highlight></codeline>
+<codeline lineno="87" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca7d61d90449ae6788575e8e46d5d3bbc6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca7d61d90449ae6788575e8e46d5d3bbc6" kindref="member">ERR_IF</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-12,</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaf316b2c5eee4079820f7100849115142" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaf316b2c5eee4079820f7100849115142" kindref="member">ERR_ABRT</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-13,</highlight></codeline>
+<codeline lineno="92" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca759030525f1768a23dc086a5fd45b4e5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadca759030525f1768a23dc086a5fd45b4e5" kindref="member">ERR_RST</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-14,</highlight></codeline>
+<codeline lineno="94" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa5176d9fecf8ec43d3bc49f4e6c3f7f5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcaa5176d9fecf8ec43d3bc49f4e6c3f7f5" kindref="member">ERR_CLSD</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-15,</highlight></codeline>
+<codeline lineno="96" refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab508ce0ebdf3ca735208b00a80a45c91" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="group__infrastructure__errors_1ggae2e66c7d13afc90ffecd6151680fbadcab508ce0ebdf3ca735208b00a80a45c91" kindref="member">ERR_ARG</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>-16</highlight></codeline>
+<codeline lineno="97"><highlight class="normal">}<sp/><ref refid="group__infrastructure__errors_1gae2e66c7d13afc90ffecd6151680fbadc" kindref="member">err_enum_t</ref>;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="group__infrastructure__errors_1gac36f9cda08ffce1f67529a432a046248" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR_IS_FATAL(e)<sp/>((e)<sp/>&lt;=<sp/>ERR_ABRT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="preprocessor">#ifdef<sp/>LWIP_DEBUG</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="err_8h_1ab58c2561ad3b133e625183721b25ba27" kindref="member">lwip_strerr</ref>(<ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>err);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="err_8h_1ab58c2561ad3b133e625183721b25ba27" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>lwip_strerr(x)<sp/>&quot;&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>!NO_SYS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="err_8h_1af6382b3192357c2fb582c84c48bdda40" kindref="member">err_to_errno</ref>(<ref refid="group__infrastructure__errors_1gaf02d9da80fd66b4f986d2c53d7231ddb" kindref="member">err_t</ref><sp/>err);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!NO_SYS<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_ERR_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/err.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/err.h"/>
   </compounddef>
 </doxygen>

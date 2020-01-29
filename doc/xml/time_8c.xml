@@ -1,162 +1,438 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="time_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="time_8c" kind="file" language="C++">
     <compoundname>time.c</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
     <includes refid="time_8h" local="no">ubixos/time.h</includes>
     <includes refid="vitals_8h" local="no">ubixos/vitals.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
     <includes refid="assert_8h" local="no">assert.h</includes>
     <incdepgraph>
-      <node id="5560">
-        <label>sys/thread.h</label>
-        <link refid="thread_8h"/>
-        <childnode refid="5548" relation="include">
+      <node id="25">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
         </childnode>
       </node>
-      <node id="5554">
-        <label>ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-        <childnode refid="5555" relation="include">
-        </childnode>
-        <childnode refid="5556" relation="include">
-        </childnode>
-        <childnode refid="5559" relation="include">
-        </childnode>
-        <childnode refid="5560" relation="include">
-        </childnode>
+      <node id="37">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
       </node>
-      <node id="5552">
-        <label>ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="5553" relation="include">
-        </childnode>
-        <childnode refid="5561" relation="include">
-        </childnode>
+      <node id="38">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
       </node>
-      <node id="5548">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5549" relation="include">
-        </childnode>
-      </node>
-      <node id="5549">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="5550">
-        <label>ubixos/time.h</label>
-        <link refid="time_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-        <childnode refid="5551" relation="include">
-        </childnode>
-      </node>
-      <node id="5556">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-        <childnode refid="5557" relation="include">
-        </childnode>
-        <childnode refid="5558" relation="include">
-        </childnode>
-      </node>
-      <node id="5559">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-      </node>
-      <node id="5561">
-        <label>vfs/vfs.h</label>
-        <link refid="vfs_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-        <childnode refid="5556" relation="include">
-        </childnode>
-        <childnode refid="5558" relation="include">
-        </childnode>
-        <childnode refid="5562" relation="include">
-        </childnode>
-        <childnode refid="5560" relation="include">
-        </childnode>
-      </node>
-      <node id="5558">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-      </node>
-      <node id="5564">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-      </node>
-      <node id="5565">
-        <label>assert.h</label>
-        <link refid="assert_8h"/>
-      </node>
-      <node id="5553">
-        <label>ubixos/ubthread.h</label>
-        <link refid="ubthread_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-        <childnode refid="5554" relation="include">
-        </childnode>
-        <childnode refid="5550" relation="include">
-        </childnode>
-      </node>
-      <node id="5557">
-        <label>ubixfs/dirCache.h</label>
-        <link refid="dirCache_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-      </node>
-      <node id="5562">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="5563" relation="include">
-        </childnode>
-        <childnode refid="5560" relation="include">
-        </childnode>
-      </node>
-      <node id="5547">
-        <label>src/sys/kernel/time.c</label>
-        <link refid="time.c"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-        <childnode refid="5550" relation="include">
-        </childnode>
-        <childnode refid="5552" relation="include">
-        </childnode>
-        <childnode refid="5564" relation="include">
-        </childnode>
-        <childnode refid="5565" relation="include">
-        </childnode>
-      </node>
-      <node id="5563">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-      </node>
-      <node id="5555">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="5548" relation="include">
-        </childnode>
-      </node>
-      <node id="5551">
+      <node id="10">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
+      <node id="44">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="27">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="50">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="19">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="22">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="43">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="2">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="39">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="time_8c_1a45d9da5c4bcc5def21490ffe633b7702" prot="public" static="yes" mutable="no">
+        <type>int</type>
+        <definition>int month[12]</definition>
+        <argsstring>[12]</argsstring>
+        <name>month</name>
+        <initializer>= { 0,
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31 + 30),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31 + 30 + 31),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31),
+<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref> * (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30) }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/time.c" line="34" column="12" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="time_8c_1df30830f5265e55035171c301eb9c3fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="time_8c_1adf30830f5265e55035171c301eb9c3fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int gettimeofday</definition>
         <argsstring>(struct timeval *tp, struct timezone *tzp)</argsstring>
@@ -175,11 +451,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="110" bodyend="115"/>
-        <references refid="structtimeval_13599199839a89e99a2ce29d45312b5cf" compoundref="time_8h" startline="73">timeval::tv_sec</references>
-        <references refid="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" compoundref="time_8h" startline="74">timeval::tv_usec</references>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/time.c" line="110" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="110" bodyend="118"/>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structvitalsStruct_1a78832d978f9753eb94bf615dc215f511" compoundref="vitals_8h" startline="38">vitalsStruct::sysUptime</references>
+        <references refid="structvitalsStruct_1a338cf71b9ba1338f47fe955d417b3337" compoundref="vitals_8h" startline="46">vitalsStruct::timeStart</references>
+        <references refid="structtimeval_1aef6ddab1064c430758f9f913b7e4a21e" compoundref="__timeval_8h" startline="18">timeval::tv_sec</references>
+        <references refid="structtimeval_1a810bf8fcd58e255a5c1896d19538b86a" compoundref="__timeval_8h" startline="19">timeval::tv_usec</references>
+        <references refid="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" compoundref="time_8h" startline="57">timezone::tz_dsttime</references>
+        <references refid="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" compoundref="time_8h" startline="56">timezone::tz_minuteswest</references>
+        <referencedby refid="gen__calls_8c_1ad3d1e6e24307ce2257adadefb46dfa10" compoundref="gen__calls_8c" startline="354" endline="358">sys_gettimeofday</referencedby>
+        <referencedby refid="sys__arch_8c_1a29a81985c051357162ad079023a076cd" compoundref="sys__arch_8c" startline="32" endline="35">sys_init</referencedby>
+        <referencedby refid="sys__arch_8c_1aa40706a5e306545035127c0cf198cf49" compoundref="sys__arch_8c" startline="483" endline="495">sys_unix_now</referencedby>
       </memberdef>
-      <memberdef kind="function" id="time_8c_145c7647a44b3b3eef8e44809180e86b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="time_8c_1a45c7647a44b3b3eef8e44809180e86b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int time_init</definition>
         <argsstring>()</argsstring>
@@ -190,21 +474,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="56" bodyend="90"/>
-        <references refid="time_8h_1da3d00d14e596527afd939066ebae6bd" compoundref="time_8h" startline="38">BCD_TO_BIN</references>
-        <references refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" compoundref="time_8h" startline="61">timeStruct::day</references>
-        <references refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" compoundref="time_8h" startline="60">timeStruct::hour</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" compoundref="time_8h" startline="59">timeStruct::min</references>
-        <references refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" compoundref="time_8h" startline="62">timeStruct::mon</references>
-        <references refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" compoundref="time_8h" startline="58">timeStruct::sec</references>
-        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
-        <references refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" compoundref="time_8c" startline="51" endline="54">timeCmosRead</references>
-        <references refid="time_8h_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</references>
-        <references refid="structvitalsStruct_1c407388b447996ea3bad97aebbb5e1a6" compoundref="vitals_8h" startline="47">vitalsStruct::timeStart</references>
-        <references refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" compoundref="time_8h" startline="63">timeStruct::year</references>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/time.c" line="52" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="52" bodyend="85"/>
       </memberdef>
-      <memberdef kind="function" id="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="time_8c_1a087d7c6ad6802ed3e466ed1d6badf3c9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>static int timeCmosRead</definition>
         <argsstring>(int addr)</argsstring>
@@ -219,14 +491,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="51" bodyend="54"/>
-        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
-        <references refid="io_8h_1f0c1dd5717007bf73b6c5119dfe7eaf2" compoundref="io_8c" startline="88" endline="95">outportByteP</references>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/time.c" line="47" column="12" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="47" bodyend="50"/>
       </memberdef>
-      <memberdef kind="function" id="time_8c_150a9563bc49b27c587f341b0336bab7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 timeMake</definition>
+      <memberdef kind="function" id="time_8c_1ae380db5538cf415ed920ff3873aa4207" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t timeMake</definition>
         <argsstring>(struct timeStruct *time)</argsstring>
         <name>timeMake</name>
         <param>
@@ -239,49 +508,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="92" bodyend="108"/>
-        <references refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" compoundref="time_8h" startline="61">timeStruct::day</references>
-        <references refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" compoundref="time_8h" startline="42">DAY</references>
-        <references refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" compoundref="time_8h" startline="60">timeStruct::hour</references>
-        <references refid="time_8h_14698ae12cf6a8acb5886fffd0ec897e6" compoundref="time_8h" startline="41">HOUR</references>
-        <references refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" compoundref="time_8h" startline="59">timeStruct::min</references>
-        <references refid="time_8h_1c1454fa04f41c693f39425697a137d82" compoundref="time_8h" startline="40">MINUTE</references>
-        <references refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" compoundref="time_8h" startline="62">timeStruct::mon</references>
-        <references refid="time_8c_145d9da5c4bcc5def21490ffe633b7702" compoundref="time_8c" startline="36">month</references>
-        <references refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" compoundref="time_8h" startline="58">timeStruct::sec</references>
-        <references refid="time_8h_15871356500f559add06ea81d60331b1b" compoundref="time_8h" startline="43">YEAR</references>
-        <references refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" compoundref="time_8h" startline="63">timeStruct::year</references>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="time_8c_145d9da5c4bcc5def21490ffe633b7702" prot="public" static="yes" mutable="no">
-        <type>int</type>
-        <definition>int month[12]</definition>
-        <argsstring>[12]</argsstring>
-        <name>month</name>
-        <initializer> {
-        0,
-        DAY*(31),
-        DAY*(31+29),
-        DAY*(31+29+31),
-        DAY*(31+29+31+30),
-        DAY*(31+29+31+30+31),
-        DAY*(31+29+31+30+31+30),
-        DAY*(31+29+31+30+31+30+31),
-        DAY*(31+29+31+30+31+30+31+31),
-        DAY*(31+29+31+30+31+30+31+31+30),
-        DAY*(31+29+31+30+31+30+31+31+30+31),
-        DAY*(31+29+31+30+31+30+31+31+30+31+30)
-}</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="36" bodyend="-1"/>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/time.c" line="87" column="10" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="87" bodyend="108"/>
+        <references refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" compoundref="time_8h" startline="42">DAY</references>
+        <references refid="time_8h_1a5871356500f559add06ea81d60331b1b" compoundref="time_8h" startline="43">YEAR</references>
+        <references refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" compoundref="time_8h" startline="52">timeStruct::year</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -289,127 +519,125 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: time_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="time_8h" kindref="compound">ubixos/time.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="time_8c_145d9da5c4bcc5def21490ffe633b7702" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8c_145d9da5c4bcc5def21490ffe633b7702" kindref="member">month</ref>[12]<sp/>=<sp/>{</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0,</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31),</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29),</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31),</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30),</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31),</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31+30),</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31+30+31),</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31+30+31+31),</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31+30+31+31+30),</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31+30+31+31+30+31),</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*(31+29+31+30+31+30+31+31+30+31+30)</highlight></codeline>
-<codeline lineno="49"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight></codeline>
-<codeline lineno="51" refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>addr)<sp/>{</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1f0c1dd5717007bf73b6c5119dfe7eaf2" kindref="member">outportByteP</ref>(0x70,addr);</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">((</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)<ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x71));</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="time_8h" kindref="compound">ubixos/time.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>month[12]<sp/>=<sp/>{<sp/>0,</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31),</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29),</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31),</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30),</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31),</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30),</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31),</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>31),</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>31<sp/>+<sp/>30),</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31),</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(31<sp/>+<sp/>29<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>31<sp/>+<sp/>30<sp/>+<sp/>31<sp/>+<sp/>30)<sp/>};</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>timeCmosRead(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>addr)<sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1af0c1dd5717007bf73b6c5119dfe7eaf2" kindref="member">outportByteP</ref>(0x70,<sp/>addr);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>((</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">)<sp/><ref refid="io_8h_1a77b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x71));</highlight></codeline>
+<codeline lineno="50"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="time_8c_1a45c7647a44b3b3eef8e44809180e86b5" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8c_1a45c7647a44b3b3eef8e44809180e86b5" kindref="member">time_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>time;</highlight></codeline>
 <codeline lineno="55"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56" refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8h_145c7647a44b3b3eef8e44809180e86b5" kindref="member">time_init</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i;</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>time;</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0<sp/>;<sp/>i<sp/>&lt;<sp/>1000000<sp/>;<sp/>i++)<sp/>{</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!(<ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(10)<sp/>&amp;<sp/>0x80))<sp/>{</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">do</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" kindref="member">sec</ref><sp/>=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(0);</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref><sp/>=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(2);</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref><sp/>=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(4);</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref><sp/>=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(7);</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref><sp/>=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(8);</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(9);</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(time.<ref refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" kindref="member">sec</ref><sp/>!=<sp/><ref refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" kindref="member">timeCmosRead</ref>(0));</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1da3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" kindref="member">sec</ref>);</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1da3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>);</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1da3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>);</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1da3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>);</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1da3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>);</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1da3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" kindref="member">year</ref>);</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"></highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>our<sp/>start<sp/>time<sp/>in<sp/>seconds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1c407388b447996ea3bad97aebbb5e1a6" kindref="member">timeStart</ref><sp/>=<sp/><ref refid="time_8h_150a9563bc49b27c587f341b0336bab7e" kindref="member">timeMake</ref>(&amp;time);</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"></highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;%i/%i/%i<sp/>%i:%i.%i\n&quot;</highlight><highlight class="normal">,time.<ref refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>,time.<ref refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>,time.<ref refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" kindref="member">year</ref>,time.<ref refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>,time.<ref refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>,time.<ref refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" kindref="member">sec</ref>);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>1000000;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!(timeCmosRead(10)<sp/>&amp;<sp/>0x80))<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">do</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" kindref="member">sec</ref><sp/>=<sp/>timeCmosRead(0);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref><sp/>=<sp/>timeCmosRead(2);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref><sp/>=<sp/>timeCmosRead(4);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref><sp/>=<sp/>timeCmosRead(7);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref><sp/>=<sp/>timeCmosRead(8);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>time.<ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>=<sp/>timeCmosRead(9);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(time.<ref refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" kindref="member">sec</ref><sp/>!=<sp/>timeCmosRead(0));</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" kindref="member">sec</ref>);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" kindref="member">BCD_TO_BIN</ref>(time.<ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref>);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>our<sp/>start<sp/>time<sp/>in<sp/>seconds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a338cf71b9ba1338f47fe955d417b3337" kindref="member">timeStart</ref><sp/>=<sp/><ref refid="time_8c_1ae380db5538cf415ed920ff3873aa4207" kindref="member">timeMake</ref>(&amp;time);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;%i/%i/%i<sp/>%i:%i.%i\n&quot;</highlight><highlight class="normal">,<sp/>time.<ref refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>,<sp/>time.<ref refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>,<sp/>time.<ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref>,<sp/>time.<ref refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>,<sp/>time.<ref refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>,<sp/>time.<ref refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" kindref="member">sec</ref>);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>all<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="86"><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>all<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"></highlight></codeline>
-<codeline lineno="92" refid="time_8c_150a9563bc49b27c587f341b0336bab7e" refkind="member"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="time_8h_150a9563bc49b27c587f341b0336bab7e" kindref="member">timeMake</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>*time)<sp/>{</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>res;</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" kindref="member">year</ref>;</highlight></codeline>
+<codeline lineno="87" refid="time_8c_1ae380db5538cf415ed920ff3873aa4207" refkind="member"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="time_8c_1ae380db5538cf415ed920ff3873aa4207" kindref="member">timeMake</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>*time)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>res;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>=<sp/>(time-&gt;<ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>+<sp/>100)<sp/>-<sp/>70;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>magic<sp/>offsets<sp/>(y+1)<sp/>needed<sp/>to<sp/>get<sp/>leapyears<sp/>right.*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>res<sp/>=<sp/><ref refid="time_8h_1a5871356500f559add06ea81d60331b1b" kindref="member">YEAR</ref><sp/>*<sp/><ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>+<sp/><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>((<ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>+<sp/>1)<sp/>/<sp/>4);</highlight></codeline>
 <codeline lineno="95"><highlight class="normal"></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/>year<sp/>=<sp/>(time-&gt;<ref refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" kindref="member">year</ref>+100)<sp/>-<sp/>70;</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>magic<sp/>offsets<sp/>(y+1)<sp/>needed<sp/>to<sp/>get<sp/>leapyears<sp/>right.*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/>res<sp/>=<sp/><ref refid="time_8h_15871356500f559add06ea81d60331b1b" kindref="member">YEAR</ref>*year<sp/>+<sp/><ref refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>*((year+1)/4);</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/><ref refid="time_8c_145d9da5c4bcc5def21490ffe633b7702" kindref="member">month</ref>[time-&gt;<ref refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>];</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>(y+2)<sp/>here.<sp/>If<sp/>it<sp/>wasn&apos;t<sp/>a<sp/>leap-year,<sp/>we<sp/>have<sp/>to<sp/>adjust<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(time-&gt;<ref refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>&gt;1<sp/>&amp;&amp;<sp/>((year+2)%4))</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>res<sp/>-=<sp/>DAY;</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/>DAY*(time-&gt;<ref refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>-1);</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/><ref refid="time_8h_14698ae12cf6a8acb5886fffd0ec897e6" kindref="member">HOUR</ref>*time-&gt;<ref refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>;</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/><ref refid="time_8h_1c1454fa04f41c693f39425697a137d82" kindref="member">MINUTE</ref>*time-&gt;<ref refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>;</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/>time-&gt;<ref refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" kindref="member">sec</ref>;</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(res);</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/>month[time-&gt;<ref refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>];</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>(y+2)<sp/>here.<sp/>If<sp/>it<sp/>wasn&apos;t<sp/>a<sp/>leap-year,<sp/>we<sp/>have<sp/>to<sp/>adjust<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(time-&gt;<ref refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref><sp/>&gt;<sp/>1<sp/>&amp;&amp;<sp/>((<ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref><sp/>+<sp/>2)<sp/>%<sp/>4))</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>res<sp/>-=<sp/><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/><ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref><sp/>*<sp/>(time-&gt;<ref refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref><sp/>-<sp/>1);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/><ref refid="time_8h_1a4698ae12cf6a8acb5886fffd0ec897e6" kindref="member">HOUR</ref><sp/>*<sp/>time-&gt;<ref refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/><ref refid="time_8h_1ac1454fa04f41c693f39425697a137d82" kindref="member">MINUTE</ref><sp/>*<sp/>time-&gt;<ref refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>res<sp/>+=<sp/>time-&gt;<ref refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" kindref="member">sec</ref>;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(res);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="109"><highlight class="normal"></highlight></codeline>
-<codeline lineno="110" refid="time_8c_1df30830f5265e55035171c301eb9c3fb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8h_1df30830f5265e55035171c301eb9c3fb" kindref="member">gettimeofday</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*tp,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*tzp)<sp/>{</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//tp-&gt;tv_sec<sp/><sp/>=<sp/>systemVitals-&gt;timeStart<sp/>+<sp/>systemVitals-&gt;sysUptime;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/>tp-&gt;<ref refid="structtimeval_13599199839a89e99a2ce29d45312b5cf" kindref="member">tv_sec</ref><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight><highlight class="comment">//systemVitals-&gt;sysUptime;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/>tp-&gt;<ref refid="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" kindref="member">tv_usec</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="110" refid="time_8c_1adf30830f5265e55035171c301eb9c3fb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8c_1adf30830f5265e55035171c301eb9c3fb" kindref="member">gettimeofday</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*tp,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*tzp)<sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>tp-&gt;<ref refid="structtimeval_1aef6ddab1064c430758f9f913b7e4a21e" kindref="member">tv_sec</ref><sp/><sp/>=<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a338cf71b9ba1338f47fe955d417b3337" kindref="member">timeStart</ref><sp/>+<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a78832d978f9753eb94bf615dc215f511" kindref="member">sysUptime</ref>;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>tp-&gt;<ref refid="structtimeval_1a810bf8fcd58e255a5c1896d19538b86a" kindref="member">tv_usec</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>tzp-&gt;<ref refid="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" kindref="member">tz_minuteswest</ref><sp/>=<sp/>(-5<sp/>*<sp/>60);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/>tzp-&gt;<ref refid="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" kindref="member">tz_dsttime</ref><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="116"><highlight class="normal"></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="118"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="119"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal">}</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/time.c"/>
   </compounddef>
 </doxygen>

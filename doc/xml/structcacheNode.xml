@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structcacheNode" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structcacheNode" kind="struct" language="C++" prot="public">
     <compoundname>cacheNode</compoundname>
     <includes refid="dirCache_8h" local="no">dirCache.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structcacheNode_176defc9430363558ce5a96f72fa7b1d4" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1a76defc9430363558ce5a96f72fa7b1d4" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> *</type>
         <definition>uInt16* cacheNode::attributes</definition>
         <argsstring></argsstring>
         <name>attributes</name>
@@ -15,12 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="19" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="19" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="47" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_1eebb0a0956a22f5d0ff55223aa918c53" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structcacheNode_1aeebb0a0956a22f5d0ff55223aa918c53" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int cacheNode::dirty</definition>
         <argsstring></argsstring>
@@ -31,11 +30,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="17" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="17" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_1e4ca3c2c9603c1e1f56516598dea641a" prot="public" static="no" mutable="no">
-        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1ae4ca3c2c9603c1e1f56516598dea641a" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
         <definition>struct cacheNode* cacheNode::fileListHead</definition>
         <argsstring></argsstring>
         <name>fileListHead</name>
@@ -45,14 +44,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="12" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="12" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
-        <referencedby refid="dirCache_8c_1472e166c2202b92faa451f2ae9906882" compoundref="dirCache_8c" startline="202" endline="228">ubixfs_cacheDelete</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="40" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aa31fa0816ce9018ef327f17a48b36d3c" compoundref="dirCache_8c" startline="210" endline="238">ubixfs_cacheDelete</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_1b464ff24189c8c4ceb4f5fdbbd7350fe" prot="public" static="no" mutable="no">
-        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1ab464ff24189c8c4ceb4f5fdbbd7350fe" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
         <definition>struct cacheNode* cacheNode::fileListTail</definition>
         <argsstring></argsstring>
         <name>fileListTail</name>
@@ -62,12 +59,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="13" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="13" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="41" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_142813fa0cdcca6ca1e6772bd20a9c321" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structcacheNode_1a42813fa0cdcca6ca1e6772bd20a9c321" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* cacheNode::info</definition>
         <argsstring></argsstring>
@@ -78,15 +73,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="14" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="14" bodyend="-1"/>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
-        <referencedby refid="dirCache_8c_1472e166c2202b92faa451f2ae9906882" compoundref="dirCache_8c" startline="202" endline="228">ubixfs_cacheDelete</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="42" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a6b56b9893c2a4b04598034085d8cee8c" compoundref="ubixfs_8c" startline="192" endline="220">readUbixFS</referencedby>
+        <referencedby refid="dirCache_8h_1aa31fa0816ce9018ef327f17a48b36d3c" compoundref="dirCache_8c" startline="210" endline="238">ubixfs_cacheDelete</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_1c3e3d36eedc34c8662965776ff6ba421" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structcacheNode_1ac3e3d36eedc34c8662965776ff6ba421" prot="public" static="no" mutable="no">
         <type>char *</type>
         <definition>char* cacheNode::name</definition>
         <argsstring></argsstring>
@@ -97,13 +90,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="8" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="8" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_1472e166c2202b92faa451f2ae9906882" compoundref="dirCache_8c" startline="202" endline="228">ubixfs_cacheDelete</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="36" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aa31fa0816ce9018ef327f17a48b36d3c" compoundref="dirCache_8c" startline="210" endline="238">ubixfs_cacheDelete</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_11802d3577a3722e29dd86b7849deb9dc" prot="public" static="no" mutable="no">
-        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1a1802d3577a3722e29dd86b7849deb9dc" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
         <definition>struct cacheNode* cacheNode::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -113,14 +105,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="10" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
-        <referencedby refid="dirCache_8c_1472e166c2202b92faa451f2ae9906882" compoundref="dirCache_8c" startline="202" endline="228">ubixfs_cacheDelete</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="38" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aa31fa0816ce9018ef327f17a48b36d3c" compoundref="dirCache_8c" startline="210" endline="238">ubixfs_cacheDelete</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_19703432cc616e60df366d82314ac655d" prot="public" static="no" mutable="no">
-        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1a9703432cc616e60df366d82314ac655d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
         <definition>struct cacheNode* cacheNode::parent</definition>
         <argsstring></argsstring>
         <name>parent</name>
@@ -130,13 +120,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="11" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="11" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="39" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_11eccf5ffd0b1a3479e0e630373cff5af" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1a1eccf5ffd0b1a3479e0e630373cff5af" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref> *</type>
         <definition>uInt16* cacheNode::permissions</definition>
         <argsstring></argsstring>
         <name>permissions</name>
@@ -146,13 +134,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="20" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="20" bodyend="-1"/>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="48" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_18b26b1b3dbe3f8cb72627e09e6c8e353" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structcacheNode_1a8b26b1b3dbe3f8cb72627e09e6c8e353" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int cacheNode::present</definition>
         <argsstring></argsstring>
@@ -163,15 +149,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="16" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="16" bodyend="-1"/>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="include_2ubixfs_2ubixfs_8h_1a6b56b9893c2a4b04598034085d8cee8c" compoundref="ubixfs_8c" startline="192" endline="220">readUbixFS</referencedby>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_1ae98ea1e215590d9e68e41aba8669091" prot="public" static="no" mutable="no">
-        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1aae98ea1e215590d9e68e41aba8669091" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
         <definition>struct cacheNode* cacheNode::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -181,12 +165,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="9" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="9" bodyend="-1"/>
-        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="37" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_181d33d36c4163308906d9a48ea0f9eab" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structcacheNode_1a81d33d36c4163308906d9a48ea0f9eab" prot="public" static="no" mutable="no">
         <type>int *</type>
         <definition>int* cacheNode::size</definition>
         <argsstring></argsstring>
@@ -197,14 +179,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="15" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="15" bodyend="-1"/>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="43" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structcacheNode_1a3fa99dfac99663d5448d74594120521" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> *</type>
+      <memberdef kind="variable" id="structcacheNode_1aa3fa99dfac99663d5448d74594120521" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref> *</type>
         <definition>uInt32* cacheNode::startCluster</definition>
         <argsstring></argsstring>
         <name>startCluster</name>
@@ -214,11 +194,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="18" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="18" bodyend="-1"/>
-        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
-        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
-        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
-        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="46" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="dirCache_8h_1aadfffea5ad577cecdfbc4eb7989cf193" compoundref="dirCache_8c" startline="193" endline="207">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_1a32762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="371" endline="437">ubixfs_initialize</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -226,33 +204,33 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="385">
+      <node id="1">
         <label>cacheNode</label>
         <link refid="structcacheNode"/>
-        <childnode refid="385" relation="usage">
-          <edgelabel>prev
-next
-parent
-fileListTail
-fileListHead</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+fileListTail</edgelabel>
+          <edgelabel>+fileListHead</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" line="7" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/dirCache.h" bodystart="7" bodyend="21"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" line="35" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/dirCache.h" bodystart="35" bodyend="49"/>
     <listofallmembers>
-      <member refid="structcacheNode_176defc9430363558ce5a96f72fa7b1d4" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>attributes</name></member>
-      <member refid="structcacheNode_1eebb0a0956a22f5d0ff55223aa918c53" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>dirty</name></member>
-      <member refid="structcacheNode_1e4ca3c2c9603c1e1f56516598dea641a" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>fileListHead</name></member>
-      <member refid="structcacheNode_1b464ff24189c8c4ceb4f5fdbbd7350fe" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>fileListTail</name></member>
-      <member refid="structcacheNode_142813fa0cdcca6ca1e6772bd20a9c321" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>info</name></member>
-      <member refid="structcacheNode_1c3e3d36eedc34c8662965776ff6ba421" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>name</name></member>
-      <member refid="structcacheNode_11802d3577a3722e29dd86b7849deb9dc" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>next</name></member>
-      <member refid="structcacheNode_19703432cc616e60df366d82314ac655d" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>parent</name></member>
-      <member refid="structcacheNode_11eccf5ffd0b1a3479e0e630373cff5af" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>permissions</name></member>
-      <member refid="structcacheNode_18b26b1b3dbe3f8cb72627e09e6c8e353" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>present</name></member>
-      <member refid="structcacheNode_1ae98ea1e215590d9e68e41aba8669091" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>prev</name></member>
-      <member refid="structcacheNode_181d33d36c4163308906d9a48ea0f9eab" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>size</name></member>
-      <member refid="structcacheNode_1a3fa99dfac99663d5448d74594120521" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>startCluster</name></member>
+      <member refid="structcacheNode_1a76defc9430363558ce5a96f72fa7b1d4" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>attributes</name></member>
+      <member refid="structcacheNode_1aeebb0a0956a22f5d0ff55223aa918c53" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>dirty</name></member>
+      <member refid="structcacheNode_1ae4ca3c2c9603c1e1f56516598dea641a" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>fileListHead</name></member>
+      <member refid="structcacheNode_1ab464ff24189c8c4ceb4f5fdbbd7350fe" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>fileListTail</name></member>
+      <member refid="structcacheNode_1a42813fa0cdcca6ca1e6772bd20a9c321" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>info</name></member>
+      <member refid="structcacheNode_1ac3e3d36eedc34c8662965776ff6ba421" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>name</name></member>
+      <member refid="structcacheNode_1a1802d3577a3722e29dd86b7849deb9dc" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>next</name></member>
+      <member refid="structcacheNode_1a9703432cc616e60df366d82314ac655d" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>parent</name></member>
+      <member refid="structcacheNode_1a1eccf5ffd0b1a3479e0e630373cff5af" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>permissions</name></member>
+      <member refid="structcacheNode_1a8b26b1b3dbe3f8cb72627e09e6c8e353" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>present</name></member>
+      <member refid="structcacheNode_1aae98ea1e215590d9e68e41aba8669091" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>prev</name></member>
+      <member refid="structcacheNode_1a81d33d36c4163308906d9a48ea0f9eab" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>size</name></member>
+      <member refid="structcacheNode_1aa3fa99dfac99663d5448d74594120521" prot="public" virt="non-virtual"><scope>cacheNode</scope><name>startCluster</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

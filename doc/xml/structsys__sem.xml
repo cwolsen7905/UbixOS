@@ -1,26 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structsys__sem" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__sem" kind="struct" language="C++" prot="public">
     <compoundname>sys_sem</compoundname>
+    <includes refid="sem_8h" local="no">sem.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structsys__sem_17b9a8512154232d0c7cd8b007ccabca0" prot="public" static="no" mutable="no">
-        <type>unsigned int</type>
-        <definition>unsigned int sys_sem::c</definition>
-        <argsstring></argsstring>
-        <name>c</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="116" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1af7b79a80d625789c95cb20b565424fd" compoundref="sys__arch_8c" startline="351" endline="368">sys_arch_sem_wait</referencedby>
-        <referencedby refid="sys__arch_8c_17e7a76cc67fb974dbc234d15f9b885fe" compoundref="sys__arch_8c" startline="299" endline="309">sys_sem_new_</referencedby>
-        <referencedby refid="sys__arch_8c_15dba9c7e95633e472717c75a21d96283" compoundref="sys__arch_8c" startline="370" endline="377">sys_sem_signal</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="structsys__sem_1a758e52262d23c22a40204e410b5f8c4" prot="public" static="no" mutable="no">
-        <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref></type>
+      <memberdef kind="variable" id="structsys__sem_1aa758e52262d23c22a40204e410b5f8c4" prot="public" static="no" mutable="no">
+        <type><ref refid="ubthread_8h_1a96521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref></type>
         <definition>ubthread_cond_t sys_sem::cond</definition>
         <argsstring></argsstring>
         <name>cond</name>
@@ -30,14 +15,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="117" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1af7b79a80d625789c95cb20b565424fd" compoundref="sys__arch_8c" startline="351" endline="368">sys_arch_sem_wait</referencedby>
-        <referencedby refid="sys__arch_8c_12c773782116a4e712bd8d4c591ab50d4" compoundref="sys__arch_8c" startline="385" endline="389">sys_sem_free_</referencedby>
-        <referencedby refid="sys__arch_8c_17e7a76cc67fb974dbc234d15f9b885fe" compoundref="sys__arch_8c" startline="299" endline="309">sys_sem_new_</referencedby>
-        <referencedby refid="sys__arch_8c_15dba9c7e95633e472717c75a21d96283" compoundref="sys__arch_8c" startline="370" endline="377">sys_sem_signal</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" line="38" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="sem_8c_1aa386df202c6e9b90a1445a61ce694210" compoundref="sem_8c" startline="87" endline="100">sem_destroy</referencedby>
+        <referencedby refid="sem_8c_1a19bd6e9be9540104f4ab465624e9a579" compoundref="sem_8c" startline="56" endline="73">sem_init</referencedby>
+        <referencedby refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</referencedby>
+        <referencedby refid="group__sys__sem_1gaff1dd2af219b75ae812e0b1660bd7455" compoundref="sys__arch_8c" startline="89" endline="103">sys_sem_signal</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structsys__sem_152b664ee7d03d9bc83f26009a5fd27f1" prot="public" static="no" mutable="no">
-        <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref></type>
+      <memberdef kind="variable" id="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" prot="public" static="no" mutable="no">
+        <type><ref refid="ubthread_8h_1a2b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref></type>
         <definition>ubthread_mutex_t sys_sem::mutex</definition>
         <argsstring></argsstring>
         <name>mutex</name>
@@ -47,11 +32,29 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="118" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1af7b79a80d625789c95cb20b565424fd" compoundref="sys__arch_8c" startline="351" endline="368">sys_arch_sem_wait</referencedby>
-        <referencedby refid="sys__arch_8c_12c773782116a4e712bd8d4c591ab50d4" compoundref="sys__arch_8c" startline="385" endline="389">sys_sem_free_</referencedby>
-        <referencedby refid="sys__arch_8c_17e7a76cc67fb974dbc234d15f9b885fe" compoundref="sys__arch_8c" startline="299" endline="309">sys_sem_new_</referencedby>
-        <referencedby refid="sys__arch_8c_15dba9c7e95633e472717c75a21d96283" compoundref="sys__arch_8c" startline="370" endline="377">sys_sem_signal</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" line="39" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="sem_8c_1aa386df202c6e9b90a1445a61ce694210" compoundref="sem_8c" startline="87" endline="100">sem_destroy</referencedby>
+        <referencedby refid="sem_8c_1a19bd6e9be9540104f4ab465624e9a579" compoundref="sem_8c" startline="56" endline="73">sem_init</referencedby>
+        <referencedby refid="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" compoundref="sys__arch_8c" startline="105" endline="130">sys_arch_sem_wait</referencedby>
+        <referencedby refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</referencedby>
+        <referencedby refid="group__sys__sem_1gaff1dd2af219b75ae812e0b1660bd7455" compoundref="sys__arch_8c" startline="89" endline="103">sys_sem_signal</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_sem::signaled</definition>
+        <argsstring></argsstring>
+        <name>signaled</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" line="37" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="sem_8c_1a19bd6e9be9540104f4ab465624e9a579" compoundref="sem_8c" startline="56" endline="73">sem_init</referencedby>
+        <referencedby refid="group__sys__sem_1ga28aa725e8a36dd0cfde89875af4f3ec9" compoundref="sys__arch_8c" startline="105" endline="130">sys_arch_sem_wait</referencedby>
+        <referencedby refid="group__sys__sem_1gadb68acad14b34550b9891bc11bbf4e63" compoundref="sys__arch_8c" startline="52" endline="72">sys_sem_new</referencedby>
+        <referencedby refid="group__sys__sem_1gaff1dd2af219b75ae812e0b1660bd7455" compoundref="sys__arch_8c" startline="89" endline="103">sys_sem_signal</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -59,30 +62,30 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="332">
+      <node id="2">
         <label>ubthread_mutex</label>
         <link refid="structubthread__mutex"/>
       </node>
-      <node id="333">
+      <node id="3">
         <label>ubthread_cond</label>
         <link refid="structubthread__cond"/>
       </node>
-      <node id="331">
+      <node id="1">
         <label>sys_sem</label>
         <link refid="structsys__sem"/>
-        <childnode refid="332" relation="usage">
-          <edgelabel>mutex</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+mutex</edgelabel>
         </childnode>
-        <childnode refid="333" relation="usage">
-          <edgelabel>cond</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+cond</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="115" bodyend="119"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" line="36" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sem.h" bodystart="36" bodyend="40"/>
     <listofallmembers>
-      <member refid="structsys__sem_17b9a8512154232d0c7cd8b007ccabca0" prot="public" virt="non-virtual"><scope>sys_sem</scope><name>c</name></member>
-      <member refid="structsys__sem_1a758e52262d23c22a40204e410b5f8c4" prot="public" virt="non-virtual"><scope>sys_sem</scope><name>cond</name></member>
-      <member refid="structsys__sem_152b664ee7d03d9bc83f26009a5fd27f1" prot="public" virt="non-virtual"><scope>sys_sem</scope><name>mutex</name></member>
+      <member refid="structsys__sem_1aa758e52262d23c22a40204e410b5f8c4" prot="public" virt="non-virtual"><scope>sys_sem</scope><name>cond</name></member>
+      <member refid="structsys__sem_1a52b664ee7d03d9bc83f26009a5fd27f1" prot="public" virt="non-virtual"><scope>sys_sem</scope><name>mutex</name></member>
+      <member refid="structsys__sem_1ab9e4ecb1c4448468fb820025b7c773be" prot="public" virt="non-virtual"><scope>sys_sem</scope><name>signaled</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,42 +1,167 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="sde_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="sde_8h" kind="file" language="C++">
     <compoundname>sde.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="main_8c" local="no">C:/Dev/git/UbixOS/sys/init/main.c</includedby>
+    <includedby refid="syscalls_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/syscalls.c</includedby>
+    <includedby refid="colours_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/colours.cc</includedby>
+    <includedby refid="main_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/main.cc</includedby>
+    <includedby refid="sde_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/sde.cc</includedby>
     <incdepgraph>
-      <node id="3464">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3465" relation="include">
+      <node id="12">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="3465">
+      <node id="9">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sde/sde.h</label>
+        <link refid="sde_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="3463">
-        <label>src/sys/include/sde/sde.h</label>
-        <link refid="sde.h"/>
-        <childnode refid="3464" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3467">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="3466">
-        <label>src/sys/include/sde/sde.h</label>
-        <link refid="sde.h"/>
-        <childnode refid="3467" relation="include">
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sde/sde.h</label>
+        <link refid="sde_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls.c</label>
+        <link refid="syscalls_8c"/>
       </node>
     </invincdepgraph>
     <innerclass refid="structsdeWindows" prot="public">sdeWindows</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="sde_8h_1ab4fbdc3563b230ef8c74e3302dc4409" prot="public" static="no">
+      <memberdef kind="define" id="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" prot="public" static="no">
         <name>drawWindow</name>
         <initializer>3</initializer>
         <briefdescription>
@@ -45,9 +170,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="31" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="31" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="sde_8h_109afc32ffae32aefc2fd5711bae0497e" prot="public" static="no">
+      <memberdef kind="define" id="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" prot="public" static="no">
         <name>killWindow</name>
         <initializer>4</initializer>
         <briefdescription>
@@ -56,9 +181,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="32" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="32" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="41" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="sde_8h_1a75400bbe109bd97a777d8f633e1ac8f" prot="public" static="no">
+      <memberdef kind="define" id="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" prot="public" static="no">
         <name>registerWindow</name>
         <initializer>1</initializer>
         <briefdescription>
@@ -67,9 +192,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="29" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="29" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="38" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="sde_8h_151000975c113abcc35a271eec1e4ad0c" prot="public" static="no">
+      <memberdef kind="define" id="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" prot="public" static="no">
         <name>windowReady</name>
         <initializer>2</initializer>
         <briefdescription>
@@ -78,11 +203,28 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="30" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="30" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="39" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="sde_8h_1a47bfdc448b46d6e2b1b1634bb8065365" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
+        <definition>struct sdeWindows* windows</definition>
+        <argsstring></argsstring>
+        <name>windows</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="56" column="24" bodyfile="C:/Dev/git/UbixOS/sys/sde/sde.cc" bodystart="43" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" declline="56" declcolumn="24"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="sde_8h_1a6c38d07b193857fbaebc1656b89136e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="sde_8h_1aa6c38d07b193857fbaebc1656b89136e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void sdeThread</definition>
         <argsstring>()</argsstring>
@@ -93,20 +235,44 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="37"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="43" column="6" bodyfile="C:/Dev/git/UbixOS/sys/sde/main.cc" bodystart="51" bodyend="143" declfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" declline="43" declcolumn="6"/>
+        <references refid="structsdeWindows_1a2585673aa370729dbdcab42cbcc3c194" compoundref="sde_8h" startline="51">sdeWindows::buf</references>
+        <references refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" compoundref="sde_8h" startline="40">drawWindow</references>
+        <references refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</references>
+        <references refid="structvitalsStruct_1a260b45f68a92442f30b6e9a4005ea938" compoundref="vitals_8h" startline="48">vitalsStruct::font</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" compoundref="sde_8h" startline="41">killWindow</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" compoundref="sde_8h" startline="49">sdeWindows::next</references>
+        <references refid="kprintf_8h_1a20b3409b318c04fbc25a13dc10d1c34f" compoundref="kprintf_8c" startline="257">ogprintOff</references>
+        <references refid="structsdeWindows_1a0cb99c5d505a61eca246f095da2a5a67" compoundref="sde_8h" startline="52">sdeWindows::pid</references>
+        <references refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" compoundref="sde_8h" startline="50">sdeWindows::prev</references>
+        <references refid="kprintf_8h_1a813254cfe6d658ea82f1dcdf2d927fb8" compoundref="kprintf_8c" startline="256">printOff</references>
+        <references refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" compoundref="sde_8h" startline="38">registerWindow</references>
+        <references refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" compoundref="armv6_2sched_8c" startline="244" endline="246">sched_yield</references>
+        <references refid="structvitalsStruct_1ae329bdf1a2ce69044a962e612a9eb1e6" compoundref="vitals_8h" startline="47">vitalsStruct::screen</references>
+        <references refid="main_8cc_1a4290727c1924758744edacd57ff00def" compoundref="colours_8cc" startline="42" endline="68">sdeTestThread</references>
+        <references refid="structsdeWindows_1af0f947e022d294f15fb30574e9555614" compoundref="sde_8h" startline="53">sdeWindows::status</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="vmm_8h_1aabceab91796188f211167ff9ca38fad7aaa698f3781aab937e9e3a9b2d15db15d" compoundref="vmm_8h" startline="111">VMM_KEEP</references>
+        <references refid="paging_8h_1a715dad65aea26aaf149284fd2432eff9" compoundref="paging_8c" startline="372" endline="486">vmm_mapFromTask</references>
+        <references refid="vmm_8h_1ae220b790a4c54aab2705161d861d0ce5" compoundref="unmappage_8c" startline="99" endline="112">vmm_unmapPages</references>
+        <references refid="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" compoundref="sde_8h" startline="39">windowReady</references>
+        <references refid="sde_8h_1a47bfdc448b46d6e2b1b1634bb8065365" compoundref="sde_8cc" startline="43">windows</references>
+        <referencedby refid="i386_2systemtask_8c_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="i386_2systemtask_8c" startline="46" endline="131">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="function" id="sde_8h_136ee3564247e8b4aaea26be96aafa813" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void sysSDE</definition>
-        <argsstring>(uInt32 cmd, void *ptr)</argsstring>
+      <memberdef kind="function" id="sde_8h_1a769e7f0a3b5204fd1298d710f36cdfa6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysSDE</definition>
+        <argsstring>(struct thread *td, struct sys_sde_args *args)</argsstring>
         <name>sysSDE</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-          <declname>cmd</declname>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
         </param>
         <param>
-          <type>void *</type>
-          <declname>ptr</declname>
+          <type>struct <ref refid="structsys__sde__args" kindref="compound">sys_sde_args</ref> *</type>
+          <declname>args</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -114,22 +280,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="42"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="sde_8h_147bfdc448b46d6e2b1b1634bb8065365" prot="public" static="no" mutable="no">
-        <type><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
-        <definition>struct sdeWindows* windows</definition>
-        <argsstring></argsstring>
-        <name>windows</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="52"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h" line="46" column="5" bodyfile="C:/Dev/git/UbixOS/sys/sde/sde.cc" bodystart="45" bodyend="145" declfile="C:/Dev/git/UbixOS/sys/include/sde/sde.h" declline="46" declcolumn="5"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structsys__sde__args_1aea6fdf875edf6fefaabea35e4877dc5a" compoundref="sysproto_8h" startline="82">sys_sde_args::cmd</references>
+        <references refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" compoundref="sde_8h" startline="40">drawWindow</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" compoundref="sde_8h" startline="41">killWindow</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" compoundref="sde_8h" startline="49">sdeWindows::next</references>
+        <references refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" compoundref="sde_8h" startline="50">sdeWindows::prev</references>
+        <references refid="structsys__sde__args_1af96b20b7c73aa62d87080907b7d15c8d" compoundref="sysproto_8h" startline="85">sys_sde_args::ptr</references>
+        <references refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" compoundref="sde_8h" startline="38">registerWindow</references>
+        <references refid="structvitalsStruct_1ae329bdf1a2ce69044a962e612a9eb1e6" compoundref="vitals_8h" startline="47">vitalsStruct::screen</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="41">thread::td_retval</references>
+        <references refid="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" compoundref="sde_8h" startline="39">windowReady</references>
+        <references refid="sde_8cc_1a47bfdc448b46d6e2b1b1634bb8065365" compoundref="sde_8cc" startline="43">windows</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -137,62 +304,69 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/**************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"></highlight></codeline>
-<codeline lineno="7"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
-<codeline lineno="8"><highlight class="comment">Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="10"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"></highlight></codeline>
-<codeline lineno="12"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
-<codeline lineno="13"><highlight class="comment">WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR</highlight></codeline>
-<codeline lineno="14"><highlight class="comment">PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,</highlight></codeline>
-<codeline lineno="15"><highlight class="comment">INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE</highlight></codeline>
-<codeline lineno="16"><highlight class="comment">GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment">OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
-<codeline lineno="18"><highlight class="comment">OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"></highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>$Id: sde_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"></highlight></codeline>
-<codeline lineno="22"><highlight class="comment">**************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="23"><highlight class="normal"></highlight></codeline>
-<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SDE_H</highlight></codeline>
-<codeline lineno="25"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SDE_H</highlight></codeline>
-<codeline lineno="26"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="28"><highlight class="normal"></highlight></codeline>
-<codeline lineno="29" refid="sde_8h_1a75400bbe109bd97a777d8f633e1ac8f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>registerWindow<sp/><sp/><sp/>1</highlight></codeline>
-<codeline lineno="30" refid="sde_8h_151000975c113abcc35a271eec1e4ad0c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>windowReady<sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
-<codeline lineno="31" refid="sde_8h_1ab4fbdc3563b230ef8c74e3302dc4409" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>drawWindow<sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight></codeline>
-<codeline lineno="32" refid="sde_8h_109afc32ffae32aefc2fd5711bae0497e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>killWindow<sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
-<codeline lineno="33"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight></codeline>
-<codeline lineno="35"><highlight class="preprocessor"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sde_8h_1a6c38d07b193857fbaebc1656b89136e" kindref="member">sdeThread</ref>();</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight></codeline>
-<codeline lineno="40"><highlight class="preprocessor"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="42"><highlight class="preprocessor"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sde_8h_136ee3564247e8b4aaea26be96aafa813" kindref="member">sysSDE</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>cmd,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*ptr);</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44" refid="structsdeWindows" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>{</highlight></codeline>
-<codeline lineno="45" refid="structsdeWindows_1f008683ce89047f27f58653f2f5afb07" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="structsdeWindows_1f008683ce89047f27f58653f2f5afb07" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="46" refid="structsdeWindows_1efa6d50e32f5dfa4c6556c65a067be6d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="structsdeWindows_1efa6d50e32f5dfa4c6556c65a067be6d" kindref="member">prev</ref>;</highlight></codeline>
-<codeline lineno="47" refid="structsdeWindows_12585673aa370729dbdcab42cbcc3c194" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>;</highlight></codeline>
-<codeline lineno="48" refid="structsdeWindows_10cb99c5d505a61eca246f095da2a5a67" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsdeWindows_10cb99c5d505a61eca246f095da2a5a67" kindref="member">pid</ref>;</highlight></codeline>
-<codeline lineno="49" refid="structsdeWindows_1445103adec37d00174102a06bddd94f5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsdeWindows_1445103adec37d00174102a06bddd94f5" kindref="member">status</ref>;</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="sde_8h_147bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref>;<sp/><sp/></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="55"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SDE_SDE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SDE_SDE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="sde_8h_1aa75400bbe109bd97a777d8f633e1ac8f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>registerWindow<sp/><sp/><sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="sde_8h_1a51000975c113abcc35a271eec1e4ad0c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>windowReady<sp/><sp/><sp/><sp/><sp/><sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="sde_8h_1aab4fbdc3563b230ef8c74e3302dc4409" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>drawWindow<sp/><sp/><sp/><sp/><sp/><sp/><sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="sde_8h_1a09afc32ffae32aefc2fd5711bae0497e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>killWindow<sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sde_8h_1aa6c38d07b193857fbaebc1656b89136e" kindref="member">sdeThread</ref>();</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>sysSDE(uint32_t<sp/>cmd,<sp/>void<sp/>*ptr);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sde_8h_1a769e7f0a3b5204fd1298d710f36cdfa6" kindref="member">sysSDE</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__sde__args" kindref="compound">sys_sde_args</ref><sp/>*args);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="structsdeWindows" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>{</highlight></codeline>
+<codeline lineno="49" refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="structsdeWindows_1af008683ce89047f27f58653f2f5afb07" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="structsdeWindows_1aefa6d50e32f5dfa4c6556c65a067be6d" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structsdeWindows_1a2585673aa370729dbdcab42cbcc3c194" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structsdeWindows_1a2585673aa370729dbdcab42cbcc3c194" kindref="member">buf</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structsdeWindows_1a0cb99c5d505a61eca246f095da2a5a67" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/><ref refid="structsdeWindows_1a0cb99c5d505a61eca246f095da2a5a67" kindref="member">pid</ref>;</highlight></codeline>
+<codeline lineno="53" refid="structsdeWindows_1af0f947e022d294f15fb30574e9555614" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structsdeWindows_1af0f947e022d294f15fb30574e9555614" kindref="member">status</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref><sp/>*<ref refid="sde_8h_1a47bfdc448b46d6e2b1b1634bb8065365" kindref="member">windows</ref>;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sde/sde.h"/>
   </compounddef>
 </doxygen>

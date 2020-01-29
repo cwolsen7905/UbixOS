@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structbootSect" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structbootSect" kind="struct" language="C++" prot="public">
     <compoundname>bootSect</compoundname>
-    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+    <includes refid="include_2ubixfs_2ubixfs_8h" local="no">ubixfs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structbootSect_1d3b694978c9b506183a7ee72a03c11e0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
+      <memberdef kind="variable" id="structbootSect_1ad3b694978c9b506183a7ee72a03c11e0" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a87d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
         <definition>uInt bootSect::BytesPerSector</definition>
         <argsstring></argsstring>
         <name>BytesPerSector</name>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="123" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="118" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="118" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_198509ae091dcf3f2786f81ff247132e6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a98509ae091dcf3f2786f81ff247132e6" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 bootSect::code[479]</definition>
         <argsstring>[479]</argsstring>
         <name>code</name>
@@ -28,10 +28,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="127" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="122" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="122" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_124ab1c78d0eca12bf9192e59cff2bbee" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a24ab1c78d0eca12bf9192e59cff2bbee" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 bootSect::fsStart</definition>
         <argsstring></argsstring>
         <name>fsStart</name>
@@ -41,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="120" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="120" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="115" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="115" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_1ae85f3c98c364997d5cb5144eba908d8" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="variable" id="structbootSect_1aae85f3c98c364997d5cb5144eba908d8" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 bootSect::id[6]</definition>
         <argsstring>[6]</argsstring>
         <name>id</name>
@@ -54,10 +54,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="117" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="112" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="112" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_15f089b32a62e159d1f84019db8bd8101" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a5f089b32a62e159d1f84019db8bd8101" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 bootSect::jmp[4]</definition>
         <argsstring>[4]</argsstring>
         <name>jmp</name>
@@ -67,10 +67,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="116" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="111" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="111" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_1d4072a8017255d8c119817bb4d8e7d7d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structbootSect_1ad4072a8017255d8c119817bb4d8e7d7d" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 bootSect::krnl_start</definition>
         <argsstring></argsstring>
         <name>krnl_start</name>
@@ -80,10 +80,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="122" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="117" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="117" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_14c97c815867ef4a889e2def80c02d78c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a4c97c815867ef4a889e2def80c02d78c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a87d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
         <definition>uInt bootSect::SectersPerTrack</definition>
         <argsstring></argsstring>
         <name>SectersPerTrack</name>
@@ -93,10 +93,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="124" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="124" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="119" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="119" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_15c5732429c667eb3d5a7bc728f0c753e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a5c5732429c667eb3d5a7bc728f0c753e" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 bootSect::tmp</definition>
         <argsstring></argsstring>
         <name>tmp</name>
@@ -106,10 +106,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="119" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="114" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="114" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_1926adbd4bc2bf0bbf37a1d4bab8610b6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a926adbd4bc2bf0bbf37a1d4bab8610b6" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 bootSect::tmp2</definition>
         <argsstring></argsstring>
         <name>tmp2</name>
@@ -119,10 +119,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="121" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="116" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="116" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_1125732168630ba5fe8f06ebf563d29db" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a125732168630ba5fe8f06ebf563d29db" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a87d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
         <definition>uInt bootSect::TotalHeads</definition>
         <argsstring></argsstring>
         <name>TotalHeads</name>
@@ -132,10 +132,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="125" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="125" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="120" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="120" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_1af4c006531ad59c8995b10ac165a50fc" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structbootSect_1aaf4c006531ad59c8995b10ac165a50fc" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 bootSect::TotalSectors</definition>
         <argsstring></argsstring>
         <name>TotalSectors</name>
@@ -145,10 +145,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="126" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="126" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="121" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="121" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structbootSect_1298f3862fbde8f187294d7b7bdbbd749" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structbootSect_1a298f3862fbde8f187294d7b7bdbbd749" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 bootSect::version</definition>
         <argsstring></argsstring>
         <name>version</name>
@@ -158,27 +158,33 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="118" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="113" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="113" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="115" bodyend="128"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>bootSect</label>
+        <link refid="structbootSect"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" line="110" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h" bodystart="110" bodyend="123"/>
     <listofallmembers>
-      <member refid="structbootSect_1d3b694978c9b506183a7ee72a03c11e0" prot="public" virt="non-virtual"><scope>bootSect</scope><name>BytesPerSector</name></member>
-      <member refid="structbootSect_198509ae091dcf3f2786f81ff247132e6" prot="public" virt="non-virtual"><scope>bootSect</scope><name>code</name></member>
-      <member refid="structbootSect_124ab1c78d0eca12bf9192e59cff2bbee" prot="public" virt="non-virtual"><scope>bootSect</scope><name>fsStart</name></member>
-      <member refid="structbootSect_1ae85f3c98c364997d5cb5144eba908d8" prot="public" virt="non-virtual"><scope>bootSect</scope><name>id</name></member>
-      <member refid="structbootSect_15f089b32a62e159d1f84019db8bd8101" prot="public" virt="non-virtual"><scope>bootSect</scope><name>jmp</name></member>
-      <member refid="structbootSect_1d4072a8017255d8c119817bb4d8e7d7d" prot="public" virt="non-virtual"><scope>bootSect</scope><name>krnl_start</name></member>
-      <member refid="structbootSect_14c97c815867ef4a889e2def80c02d78c" prot="public" virt="non-virtual"><scope>bootSect</scope><name>SectersPerTrack</name></member>
-      <member refid="structbootSect_15c5732429c667eb3d5a7bc728f0c753e" prot="public" virt="non-virtual"><scope>bootSect</scope><name>tmp</name></member>
-      <member refid="structbootSect_1926adbd4bc2bf0bbf37a1d4bab8610b6" prot="public" virt="non-virtual"><scope>bootSect</scope><name>tmp2</name></member>
-      <member refid="structbootSect_1125732168630ba5fe8f06ebf563d29db" prot="public" virt="non-virtual"><scope>bootSect</scope><name>TotalHeads</name></member>
-      <member refid="structbootSect_1af4c006531ad59c8995b10ac165a50fc" prot="public" virt="non-virtual"><scope>bootSect</scope><name>TotalSectors</name></member>
-      <member refid="structbootSect_1298f3862fbde8f187294d7b7bdbbd749" prot="public" virt="non-virtual"><scope>bootSect</scope><name>version</name></member>
+      <member refid="structbootSect_1ad3b694978c9b506183a7ee72a03c11e0" prot="public" virt="non-virtual"><scope>bootSect</scope><name>BytesPerSector</name></member>
+      <member refid="structbootSect_1a98509ae091dcf3f2786f81ff247132e6" prot="public" virt="non-virtual"><scope>bootSect</scope><name>code</name></member>
+      <member refid="structbootSect_1a24ab1c78d0eca12bf9192e59cff2bbee" prot="public" virt="non-virtual"><scope>bootSect</scope><name>fsStart</name></member>
+      <member refid="structbootSect_1aae85f3c98c364997d5cb5144eba908d8" prot="public" virt="non-virtual"><scope>bootSect</scope><name>id</name></member>
+      <member refid="structbootSect_1a5f089b32a62e159d1f84019db8bd8101" prot="public" virt="non-virtual"><scope>bootSect</scope><name>jmp</name></member>
+      <member refid="structbootSect_1ad4072a8017255d8c119817bb4d8e7d7d" prot="public" virt="non-virtual"><scope>bootSect</scope><name>krnl_start</name></member>
+      <member refid="structbootSect_1a4c97c815867ef4a889e2def80c02d78c" prot="public" virt="non-virtual"><scope>bootSect</scope><name>SectersPerTrack</name></member>
+      <member refid="structbootSect_1a5c5732429c667eb3d5a7bc728f0c753e" prot="public" virt="non-virtual"><scope>bootSect</scope><name>tmp</name></member>
+      <member refid="structbootSect_1a926adbd4bc2bf0bbf37a1d4bab8610b6" prot="public" virt="non-virtual"><scope>bootSect</scope><name>tmp2</name></member>
+      <member refid="structbootSect_1a125732168630ba5fe8f06ebf563d29db" prot="public" virt="non-virtual"><scope>bootSect</scope><name>TotalHeads</name></member>
+      <member refid="structbootSect_1aaf4c006531ad59c8995b10ac165a50fc" prot="public" virt="non-virtual"><scope>bootSect</scope><name>TotalSectors</name></member>
+      <member refid="structbootSect_1a298f3862fbde8f187294d7b7bdbbd749" prot="public" virt="non-virtual"><scope>bootSect</scope><name>version</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

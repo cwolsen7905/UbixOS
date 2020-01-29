@@ -1,56 +1,94 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="pci_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="pci_8h" kind="file" language="C++">
     <compoundname>pci.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
-    <includedby refid="pci_8c" local="no">src/sys/pci/pci.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <includedby refid="pci_8c" local="no">C:/Dev/git/UbixOS/sys/pci/pci.c</includedby>
     <incdepgraph>
-      <node id="3452">
-        <label>src/sys/include/pci/pci.h</label>
-        <link refid="pci.h"/>
-        <childnode refid="3453" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="3453">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3454" relation="include">
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="3454">
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/pci.h</label>
+        <link refid="pci_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3455">
-        <label>src/sys/include/pci/pci.h</label>
-        <link refid="pci.h"/>
-        <childnode refid="3456" relation="include">
-        </childnode>
-        <childnode refid="3458" relation="include">
-        </childnode>
-      </node>
-      <node id="3458">
-        <label>src/sys/pci/pci.c</label>
-        <link refid="pci_8c"/>
-      </node>
-      <node id="3457">
-        <label>src/sys/init/main.c</label>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
       </node>
-      <node id="3456">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="3457" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/pci.h</label>
+        <link refid="pci_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/pci/pci.c</label>
+        <link refid="pci_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </invincdepgraph>
     <innerclass refid="structconfadd" prot="public">confadd</innerclass>
     <innerclass refid="structpciConfig" prot="public">pciConfig</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="pci_8h_13c5cd622462bb50b6dab4c189e219eb9" prot="public" static="no">
+      <memberdef kind="define" id="pci_8h_1a3c5cd622462bb50b6dab4c189e219eb9" prot="public" static="no">
         <name>countof</name>
         <param><defname>a</defname></param>
         <initializer>(sizeof(a) / sizeof(a[0]))</initializer>
@@ -60,12 +98,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="77" bodyend="-1"/>
-        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="98" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="98" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="pci_8h_15c450b9e2534226b162a16de0ef6b434" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="pci_8h_1a5c450b9e2534226b162a16de0ef6b434" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int pci_init</definition>
         <argsstring>()</argsstring>
@@ -76,25 +113,26 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/pci.c" bodystart="292" bodyend="312"/>
-        <references refid="structpciConfig_19bfd2d9a3ba40dd32ba4f453dd1d6783" compoundref="pci_8h" startline="46">pciConfig::baseClass</references>
-        <references refid="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" compoundref="pci_8h" startline="72">confadd::bus</references>
-        <references refid="pci_8h_13c5cd622462bb50b6dab4c189e219eb9" compoundref="pci_8h" startline="77">countof</references>
-        <references refid="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" compoundref="pci_8h" startline="71">confadd::dev</references>
-        <references refid="structconfadd_1afb15c7a48b105117892b837bf2c23f2" compoundref="pci_8h" startline="70">confadd::func</references>
-        <references refid="structpciConfig_152862e778f41c948aa1fff00f7cbfaf1" compoundref="pci_8h" startline="44">pciConfig::interface</references>
-        <references refid="structpciConfig_1e9f2db7fa0eb75fd4bddff056c2e921a" compoundref="pci_8h" startline="57">pciConfig::irq</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
-        <references refid="pci_8c_14cf86f576a7ecc8e777cae716efb13d1">pciClasses</references>
-        <references refid="pci_8h_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</references>
-        <references refid="structpciConfig_1c7bc166ab3f2fc2cdc5ab88cf68e0a4d" compoundref="pci_8h" startline="45">pciConfig::subClass</references>
-        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="100" column="5" bodyfile="C:/Dev/git/UbixOS/sys/pci/pci.c" bodystart="244" bodyend="269" declfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" declline="100" declcolumn="5"/>
+        <references refid="structpciConfig_1a6ad529c48f62a51cc647c8ce9cc9c609" compoundref="pci_8h" startline="83">pciConfig::bus</references>
+        <references refid="structpciConfig_1a8e9f55ac27f0e6d5869a3a2bd9ffe6bb" compoundref="pci_8h" startline="44">pciConfig::classCode</references>
+        <references refid="pci_8h_1a3c5cd622462bb50b6dab4c189e219eb9" compoundref="pci_8h" startline="98">countof</references>
+        <references refid="structpciConfig_1aa73b7917021ebcf2ec28084faecaf35d" compoundref="pci_8h" startline="84">pciConfig::dev</references>
+        <references refid="structpciConfig_1a175cb9658f47e8b518172f0de510b96c" compoundref="pci_8h" startline="85">pciConfig::func</references>
+        <references refid="structpciConfig_1a9bbbff5574626b54e3a678dc38012a93" compoundref="pci_8h" startline="65">pciConfig::intLine</references>
+        <references refid="structpciConfig_1ab857d16aeaeacd9fa6bf825e296a7d11" compoundref="pci_8h" startline="66">pciConfig::intPin</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="37">name</references>
+        <references refid="pci_8c_1a06d7d37b951914590189751cececa69f">pciClasses</references>
+        <references refid="pci_8c_1a9a16d3ca1d4538415b752ab0c58e72ba" compoundref="pci_8c" startline="139" endline="242">pciProbe</references>
+        <references refid="structpciConfig_1afe5a1cf42dff529b250c7ee548ea812d" compoundref="pci_8h" startline="42">pciConfig::progIf</references>
+        <references refid="structpciConfig_1a83a72a5cba21bffe8359bee95d82ac58" compoundref="pci_8h" startline="43">pciConfig::subClass</references>
+        <references refid="structpciConfig_1aa9675635761800feb7a5827c100ef9ae" compoundref="pci_8h" startline="35">pciConfig::vendorID</references>
       </memberdef>
-      <memberdef kind="function" id="pci_8h_151fa422468461d6a5e06b3cea7ceb912" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
-        <definition>bool pciProbe</definition>
-        <argsstring>(int bus, int dev, int func, struct pciConfig *cfg)</argsstring>
+      <memberdef kind="function" id="pci_8h_1a9a16d3ca1d4538415b752ab0c58e72ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t pciProbe</definition>
+        <argsstring>(int bus, int dev, int func)</argsstring>
         <name>pciProbe</name>
         <param>
           <type>int</type>
@@ -108,46 +146,40 @@
           <type>int</type>
           <declname>func</declname>
         </param>
-        <param>
-          <type>struct <ref refid="structpciConfig" kindref="compound">pciConfig</ref> *</type>
-          <declname>cfg</declname>
-        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/pci.c" bodystart="236" bodyend="290"/>
-        <references refid="structpciConfig_1bb26815c9bf94949629d95ee37118a76" compoundref="pci_8h" startline="60">pciConfig::base</references>
-        <references refid="structpciConfig_19bfd2d9a3ba40dd32ba4f453dd1d6783" compoundref="pci_8h" startline="46">pciConfig::baseClass</references>
-        <references refid="structpciConfig_125432930e0aeee471b7a6152f5336180" compoundref="pci_8h" startline="51">pciConfig::bist</references>
-        <references refid="structpciConfig_11c99eb7381df726aa6471208dc6a68e2" compoundref="pci_8h" startline="54">pciConfig::bus</references>
-        <references refid="structpciConfig_1995b791fa6ade24129754af9010c3a8c" compoundref="pci_8h" startline="48">pciConfig::cacheLineSize</references>
-        <references refid="structpciConfig_1620dc11ca24ea3f4a293906ee1a87ef2" compoundref="pci_8h" startline="40">pciConfig::command</references>
-        <references refid="structpciConfig_189713ede4222cc50162ba85128f69fd0" compoundref="pci_8h" startline="55">pciConfig::dev</references>
-        <references refid="structpciConfig_14e80d873140cd94a6910dc9bafec1b16" compoundref="pci_8h" startline="38">pciConfig::deviceId</references>
-        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
-        <references refid="structpciConfig_1a59a8089cfd6f27bb37c9b99e2e243a3" compoundref="pci_8h" startline="56">pciConfig::func</references>
-        <references refid="structpciConfig_15baa44abf78576c1282ee0b5d1420bd1" compoundref="pci_8h" startline="50">pciConfig::headerType</references>
-        <references refid="structpciConfig_152862e778f41c948aa1fff00f7cbfaf1" compoundref="pci_8h" startline="44">pciConfig::interface</references>
-        <references refid="structpciConfig_1e9f2db7fa0eb75fd4bddff056c2e921a" compoundref="pci_8h" startline="57">pciConfig::irq</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structpciConfig_13d2576570a3aad52528ee4a5d8bb6ca5" compoundref="pci_8h" startline="49">pciConfig::latencyTimer</references>
-        <references refid="pci_8h_109d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="182" endline="208">pciRead</references>
-        <references refid="pci_8h_1562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="210" endline="233">pciWrite</references>
-        <references refid="structpciConfig_1067dfa928c2cc4f1427ffb7f1e43ca81" compoundref="pci_8h" startline="61">pciConfig::size</references>
-        <references refid="structpciConfig_1d8aa8608221f9729a7f609cb003dbc90" compoundref="pci_8h" startline="41">pciConfig::status</references>
-        <references refid="structpciConfig_1c7bc166ab3f2fc2cdc5ab88cf68e0a4d" compoundref="pci_8h" startline="45">pciConfig::subClass</references>
-        <references refid="structpciConfig_12742d2e9d8bb1c62246993d890f47dd0" compoundref="pci_8h" startline="64">pciConfig::subsys</references>
-        <references refid="structpciConfig_126d5cecfcd18d8d9249a6e84bb778a17" compoundref="pci_8h" startline="63">pciConfig::subsysVendor</references>
-        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
-        <references refid="structpciConfig_141aa6f820c11581dabb2664524e41a53" compoundref="pci_8h" startline="37">pciConfig::vendorId</references>
-        <references refid="ap-boot_8S_17e98760dd541754f39aa9a0060176908" compoundref="ap-boot_8S" startline="6">x10</references>
-        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="102" column="10" bodyfile="C:/Dev/git/UbixOS/sys/pci/pci.c" bodystart="139" bodyend="242" declfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" declline="102" declcolumn="10"/>
+        <references refid="structpciConfig_1a1daad32be860e62df484b3f1f3b72b5e" compoundref="pci_8h" startline="51">pciConfig::bar</references>
+        <references refid="structpciConfig_1a2add335aa360526ac46154e7777f80e6" compoundref="pci_8h" startline="49">pciConfig::bist</references>
+        <references refid="structpciConfig_1a6ad529c48f62a51cc647c8ce9cc9c609" compoundref="pci_8h" startline="83">pciConfig::bus</references>
+        <references refid="structpciConfig_1ab63a65ccdbc9fce15acb5edc3950daeb" compoundref="pci_8h" startline="46">pciConfig::cacheLineSize</references>
+        <references refid="structpciConfig_1a8e9f55ac27f0e6d5869a3a2bd9ffe6bb" compoundref="pci_8h" startline="44">pciConfig::classCode</references>
+        <references refid="structpciConfig_1aec8c642edd27bddd4671e2fbe61df627" compoundref="pci_8h" startline="38">pciConfig::command</references>
+        <references refid="structpciConfig_1aa73b7917021ebcf2ec28084faecaf35d" compoundref="pci_8h" startline="84">pciConfig::dev</references>
+        <references refid="structpciConfig_1a58628534204bc4e05e5f9020ac8350d8" compoundref="pci_8h" startline="36">pciConfig::deviceID</references>
+        <references refid="structpciConfig_1a175cb9658f47e8b518172f0de510b96c" compoundref="pci_8h" startline="85">pciConfig::func</references>
+        <references refid="structpciConfig_1a38752dcd81e2a6d67781100afa24bdf8" compoundref="pci_8h" startline="48">pciConfig::headerType</references>
+        <references refid="structpciConfig_1a9bbbff5574626b54e3a678dc38012a93" compoundref="pci_8h" startline="65">pciConfig::intLine</references>
+        <references refid="structpciConfig_1ab857d16aeaeacd9fa6bf825e296a7d11" compoundref="pci_8h" startline="66">pciConfig::intPin</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structpciConfig_1a4d9b9cdea220f31faddd3be8e4284a40" compoundref="pci_8h" startline="47">pciConfig::latencyTimer</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</references>
+        <references refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</references>
+        <references refid="structpciConfig_1afe5a1cf42dff529b250c7ee548ea812d" compoundref="pci_8h" startline="42">pciConfig::progIf</references>
+        <references refid="structpciConfig_1a96580a28f37b495264305b791c7e2620" compoundref="pci_8h" startline="39">pciConfig::status</references>
+        <references refid="structpciConfig_1a83a72a5cba21bffe8359bee95d82ac58" compoundref="pci_8h" startline="43">pciConfig::subClass</references>
+        <references refid="structpciConfig_1aa9675635761800feb7a5827c100ef9ae" compoundref="pci_8h" startline="35">pciConfig::vendorID</references>
+        <referencedby refid="pci_8c_1a5c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="244" endline="269">pci_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="pci_8h_109d5fac523ec602b928a2eeb2dc3eee6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="pci_8h_1a09d5fac523ec602b928a2eeb2dc3eee6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 pciRead</definition>
         <argsstring>(int bus, int dev, int func, int reg, int bytes)</argsstring>
         <name>pciRead</name>
@@ -177,14 +209,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/pci.c" bodystart="182" bodyend="208"/>
-        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
-        <references refid="io_8h_18d6617406b264c7f9e143adab8406791" compoundref="io_8c" startline="134" endline="142">inportDWord</references>
-        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
-        <references refid="io_8h_12e2ad8d744ae4b35ea37d39dcfea1296" compoundref="io_8c" startline="119" endline="125">outportDWord</references>
-        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="103" column="8" bodyfile="C:/Dev/git/UbixOS/sys/pci/pci.c" bodystart="76" bodyend="106" declfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" declline="103" declcolumn="8"/>
+        <references refid="structconfadd_1a183f0168efe559d9bd93c0333c633e87" compoundref="pci_8h" startline="93">confadd::bus</references>
+        <references refid="structconfadd_1a25302013455d0f821a642ca36088082d" compoundref="pci_8h" startline="92">confadd::dev</references>
+        <references refid="structconfadd_1a7e9ccb6d9b97c39e102cbedf58c22919" compoundref="pci_8h" startline="95">confadd::enable</references>
+        <references refid="structconfadd_1a29f775cd426e1c998042e0ddf3b747ce" compoundref="pci_8h" startline="91">confadd::func</references>
+        <references refid="io_8h_1a77b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="38" endline="46">inportByte</references>
+        <references refid="io_8h_1a8d6617406b264c7f9e143adab8406791" compoundref="io_8c" startline="133" endline="141">inportDWord</references>
+        <references refid="io_8h_1afb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="55" endline="63">inportWord</references>
+        <references refid="io_8h_1a2e2ad8d744ae4b35ea37d39dcfea1296" compoundref="io_8c" startline="118" endline="124">outportDWord</references>
+        <references refid="structconfadd_1a0a9c3960a73c47086fcccb9c955638c7" compoundref="pci_8h" startline="90">confadd::reg</references>
+        <referencedby refid="pci_8c_1a9a16d3ca1d4538415b752ab0c58e72ba" compoundref="pci_8c" startline="139" endline="242">pciProbe</referencedby>
       </memberdef>
-      <memberdef kind="function" id="pci_8h_1562e38dfaaab5bd65c08f7ee9769235d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="pci_8h_1a562e38dfaaab5bd65c08f7ee9769235d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void pciWrite</definition>
         <argsstring>(int bus, int dev, int func, int reg, uInt32 v, int bytes)</argsstring>
@@ -206,7 +243,7 @@
           <declname>reg</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
           <declname>v</declname>
         </param>
         <param>
@@ -219,11 +256,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/pci.c" bodystart="210" bodyend="233"/>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="io_8h_12e2ad8d744ae4b35ea37d39dcfea1296" compoundref="io_8c" startline="119" endline="125">outportDWord</references>
-        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
-        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="104" column="6" bodyfile="C:/Dev/git/UbixOS/sys/pci/pci.c" bodystart="108" bodyend="137" declfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" declline="104" declcolumn="6"/>
+        <references refid="structconfadd_1a183f0168efe559d9bd93c0333c633e87" compoundref="pci_8h" startline="93">confadd::bus</references>
+        <references refid="structconfadd_1a25302013455d0f821a642ca36088082d" compoundref="pci_8h" startline="92">confadd::dev</references>
+        <references refid="structconfadd_1a7e9ccb6d9b97c39e102cbedf58c22919" compoundref="pci_8h" startline="95">confadd::enable</references>
+        <references refid="structconfadd_1a29f775cd426e1c998042e0ddf3b747ce" compoundref="pci_8h" startline="91">confadd::func</references>
+        <references refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="72" endline="78">outportByte</references>
+        <references refid="io_8h_1a2e2ad8d744ae4b35ea37d39dcfea1296" compoundref="io_8c" startline="118" endline="124">outportDWord</references>
+        <references refid="io_8h_1a243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="103" endline="109">outportWord</references>
+        <references refid="structconfadd_1a0a9c3960a73c47086fcccb9c955638c7" compoundref="pci_8h" startline="90">confadd::reg</references>
+        <referencedby refid="pci_8c_1a9a16d3ca1d4538415b752ab0c58e72ba" compoundref="pci_8c" startline="139" endline="242">pciProbe</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -231,117 +273,113 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: pci_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_PCI_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_PCI_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="structpciConfig" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpciConfig" kindref="compound">pciConfig</ref><sp/>{</highlight></codeline>
-<codeline lineno="37" refid="structpciConfig_141aa6f820c11581dabb2664524e41a53" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpciConfig_141aa6f820c11581dabb2664524e41a53" kindref="member">vendorId</ref>;</highlight></codeline>
-<codeline lineno="38" refid="structpciConfig_14e80d873140cd94a6910dc9bafec1b16" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpciConfig_14e80d873140cd94a6910dc9bafec1b16" kindref="member">deviceId</ref>;</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40" refid="structpciConfig_1620dc11ca24ea3f4a293906ee1a87ef2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpciConfig_1620dc11ca24ea3f4a293906ee1a87ef2" kindref="member">command</ref>;</highlight></codeline>
-<codeline lineno="41" refid="structpciConfig_1d8aa8608221f9729a7f609cb003dbc90" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpciConfig_1d8aa8608221f9729a7f609cb003dbc90" kindref="member">status</ref>;</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight></codeline>
-<codeline lineno="43" refid="structpciConfig_152115c6ea1c2d6ca75dbb63aa016d478" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_152115c6ea1c2d6ca75dbb63aa016d478" kindref="member">revisionId</ref>;</highlight></codeline>
-<codeline lineno="44" refid="structpciConfig_152862e778f41c948aa1fff00f7cbfaf1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_152862e778f41c948aa1fff00f7cbfaf1" kindref="member">interface</ref>;</highlight></codeline>
-<codeline lineno="45" refid="structpciConfig_1c7bc166ab3f2fc2cdc5ab88cf68e0a4d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_1c7bc166ab3f2fc2cdc5ab88cf68e0a4d" kindref="member">subClass</ref>;</highlight></codeline>
-<codeline lineno="46" refid="structpciConfig_19bfd2d9a3ba40dd32ba4f453dd1d6783" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_19bfd2d9a3ba40dd32ba4f453dd1d6783" kindref="member">baseClass</ref>;</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight></codeline>
-<codeline lineno="48" refid="structpciConfig_1995b791fa6ade24129754af9010c3a8c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_1995b791fa6ade24129754af9010c3a8c" kindref="member">cacheLineSize</ref>;</highlight></codeline>
-<codeline lineno="49" refid="structpciConfig_13d2576570a3aad52528ee4a5d8bb6ca5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_13d2576570a3aad52528ee4a5d8bb6ca5" kindref="member">latencyTimer</ref>;</highlight></codeline>
-<codeline lineno="50" refid="structpciConfig_15baa44abf78576c1282ee0b5d1420bd1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_15baa44abf78576c1282ee0b5d1420bd1" kindref="member">headerType</ref>;</highlight></codeline>
-<codeline lineno="51" refid="structpciConfig_125432930e0aeee471b7a6152f5336180" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_125432930e0aeee471b7a6152f5336180" kindref="member">bist</ref>;</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_PCI_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_PCI_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="structpciConfig" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpciConfig" kindref="compound">pciConfig</ref><sp/>{</highlight></codeline>
+<codeline lineno="35" refid="structpciConfig_1aa9675635761800feb7a5827c100ef9ae" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1aa9675635761800feb7a5827c100ef9ae" kindref="member">vendorID</ref>;</highlight></codeline>
+<codeline lineno="36" refid="structpciConfig_1a58628534204bc4e05e5f9020ac8350d8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1a58628534204bc4e05e5f9020ac8350d8" kindref="member">deviceID</ref>;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="structpciConfig_1aec8c642edd27bddd4671e2fbe61df627" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1aec8c642edd27bddd4671e2fbe61df627" kindref="member">command</ref>;</highlight></codeline>
+<codeline lineno="39" refid="structpciConfig_1a96580a28f37b495264305b791c7e2620" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1a96580a28f37b495264305b791c7e2620" kindref="member">status</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="structpciConfig_1acd2f2d9e82ed627f9fc4c0f077764ac4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1acd2f2d9e82ed627f9fc4c0f077764ac4" kindref="member">revisionID</ref>;</highlight></codeline>
+<codeline lineno="42" refid="structpciConfig_1afe5a1cf42dff529b250c7ee548ea812d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1afe5a1cf42dff529b250c7ee548ea812d" kindref="member">progIf</ref>;</highlight></codeline>
+<codeline lineno="43" refid="structpciConfig_1a83a72a5cba21bffe8359bee95d82ac58" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a83a72a5cba21bffe8359bee95d82ac58" kindref="member">subClass</ref>;</highlight></codeline>
+<codeline lineno="44" refid="structpciConfig_1a8e9f55ac27f0e6d5869a3a2bd9ffe6bb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a8e9f55ac27f0e6d5869a3a2bd9ffe6bb" kindref="member">classCode</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="structpciConfig_1ab63a65ccdbc9fce15acb5edc3950daeb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1ab63a65ccdbc9fce15acb5edc3950daeb" kindref="member">cacheLineSize</ref>;</highlight></codeline>
+<codeline lineno="47" refid="structpciConfig_1a4d9b9cdea220f31faddd3be8e4284a40" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a4d9b9cdea220f31faddd3be8e4284a40" kindref="member">latencyTimer</ref>;</highlight></codeline>
+<codeline lineno="48" refid="structpciConfig_1a38752dcd81e2a6d67781100afa24bdf8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a38752dcd81e2a6d67781100afa24bdf8" kindref="member">headerType</ref>;</highlight></codeline>
+<codeline lineno="49" refid="structpciConfig_1a2add335aa360526ac46154e7777f80e6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a2add335aa360526ac46154e7777f80e6" kindref="member">bist</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="structpciConfig_1a1daad32be860e62df484b3f1f3b72b5e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structpciConfig_1a1daad32be860e62df484b3f1f3b72b5e" kindref="member">bar</ref>[6];</highlight></codeline>
 <codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>device<sp/>info<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="54" refid="structpciConfig_11c99eb7381df726aa6471208dc6a68e2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_11c99eb7381df726aa6471208dc6a68e2" kindref="member">bus</ref>;</highlight></codeline>
-<codeline lineno="55" refid="structpciConfig_189713ede4222cc50162ba85128f69fd0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_189713ede4222cc50162ba85128f69fd0" kindref="member">dev</ref>;</highlight></codeline>
-<codeline lineno="56" refid="structpciConfig_1a59a8089cfd6f27bb37c9b99e2e243a3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_1a59a8089cfd6f27bb37c9b99e2e243a3" kindref="member">func</ref>;</highlight></codeline>
-<codeline lineno="57" refid="structpciConfig_1e9f2db7fa0eb75fd4bddff056c2e921a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structpciConfig_1e9f2db7fa0eb75fd4bddff056c2e921a" kindref="member">irq</ref>;</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>base<sp/>registers<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="60" refid="structpciConfig_1bb26815c9bf94949629d95ee37118a76" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structpciConfig_1bb26815c9bf94949629d95ee37118a76" kindref="member">base</ref>[6];</highlight></codeline>
-<codeline lineno="61" refid="structpciConfig_1067dfa928c2cc4f1427ffb7f1e43ca81" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structpciConfig_1067dfa928c2cc4f1427ffb7f1e43ca81" kindref="member">size</ref>[6];</highlight></codeline>
+<codeline lineno="53" refid="structpciConfig_1add2d8420e97686ad79b140e53c28a09e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structpciConfig_1add2d8420e97686ad79b140e53c28a09e" kindref="member">cbPointer</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structpciConfig_1a0df9b94d789adf4d6520522e500cdc9a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1a0df9b94d789adf4d6520522e500cdc9a" kindref="member">subsysVendorID</ref>;</highlight></codeline>
+<codeline lineno="56" refid="structpciConfig_1a27c53bcef0585b298dbc1de72dbd0e35" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1a27c53bcef0585b298dbc1de72dbd0e35" kindref="member">subsysID</ref>;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="structpciConfig_1a645de37814e9c632d94c04b2f94516b6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structpciConfig_1a645de37814e9c632d94c04b2f94516b6" kindref="member">epromAddr</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="structpciConfig_1a7b266768c61d834fefb13c9e9e1c8843" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1a7b266768c61d834fefb13c9e9e1c8843" kindref="member">capabilites</ref>;</highlight></codeline>
+<codeline lineno="61" refid="structpciConfig_1a9b07b9a18acbece2ba940db0f94dafe9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structpciConfig_1a9b07b9a18acbece2ba940db0f94dafe9" kindref="member">res1</ref>;</highlight></codeline>
 <codeline lineno="62"><highlight class="normal"></highlight></codeline>
-<codeline lineno="63" refid="structpciConfig_126d5cecfcd18d8d9249a6e84bb778a17" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpciConfig_126d5cecfcd18d8d9249a6e84bb778a17" kindref="member">subsysVendor</ref>;</highlight></codeline>
-<codeline lineno="64" refid="structpciConfig_12742d2e9d8bb1c62246993d890f47dd0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpciConfig_12742d2e9d8bb1c62246993d890f47dd0" kindref="member">subsys</ref>;</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight></codeline>
-<codeline lineno="68" refid="structconfadd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structconfadd" kindref="compound">confadd</ref><sp/>{</highlight></codeline>
-<codeline lineno="69" refid="structconfadd_168dbcf1a10079c788ebf7b7cebb58125" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structconfadd_168dbcf1a10079c788ebf7b7cebb58125" kindref="member">reg</ref>:8;</highlight></codeline>
-<codeline lineno="70" refid="structconfadd_1afb15c7a48b105117892b837bf2c23f2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structconfadd_1afb15c7a48b105117892b837bf2c23f2" kindref="member">func</ref>:3;</highlight></codeline>
-<codeline lineno="71" refid="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" kindref="member">dev</ref>:5;</highlight></codeline>
-<codeline lineno="72" refid="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" kindref="member">bus</ref>:8;</highlight></codeline>
-<codeline lineno="73" refid="structconfadd_15899cc614af11f99fab8391fbe8022b7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structconfadd_15899cc614af11f99fab8391fbe8022b7" kindref="member">rsvd</ref>:7;</highlight></codeline>
-<codeline lineno="74" refid="structconfadd_1c2dd33e1c67afa8930a230ff6c222615" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structconfadd_1c2dd33e1c67afa8930a230ff6c222615" kindref="member">enable</ref>:1;</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight></codeline>
-<codeline lineno="77" refid="pci_8h_13c5cd622462bb50b6dab4c189e219eb9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>countof(a)<sp/><sp/><sp/><sp/><sp/>(sizeof(a)<sp/>/<sp/>sizeof(a[0]))</highlight></codeline>
-<codeline lineno="78"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="pci_8h_15c450b9e2534226b162a16de0ef6b434" kindref="member">pci_init</ref>();</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight></codeline>
-<codeline lineno="81"><highlight class="normal"></highlight></codeline>
-<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="pci_8h_151fa422468461d6a5e06b3cea7ceb912" kindref="member">pciProbe</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bus,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dev,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>func,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpciConfig" kindref="compound">pciConfig</ref><sp/>*cfg);</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="pci_8h_109d5fac523ec602b928a2eeb2dc3eee6" kindref="member">pciRead</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bus,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dev,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>func,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>reg,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bytes);</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="pci_8h_1562e38dfaaab5bd65c08f7ee9769235d" kindref="member">pciWrite</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bus,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dev,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>func,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>reg,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>v,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bytes);</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"></highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="87"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="89"><highlight class="comment"><sp/>$Log: pci_8h.xml,v $
-<codeline lineno="89"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
-<codeline lineno="89"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="89"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="92"><highlight class="comment"></highlight></codeline>
-<codeline lineno="93"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="94"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="95"><highlight class="comment"></highlight></codeline>
-<codeline lineno="96"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:51<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="97"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="98"><highlight class="comment"></highlight></codeline>
-<codeline lineno="99"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/08/20<sp/>16:49:11<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="100"><highlight class="comment"><sp/>PCI<sp/>Updates<sp/>-<sp/>More<sp/>to<sp/>follow<sp/>as<sp/>PCI<sp/>system<sp/>gets<sp/>revamped</highlight></codeline>
-<codeline lineno="101"><highlight class="comment"></highlight></codeline>
-<codeline lineno="102"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:05:07<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="103"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="104"><highlight class="comment"></highlight></codeline>
-<codeline lineno="105"><highlight class="comment"></highlight></codeline>
-<codeline lineno="106"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="107"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="structpciConfig_1a1bf30873715c7de1e913784409c3c155" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structpciConfig_1a1bf30873715c7de1e913784409c3c155" kindref="member">res2</ref>;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="structpciConfig_1a9bbbff5574626b54e3a678dc38012a93" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a9bbbff5574626b54e3a678dc38012a93" kindref="member">intLine</ref>;</highlight></codeline>
+<codeline lineno="66" refid="structpciConfig_1ab857d16aeaeacd9fa6bf825e296a7d11" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1ab857d16aeaeacd9fa6bf825e296a7d11" kindref="member">intPin</ref>;</highlight></codeline>
+<codeline lineno="67" refid="structpciConfig_1a2767786af8800e041a384f84104a6d80" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a2767786af8800e041a384f84104a6d80" kindref="member">minGrant</ref>;</highlight></codeline>
+<codeline lineno="68" refid="structpciConfig_1a05a8bb4e013e7f7ab2054501bb712c06" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a05a8bb4e013e7f7ab2054501bb712c06" kindref="member">maxLatency</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>device<sp/>info<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint8_t<sp/><sp/>bus;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint8_t<sp/><sp/>dev;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint8_t<sp/><sp/>func;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint8_t<sp/><sp/>irq;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint8_t<sp/>irqLine;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>base<sp/>registers<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uInt32<sp/>base[6];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uInt32<sp/>size[6];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint16_t<sp/>subsysVendor;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//uint16_t<sp/>subsys;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Device<sp/>Info<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//Move<sp/>this<sp/>to<sp/>anotther<sp/>struct<sp/>eventually</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="structpciConfig_1a6ad529c48f62a51cc647c8ce9cc9c609" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a6ad529c48f62a51cc647c8ce9cc9c609" kindref="member">bus</ref>;</highlight></codeline>
+<codeline lineno="84" refid="structpciConfig_1aa73b7917021ebcf2ec28084faecaf35d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1aa73b7917021ebcf2ec28084faecaf35d" kindref="member">dev</ref>;</highlight></codeline>
+<codeline lineno="85" refid="structpciConfig_1a175cb9658f47e8b518172f0de510b96c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structpciConfig_1a175cb9658f47e8b518172f0de510b96c" kindref="member">func</ref>;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="structconfadd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structconfadd" kindref="compound">confadd</ref><sp/>{</highlight></codeline>
+<codeline lineno="90" refid="structconfadd_1a0a9c3960a73c47086fcccb9c955638c7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structconfadd_1a0a9c3960a73c47086fcccb9c955638c7" kindref="member">reg</ref><sp/>:8;</highlight></codeline>
+<codeline lineno="91" refid="structconfadd_1a29f775cd426e1c998042e0ddf3b747ce" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structconfadd_1a29f775cd426e1c998042e0ddf3b747ce" kindref="member">func</ref><sp/>:3;</highlight></codeline>
+<codeline lineno="92" refid="structconfadd_1a25302013455d0f821a642ca36088082d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structconfadd_1a25302013455d0f821a642ca36088082d" kindref="member">dev</ref><sp/>:5;</highlight></codeline>
+<codeline lineno="93" refid="structconfadd_1a183f0168efe559d9bd93c0333c633e87" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structconfadd_1a183f0168efe559d9bd93c0333c633e87" kindref="member">bus</ref><sp/>:8;</highlight></codeline>
+<codeline lineno="94" refid="structconfadd_1a595d0f91c5459eb66c3777fd30861bca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structconfadd_1a595d0f91c5459eb66c3777fd30861bca" kindref="member">rsvd</ref><sp/>:7;</highlight></codeline>
+<codeline lineno="95" refid="structconfadd_1a7e9ccb6d9b97c39e102cbedf58c22919" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structconfadd_1a7e9ccb6d9b97c39e102cbedf58c22919" kindref="member">enable</ref><sp/>:1;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="pci_8h_1a3c5cd622462bb50b6dab4c189e219eb9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>countof(a)<sp/><sp/><sp/><sp/><sp/>(sizeof(a)<sp/>/<sp/>sizeof(a[0]))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="pci_8h_1a5c450b9e2534226b162a16de0ef6b434" kindref="member">pci_init</ref>();</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="pci_8h_1a9a16d3ca1d4538415b752ab0c58e72ba" kindref="member">pciProbe</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bus,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dev,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>func);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="pci_8h_1a09d5fac523ec602b928a2eeb2dc3eee6" kindref="member">pciRead</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bus,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dev,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>func,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>reg,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bytes);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="pci_8h_1a562e38dfaaab5bd65c08f7ee9769235d" kindref="member">pciWrite</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bus,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>dev,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>func,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>reg,<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>v,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>bytes);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h"/>
   </compounddef>
 </doxygen>

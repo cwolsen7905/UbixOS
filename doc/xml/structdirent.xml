@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdirent" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdirent" kind="struct" language="C++" prot="public">
     <compoundname>dirent</compoundname>
     <includes refid="ufs_8h" local="no">ufs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structdirent_10aa21d56704896b87f8a39ecba4f3731" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
+      <memberdef kind="variable" id="structdirent_1a0aa21d56704896b87f8a39ecba4f3731" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1acaa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
         <definition>__uint32_t dirent::d_fileno</definition>
         <argsstring></argsstring>
         <name>d_fileno</name>
@@ -15,10 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="113" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="113" bodyend="-1"/>
-        <referencedby refid="ufs_8c_1ccfc6cc8f916e7f58db4ac350bdc1e9b" compoundref="ufs_8c" startline="214" endline="233">fsfind</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="93" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="93" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirent_18cb13e39a90c43e6b180ff4f1614e4da" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structdirent_1a8cb13e39a90c43e6b180ff4f1614e4da" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char dirent::d_name[255+1]</definition>
         <argsstring>[255+1]</argsstring>
@@ -29,11 +28,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="117" bodyend="-1"/>
-        <referencedby refid="ufs_8c_1ccfc6cc8f916e7f58db4ac350bdc1e9b" compoundref="ufs_8c" startline="214" endline="233">fsfind</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="97" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="97" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirent_1fd25358244d313ebc9a76cf6cdb4f36a" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref></type>
+      <memberdef kind="variable" id="structdirent_1afd25358244d313ebc9a76cf6cdb4f36a" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a25875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref></type>
         <definition>__uint8_t dirent::d_namlen</definition>
         <argsstring></argsstring>
         <name>d_namlen</name>
@@ -43,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="116" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="96" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="96" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirent_16ca250ead8b04b71ea787acbd29b6b75" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_128989c8f3e511d5c6a9fd46b1adc1ee0" kindref="member">__uint16_t</ref></type>
+      <memberdef kind="variable" id="structdirent_1a6ca250ead8b04b71ea787acbd29b6b75" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a28989c8f3e511d5c6a9fd46b1adc1ee0" kindref="member">__uint16_t</ref></type>
         <definition>__uint16_t dirent::d_reclen</definition>
         <argsstring></argsstring>
         <name>d_reclen</name>
@@ -56,11 +54,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="114" bodyend="-1"/>
-        <referencedby refid="ufs_8c_1ccfc6cc8f916e7f58db4ac350bdc1e9b" compoundref="ufs_8c" startline="214" endline="233">fsfind</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="94" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="94" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structdirent_1a850909d0a98e07d0ccd6232d28ed133" prot="public" static="no" mutable="no">
-        <type><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref></type>
+      <memberdef kind="variable" id="structdirent_1aa850909d0a98e07d0ccd6232d28ed133" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1a25875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref></type>
         <definition>__uint8_t dirent::d_type</definition>
         <argsstring></argsstring>
         <name>d_type</name>
@@ -70,21 +67,26 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="115" bodyend="-1"/>
-        <referencedby refid="ufs_8c_1ccfc6cc8f916e7f58db4ac350bdc1e9b" compoundref="ufs_8c" startline="214" endline="233">fsfind</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="95" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="95" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="112" bodyend="118"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>dirent</label>
+        <link refid="structdirent"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="92" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="92" bodyend="98"/>
     <listofallmembers>
-      <member refid="structdirent_10aa21d56704896b87f8a39ecba4f3731" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_fileno</name></member>
-      <member refid="structdirent_18cb13e39a90c43e6b180ff4f1614e4da" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_name</name></member>
-      <member refid="structdirent_1fd25358244d313ebc9a76cf6cdb4f36a" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_namlen</name></member>
-      <member refid="structdirent_16ca250ead8b04b71ea787acbd29b6b75" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_reclen</name></member>
-      <member refid="structdirent_1a850909d0a98e07d0ccd6232d28ed133" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_type</name></member>
+      <member refid="structdirent_1a0aa21d56704896b87f8a39ecba4f3731" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_fileno</name></member>
+      <member refid="structdirent_1a8cb13e39a90c43e6b180ff4f1614e4da" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_name</name></member>
+      <member refid="structdirent_1afd25358244d313ebc9a76cf6cdb4f36a" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_namlen</name></member>
+      <member refid="structdirent_1a6ca250ead8b04b71ea787acbd29b6b75" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_reclen</name></member>
+      <member refid="structdirent_1aa850909d0a98e07d0ccd6232d28ed133" prot="public" virt="non-virtual"><scope>dirent</scope><name>d_type</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

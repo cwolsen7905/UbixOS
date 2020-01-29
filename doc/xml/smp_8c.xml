@@ -1,76 +1,206 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="smp_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="smp_8c" kind="file" language="C++">
     <compoundname>smp.c</compoundname>
     <includes refid="smp_8h" local="no">ubixos/smp.h</includes>
     <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
     <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
-    <includes refid="lib_2string_8h" local="no">lib/string.h</includes>
+    <includes local="no">lib/string.h</includes>
     <includes refid="io_8h" local="no">sys/io.h</includes>
     <incdepgraph>
-      <node id="5445">
+      <node id="13">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="11">
         <label>ubixos/kpanic.h</label>
         <link refid="kpanic_8h"/>
       </node>
-      <node id="5444">
-        <label>ubixos/spinlock.h</label>
-        <link refid="spinlock_8h"/>
-        <childnode refid="5442" relation="include">
-        </childnode>
-      </node>
-      <node id="5441">
-        <label>ubixos/smp.h</label>
-        <link refid="smp_8h"/>
-        <childnode refid="5442" relation="include">
-        </childnode>
-      </node>
-      <node id="5442">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5443" relation="include">
-        </childnode>
-      </node>
-      <node id="5443">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="5447">
-        <label>lib/string.h</label>
-        <link refid="lib_2string_8h"/>
-        <childnode refid="5442" relation="include">
-        </childnode>
-      </node>
-      <node id="5446">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5442" relation="include">
-        </childnode>
-      </node>
-      <node id="5440">
-        <label>src/sys/kernel/smp.c</label>
-        <link refid="smp.c"/>
-        <childnode refid="5441" relation="include">
-        </childnode>
-        <childnode refid="5444" relation="include">
-        </childnode>
-        <childnode refid="5445" relation="include">
-        </childnode>
-        <childnode refid="5446" relation="include">
-        </childnode>
-        <childnode refid="5447" relation="include">
-        </childnode>
-        <childnode refid="5448" relation="include">
-        </childnode>
-      </node>
-      <node id="5448">
+      <node id="15">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>lib/string.h</label>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ubixos/smp.h</label>
+        <link refid="smp_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kernel/smp.c</label>
+        <link refid="smp_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
     <innerclass refid="structgdt__descr" prot="public">gdt_descr</innerclass>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="smp_8c_1a8077b4068df4916596e7f7b737139b81" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structspinLock" kindref="compound">spinLock</ref></type>
+        <definition>struct spinLock bkl</definition>
+        <argsstring></argsstring>
+        <name>bkl</name>
+        <initializer>= <ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="113" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref></type>
+        <definition>struct cpuinfo_t cpuinfo[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>cpuinfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="38" column="15" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="smp_8c_1ae0d1ca1679c6e54636d44d69e2c44f9d" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structspinLock" kindref="compound">spinLock</ref></type>
+        <definition>struct spinLock cpuInfoLock</definition>
+        <argsstring></argsstring>
+        <name>cpuInfoLock</name>
+        <initializer>= <ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="80" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="smp_8c_1a29c1aa6c61dfac505825b96920fa447d" prot="public" static="yes" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
+        <definition>uInt32 cpus</definition>
+        <argsstring></argsstring>
+        <name>cpus</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="38" column="15" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="smp_8c_1abef54cc16ef7a2ca9a82990a547239fe" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structspinLock" kindref="compound">spinLock</ref></type>
+        <definition>struct spinLock initSpinLock</definition>
+        <argsstring></argsstring>
+        <name>initSpinLock</name>
+        <initializer>= <ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="80" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> *</type>
+        <definition>uInt8* vram</definition>
+        <argsstring></argsstring>
+        <name>vram</name>
+        <initializer>= (<ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> *)0xB8000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="42" column="7" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="42" bodyend="-1"/>
+        <referencedby refid="smp_8c_1a66c37e11ba7abfcafc63146553b2cd16" compoundref="smp_8c" startline="95" endline="100">cpu0_thread</referencedby>
+        <referencedby refid="smp_8c_1a5e82e9f1e0fec1ac5db2ebd16652a043" compoundref="smp_8c" startline="101" endline="106">cpu1_thread</referencedby>
+        <referencedby refid="smp_8c_1acfec913213194039ad31b2602bf8af4f" compoundref="smp_8c" startline="107" endline="112">cpu2_thread</referencedby>
+        <referencedby refid="smp_8c_1a13735e9644e3c9a01bfc7785b31691ab" compoundref="smp_8c" startline="113" endline="118">cpu3_thread</referencedby>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="smp_8c_1e4dc28abba9d6b02a779ca1b8ffecd98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1ae4dc28abba9d6b02a779ca1b8ffecd98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void ap_trampoline_end</definition>
         <argsstring>()</argsstring>
@@ -81,10 +211,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="233"/>
-        <referencedby refid="smp_8c_170e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="234" endline="248">apicMagic</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="230" column="1" declfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" declline="230" declcolumn="1"/>
+        <referencedby refid="smp_8c_1a70e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="231" endline="251">apicMagic</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1f4f760b6cb0a871253009bb20d70657d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1af4f760b6cb0a871253009bb20d70657d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void ap_trampoline_start</definition>
         <argsstring>()</argsstring>
@@ -95,9 +225,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="233"/>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="229" column="13"/>
+        <referencedby refid="smp_8c_1a70e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="231" endline="251">apicMagic</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_170e557cb01aee676855cee05b0769288" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a70e557cb01aee676855cee05b0769288" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void apicMagic</definition>
         <argsstring>(void)</argsstring>
@@ -111,16 +242,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="234" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="234" bodyend="248"/>
-        <references refid="smp_8c_1e4dc28abba9d6b02a779ca1b8ffecd98">ap_trampoline_end</references>
-        <references refid="ap-boot_8S_1b1cb92a8709c60591691af45d450d9f3" compoundref="ap-boot_8S" startline="6">ap_trampoline_start</references>
-        <references refid="smp_8c_198935271c68a482c194d4c784d814ddd" compoundref="smp_8c" startline="45" endline="47">apicRead</references>
-        <references refid="smp_8c_1ab4a831897afae67446bf78c88123749" compoundref="smp_8c" startline="49" endline="51">apicWrite</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="231" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="231" bodyend="251"/>
+        <references refid="smp_8c_1ae4dc28abba9d6b02a779ca1b8ffecd98">ap_trampoline_end</references>
+        <references refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d">ap_trampoline_start</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_198935271c68a482c194d4c784d814ddd" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a98935271c68a482c194d4c784d814ddd" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type>unsigned int</type>
         <definition>static unsigned int apicRead</definition>
         <argsstring>(address)</argsstring>
@@ -134,11 +262,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="45" bodyend="47"/>
-        <referencedby refid="smp_8c_170e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="234" endline="248">apicMagic</referencedby>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="44" column="28" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="44" bodyend="46"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1ab4a831897afae67446bf78c88123749" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1aab4a831897afae67446bf78c88123749" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type>void</type>
         <definition>static void apicWrite</definition>
         <argsstring>(unsigned int address, unsigned int data)</argsstring>
@@ -157,42 +283,41 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="49" bodyend="51"/>
-        <referencedby refid="smp_8c_170e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="234" endline="248">apicMagic</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="48" column="20" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="48" bodyend="50"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_18325315e2d1f564d9777ebd849c3296c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a2004a7b1e5303bb8df2017d0db19e1db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>asm</definition>
-        <argsstring>(&quot;.globl cpuid            \n&quot;&quot;cpuid:                  \n&quot;&quot;  pushl   %ebx          \n&quot;&quot;  pushl   %edi          \n&quot;&quot;  movl    12(%esp),%eax \n&quot;&quot;  movl    16(%esp),%edi \n&quot;&quot;  cpuid                 \n&quot;&quot;  movl    %eax,0(%edi)  \n&quot;&quot;  movl    %ebx,4(%edi)  \n&quot;&quot;  movl    %ecx,8(%edi)  \n&quot;&quot;  movl    %edx,12(%edi) \n&quot;&quot;  popl    %edi          \n&quot;&quot;  popl    %ebx          \n&quot;&quot;  ret                   \n&quot;)</argsstring>
+        <argsstring>(&quot;.globl cpuid            \n&quot; &quot;cpuid:                  \n&quot; &quot;  pushl   %ebx          \n&quot; &quot;  pushl   %edi          \n&quot; &quot;  movl    12(%esp),%eax \n&quot; &quot;  movl    16(%esp),%edi \n&quot; &quot;  cpuid                 \n&quot; &quot;  movl    %eax,0(%edi)  \n&quot; &quot;  movl    %ebx,4(%edi)  \n&quot; &quot;  movl    %ecx,8(%edi)  \n&quot; &quot;  movl    %edx,12(%edi) \n&quot; &quot;  popl    %edi          \n&quot; &quot;  popl    %ebx          \n&quot; &quot;  ret                   \n&quot;)</argsstring>
         <name>asm</name>
         <param>
-          <type>&quot;.globl cpuid \n&quot;&quot;cpuid: \n&quot;&quot; pushl %<ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> \n&quot;&quot; pushl %<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> \n&quot;&quot; movl </type>
+          <type>&quot;.globl <ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref> \n&quot; &quot;cpuid: \n&quot; &quot; pushl %ebx \n&quot; &quot; pushl %edi \n&quot; &quot; movl </type>
           <declname>12</declname>
-          <array>(%esp)</array>
+          <array>%esp</array>
         </param>
         <param>
-          <type>%<ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref>\n&quot;&quot;movl </type>
+          <type>%eax \n&quot; &quot; movl </type>
           <declname>16</declname>
-          <array>(%esp)</array>
+          <array>%esp</array>
         </param>
         <param>
-          <type>%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>\n&quot;&quot;cpuid\n&quot;&quot;movl%</type>
+          <type>%edi \n&quot; &quot; <ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref> \n&quot; &quot; movl %</type>
           <declname>eax</declname>
         </param>
         <param>
-          <type>0(%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>)\n&quot;&quot;movl%</type>
+          <type>0(%edi) \n&quot; &quot; movl %</type>
           <declname>ebx</declname>
         </param>
         <param>
-          <type>4(%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>)\n&quot;&quot;movl%</type>
+          <type>4(%edi) \n&quot; &quot; movl %</type>
           <declname>ecx</declname>
         </param>
         <param>
-          <type>8(%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>)\n&quot;&quot;movl%</type>
+          <type>8(%edi) \n&quot; &quot; movl %</type>
           <declname>edx</declname>
         </param>
         <param>
-          <type>12(%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>)\n&quot;&quot;popl%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>\n&quot;&quot;popl%<ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref>\n&quot;&quot;ret\n&quot;</type>
+          <type>12(%edi) \n&quot; &quot; popl %edi \n&quot; &quot; popl %ebx \n&quot; &quot; ret \n&quot;</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -200,9 +325,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="286"/>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="272" column="1" declfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" declline="272" declcolumn="1"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1ac7cb5b4b2fbc61966a6dfc8044a7b800" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void c_ap_boot</definition>
         <argsstring>(void)</argsstring>
@@ -216,17 +341,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="137" bodyend="158"/>
-        <references refid="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" compoundref="smp_8c" startline="103" endline="108">cpu1_thread</references>
-        <references refid="smp_8c_1cfec913213194039ad31b2602bf8af4f" compoundref="smp_8c" startline="109" endline="114">cpu2_thread</references>
-        <references refid="smp_8c_113735e9644e3c9a01bfc7785b31691ab" compoundref="smp_8c" startline="115" endline="120">cpu3_thread</references>
-        <references refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</references>
-        <references refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" compoundref="smp_8c" startline="37">initSpinLock</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="spinlock_8h_1cba75fe5ed894dc88030f7458b114a94" compoundref="spinlock_8c" startline="70" endline="72">spinLockLocked</references>
-        <references refid="ap-boot_8S_1d58beb3879ac361d068b0618ba2d7620" compoundref="ap-boot_8S" startline="6">xe9</references>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="133" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="133" bodyend="154"/>
+        <references refid="armv6_2spinlock_8c_1a6c0fe254de396873793ccc16915a6631" compoundref="armv6_2spinlock_8c" startline="69" endline="71">spinLockLocked</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_166c37e11ba7abfcafc63146553b2cd16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a66c37e11ba7abfcafc63146553b2cd16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpu0_thread</definition>
         <argsstring>(void)</argsstring>
@@ -240,11 +358,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="97" bodyend="102"/>
-        <references refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</references>
-        <references refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="43">vram</references>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="95" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="95" bodyend="100"/>
+        <references refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="121" endline="131">kernel_function</references>
+        <references refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="42">vram</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a5e82e9f1e0fec1ac5db2ebd16652a043" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpu1_thread</definition>
         <argsstring>(void)</argsstring>
@@ -258,12 +376,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="103" bodyend="108"/>
-        <references refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</references>
-        <references refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="43">vram</references>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="101" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="101" bodyend="106"/>
+        <references refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="121" endline="131">kernel_function</references>
+        <references refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="42">vram</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1cfec913213194039ad31b2602bf8af4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1acfec913213194039ad31b2602bf8af4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpu2_thread</definition>
         <argsstring>(void)</argsstring>
@@ -277,12 +394,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="109" bodyend="114"/>
-        <references refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</references>
-        <references refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="43">vram</references>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="107" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="107" bodyend="112"/>
+        <references refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="121" endline="131">kernel_function</references>
+        <references refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="42">vram</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_113735e9644e3c9a01bfc7785b31691ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a13735e9644e3c9a01bfc7785b31691ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpu3_thread</definition>
         <argsstring>(void)</argsstring>
@@ -296,12 +412,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="115" bodyend="120"/>
-        <references refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</references>
-        <references refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="43">vram</references>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="113" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="113" bodyend="118"/>
+        <references refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="121" endline="131">kernel_function</references>
+        <references refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" compoundref="smp_8c" startline="42">vram</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1c89d80447fce7d622c7dfc6620039600" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1ac89d80447fce7d622c7dfc6620039600" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void cpuidDetect</definition>
         <argsstring>()</argsstring>
@@ -312,14 +427,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="173" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="173" bodyend="180"/>
-        <references refid="smp_8h_1abe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="252" endline="260">getEflags</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" compoundref="smp_8c" startline="262" endline="269">setEflags</references>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="168" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="168" bodyend="175"/>
+        <references refid="smp_8c_1aabe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="253" endline="261">getEflags</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" compoundref="smp_8c" startline="263" endline="270">setEflags</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="function" id="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 cpuInfo</definition>
         <argsstring>()</argsstring>
         <name>cpuInfo</name>
@@ -329,33 +443,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="182" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="182" bodyend="231"/>
-        <references refid="structcpuinfo__t_1a76ba6d81506e6a5d086cb8c61a6246f" compoundref="smp_8h" startline="38">cpuinfo_t::apic_id</references>
-        <references refid="structcpuinfo__t_17b9f17434cf958ae23150aea98a91724" compoundref="smp_8h" startline="38">cpuinfo_t::apic_ver</references>
-        <references refid="smp_8c_198935271c68a482c194d4c784d814ddd" compoundref="smp_8c" startline="45" endline="47">apicRead</references>
-        <references refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" compoundref="smp_8h" startline="42">cpuinfo_t::brand</references>
-        <references refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f">cpuid</references>
-        <references refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" compoundref="smp_8c" startline="40">cpuinfo</references>
-        <references refid="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" compoundref="smp_8c" startline="38">cpuInfoLock</references>
-        <references refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" compoundref="smp_8c" startline="39">cpus</references>
-        <references refid="structcpuinfo__t_1b8935d0ed0f78c40e238027b807d2ee7" compoundref="smp_8h" startline="40">cpuinfo_t::feature</references>
-        <references refid="smp_8h_1abe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="252" endline="260">getEflags</references>
-        <references refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" compoundref="smp_8h" startline="36">cpuinfo_t::id</references>
-        <references refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" compoundref="smp_8h" startline="43">cpuinfo_t::ident</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="structcpuinfo__t_1666edb35af6b506907e999f0c29ee91f" compoundref="smp_8h" startline="41">cpuinfo_t::max</references>
-        <references refid="structcpuinfo__t_155e6db773b2ec5602b132fe54ef2da27" compoundref="smp_8h" startline="37">cpuinfo_t::ok</references>
-        <references refid="smp_8c_15607ecf06fd77905053dbb15eaf0ff6b" compoundref="smp_8c" startline="53" endline="56">setDr3</references>
-        <references refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" compoundref="smp_8c" startline="262" endline="269">setEflags</references>
-        <references refid="structcpuinfo__t_14dc954f30d7ac869a43702bc6a0389dc" compoundref="smp_8h" startline="39">cpuinfo_t::signature</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
-        <references refid="ap-boot_8S_1c2a218176530ced267bbcc8042da1000" compoundref="ap-boot_8S" startline="52">x30</references>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="177" column="7" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="177" bodyend="227"/>
+        <references refid="smp_8c_1aabe8182d15984977e87831f32527ff78" compoundref="smp_8c" startline="253" endline="261">getEflags</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" compoundref="smp_8c" startline="263" endline="270">setEflags</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1ab9f1e8692e06eb164641f50aa4d7aed6" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>static void GDT_fixer</definition>
         <argsstring>()</argsstring>
@@ -366,12 +460,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="69" bodyend="94"/>
-        <references refid="structgdt__descr_12c59f0ca24b900a4bfc00019185296b7" compoundref="smp_8c" startline="65">gdt_descr::limit</references>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="68" column="13" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="68" bodyend="93"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_10f6e384fb3ad325aa2406af715ff341d" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>__inline__ <ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="smp_8c_1a0f6e384fb3ad325aa2406af715ff341d" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>__inline__ <ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>static __inline__ uInt32 getDr3</definition>
         <argsstring>(void)</argsstring>
         <name>getDr3</name>
@@ -384,11 +476,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="58" bodyend="62"/>
-        <referencedby refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="57" column="26" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="57" bodyend="61"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1abe8182d15984977e87831f32527ff78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="smp_8c_1aabe8182d15984977e87831f32527ff78" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 getEflags</definition>
         <argsstring>()</argsstring>
         <name>getEflags</name>
@@ -398,12 +489,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="252" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="252" bodyend="260"/>
-        <referencedby refid="smp_8c_1c89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="173" endline="180">cpuidDetect</referencedby>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="253" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="253" bodyend="261"/>
+        <referencedby refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="168" endline="175">cpuidDetect</referencedby>
+        <referencedby refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="177" endline="227">cpuInfo</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_10844b0ab23ee41899fc5d622078d20d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="function" id="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>uInt8 kernel_function</definition>
         <argsstring>(void)</argsstring>
         <name>kernel_function</name>
@@ -416,17 +507,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="123" bodyend="134"/>
-        <references refid="smp_8c_10f6e384fb3ad325aa2406af715ff341d" compoundref="smp_8c" startline="58" endline="62">getDr3</references>
-        <references refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" compoundref="smp_8h" startline="36">cpuinfo_t::id</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <referencedby refid="smp_8c_166c37e11ba7abfcafc63146553b2cd16" compoundref="smp_8c" startline="97" endline="102">cpu0_thread</referencedby>
-        <referencedby refid="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" compoundref="smp_8c" startline="103" endline="108">cpu1_thread</referencedby>
-        <referencedby refid="smp_8c_1cfec913213194039ad31b2602bf8af4f" compoundref="smp_8c" startline="109" endline="114">cpu2_thread</referencedby>
-        <referencedby refid="smp_8c_113735e9644e3c9a01bfc7785b31691ab" compoundref="smp_8c" startline="115" endline="120">cpu3_thread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="121" column="7" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="121" bodyend="131" declfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" declline="41" declcolumn="7"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="smp_8c_1a66c37e11ba7abfcafc63146553b2cd16" compoundref="smp_8c" startline="95" endline="100">cpu0_thread</referencedby>
+        <referencedby refid="smp_8c_1a5e82e9f1e0fec1ac5db2ebd16652a043" compoundref="smp_8c" startline="101" endline="106">cpu1_thread</referencedby>
+        <referencedby refid="smp_8c_1acfec913213194039ad31b2602bf8af4f" compoundref="smp_8c" startline="107" endline="112">cpu2_thread</referencedby>
+        <referencedby refid="smp_8c_1a13735e9644e3c9a01bfc7785b31691ab" compoundref="smp_8c" startline="113" endline="118">cpu3_thread</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_15607ecf06fd77905053dbb15eaf0ff6b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a5607ecf06fd77905053dbb15eaf0ff6b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>__inline__ void</type>
         <definition>static __inline__ void setDr3</definition>
         <argsstring>(void *dr3)</argsstring>
@@ -441,16 +529,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="53" bodyend="56"/>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="52" column="24" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="52" bodyend="55"/>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1133d6aaf4635e4585ee54a0438d0bf36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void setEflags</definition>
         <argsstring>(uInt32 eflags)</argsstring>
         <name>setEflags</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
           <declname>eflags</declname>
         </param>
         <briefdescription>
@@ -459,11 +546,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="262" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="262" bodyend="269"/>
-        <referencedby refid="smp_8c_1c89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="173" endline="180">cpuidDetect</referencedby>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="263" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="263" bodyend="270"/>
+        <referencedby refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="168" endline="175">cpuidDetect</referencedby>
+        <referencedby refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="177" endline="227">cpuInfo</referencedby>
       </memberdef>
-      <memberdef kind="function" id="smp_8c_1ce31619db109aa8b20a916d48969928d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="smp_8c_1ace31619db109aa8b20a916d48969928d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void smpInit</definition>
         <argsstring>()</argsstring>
@@ -474,108 +561,8 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="161" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="161" bodyend="171"/>
-        <references refid="smp_8h_1fb282ad2f10cfff4d0da79689e6dfc82" compoundref="smp_8c" startline="234" endline="248">apicMagic</references>
-        <references refid="smp_8h_1c89d80447fce7d622c7dfc6620039600" compoundref="smp_8c" startline="173" endline="180">cpuidDetect</references>
-        <references refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</references>
-        <references refid="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" compoundref="smp_8c" startline="69" endline="94">GDT_fixer</references>
-        <references refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" compoundref="smp_8c" startline="37">initSpinLock</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="smp_8c_171085af55092ee7b25d4bd346169ce89" prot="public" static="yes" mutable="no">
-        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
-        <definition>spinLock_t bkl</definition>
-        <argsstring></argsstring>
-        <name>bkl</name>
-        <initializer> SPIN_LOCK_INITIALIZER</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="122" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" prot="public" static="no" mutable="no">
-        <type><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref></type>
-        <definition>struct cpuinfo_t cpuinfo[8]</definition>
-        <argsstring>[8]</argsstring>
-        <name>cpuinfo</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="40" bodyend="-1"/>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" prot="public" static="yes" mutable="no">
-        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
-        <definition>spinLock_t cpuInfoLock</definition>
-        <argsstring></argsstring>
-        <name>cpuInfoLock</name>
-        <initializer> SPIN_LOCK_INITIALIZER</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="38" bodyend="-1"/>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="smp_8c_129c1aa6c61dfac505825b96920fa447d" prot="public" static="yes" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 cpus</definition>
-        <argsstring></argsstring>
-        <name>cpus</name>
-        <initializer> 0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="39" bodyend="-1"/>
-        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="smp_8c_19a5fd10dce49f2fe147d346b8de71902" prot="public" static="yes" mutable="no">
-        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
-        <definition>spinLock_t initSpinLock</definition>
-        <argsstring></argsstring>
-        <name>initSpinLock</name>
-        <initializer> SPIN_LOCK_INITIALIZER</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="37" bodyend="-1"/>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
-        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> *</type>
-        <definition>uInt8* vram</definition>
-        <argsstring></argsstring>
-        <name>vram</name>
-        <initializer> (<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> *)0xB8000</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="43" bodyend="-1"/>
-        <referencedby refid="smp_8c_166c37e11ba7abfcafc63146553b2cd16" compoundref="smp_8c" startline="97" endline="102">cpu0_thread</referencedby>
-        <referencedby refid="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" compoundref="smp_8c" startline="103" endline="108">cpu1_thread</referencedby>
-        <referencedby refid="smp_8c_1cfec913213194039ad31b2602bf8af4f" compoundref="smp_8c" startline="109" endline="114">cpu2_thread</referencedby>
-        <referencedby refid="smp_8c_113735e9644e3c9a01bfc7785b31691ab" compoundref="smp_8c" startline="115" endline="120">cpu3_thread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c" line="156" column="6" bodyfile="C:/Dev/git/UbixOS/sys/kernel/smp.c" bodystart="156" bodyend="166"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -583,298 +570,299 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: smp_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="smp_8h" kindref="compound">ubixos/smp.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lib_2string_8h" kindref="compound">lib/string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37" refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" kindref="member">initSpinLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
-<codeline lineno="38" refid="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" kindref="member">cpuInfoLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
-<codeline lineno="39" refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref><sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="40" refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[8];</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="43" refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" refkind="member"><highlight class="normal"><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>*<ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref><sp/>=<sp/>(<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>*)0xB8000;</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight></codeline>
-<codeline lineno="45" refid="smp_8c_198935271c68a482c194d4c784d814ddd" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="smp_8c_198935271c68a482c194d4c784d814ddd" kindref="member">apicRead</ref>(address)<sp/>{</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>*(</highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)<sp/>(0xFEE00000<sp/>+<sp/>address);</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight></codeline>
-<codeline lineno="49" refid="smp_8c_1ab4a831897afae67446bf78c88123749" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1ab4a831897afae67446bf78c88123749" kindref="member">apicWrite</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>address,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>data)<sp/>{</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/>*(</highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)<sp/>(0xFEE00000<sp/>+<sp/>address)<sp/>=<sp/>data;</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53" refid="smp_8c_15607ecf06fd77905053dbb15eaf0ff6b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/>__inline__<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_15607ecf06fd77905053dbb15eaf0ff6b" kindref="member">setDr3</ref><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*dr3)<sp/>{</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">register</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>value<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)dr3;</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(</highlight><highlight class="stringliteral">&quot;mov<sp/>%0,<sp/>%%dr3&quot;</highlight><highlight class="normal"><sp/>::<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal"><sp/>(value));</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight></codeline>
-<codeline lineno="58" refid="smp_8c_10f6e384fb3ad325aa2406af715ff341d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/>__inline__<sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="smp_8c_10f6e384fb3ad325aa2406af715ff341d" kindref="member">getDr3</ref><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">register</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>value;</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(</highlight><highlight class="stringliteral">&quot;mov<sp/>%%dr3,<sp/>%0&quot;</highlight><highlight class="normal"><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=r&quot;</highlight><highlight class="normal"><sp/>(value));</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value;</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight></codeline>
-<codeline lineno="64" refid="structgdt__descr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref><sp/>{</highlight></codeline>
-<codeline lineno="65" refid="structgdt__descr_12c59f0ca24b900a4bfc00019185296b7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><ref refid="structgdt__descr_12c59f0ca24b900a4bfc00019185296b7" kindref="member">limit</ref>;</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*base<sp/><ref refid="structgdt__descr_19c540c5e1672426b7c6430e1b2f66fba" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
-<codeline lineno="67"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
-<codeline lineno="69" refid="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" kindref="member">GDT_fixer</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref><sp/><sp/>gdt_descr;</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*gdt<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)0x20000;<sp/></highlight><highlight class="comment">//<sp/>128KB</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/>gdt[0]<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/>gdt[1]<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/>gdt[2]<sp/>=<sp/>0x0000ffff;<sp/></highlight><highlight class="comment">//<sp/>seg<sp/>0x8<sp/><sp/>--<sp/>DPL<sp/>0<sp/>4GB<sp/>code</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/>gdt[3]<sp/>=<sp/>0x00cf9a00;</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/>gdt[4]<sp/>=<sp/>0x0000ffff;<sp/></highlight><highlight class="comment">//<sp/>seg<sp/>0x10<sp/>--<sp/>DPL<sp/>0<sp/>4GB<sp/>data</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/>gdt[5]<sp/>=<sp/>0x00cf9200;</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/>gdt[6]<sp/>=<sp/>0x0000ffff;<sp/></highlight><highlight class="comment">//<sp/>seg<sp/>0x1b<sp/>--<sp/>DPL<sp/>3<sp/>4GB<sp/>code</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/>gdt[7]<sp/>=<sp/>0x00cffa00;</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/>gdt[8]<sp/>=<sp/>0x0000ffff;<sp/></highlight><highlight class="comment">//<sp/>seg<sp/>0x23<sp/>--<sp/>DPL<sp/>3<sp/>4GB<sp/>data</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/>gdt[9]<sp/>=<sp/>0x00cff200;</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"></highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/>gdt_descr.<ref refid="structgdt__descr_12c59f0ca24b900a4bfc00019185296b7" kindref="member">limit</ref><sp/>=<sp/>32<sp/>*<sp/>4;</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/>gdt_descr.base<sp/><sp/>=<sp/>gdt;</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="88"><highlight class="comment"><sp/><sp/>asm(&quot;lgdt<sp/>%0;&quot;<sp/>:<sp/>:<sp/>&quot;m&quot;<sp/>(gdt_descr));</highlight></codeline>
-<codeline lineno="89"><highlight class="comment"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;ljmp<sp/>%0,$1f;<sp/>1:&quot;<sp/>::<sp/>&quot;i&quot;<sp/>(0x08));</highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;movw<sp/>%w0,%%ds&quot;<sp/>::<sp/>&quot;r&quot;<sp/>(0x10));</highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;movw<sp/>%w0,%%es&quot;<sp/>::<sp/>&quot;r&quot;<sp/>(0x10));</highlight></codeline>
-<codeline lineno="92"><highlight class="comment"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;movw<sp/>%w0,%%ss&quot;<sp/>::<sp/>&quot;r&quot;<sp/>(0x10));</highlight></codeline>
-<codeline lineno="93"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"></highlight></codeline>
-<codeline lineno="97" refid="smp_8c_166c37e11ba7abfcafc63146553b2cd16" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_166c37e11ba7abfcafc63146553b2cd16" kindref="member">cpu0_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[40+640]<sp/>=<sp/><ref refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[42+640]++;</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="102"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="103" refid="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" kindref="member">cpu1_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[60+640]<sp/>=<sp/><ref refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[62+640]++;</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="108"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="109" refid="smp_8c_1cfec913213194039ad31b2602bf8af4f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1cfec913213194039ad31b2602bf8af4f" kindref="member">cpu2_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[80+640]<sp/>=<sp/><ref refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[82+640]++;</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="115" refid="smp_8c_113735e9644e3c9a01bfc7785b31691ab" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_113735e9644e3c9a01bfc7785b31691ab" kindref="member">cpu3_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[100+640]<sp/>=<sp/><ref refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[102+640]++;</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="120"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"></highlight></codeline>
-<codeline lineno="122" refid="smp_8c_171085af55092ee7b25d4bd346169ce89" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="smp_8c_171085af55092ee7b25d4bd346169ce89" kindref="member">bkl</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
-<codeline lineno="123" refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" refkind="member"><highlight class="normal"><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/>*cpu;</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="smp_8h" kindref="compound">ubixos/smp.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;lib/string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspinLock" kindref="compound">spinLock</ref><sp/>initSpinLock<sp/>=<sp/><ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspinLock" kindref="compound">spinLock</ref><sp/>cpuInfoLock<sp/>=<sp/><ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>cpus<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="39" refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[8];</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="42" refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" refkind="member"><highlight class="normal"><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>*<ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref><sp/>=<sp/>(<ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>*)0xB8000;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>apicRead(address)<sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>*(</highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)<sp/>(0xFEE00000<sp/>+<sp/>address);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>apicWrite(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>address,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>data)<sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>*(</highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)<sp/>(0xFEE00000<sp/>+<sp/>address)<sp/>=<sp/>data;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/>__inline__<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>setDr3<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*dr3)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">register</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>value<sp/>=<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)dr3;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(</highlight><highlight class="stringliteral">&quot;mov<sp/>%0,<sp/>%%dr3&quot;</highlight><highlight class="normal"><sp/>::<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal"><sp/>(value));</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/>__inline__<sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>getDr3<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">register</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>value;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>__asm__<sp/>__volatile__<sp/>(</highlight><highlight class="stringliteral">&quot;mov<sp/>%%dr3,<sp/>%0&quot;</highlight><highlight class="normal"><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=r&quot;</highlight><highlight class="normal"><sp/>(value));</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="structgdt__descr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref><sp/>{</highlight></codeline>
+<codeline lineno="64" refid="structgdt__descr_1a2c59f0ca24b900a4bfc00019185296b7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structgdt__descr_1a2c59f0ca24b900a4bfc00019185296b7" kindref="member">limit</ref>;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*base<sp/><ref refid="structgdt__descr_1a9c540c5e1672426b7c6430e1b2f66fba" kindref="member">__attribute__</ref><sp/>((packed));</highlight></codeline>
+<codeline lineno="66"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>GDT_fixer()<sp/>{</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref><sp/><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref>;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*gdt<sp/>=<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*)0x20000;<sp/></highlight><highlight class="comment">//<sp/>128KB</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>gdt[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>gdt[1]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/>gdt[2]<sp/>=<sp/>0x0000ffff;</highlight><highlight class="comment">//<sp/>seg<sp/>0x8<sp/><sp/>--<sp/>DPL<sp/>0<sp/>4GB<sp/>code</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>gdt[3]<sp/>=<sp/>0x00cf9a00;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>gdt[4]<sp/>=<sp/>0x0000ffff;</highlight><highlight class="comment">//<sp/>seg<sp/>0x10<sp/>--<sp/>DPL<sp/>0<sp/>4GB<sp/>data</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>gdt[5]<sp/>=<sp/>0x00cf9200;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/>gdt[6]<sp/>=<sp/>0x0000ffff;</highlight><highlight class="comment">//<sp/>seg<sp/>0x1b<sp/>--<sp/>DPL<sp/>3<sp/>4GB<sp/>code</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>gdt[7]<sp/>=<sp/>0x00cffa00;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>gdt[8]<sp/>=<sp/>0x0000ffff;</highlight><highlight class="comment">//<sp/>seg<sp/>0x23<sp/>--<sp/>DPL<sp/>3<sp/>4GB<sp/>data</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>gdt[9]<sp/>=<sp/>0x00cff200;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref>.<ref refid="structgdt__descr_1a2c59f0ca24b900a4bfc00019185296b7" kindref="member">limit</ref><sp/>=<sp/>32<sp/>*<sp/>4;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="structgdt__descr" kindref="compound">gdt_descr</ref>.base<sp/>=<sp/>gdt;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/><sp/><sp/>asm(&quot;lgdt<sp/>%0;&quot;<sp/>:<sp/>:<sp/>&quot;m&quot;<sp/>(gdt_descr));</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;ljmp<sp/>%0,$1f;<sp/>1:&quot;<sp/>::<sp/>&quot;i&quot;<sp/>(0x08));</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;movw<sp/>%w0,%%ds&quot;<sp/>::<sp/>&quot;r&quot;<sp/>(0x10));</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;movw<sp/>%w0,%%es&quot;<sp/>::<sp/>&quot;r&quot;<sp/>(0x10));</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/><sp/><sp/>__asm__<sp/>__volatile__<sp/>(&quot;movw<sp/>%w0,%%ss&quot;<sp/>::<sp/>&quot;r&quot;<sp/>(0x10));</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="smp_8c_1a66c37e11ba7abfcafc63146553b2cd16" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1a66c37e11ba7abfcafc63146553b2cd16" kindref="member">cpu0_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[40+640]<sp/>=<sp/><ref refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[42+640]++;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="101" refid="smp_8c_1a5e82e9f1e0fec1ac5db2ebd16652a043" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1a5e82e9f1e0fec1ac5db2ebd16652a043" kindref="member">cpu1_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[60+640]<sp/>=<sp/><ref refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[62+640]++;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="106"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="107" refid="smp_8c_1acfec913213194039ad31b2602bf8af4f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1acfec913213194039ad31b2602bf8af4f" kindref="member">cpu2_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[80+640]<sp/>=<sp/><ref refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[82+640]++;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="113" refid="smp_8c_1a13735e9644e3c9a01bfc7785b31691ab" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1a13735e9644e3c9a01bfc7785b31691ab" kindref="member">cpu3_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[100+640]<sp/>=<sp/><ref refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>();</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5f2d0854cc28b4f2ef16a03061d9d237" kindref="member">vram</ref>[102+640]++;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="118"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspinLock" kindref="compound">spinLock</ref><sp/>bkl<sp/>=<sp/><ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="121" refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" refkind="member"><highlight class="normal"><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8c_1a0844b0ab23ee41899fc5d622078d20d6" kindref="member">kernel_function</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/>*cpu;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;bkl);</highlight></codeline>
 <codeline lineno="125"><highlight class="normal"></highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;bkl);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/>cpu<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/>*)getDr3();</highlight></codeline>
 <codeline lineno="127"><highlight class="normal"></highlight></codeline>
-<codeline lineno="128"><highlight class="normal"></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/>cpu<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcpuinfo__t" kindref="compound">cpuinfo_t</ref><sp/>*)<ref refid="smp_8c_10f6e384fb3ad325aa2406af715ff341d" kindref="member">getDr3</ref>();</highlight></codeline>
-<codeline lineno="130"><highlight class="normal"></highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;bkl);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;bkl);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(</highlight><highlight class="charliteral">&apos;0&apos;</highlight><highlight class="normal"><sp/>+<sp/>cpu-&gt;<ref refid="structcpuinfo__t_1af5c4407ffad5df94902b218355267260" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="132"><highlight class="normal"></highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(</highlight><highlight class="charliteral">&apos;0&apos;</highlight><highlight class="normal"><sp/>+<sp/>cpu-&gt;<ref refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" kindref="member">id</ref>);</highlight></codeline>
-<codeline lineno="134"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="smp_8c_1ac7cb5b4b2fbc61966a6dfc8044a7b800" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1ac7cb5b4b2fbc61966a6dfc8044a7b800" kindref="member">c_ap_boot</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal">(<ref refid="armv6_2spinlock_8c_1a6c0fe254de396873793ccc16915a6631" kindref="member">spinLockLocked</ref>(&amp;initSpinLock));</highlight></codeline>
 <codeline lineno="136"><highlight class="normal"></highlight></codeline>
-<codeline lineno="137" refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" kindref="member">c_ap_boot</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"></highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal">(<ref refid="spinlock_8h_1cba75fe5ed894dc88030f7458b114a94" kindref="member">spinLockLocked</ref>(&amp;<ref refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" kindref="member">initSpinLock</ref>));</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"></highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(<ref refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>())<sp/>{</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_15e82e9f1e0fec1ac5db2ebd16652a043" kindref="member">cpu1_thread</ref>();</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:</highlight></codeline>
-<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1cfec913213194039ad31b2602bf8af4f" kindref="member">cpu2_thread</ref>();</highlight></codeline>
-<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="148"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_113735e9644e3c9a01bfc7785b31691ab" kindref="member">cpu3_thread</ref>();</highlight></codeline>
-<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="151"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="152"><highlight class="normal"></highlight></codeline>
-<codeline lineno="153"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0<ref refid="ap-boot_8S_1d58beb3879ac361d068b0618ba2d7620" kindref="member">xe9</ref>,</highlight><highlight class="charliteral">&apos;5&apos;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="154"><highlight class="normal"></highlight></codeline>
-<codeline lineno="155"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="157"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="158"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"></highlight></codeline>
-<codeline lineno="160"><highlight class="normal"></highlight></codeline>
-<codeline lineno="161" refid="smp_8c_1ce31619db109aa8b20a916d48969928d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1ce31619db109aa8b20a916d48969928d" kindref="member">smpInit</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" kindref="member">initSpinLock</ref>);</highlight></codeline>
-<codeline lineno="163"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" kindref="member">GDT_fixer</ref>();</highlight></codeline>
-<codeline lineno="164"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_1c89d80447fce7d622c7dfc6620039600" kindref="member">cpuidDetect</ref>();</highlight></codeline>
-<codeline lineno="165"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>();</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_1fb282ad2f10cfff4d0da79689e6dfc82" kindref="member">apicMagic</ref>();</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="smp_8c_19a5fd10dce49f2fe147d346b8de71902" kindref="member">initSpinLock</ref>);</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"></highlight></codeline>
-<codeline lineno="169"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//cpu0_thread();<sp/></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="170"><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="171"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="172"><highlight class="normal"></highlight></codeline>
-<codeline lineno="173" refid="smp_8c_1c89d80447fce7d622c7dfc6620039600" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1c89d80447fce7d622c7dfc6620039600" kindref="member">cpuidDetect</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!(<ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" kindref="member">setEflags</ref>(<ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>|<sp/>(1&lt;&lt;21));</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>!(<ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{</highlight></codeline>
-<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;CPU<sp/>doesn&apos;t<sp/>support<sp/>CPUID,<sp/>get<sp/>a<sp/>newer<sp/>machine\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="180"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="181"><highlight class="normal"></highlight></codeline>
-<codeline lineno="182" refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" refkind="member"><highlight class="normal"><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8h_1452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="183"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>data[4],i;</highlight></codeline>
-<codeline lineno="184"><highlight class="normal"></highlight></codeline>
-<codeline lineno="185"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>!(<ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>If<sp/>the<sp/>cpuid<sp/>bit<sp/>in<sp/>eflags<sp/>not<sp/>set..</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" kindref="member">setEflags</ref>(<ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>|<sp/>(1&lt;&lt;21));<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>..try<sp/>and<sp/>set<sp/>it<sp/>to<sp/>see<sp/>if<sp/>it<sp/>comes<sp/>on..</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>!(<ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>It<sp/>didn&apos;t..<sp/>This<sp/>CPU<sp/>suck</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;CPU<sp/>doesn&apos;t<sp/>support<sp/>CPUID,<sp/>get<sp/>a<sp/>newer<sp/>machine\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(<ref refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>())<sp/>{</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a5e82e9f1e0fec1ac5db2ebd16652a043" kindref="member">cpu1_thread</ref>();</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>2:</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1acfec913213194039ad31b2602bf8af4f" kindref="member">cpu2_thread</ref>();</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a13735e9644e3c9a01bfc7785b31691ab" kindref="member">cpu3_thread</ref>();</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0xe9,</highlight><highlight class="charliteral">&apos;5&apos;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(;;)<sp/>{</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="154"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="smp_8c_1ace31619db109aa8b20a916d48969928d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1ace31619db109aa8b20a916d48969928d" kindref="member">smpInit</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;initSpinLock);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/>GDT_fixer();</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" kindref="member">cpuidDetect</ref>();</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>();</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a70e557cb01aee676855cee05b0769288" kindref="member">apicMagic</ref>();</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;initSpinLock);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//cpu0_thread();<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168" refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1ac89d80447fce7d622c7dfc6620039600" kindref="member">cpuidDetect</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!(<ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" kindref="member">setEflags</ref>(<ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>|<sp/>(1&lt;&lt;21));</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>!(<ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;CPU<sp/>doesn&apos;t<sp/>support<sp/>CPUID,<sp/>get<sp/>a<sp/>newer<sp/>machine\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="175"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177" refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" refkind="member"><highlight class="normal"><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="smp_8c_1a452f210aee65a2a30cbc5cb8923a9881" kindref="member">cpuInfo</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>data[4],i;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>!(<ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>If<sp/>the<sp/>cpuid<sp/>bit<sp/>in<sp/>eflags<sp/>not<sp/>set..</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" kindref="member">setEflags</ref>(<ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>|<sp/>(1&lt;&lt;21));</highlight><highlight class="comment">//<sp/>..try<sp/>and<sp/>set<sp/>it<sp/>to<sp/>see<sp/>if<sp/>it<sp/>comes<sp/>on..</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<sp/>!(<ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>&amp;<sp/>(1&lt;&lt;21))<sp/>)<sp/>{<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>It<sp/>didn&apos;t..<sp/>This<sp/>CPU<sp/>suck</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;CPU<sp/>doesn&apos;t<sp/>support<sp/>CPUID,<sp/>get<sp/>a<sp/>newer<sp/>machine\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;cpuInfoLock);</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1a55e6db773b2ec5602b132fe54ef2da27" kindref="member">ok</ref><sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1aa76ba6d81506e6a5d086cb8c61a6246f" kindref="member">apic_id</ref><sp/>=<sp/>apicRead(0x20)<sp/>&gt;&gt;<sp/>24;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1a7b9f17434cf958ae23150aea98a91724" kindref="member">apic_ver</ref><sp/>=<sp/>apicRead(0x30)<sp/>&amp;<sp/>0xFF;</highlight></codeline>
 <codeline lineno="191"><highlight class="normal"></highlight></codeline>
-<codeline lineno="192"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" kindref="member">cpuInfoLock</ref>);</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_155e6db773b2ec5602b132fe54ef2da27" kindref="member">ok</ref><sp/>=<sp/>1;</highlight></codeline>
-<codeline lineno="194"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1a76ba6d81506e6a5d086cb8c61a6246f" kindref="member">apic_id</ref><sp/><sp/>=<sp/><ref refid="smp_8c_198935271c68a482c194d4c784d814ddd" kindref="member">apicRead</ref>(0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>)<sp/>&gt;&gt;<sp/>24;</highlight></codeline>
-<codeline lineno="195"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_17b9f17434cf958ae23150aea98a91724" kindref="member">apic_ver</ref><sp/>=<sp/><ref refid="smp_8c_198935271c68a482c194d4c784d814ddd" kindref="member">apicRead</ref>(0<ref refid="ap-boot_8S_1c2a218176530ced267bbcc8042da1000" kindref="member">x30</ref>)<sp/>&amp;<sp/>0xFF;</highlight></codeline>
-<codeline lineno="196"><highlight class="normal"></highlight></codeline>
-<codeline lineno="197"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(0,data);</highlight></codeline>
-<codeline lineno="198"><highlight class="normal"><sp/><sp/>*(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[0]<sp/>=<sp/>data[1];</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"><sp/><sp/>*(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[4]<sp/>=<sp/>data[3];</highlight></codeline>
-<codeline lineno="200"><highlight class="normal"><sp/><sp/>*(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[8]<sp/>=<sp/>data[2];</highlight></codeline>
-<codeline lineno="201"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1e529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[17]<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="202"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1666edb35af6b506907e999f0c29ee91f" kindref="member">max</ref><sp/>=<sp/>data[0];</highlight></codeline>
-<codeline lineno="203"><highlight class="normal"></highlight></codeline>
-<codeline lineno="204"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(1,data);</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_14dc954f30d7ac869a43702bc6a0389dc" kindref="member">signature</ref><sp/>=<sp/>data[0];</highlight></codeline>
-<codeline lineno="206"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1b8935d0ed0f78c40e238027b807d2ee7" kindref="member">feature</ref><sp/><sp/><sp/>=<sp/>data[3];</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(0,data);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/>*(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1ae529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[0]<sp/>=<sp/>data[1];</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/>*(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1ae529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[4]<sp/>=<sp/>data[3];</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/>*(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1ae529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[8]<sp/>=<sp/>data[2];</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1ae529ad76c06841e1f825296d0ec107a0" kindref="member">ident</ref>[17]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1a666edb35af6b506907e999f0c29ee91f" kindref="member">max</ref><sp/>=<sp/>data[0];</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(1,data);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1a4dc954f30d7ac869a43702bc6a0389dc" kindref="member">signature</ref><sp/>=<sp/>data[0];</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1ab8935d0ed0f78c40e238027b807d2ee7" kindref="member">feature</ref><sp/>=<sp/>data[3];</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(0x80000000,data);</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(data[0]&gt;=0x80000004)<sp/>{</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(i=0;i&lt;3;i++)<sp/>{</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="smp_8h_1a8e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(0x80000002<sp/>+<sp/>i,data);</highlight></codeline>
 <codeline lineno="207"><highlight class="normal"></highlight></codeline>
-<codeline lineno="208"><highlight class="normal"><sp/><sp/><ref refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(0x80000000,data);</highlight></codeline>
-<codeline lineno="209"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(data[0]&gt;=0x80000004)<sp/>{</highlight></codeline>
-<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(i=0;i&lt;3;i++)<sp/>{</highlight></codeline>
-<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="smp_8h_18e797e0b8a36194fca8fa45767974c2f" kindref="member">cpuid</ref>(0x80000002<sp/>+<sp/>i,data);</highlight></codeline>
-<codeline lineno="212"><highlight class="normal"></highlight></codeline>
-<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+0]<sp/><sp/>=<sp/>data[0];</highlight></codeline>
-<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+4]<sp/><sp/>=<sp/>data[1];</highlight></codeline>
-<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+8]<sp/><sp/>=<sp/>data[2];</highlight></codeline>
-<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+12]<sp/>=<sp/>data[3];</highlight></codeline>
-<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[48]<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="219"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>].<ref refid="structcpuinfo__t_1bf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="221"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="222"><highlight class="normal"></highlight></codeline>
-<codeline lineno="223"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_15607ecf06fd77905053dbb15eaf0ff6b" kindref="member">setDr3</ref>(&amp;<ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[<ref refid="smp_8c_129c1aa6c61dfac505825b96920fa447d" kindref="member">cpus</ref>]);<sp/></highlight><highlight class="comment">//<sp/>DR3<sp/>always<sp/>points<sp/>to<sp/>the<sp/>cpu-struct<sp/>for<sp/>that<sp/>CPU<sp/>(should<sp/>be<sp/>thread-struct<sp/>of<sp/>current<sp/>thread)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="224"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1f5c4407ffad5df94902b218355267260" kindref="member">id</ref><sp/>=<sp/>cpus;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+0]<sp/>=<sp/>data[0];</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+4]<sp/>=<sp/>data[1];</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+8]<sp/>=<sp/>data[2];</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>*(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[16*i+12]<sp/>=<sp/>data[3];</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[48]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1abf3a842f1c5959d5a6abf52bda0b7dae" kindref="member">brand</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/>setDr3(&amp;<ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus]);<sp/></highlight><highlight class="comment">//<sp/>DR3<sp/>always<sp/>points<sp/>to<sp/>the<sp/>cpu-struct<sp/>for<sp/>that<sp/>CPU<sp/>(should<sp/>be<sp/>thread-struct<sp/>of<sp/>current<sp/>thread)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1a963def6fffd92dece6dd156abbcf4fa0" kindref="member">cpuinfo</ref>[cpus].<ref refid="structcpuinfo__t_1af5c4407ffad5df94902b218355267260" kindref="member">id</ref><sp/>=<sp/>cpus;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/>cpus++;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;cpuInfoLock);</highlight></codeline>
 <codeline lineno="225"><highlight class="normal"></highlight></codeline>
-<codeline lineno="226"><highlight class="normal"><sp/><sp/>cpus++;</highlight></codeline>
-<codeline lineno="227"><highlight class="normal"></highlight></codeline>
-<codeline lineno="228"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="smp_8c_1d5f78a3dc61e0ca7819dc3d5d5794419" kindref="member">cpuInfoLock</ref>);</highlight></codeline>
-<codeline lineno="229"><highlight class="normal"></highlight></codeline>
-<codeline lineno="230"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(cpus<sp/>-<sp/>1);</highlight></codeline>
-<codeline lineno="231"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="232"><highlight class="normal"></highlight></codeline>
-<codeline lineno="233"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ap-boot_8S_1b1cb92a8709c60591691af45d450d9f3" kindref="member">ap_trampoline_start</ref>(),<ref refid="smp_8c_1e4dc28abba9d6b02a779ca1b8ffecd98" kindref="member">ap_trampoline_end</ref>();</highlight></codeline>
-<codeline lineno="234" refid="smp_8c_170e557cb01aee676855cee05b0769288" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1fb282ad2f10cfff4d0da79689e6dfc82" kindref="member">apicMagic</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
-<codeline lineno="235"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>tmp;</highlight></codeline>
-<codeline lineno="236"><highlight class="normal"></highlight></codeline>
-<codeline lineno="237"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Copying<sp/>%u<sp/>bytes<sp/>from<sp/>0x%x<sp/>to<sp/>0x00\n&quot;</highlight><highlight class="normal">,<ref refid="smp_8c_1e4dc28abba9d6b02a779ca1b8ffecd98" kindref="member">ap_trampoline_end</ref><sp/>-<sp/><ref refid="ap-boot_8S_1b1cb92a8709c60591691af45d450d9f3" kindref="member">ap_trampoline_start</ref>,<ref refid="ap-boot_8S_1b1cb92a8709c60591691af45d450d9f3" kindref="member">ap_trampoline_start</ref>);</highlight></codeline>
-<codeline lineno="238"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(0x0,(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="ap-boot_8S_1b1cb92a8709c60591691af45d450d9f3" kindref="member">ap_trampoline_start</ref>,<ref refid="smp_8c_1e4dc28abba9d6b02a779ca1b8ffecd98" kindref="member">ap_trampoline_end</ref><sp/>-<sp/>ap_trampoline_start);</highlight></codeline>
-<codeline lineno="239"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1ab4a831897afae67446bf78c88123749" kindref="member">apicWrite</ref>(0x280,0);</highlight></codeline>
-<codeline lineno="240"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_198935271c68a482c194d4c784d814ddd" kindref="member">apicRead</ref>(0x280);</highlight></codeline>
-<codeline lineno="241"><highlight class="normal"></highlight></codeline>
-<codeline lineno="242"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1ab4a831897afae67446bf78c88123749" kindref="member">apicWrite</ref>(0x300,0x000C4500);<sp/><sp/></highlight><highlight class="comment">//<sp/>INIT<sp/>IPI<sp/>to<sp/>all<sp/>CPUs</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="243"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(tmp=0;tmp&lt;800000;tmp++)<sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">//<sp/>Sleep<sp/>a<sp/>little<sp/>(should<sp/>be<sp/>10ms)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="244"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1ab4a831897afae67446bf78c88123749" kindref="member">apicWrite</ref>(0x300,0x000C4600);<sp/><sp/></highlight><highlight class="comment">//<sp/>INIT<sp/>SIPI<sp/>to<sp/>all<sp/>CPUs</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="245"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(tmp=0;tmp&lt;800000;tmp++)<sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">//<sp/>Sleep<sp/>a<sp/>little<sp/>(should<sp/>be<sp/>200ms)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="246"><highlight class="normal"><sp/><sp/><ref refid="smp_8c_1ab4a831897afae67446bf78c88123749" kindref="member">apicWrite</ref>(0x300,0x000C4600);<sp/><sp/></highlight><highlight class="comment">//<sp/>Second<sp/>INIT<sp/>SIPI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="247"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(tmp=0;tmp&lt;800000;tmp++)<sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">//<sp/>Sleep<sp/>a<sp/>little<sp/>(should<sp/>be<sp/>200ms)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="248"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="249"><highlight class="normal"></highlight></codeline>
-<codeline lineno="250"><highlight class="normal"></highlight></codeline>
-<codeline lineno="251"><highlight class="normal"></highlight></codeline>
-<codeline lineno="252" refid="smp_8c_1abe8182d15984977e87831f32527ff78" refkind="member"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="smp_8h_1abe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="253"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>eflags<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="254"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;pushfl<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;popl<sp/>%%eax<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(eflags)</highlight></codeline>
-<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="259"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(eflags);</highlight></codeline>
-<codeline lineno="260"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="261"><highlight class="normal"></highlight></codeline>
-<codeline lineno="262" refid="smp_8c_1133d6aaf4635e4585ee54a0438d0bf36" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8h_1d58e8f36b58bd7c198307a1f012fd975" kindref="member">setEflags</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>eflags)<sp/>{</highlight></codeline>
-<codeline lineno="263"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;pushl<sp/>%%eax<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;popfl<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
-<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(eflags)</highlight></codeline>
-<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="269"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="270"><highlight class="normal"></highlight></codeline>
-<codeline lineno="271"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="272"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;.globl<sp/>cpuid<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="273"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;cpuid:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="274"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/><sp/><sp/>%ebx<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="275"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/><sp/><sp/>%edi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="276"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>12(%esp),%eax<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="277"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>16(%esp),%edi<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="278"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>cpuid<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="279"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%eax,0(%edi)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="280"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%ebx,4(%edi)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="281"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%ecx,8(%edi)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="282"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%edx,12(%edi)<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="283"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popl<sp/><sp/><sp/><sp/>%edi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="284"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popl<sp/><sp/><sp/><sp/>%ebx<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="285"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>ret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="286"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
-<codeline lineno="287"><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="288"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="289"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="290"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="291"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(cpus<sp/>-<sp/>1);</highlight></codeline>
+<codeline lineno="227"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d" kindref="member">ap_trampoline_start</ref>(),</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><ref refid="smp_8c_1ae4dc28abba9d6b02a779ca1b8ffecd98" kindref="member">ap_trampoline_end</ref>();</highlight></codeline>
+<codeline lineno="231" refid="smp_8c_1a70e557cb01aee676855cee05b0769288" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1a70e557cb01aee676855cee05b0769288" kindref="member">apicMagic</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>tmp;</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Copying<sp/>%u<sp/>bytes<sp/>from<sp/>0x%x<sp/>to<sp/>0x00\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="smp_8c_1ae4dc28abba9d6b02a779ca1b8ffecd98" kindref="member">ap_trampoline_end</ref><sp/>-<sp/><ref refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d" kindref="member">ap_trampoline_start</ref>,<sp/><ref refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d" kindref="member">ap_trampoline_start</ref>);</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(0x0,<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d" kindref="member">ap_trampoline_start</ref>,<sp/><ref refid="smp_8c_1ae4dc28abba9d6b02a779ca1b8ffecd98" kindref="member">ap_trampoline_end</ref><sp/>-<sp/><ref refid="smp_8c_1af4f760b6cb0a871253009bb20d70657d" kindref="member">ap_trampoline_start</ref>);</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/>apicWrite(0x280,<sp/>0);</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/>apicRead(0x280);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/>apicWrite(0x300,<sp/>0x000C4500);<sp/><sp/></highlight><highlight class="comment">//<sp/>INIT<sp/>IPI<sp/>to<sp/>all<sp/>CPUs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmp<sp/>=<sp/>0;<sp/>tmp<sp/>&lt;<sp/>800000;<sp/>tmp++)</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Sleep<sp/>a<sp/>little<sp/>(should<sp/>be<sp/>10ms)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/>apicWrite(0x300,<sp/>0x000C4600);<sp/><sp/></highlight><highlight class="comment">//<sp/>INIT<sp/>SIPI<sp/>to<sp/>all<sp/>CPUs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmp<sp/>=<sp/>0;<sp/>tmp<sp/>&lt;<sp/>800000;<sp/>tmp++)</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Sleep<sp/>a<sp/>little<sp/>(should<sp/>be<sp/>200ms)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/>apicWrite(0x300,<sp/>0x000C4600);<sp/><sp/></highlight><highlight class="comment">//<sp/>Second<sp/>INIT<sp/>SIPI</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmp<sp/>=<sp/>0;<sp/>tmp<sp/>&lt;<sp/>800000;<sp/>tmp++)</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;nop&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>Sleep<sp/>a<sp/>little<sp/>(should<sp/>be<sp/>200ms)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"></highlight></codeline>
+<codeline lineno="253" refid="smp_8c_1aabe8182d15984977e87831f32527ff78" refkind="member"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="smp_8c_1aabe8182d15984977e87831f32527ff78" kindref="member">getEflags</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>eflags<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;pushfl<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;popl<sp/>%%eax<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(eflags)</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(eflags);</highlight></codeline>
+<codeline lineno="261"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263" refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="smp_8c_1a133d6aaf4635e4585ee54a0438d0bf36" kindref="member">setEflags</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>eflags)<sp/>{</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;pushl<sp/>%%eax<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;popfl<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(eflags)</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="270"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;.globl<sp/>cpuid<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;cpuid:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/><sp/><sp/>%ebx<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/><sp/><sp/>%edi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>12(%esp),%eax<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>16(%esp),%edi<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>cpuid<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%eax,0(%edi)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%ebx,4(%edi)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%ecx,8(%edi)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/><sp/><sp/><sp/>%edx,12(%edi)<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popl<sp/><sp/><sp/><sp/>%edi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popl<sp/><sp/><sp/><sp/>%ebx<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>ret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal">);</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="290"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="291"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/kernel/smp.c"/>
   </compounddef>
 </doxygen>

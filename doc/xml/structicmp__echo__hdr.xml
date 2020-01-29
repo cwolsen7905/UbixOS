@@ -1,50 +1,16 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structicmp__echo__hdr" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structicmp__echo__hdr" kind="struct" language="C++" prot="public">
     <compoundname>icmp_echo_hdr</compoundname>
-    <includes refid="ipv4_2icmp_8h" local="no">icmp.h</includes>
+    <includes refid="prot_2icmp_8h" local="no">icmp.h</includes>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="structicmp__echo__hdr_10e9ae9e696251095ecc69d231bae47c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structicmp__echo__hdr_1a5d1bdfcc4a8bdd58513ecbaea368c1ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>icmp_echo_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 seqno)</argsstring>
+        <argsstring>(u16_t chksum)</argsstring>
         <name>PACK_STRUCT_FIELD</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>seqno</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="80"/>
-      </memberdef>
-      <memberdef kind="function" id="structicmp__echo__hdr_1aa3a701f7bab6a4830dccd3e91beacf0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>icmp_echo_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 id)</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>id</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="79"/>
-      </memberdef>
-      <memberdef kind="function" id="structicmp__echo__hdr_1d7e2960ee0fd00e11a0aca35e4668010" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type></type>
-        <definition>icmp_echo_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 chksum)</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
           <declname>chksum</declname>
         </param>
         <briefdescription>
@@ -53,16 +19,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="78"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" line="72" column="3"/>
       </memberdef>
-      <memberdef kind="function" id="structicmp__echo__hdr_1b1219f4ee9ad3b8f988904aaacf7138b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structicmp__echo__hdr_1a35dd6758d625e1542599175e65235362" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>icmp_echo_hdr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt16 _type_code)</argsstring>
+        <argsstring>(u16_t id)</argsstring>
         <name>PACK_STRUCT_FIELD</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>_type_code</declname>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>id</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -70,91 +36,78 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="77"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" line="73" column="3"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structicmp__echo__hdr_165ffa20f2da497b6ca7f2e2c75cc740a" prot="public" static="no" mutable="no">
-        <type>u16_t</type>
-        <definition>u16_t icmp_echo_hdr::chksum</definition>
-        <argsstring></argsstring>
-        <name>chksum</name>
+      <memberdef kind="function" id="structicmp__echo__hdr_1a2d2722057bc87fa0afb495ba6716eb57" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp_echo_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(u16_t seqno)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+          <declname>seqno</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="73" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" line="74" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structicmp__echo__hdr_109cbe6937f16588714f1a2c5a33bfb84" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t icmp_echo_hdr::icode</definition>
-        <argsstring></argsstring>
-        <name>icode</name>
+      <memberdef kind="function" id="structicmp__echo__hdr_1adcbacb52889e263a973944ec5fbd6b55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp_echo_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t code)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>code</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="72" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" line="71" column="3"/>
       </memberdef>
-      <memberdef kind="variable" id="structicmp__echo__hdr_16a80a74668fbb1500e0fab527ceba5b6" prot="public" static="no" mutable="no">
-        <type>u16_t</type>
-        <definition>u16_t icmp_echo_hdr::id</definition>
-        <argsstring></argsstring>
-        <name>id</name>
+      <memberdef kind="function" id="structicmp__echo__hdr_1a0e52c238eaeadcb6f4fd9b8136488a66" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp_echo_hdr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t type)</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
+        <param>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+          <declname>type</declname>
+        </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="74" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structicmp__echo__hdr_142ade6a5230d4161c272fcaec67b7c3d" prot="public" static="no" mutable="no">
-        <type>u16_t</type>
-        <definition>u16_t icmp_echo_hdr::seqno</definition>
-        <argsstring></argsstring>
-        <name>seqno</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="75" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structicmp__echo__hdr_141fbe35b6732e5b675527b5561aaef73" prot="public" static="no" mutable="no">
-        <type>u8_t</type>
-        <definition>u8_t icmp_echo_hdr::type</definition>
-        <argsstring></argsstring>
-        <name>type</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="71" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" line="70" column="3"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
+<para>This is the standard ICMP header only that the u32_t data is split to two u16_t like ICMP echo needs it. This header is also used for other ICMP types that do not use the data part. </para>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" bodystart="76" bodyend="81"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>icmp_echo_hdr</label>
+        <link refid="structicmp__echo__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" line="69" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h" bodystart="69" bodyend="75"/>
     <listofallmembers>
-      <member refid="structicmp__echo__hdr_165ffa20f2da497b6ca7f2e2c75cc740a" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>chksum</name></member>
-      <member refid="structicmp__echo__hdr_109cbe6937f16588714f1a2c5a33bfb84" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>icode</name></member>
-      <member refid="structicmp__echo__hdr_16a80a74668fbb1500e0fab527ceba5b6" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>id</name></member>
-      <member refid="structicmp__echo__hdr_1b1219f4ee9ad3b8f988904aaacf7138b" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structicmp__echo__hdr_1d7e2960ee0fd00e11a0aca35e4668010" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structicmp__echo__hdr_1aa3a701f7bab6a4830dccd3e91beacf0" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structicmp__echo__hdr_10e9ae9e696251095ecc69d231bae47c6" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
-      <member refid="structicmp__echo__hdr_142ade6a5230d4161c272fcaec67b7c3d" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>seqno</name></member>
-      <member refid="structicmp__echo__hdr_141fbe35b6732e5b675527b5561aaef73" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>type</name></member>
+      <member refid="structicmp__echo__hdr_1a5d1bdfcc4a8bdd58513ecbaea368c1ad" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp__echo__hdr_1a35dd6758d625e1542599175e65235362" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp__echo__hdr_1a2d2722057bc87fa0afb495ba6716eb57" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp__echo__hdr_1a0e52c238eaeadcb6f4fd9b8136488a66" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
+      <member refid="structicmp__echo__hdr_1adcbacb52889e263a973944ec5fbd6b55" prot="public" virt="non-virtual"><scope>icmp_echo_hdr</scope><name>PACK_STRUCT_FLD_8</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

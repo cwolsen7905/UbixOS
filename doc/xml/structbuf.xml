@@ -1,13 +1,19 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structbuf" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structbuf" kind="struct" language="C++" prot="public">
     <compoundname>buf</compoundname>
     <includes refid="buf_8h" local="no">buf.h</includes>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/buf.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/buf.h" bodystart="37" bodyend="38"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>buf</label>
+        <link refid="structbuf"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/buf.h" line="35" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/buf.h" bodystart="35" bodyend="36"/>
     <listofallmembers>
     </listofallmembers>
   </compounddef>

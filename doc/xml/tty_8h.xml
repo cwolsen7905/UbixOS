@@ -1,445 +1,766 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="tty_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="tty_8h" kind="file" language="C++">
     <compoundname>tty.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
-    <includedby refid="sched_8h" local="no">src/sys/include/ubixos/sched.h</includedby>
-    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
-    <includedby refid="fork_8c" local="no">src/sys/kernel/fork.c</includedby>
-    <includedby refid="kpanic_8c" local="no">src/sys/kernel/kpanic.c</includedby>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
-    <includedby refid="tty_8c" local="no">src/sys/kernel/tty.c</includedby>
-    <includedby refid="video_8c" local="no">src/sys/sys/video.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="armv6_2fork_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</includedby>
+    <includedby refid="armv6_2kpanic_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/kpanic.c</includedby>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386_2fork_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/fork.c</includedby>
+    <includedby refid="i386_2kpanic_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/kpanic.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <includedby refid="sched_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/sched.h</includedby>
+    <includedby refid="atkbd_8c" local="no">C:/Dev/git/UbixOS/sys/isa/atkbd.c</includedby>
+    <includedby refid="tty_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/tty.c</includedby>
+    <includedby refid="video_8c" local="no">C:/Dev/git/UbixOS/sys/sys/video.c</includedby>
     <incdepgraph>
-      <node id="4485">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4486" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="4486">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="4484">
-        <label>src/sys/include/ubixos/tty.h</label>
-        <link refid="tty.h"/>
-        <childnode refid="4485" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4490">
-        <label>src/sys/include/ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="4491" relation="include">
-        </childnode>
-        <childnode refid="4504" relation="include">
-        </childnode>
-        <childnode refid="4509" relation="include">
-        </childnode>
-        <childnode refid="4517" relation="include">
-        </childnode>
-        <childnode refid="4519" relation="include">
-        </childnode>
-        <childnode refid="4488" relation="include">
-        </childnode>
-        <childnode refid="4521" relation="include">
-        </childnode>
-        <childnode refid="4522" relation="include">
-        </childnode>
-        <childnode refid="4510" relation="include">
-        </childnode>
-        <childnode refid="4533" relation="include">
-        </childnode>
-        <childnode refid="4525" relation="include">
-        </childnode>
-        <childnode refid="4520" relation="include">
-        </childnode>
-        <childnode refid="4534" relation="include">
-        </childnode>
-        <childnode refid="4507" relation="include">
-        </childnode>
-        <childnode refid="4514" relation="include">
-        </childnode>
-        <childnode refid="4535" relation="include">
-        </childnode>
-        <childnode refid="4495" relation="include">
-        </childnode>
-        <childnode refid="4515" relation="include">
-        </childnode>
-        <childnode refid="4501" relation="include">
-        </childnode>
-        <childnode refid="4518" relation="include">
-        </childnode>
-        <childnode refid="4508" relation="include">
-        </childnode>
-        <childnode refid="4536" relation="include">
-        </childnode>
-        <childnode refid="4516" relation="include">
-        </childnode>
-        <childnode refid="4500" relation="include">
-        </childnode>
-        <childnode refid="4529" relation="include">
-        </childnode>
-        <childnode refid="4537" relation="include">
-        </childnode>
-        <childnode refid="4538" relation="include">
-        </childnode>
-        <childnode refid="4539" relation="include">
-        </childnode>
-      </node>
-      <node id="4494">
-        <label>src/sys/pci/hd.c</label>
-        <link refid="hd_8c"/>
-      </node>
-      <node id="4509">
-        <label>src/sys/include/ubixos/endtask.h</label>
-        <link refid="endtask_8h"/>
-        <childnode refid="4510" relation="include">
-        </childnode>
-        <childnode refid="4506" relation="include">
-        </childnode>
-        <childnode refid="4511" relation="include">
-        </childnode>
-        <childnode refid="4512" relation="include">
-        </childnode>
-        <childnode refid="4513" relation="include">
-        </childnode>
-        <childnode refid="4514" relation="include">
-        </childnode>
-        <childnode refid="4495" relation="include">
-        </childnode>
-        <childnode refid="4515" relation="include">
-        </childnode>
-        <childnode refid="4516" relation="include">
-        </childnode>
-      </node>
-      <node id="4527">
-        <label>src/sys/kernel/vitals.c</label>
-        <link refid="vitals_8c"/>
-      </node>
-      <node id="4505">
-        <label>src/sys/kernel/elf.c</label>
-        <link refid="elf_8c"/>
-      </node>
-      <node id="4541">
-        <label>src/sys/kernel/tty.c</label>
-        <link refid="tty_8c"/>
-      </node>
-      <node id="4502">
-        <label>src/sys/mpi/message.c</label>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/mpi/message.c</label>
         <link refid="message_8c"/>
       </node>
-      <node id="4508">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod_8c"/>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
       </node>
-      <node id="4503">
-        <label>src/sys/mpi/system.c</label>
-        <link refid="system_8c"/>
-      </node>
-      <node id="4513">
-        <label>src/sys/kernel/kern_sysctl.c</label>
-        <link refid="kern__sysctl_8c"/>
-      </node>
-      <node id="4523">
-        <label>src/sys/include/ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="4488" relation="include">
-        </childnode>
-        <childnode refid="4510" relation="include">
-        </childnode>
-        <childnode refid="4524" relation="include">
-        </childnode>
-        <childnode refid="4525" relation="include">
-        </childnode>
-        <childnode refid="4520" relation="include">
-        </childnode>
-        <childnode refid="4495" relation="include">
-        </childnode>
-        <childnode refid="4501" relation="include">
-        </childnode>
-        <childnode refid="4526" relation="include">
-        </childnode>
-        <childnode refid="4518" relation="include">
-        </childnode>
-        <childnode refid="4527" relation="include">
-        </childnode>
-        <childnode refid="4528" relation="include">
-        </childnode>
-        <childnode refid="4529" relation="include">
-        </childnode>
-        <childnode refid="4530" relation="include">
-        </childnode>
-        <childnode refid="4531" relation="include">
-        </childnode>
-        <childnode refid="4532" relation="include">
-        </childnode>
-      </node>
-      <node id="4536">
-        <label>src/sys/lib/kmalloc.c</label>
-        <link refid="kmalloc_8c"/>
-      </node>
-      <node id="4539">
-        <label>src/sys/vmm/paging.c</label>
-        <link refid="paging_8c"/>
-      </node>
-      <node id="4498">
-        <label>src/sys/ubixfs/directory.c</label>
-        <link refid="directory_8c"/>
-      </node>
-      <node id="4512">
-        <label>src/sys/kernel/kern_sig.c</label>
-        <link refid="kern__sig_8c"/>
-      </node>
-      <node id="4518">
-        <label>src/sys/kernel/ubthread.c</label>
-        <link refid="ubthread_8c"/>
-      </node>
-      <node id="4501">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="4528">
-        <label>src/sys/lib/ogprintf.cc</label>
-        <link refid="ogprintf_8cc"/>
-      </node>
-      <node id="4507">
-        <label>src/sys/kernel/ld.c</label>
-        <link refid="ld_8c"/>
-      </node>
-      <node id="4520">
-        <label>src/sys/kernel/fork.c</label>
-        <link refid="fork_8c"/>
-      </node>
-      <node id="4496">
-        <label>src/sys/ubixfs/block.c</label>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
         <link refid="block_8c"/>
       </node>
-      <node id="4514">
-        <label>src/sys/kernel/sched.c</label>
-        <link refid="sched_8c"/>
-      </node>
-      <node id="4491">
-        <label>src/sys/include/mpi/mpi.h</label>
-        <link refid="mpi_8h"/>
-        <childnode refid="4492" relation="include">
+      <node id="81">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="57" relation="include">
         </childnode>
-        <childnode refid="4495" relation="include">
+        <childnode refid="82" relation="include">
         </childnode>
-        <childnode refid="4501" relation="include">
+        <childnode refid="66" relation="include">
         </childnode>
-        <childnode refid="4502" relation="include">
+        <childnode refid="46" relation="include">
         </childnode>
-        <childnode refid="4503" relation="include">
+        <childnode refid="72" relation="include">
         </childnode>
       </node>
-      <node id="4519">
-        <label>src/sys/include/ubixos/fork.h</label>
-        <link refid="fork_8h"/>
-        <childnode refid="4520" relation="include">
-        </childnode>
-      </node>
-      <node id="4497">
-        <label>src/sys/ubixfs/dirCache.c</label>
-        <link refid="dirCache_8c"/>
-      </node>
-      <node id="4500">
-        <label>src/sys/ubixfs/ubixfs.c</label>
-        <link refid="ubixfs_8c"/>
-      </node>
-      <node id="4542">
-        <label>src/sys/sys/video.c</label>
-        <link refid="video_8c"/>
-      </node>
-      <node id="4489">
-        <label>src/sys/init/main.c</label>
-        <link refid="main_8c"/>
-      </node>
-      <node id="4492">
-        <label>src/sys/include/ubixfs/ubixfs.h</label>
-        <link refid="ubixfs_8h"/>
-        <childnode refid="4493" relation="include">
-        </childnode>
-        <childnode refid="4488" relation="include">
-        </childnode>
-        <childnode refid="4495" relation="include">
-        </childnode>
-        <childnode refid="4496" relation="include">
-        </childnode>
-        <childnode refid="4497" relation="include">
-        </childnode>
-        <childnode refid="4498" relation="include">
-        </childnode>
-        <childnode refid="4499" relation="include">
-        </childnode>
-        <childnode refid="4500" relation="include">
-        </childnode>
-      </node>
-      <node id="4533">
-        <label>src/sys/kernel/bioscall.c</label>
-        <link refid="bioscall_8c"/>
-      </node>
-      <node id="4522">
-        <label>src/sys/include/ubixos/ubthread.h</label>
-        <link refid="ubthread_8h"/>
-        <childnode refid="4523" relation="include">
-        </childnode>
-        <childnode refid="4518" relation="include">
-        </childnode>
-      </node>
-      <node id="4495">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
-      </node>
-      <node id="4524">
-        <label>src/sys/isa/ne2k.c</label>
-        <link refid="ne2k_8c"/>
-      </node>
-      <node id="4517">
-        <label>src/sys/include/ubixos/exec.h</label>
-        <link refid="exec_8h"/>
-        <childnode refid="4489" relation="include">
-        </childnode>
-        <childnode refid="4506" relation="include">
-        </childnode>
-        <childnode refid="4495" relation="include">
-        </childnode>
-        <childnode refid="4501" relation="include">
-        </childnode>
-        <childnode refid="4518" relation="include">
-        </childnode>
-        <childnode refid="4500" relation="include">
-        </childnode>
-      </node>
-      <node id="4521">
-        <label>src/sys/include/ubixos/syscalls.h</label>
-        <link refid="syscalls_8h"/>
-        <childnode refid="4495" relation="include">
-        </childnode>
-      </node>
-      <node id="4493">
-        <label>src/sys/include/pci/hd.h</label>
-        <link refid="hd_8h"/>
-        <childnode refid="4488" relation="include">
-        </childnode>
-        <childnode refid="4494" relation="include">
-        </childnode>
-      </node>
-      <node id="4510">
-        <label>src/sys/isa/atkbd.c</label>
-        <link refid="atkbd_8c"/>
-      </node>
-      <node id="4538">
-        <label>src/sys/vmm/pagefault.c</label>
+      <node id="89">
+        <label>C:/Dev/git/UbixOS/sys/vmm/pagefault.c</label>
         <link refid="pagefault_8c"/>
       </node>
-      <node id="4499">
-        <label>src/sys/ubixfs/thread.c</label>
-        <link refid="thread_8c"/>
+      <node id="86">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="4488">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="4489" relation="include">
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="85">
+        <label>C:/Dev/git/UbixOS/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h</label>
+        <link refid="syscalls_8h"/>
+        <childnode refid="14" relation="include">
         </childnode>
-      </node>
-      <node id="4530">
-        <label>src/sys/vfs/mount.c</label>
-        <link refid="mount_8c"/>
-      </node>
-      <node id="4540">
-        <label>src/sys/kernel/kpanic.c</label>
-        <link refid="kpanic_8c"/>
-      </node>
-      <node id="4526">
-        <label>src/sys/kernel/time.c</label>
-        <link refid="time_8c"/>
-      </node>
-      <node id="4532">
-        <label>src/sys/vmm/vmm_memory.c</label>
-        <link refid="vmm__memory_8c"/>
-      </node>
-      <node id="4535">
-        <label>src/sys/kernel/spinlock.c</label>
-        <link refid="spinlock_8c"/>
-      </node>
-      <node id="4504">
-        <label>src/sys/include/ubixos/elf.h</label>
-        <link refid="elf_8h"/>
-        <childnode refid="4505" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="4506" relation="include">
+        <childnode refid="44" relation="include">
         </childnode>
-        <childnode refid="4507" relation="include">
+        <childnode refid="45" relation="include">
         </childnode>
-        <childnode refid="4495" relation="include">
+        <childnode refid="54" relation="include">
         </childnode>
-        <childnode refid="4508" relation="include">
+        <childnode refid="55" relation="include">
         </childnode>
       </node>
-      <node id="4511">
-        <label>src/sys/kernel/kern_descrip.c</label>
-        <link refid="kern__descrip_8c"/>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
       </node>
-      <node id="4525">
-        <label>src/sys/kernel/endtask.c</label>
-        <link refid="endtask_8c"/>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c</label>
+        <link refid="mpi__syscalls_8c"/>
       </node>
-      <node id="4487">
-        <label>src/sys/include/ubixos/tty.h</label>
-        <link refid="tty.h"/>
-        <childnode refid="4488" relation="include">
+      <node id="87">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="37" relation="include">
         </childnode>
-        <childnode refid="4490" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
-        <childnode refid="4510" relation="include">
+        <childnode refid="14" relation="include">
         </childnode>
-        <childnode refid="4520" relation="include">
+        <childnode refid="38" relation="include">
         </childnode>
-        <childnode refid="4540" relation="include">
+        <childnode refid="16" relation="include">
         </childnode>
-        <childnode refid="4501" relation="include">
+        <childnode refid="18" relation="include">
         </childnode>
-        <childnode refid="4541" relation="include">
+        <childnode refid="39" relation="include">
         </childnode>
-        <childnode refid="4542" relation="include">
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
         </childnode>
       </node>
-      <node id="4529">
-        <label>src/sys/vfs/file.c</label>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
         <link refid="file_8c"/>
       </node>
-      <node id="4534">
-        <label>src/sys/kernel/gen_calls.c</label>
-        <link refid="gen__calls_8c"/>
-      </node>
-      <node id="4516">
-        <label>src/sys/sys/idt.c</label>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/sys/idt.c</label>
         <link refid="idt_8c"/>
       </node>
-      <node id="4515">
-        <label>src/sys/kernel/syscall_new.c</label>
-        <link refid="syscall__new_8c"/>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
       </node>
-      <node id="4506">
-        <label>src/sys/kernel/exec.c</label>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/spinlock.c</label>
+        <link refid="armv6_2spinlock_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/kpanic.c</label>
+        <link refid="armv6_2kpanic_8c"/>
+      </node>
+      <node id="79">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/access.h</label>
+        <link refid="access_8h"/>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</label>
+        <link refid="i386_2spinlock_8c"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/include/net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/include/mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="83">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="92">
+        <label>C:/Dev/git/UbixOS/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="84">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vfs_calls.c</label>
+        <link refid="vfs__calls_8c"/>
+      </node>
+      <node id="77">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/fork.h</label>
+        <link refid="fork_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
         <link refid="exec_8c"/>
       </node>
-      <node id="4537">
-        <label>src/sys/vmm/getfreevirtualpage.c</label>
+      <node id="82">
+        <label>C:/Dev/git/UbixOS/sys/kernel/sem.c</label>
+        <link refid="sem_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</label>
+        <link refid="armv6_2bioscall_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="91">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c</label>
+        <link refid="vmm__mmap_8c"/>
+      </node>
+      <node id="90">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="93">
+        <label>C:/Dev/git/UbixOS/sys/sys/video.c</label>
+        <link refid="video_8c"/>
+      </node>
+      <node id="76">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/net/core/sys.c</label>
+        <link refid="sys_8c"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="80">
+        <label>C:/Dev/git/UbixOS/sys/kernel/access.c</label>
+        <link refid="access_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="88">
+        <label>C:/Dev/git/UbixOS/sys/vmm/getfreevirtualpage.c</label>
         <link refid="getfreevirtualpage_8c"/>
       </node>
-      <node id="4531">
-        <label>src/sys/vfs/vfs.c</label>
-        <link refid="vfs_8c"/>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/kpanic.c</label>
+        <link refid="i386_2kpanic_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/kernel/descrip.c</label>
+        <link refid="descrip_8c"/>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls_posix.c</label>
+        <link refid="syscalls__posix_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls.c</label>
+        <link refid="syscalls_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/trap.c</label>
+        <link refid="trap_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="78">
+        <label>C:/Dev/git/UbixOS/sys/sys/elf.c</label>
+        <link refid="sys_2elf_8c"/>
+      </node>
+      <node id="74">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
       </node>
     </invincdepgraph>
     <innerclass refid="structtty__termNode" prot="public">tty_termNode</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="tty_8h_1af7550f4ba4072823e4085117944c5ef" prot="public" static="no">
+      <memberdef kind="define" id="tty_8h_1aaf7550f4ba4072823e4085117944c5ef" prot="public" static="no">
         <name>TTY_MAX_TERMS</name>
         <initializer>5</initializer>
         <briefdescription>
@@ -448,14 +769,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" bodystart="35" bodyend="-1"/>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="34" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" bodystart="34" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="tty_8h_1b4a376d082a021be5b9520e6c4987065" prot="public" static="no">
-        <type><ref refid="structtty__termNode" kindref="compound">tty_termNode</ref></type>
+      <memberdef kind="typedef" id="tty_8h_1ab4a376d082a021be5b9520e6c4987065" prot="public" static="no">
+        <type>struct <ref refid="structtty__termNode" kindref="compound">tty_termNode</ref></type>
         <definition>typedef struct tty_termNode  tty_term</definition>
         <argsstring></argsstring>
         <name>tty_term</name>
@@ -465,17 +784,39 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="46"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="45" column="10"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="tty_8h_1aafbb5679104334c34d7691b2de7d7a86" prot="public" static="no" mutable="no">
+        <type><ref refid="tty_8h_1ab4a376d082a021be5b9520e6c4987065" kindref="member">tty_term</ref> *</type>
+        <definition>tty_term* tty_foreground</definition>
+        <argsstring></argsstring>
+        <name>tty_foreground</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="52" column="17" bodyfile="C:/Dev/git/UbixOS/sys/kernel/tty.c" bodystart="38" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" declline="52" declcolumn="17"/>
+        <referencedby refid="atkbd_8c_1ac45fdeab51c3197c1e7c4ec7beabaca9" compoundref="atkbd_8c" startline="346" endline="393">getchar</referencedby>
+        <referencedby refid="kpanic_8h_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</referencedby>
+        <referencedby refid="video_8c_1a5429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="58" endline="106">kprint</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a635e457cca04f0435b1b25d0d6b987df" compoundref="file_8c" startline="76" endline="113">sys_fgetc</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="tty_8c_1a52a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="84" endline="113">tty_change</referencedby>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="tty_8h_1fb200d47095b1f878728403e9346cc33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="tty_8h_1afb200d47095b1f878728403e9346cc33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int tty_change</definition>
         <argsstring>(uInt16)</argsstring>
         <name>tty_change</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -483,26 +824,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="87" bodyend="116"/>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="tty_8c_171910aae9a65de1b7375f236908f8a22" compoundref="tty_8c" startline="38">terms</references>
-        <references refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" compoundref="tty_8h" startline="38">tty_termNode::tty_buffer</references>
-        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
-        <references refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" compoundref="tty_8h" startline="35">TTY_MAX_TERMS</references>
-        <references refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" compoundref="tty_8h" startline="39">tty_termNode::tty_pointer</references>
-        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
-        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
-        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="48" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/tty.c" bodystart="84" bodyend="113" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" declline="48" declcolumn="5"/>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structtty__termNode_1ad7d6c2241ad060df43036b02a9a6ac26" compoundref="tty_8h" startline="37">tty_termNode::tty_buffer</references>
+        <references refid="tty_8c_1aafbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="38">tty_foreground</references>
+        <references refid="tty_8h_1aaf7550f4ba4072823e4085117944c5ef" compoundref="tty_8h" startline="34">TTY_MAX_TERMS</references>
       </memberdef>
-      <memberdef kind="function" id="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+      <memberdef kind="function" id="tty_8h_1a4f96ccac7e60296ef496008d8cbed0ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="tty_8h_1ab4a376d082a021be5b9520e6c4987065" kindref="member">tty_term</ref> *</type>
         <definition>tty_term* tty_find</definition>
         <argsstring>(uInt16)</argsstring>
         <name>tty_find</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -510,13 +845,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="170" bodyend="172"/>
-        <references refid="tty_8c_171910aae9a65de1b7375f236908f8a22" compoundref="tty_8c" startline="38">terms</references>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="49" column="10" bodyfile="C:/Dev/git/UbixOS/sys/kernel/tty.c" bodystart="167" bodyend="169" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" declline="49" declcolumn="10"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="video_8c_1a5429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="58" endline="106">kprint</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="function" id="tty_8h_1ab365abb615be7027fa0bdb2c09569cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="tty_8h_1aab365abb615be7027fa0bdb2c09569cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int tty_init</definition>
         <argsstring>()</argsstring>
@@ -527,22 +861,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="42" bodyend="79"/>
-        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="tty_8c_171910aae9a65de1b7375f236908f8a22" compoundref="tty_8c" startline="38">terms</references>
-        <references refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" compoundref="tty_8h" startline="38">tty_termNode::tty_buffer</references>
-        <references refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" compoundref="tty_8h" startline="40">tty_termNode::tty_colour</references>
-        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
-        <references refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" compoundref="tty_8h" startline="35">TTY_MAX_TERMS</references>
-        <references refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" compoundref="tty_8h" startline="39">tty_termNode::tty_pointer</references>
-        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
-        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="47" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/tty.c" bodystart="41" bodyend="77" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" declline="47" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="tty_8h_1d96f57a7c113d3cfa76ee5fed6de33c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="tty_8h_1ad96f57a7c113d3cfa76ee5fed6de33c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int tty_print</definition>
         <argsstring>(char *, tty_term *)</argsstring>
@@ -551,7 +872,7 @@
           <type>char *</type>
         </param>
         <param>
-          <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+          <type><ref refid="tty_8h_1ab4a376d082a021be5b9520e6c4987065" kindref="member">tty_term</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -559,43 +880,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="118" bodyend="168"/>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" compoundref="tty_8h" startline="40">tty_termNode::tty_colour</references>
-        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
-        <references refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" compoundref="tty_8h" startline="39">tty_termNode::tty_pointer</references>
-        <references refid="tty_8c_100b6c183f536a95df28a74c26816dc08" compoundref="tty_8c" startline="40">tty_spinLock</references>
-        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
-        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
-        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
-        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
-        <referencedby refid="file_8c_11a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="49" endline="57">sysFwrite</referencedby>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="tty_8h_1afbb5679104334c34d7691b2de7d7a86" prot="public" static="no" mutable="no">
-        <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
-        <definition>tty_term* tty_foreground</definition>
-        <argsstring></argsstring>
-        <name>tty_foreground</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="39" bodyend="-1"/>
-        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
-        <referencedby refid="atkbd_8c_19e32494b8c0797b73c41a50c698f0c04" compoundref="atkbd_8c" startline="329" endline="375">getch</referencedby>
-        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
-        <referencedby refid="kpanic_8c_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</referencedby>
-        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
-        <referencedby refid="file_8c_104b3a6449e24cc27188e1f4b9a9d8225" compoundref="file_8c" startline="59" endline="86">sysFgetc</referencedby>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" line="50" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/tty.c" bodystart="115" bodyend="165" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h" declline="50" declcolumn="5"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="video_8c_1a5429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="58" endline="106">kprint</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1a6b6b8f061ddd1e9631f0858ff0d83ff0" compoundref="file_8c" startline="47" endline="62">sys_fwrite</referencedby>
+        <referencedby refid="file_8c_1a1a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="66" endline="74">sysFwrite</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -603,102 +892,61 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: tty_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_TTY_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_TTY_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35" refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TTY_MAX_TERMS<sp/>5</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37" refid="structtty__termNode" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtty__termNode" kindref="compound">tty_termNode</ref><sp/>{</highlight></codeline>
-<codeline lineno="38" refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>*<ref refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" kindref="member">tty_buffer</ref>;</highlight></codeline>
-<codeline lineno="39" refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>*<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>;</highlight></codeline>
-<codeline lineno="40" refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><sp/><sp/><ref refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" kindref="member">tty_colour</ref>;</highlight></codeline>
-<codeline lineno="41" refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><sp/><ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref>;</highlight></codeline>
-<codeline lineno="42" refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><sp/><ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref>;</highlight></codeline>
-<codeline lineno="43" refid="structtty__termNode_1f8e2ad49f523044768d8e768bfe531e4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/><sp/><ref refid="structtty__termNode_1f8e2ad49f523044768d8e768bfe531e4" kindref="member">owner</ref>;</highlight></codeline>
-<codeline lineno="44" refid="structtty__termNode_139b59f0bd823a6c86eaac17a80d9c360" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structtty__termNode_139b59f0bd823a6c86eaac17a80d9c360" kindref="member">stdin</ref>[512];</highlight></codeline>
-<codeline lineno="45" refid="structtty__termNode_129b1eedda11ef5e0cc7e069c0324afd9" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtty__termNode_129b1eedda11ef5e0cc7e069c0324afd9" kindref="member">stdinSize</ref>;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="structtty__termNode" kindref="compound">tty_term</ref>;</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1ab365abb615be7027fa0bdb2c09569cb" kindref="member">tty_init</ref>();</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1fb200d47095b1f878728403e9346cc33" kindref="member">tty_change</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>);</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*<ref refid="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" kindref="member">tty_find</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>);</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1d96f57a7c113d3cfa76ee5fed6de33c0" kindref="member">tty_print</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*);</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*<ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>;</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="56"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="58"><highlight class="comment"><sp/>$Log: tty_8h.xml,v $
-<codeline lineno="58"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:53  reddawg
-<codeline lineno="58"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="58"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="59"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"></highlight></codeline>
-<codeline lineno="62"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="63"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"></highlight></codeline>
-<codeline lineno="65"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:57<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="66"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="67"><highlight class="comment"></highlight></codeline>
-<codeline lineno="68"><highlight class="comment"><sp/>Revision<sp/>1.8<sp/><sp/>2004/09/06<sp/>22:11:29<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="69"><highlight class="comment"><sp/>tty:<sp/>now<sp/>each<sp/>tty<sp/>has<sp/>a<sp/>stdin....</highlight></codeline>
-<codeline lineno="70"><highlight class="comment"></highlight></codeline>
-<codeline lineno="71"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/08/14<sp/>11:23:02<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="72"><highlight class="comment"><sp/>Changes</highlight></codeline>
-<codeline lineno="73"><highlight class="comment"></highlight></codeline>
-<codeline lineno="74"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/08/09<sp/>12:58:05<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="75"><highlight class="comment"><sp/>let<sp/>me<sp/>know<sp/>when<sp/>you<sp/>got<sp/>the<sp/>surce</highlight></codeline>
-<codeline lineno="76"><highlight class="comment"></highlight></codeline>
-<codeline lineno="77"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/08/09<sp/>05:40:31<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="78"><highlight class="comment"><sp/>tty:<sp/>removed<sp/>current<sp/>and<sp/>made<sp/>a<sp/>foreground</highlight></codeline>
-<codeline lineno="79"><highlight class="comment"></highlight></codeline>
-<codeline lineno="80"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/08/06<sp/>22:32:16<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="81"><highlight class="comment"><sp/>Ubix<sp/>Works<sp/>Again</highlight></codeline>
-<codeline lineno="82"><highlight class="comment"></highlight></codeline>
-<codeline lineno="83"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/08/04<sp/>08:17:57<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="84"><highlight class="comment"><sp/>tty:<sp/>we<sp/>have<sp/>primative<sp/>ttys<sp/>try<sp/>f1-f5<sp/>so<sp/>it<sp/>is<sp/>easier<sp/>to<sp/>use<sp/>and<sp/>debug</highlight></codeline>
-<codeline lineno="85"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>ubixos</highlight></codeline>
-<codeline lineno="86"><highlight class="comment"></highlight></codeline>
-<codeline lineno="87"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/08/03<sp/>21:44:24<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="88"><highlight class="comment"><sp/>ttys</highlight></codeline>
-<codeline lineno="89"><highlight class="comment"></highlight></codeline>
-<codeline lineno="90"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UBIXOS_TTY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UBIXOS_TTY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="tty_8h_1aaf7550f4ba4072823e4085117944c5ef" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TTY_MAX_TERMS<sp/>5</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="structtty__termNode" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtty__termNode" kindref="compound">tty_termNode</ref><sp/>{</highlight></codeline>
+<codeline lineno="37" refid="structtty__termNode_1ad7d6c2241ad060df43036b02a9a6ac26" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structtty__termNode_1ad7d6c2241ad060df43036b02a9a6ac26" kindref="member">tty_buffer</ref>;</highlight></codeline>
+<codeline lineno="38" refid="structtty__termNode_1ac0868dddca6832ef5f791dd8d2606c7c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structtty__termNode_1ac0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>;</highlight></codeline>
+<codeline lineno="39" refid="structtty__termNode_1a06bfeceb1a07aa6c0602745a12be05b0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref><sp/><ref refid="structtty__termNode_1a06bfeceb1a07aa6c0602745a12be05b0" kindref="member">tty_colour</ref>;</highlight></codeline>
+<codeline lineno="40" refid="structtty__termNode_1a22e444939c17fda952c5924c8780aa8b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structtty__termNode_1a22e444939c17fda952c5924c8780aa8b" kindref="member">tty_x</ref>;</highlight></codeline>
+<codeline lineno="41" refid="structtty__termNode_1a9440a0dd6d9f9402e84725a303946bb9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/><ref refid="structtty__termNode_1a9440a0dd6d9f9402e84725a303946bb9" kindref="member">tty_y</ref>;</highlight></codeline>
+<codeline lineno="42" refid="structtty__termNode_1af8e2ad49f523044768d8e768bfe531e4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/><ref refid="structtty__termNode_1af8e2ad49f523044768d8e768bfe531e4" kindref="member">owner</ref>;</highlight></codeline>
+<codeline lineno="43" refid="structtty__termNode_1a39b59f0bd823a6c86eaac17a80d9c360" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structtty__termNode_1a39b59f0bd823a6c86eaac17a80d9c360" kindref="member">stdin</ref>[512];</highlight></codeline>
+<codeline lineno="44" refid="structtty__termNode_1a29b1eedda11ef5e0cc7e069c0324afd9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtty__termNode_1a29b1eedda11ef5e0cc7e069c0324afd9" kindref="member">stdinSize</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal">}<sp/><ref refid="tty_8h_1ab4a376d082a021be5b9520e6c4987065" kindref="member">tty_term</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1aab365abb615be7027fa0bdb2c09569cb" kindref="member">tty_init</ref>();</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1afb200d47095b1f878728403e9346cc33" kindref="member">tty_change</ref>(<ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref>);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*<ref refid="tty_8h_1a4f96ccac7e60296ef496008d8cbed0ff" kindref="member">tty_find</ref>(<ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref>);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1ad96f57a7c113d3cfa76ee5fed6de33c0" kindref="member">tty_print</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*<ref refid="tty_8h_1aafbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/tty.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/tty.h"/>
   </compounddef>
 </doxygen>

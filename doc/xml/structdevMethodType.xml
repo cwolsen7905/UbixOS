@@ -1,13 +1,19 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structdevMethodType" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structdevMethodType" kind="struct" language="C++" prot="public">
     <compoundname>devMethodType</compoundname>
     <includes refid="driver_8h" local="no">driver.h</includes>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" bodystart="38" bodyend="39"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>devMethodType</label>
+        <link refid="structdevMethodType"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/driver.h" line="36" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/driver.h" bodystart="36" bodyend="37"/>
     <listofallmembers>
     </listofallmembers>
   </compounddef>

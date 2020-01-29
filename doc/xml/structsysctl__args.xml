@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structsysctl__args" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsysctl__args" kind="struct" language="C++" prot="public">
     <compoundname>sysctl_args</compoundname>
-    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structsysctl__args_12653c7c39cf27b5c3d565902797cfb1c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a2653c7c39cf27b5c3d565902797cfb1c" prot="public" static="no" mutable="no">
         <type>int *</type>
         <definition>int* sysctl_args::name</definition>
         <argsstring></argsstring>
@@ -15,10 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="71" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="312" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="312" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1d1ff722dbc06318c0984f6a510772558" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1ad1ff722dbc06318c0984f6a510772558" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sysctl_args::name_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -29,12 +28,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="71" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="311" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="311" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1672b3b4dbbfb4cdd15633fb8c267508c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a98b610aeb3e559acb5962a88bfdbfff6" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sysctl_args::name_r_[(sizeof(register_t)&lt;=sizeof(int *)?0:sizeof(register_t)-sizeof(int *))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(int *)?0:sizeof(register_t)-sizeof(int *))]</argsstring>
+        <definition>char sysctl_args::name_r_[(sizeof(register_t)&lt;=sizeof(int *) ? 0 :sizeof(register_t) - sizeof(int *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int *) ? 0 :sizeof(register_t) - sizeof(int *))]</argsstring>
         <name>name_r_</name>
         <briefdescription>
         </briefdescription>
@@ -42,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="71" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="313" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="313" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1bd967f23c35e3af742faa6135f89e79e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+      <memberdef kind="variable" id="structsysctl__args_1abd967f23c35e3af742faa6135f89e79e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
         <definition>u_int sysctl_args::namelen</definition>
         <argsstring></argsstring>
         <name>namelen</name>
@@ -55,10 +54,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="72" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="315" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="315" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_11e1553b9bc2757bbedd9d9d379d0ded6" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a1e1553b9bc2757bbedd9d9d379d0ded6" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sysctl_args::namelen_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -69,12 +67,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="72" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="314" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="314" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1032bc7ce35f3b1183bd477dd877e92da" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a2798b20a7daa2203512d385245ceb287" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sysctl_args::namelen_r_[(sizeof(register_t)&lt;=sizeof(u_int)?0:sizeof(register_t)-sizeof(u_int))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int)?0:sizeof(register_t)-sizeof(u_int))]</argsstring>
+        <definition>char sysctl_args::namelen_r_[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(u_int) ? 0 :sizeof(register_t) - sizeof(u_int))]</argsstring>
         <name>namelen_r_</name>
         <briefdescription>
         </briefdescription>
@@ -82,22 +80,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="72" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="316" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="316" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1b8149710145b51cbc967dbc615ed920b" prot="public" static="no" mutable="no">
-        <type>void *</type>
-        <definition>void* sysctl_args::new</definition>
-        <argsstring></argsstring>
-        <name>new</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="75" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1008871ccee9e25f6eb8cc1aee1a6e4d0" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a008871ccee9e25f6eb8cc1aee1a6e4d0" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sysctl_args::new_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -108,12 +93,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="75" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="323" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="323" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1f4c1045e862bb7d2108e222144f043bb" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1aea9aff50d66813ca445dda9388b739df" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sysctl_args::new_r_[(sizeof(register_t)&lt;=sizeof(void *)?0:sizeof(register_t)-sizeof(void *))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(void *)?0:sizeof(register_t)-sizeof(void *))]</argsstring>
+        <definition>char sysctl_args::new_r_[(sizeof(register_t)&lt;=sizeof(void *) ? 0 :sizeof(register_t) - sizeof(void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(void *) ? 0 :sizeof(register_t) - sizeof(void *))]</argsstring>
         <name>new_r_</name>
         <briefdescription>
         </briefdescription>
@@ -121,10 +106,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="75" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="325" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="325" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_145cc219865ddc983c32a7a12a692106c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+      <memberdef kind="variable" id="structsysctl__args_1a45cc219865ddc983c32a7a12a692106c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
         <definition>size_t sysctl_args::newlen</definition>
         <argsstring></argsstring>
         <name>newlen</name>
@@ -134,10 +119,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="76" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="327" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="327" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_15174043ae5cf8e75d30093b3d3cc6f84" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a5174043ae5cf8e75d30093b3d3cc6f84" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sysctl_args::newlen_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -148,12 +132,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="76" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="326" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="326" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_18df906e743f1dce735a933c714d5b976" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1ac197833adacbdc4f15af9286d5e1c966" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sysctl_args::newlen_r_[(sizeof(register_t)&lt;=sizeof(size_t)?0:sizeof(register_t)-sizeof(size_t))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t)?0:sizeof(register_t)-sizeof(size_t))]</argsstring>
+        <definition>char sysctl_args::newlen_r_[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t) ? 0 :sizeof(register_t) - sizeof(size_t))]</argsstring>
         <name>newlen_r_</name>
         <briefdescription>
         </briefdescription>
@@ -161,23 +145,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="76" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="328" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="328" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_15a10c812e19c32979ad704d816fa78ae" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a8beb0dc50ab5229b180e9850b0cb4afb" prot="public" static="no" mutable="no">
         <type>void *</type>
-        <definition>void* sysctl_args::old</definition>
+        <definition>void* sysctl_args::newp</definition>
         <argsstring></argsstring>
-        <name>old</name>
+        <name>newp</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="73" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="324" column="11" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="324" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1e6c53b996c80d5bb1d1be2144d3ac929" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1ae6c53b996c80d5bb1d1be2144d3ac929" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sysctl_args::old_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -188,12 +171,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="73" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="317" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="317" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1ccd4c5e0f7180580b0a3f2546ce2c3fb" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a7c11de41caac948f6f3dc3b4cd589245" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sysctl_args::old_r_[(sizeof(register_t)&lt;=sizeof(void *)?0:sizeof(register_t)-sizeof(void *))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(void *)?0:sizeof(register_t)-sizeof(void *))]</argsstring>
+        <definition>char sysctl_args::old_r_[(sizeof(register_t)&lt;=sizeof(void *) ? 0 :sizeof(register_t) - sizeof(void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(void *) ? 0 :sizeof(register_t) - sizeof(void *))]</argsstring>
         <name>old_r_</name>
         <briefdescription>
         </briefdescription>
@@ -201,10 +184,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="73" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="319" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="319" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_1d82c3aba52eb190fc3dbee14eea74c0f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref> *</type>
+      <memberdef kind="variable" id="structsysctl__args_1ad82c3aba52eb190fc3dbee14eea74c0f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref> *</type>
         <definition>size_t* sysctl_args::oldlenp</definition>
         <argsstring></argsstring>
         <name>oldlenp</name>
@@ -214,10 +197,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="74" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="321" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="321" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_15291279ffa17bef536998c690489f355" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a5291279ffa17bef536998c690489f355" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sysctl_args::oldlenp_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -228,12 +210,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="74" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="320" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="320" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsysctl__args_19b26500bafbd054a79f7dc9d6aeb11e7" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsysctl__args_1a601037e6019a71a6c50102506a2e6c25" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sysctl_args::oldlenp_r_[(sizeof(register_t)&lt;=sizeof(size_t *)?0:sizeof(register_t)-sizeof(size_t *))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t *)?0:sizeof(register_t)-sizeof(size_t *))]</argsstring>
+        <definition>char sysctl_args::oldlenp_r_[(sizeof(register_t)&lt;=sizeof(size_t *) ? 0 :sizeof(register_t) - sizeof(size_t *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t *) ? 0 :sizeof(register_t) - sizeof(size_t *))]</argsstring>
         <name>oldlenp_r_</name>
         <briefdescription>
         </briefdescription>
@@ -241,33 +223,52 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="74" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="322" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="322" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__args_1a879406f4741f55713b15ab7590212073" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* sysctl_args::oldp</definition>
+        <argsstring></argsstring>
+        <name>oldp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="318" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="318" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="70" bodyend="77"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>sysctl_args</label>
+        <link refid="structsysctl__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="310" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="310" bodyend="329"/>
     <listofallmembers>
-      <member refid="structsysctl__args_12653c7c39cf27b5c3d565902797cfb1c" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>name</name></member>
-      <member refid="structsysctl__args_1d1ff722dbc06318c0984f6a510772558" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>name_l_</name></member>
-      <member refid="structsysctl__args_1672b3b4dbbfb4cdd15633fb8c267508c" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>name_r_</name></member>
-      <member refid="structsysctl__args_1bd967f23c35e3af742faa6135f89e79e" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>namelen</name></member>
-      <member refid="structsysctl__args_11e1553b9bc2757bbedd9d9d379d0ded6" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>namelen_l_</name></member>
-      <member refid="structsysctl__args_1032bc7ce35f3b1183bd477dd877e92da" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>namelen_r_</name></member>
-      <member refid="structsysctl__args_1b8149710145b51cbc967dbc615ed920b" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>new</name></member>
-      <member refid="structsysctl__args_1008871ccee9e25f6eb8cc1aee1a6e4d0" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>new_l_</name></member>
-      <member refid="structsysctl__args_1f4c1045e862bb7d2108e222144f043bb" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>new_r_</name></member>
-      <member refid="structsysctl__args_145cc219865ddc983c32a7a12a692106c" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newlen</name></member>
-      <member refid="structsysctl__args_15174043ae5cf8e75d30093b3d3cc6f84" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newlen_l_</name></member>
-      <member refid="structsysctl__args_18df906e743f1dce735a933c714d5b976" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newlen_r_</name></member>
-      <member refid="structsysctl__args_15a10c812e19c32979ad704d816fa78ae" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>old</name></member>
-      <member refid="structsysctl__args_1e6c53b996c80d5bb1d1be2144d3ac929" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>old_l_</name></member>
-      <member refid="structsysctl__args_1ccd4c5e0f7180580b0a3f2546ce2c3fb" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>old_r_</name></member>
-      <member refid="structsysctl__args_1d82c3aba52eb190fc3dbee14eea74c0f" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldlenp</name></member>
-      <member refid="structsysctl__args_15291279ffa17bef536998c690489f355" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldlenp_l_</name></member>
-      <member refid="structsysctl__args_19b26500bafbd054a79f7dc9d6aeb11e7" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldlenp_r_</name></member>
+      <member refid="structsysctl__args_1a2653c7c39cf27b5c3d565902797cfb1c" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>name</name></member>
+      <member refid="structsysctl__args_1ad1ff722dbc06318c0984f6a510772558" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>name_l_</name></member>
+      <member refid="structsysctl__args_1a98b610aeb3e559acb5962a88bfdbfff6" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>name_r_</name></member>
+      <member refid="structsysctl__args_1abd967f23c35e3af742faa6135f89e79e" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>namelen</name></member>
+      <member refid="structsysctl__args_1a1e1553b9bc2757bbedd9d9d379d0ded6" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>namelen_l_</name></member>
+      <member refid="structsysctl__args_1a2798b20a7daa2203512d385245ceb287" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>namelen_r_</name></member>
+      <member refid="structsysctl__args_1a008871ccee9e25f6eb8cc1aee1a6e4d0" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>new_l_</name></member>
+      <member refid="structsysctl__args_1aea9aff50d66813ca445dda9388b739df" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>new_r_</name></member>
+      <member refid="structsysctl__args_1a45cc219865ddc983c32a7a12a692106c" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newlen</name></member>
+      <member refid="structsysctl__args_1a5174043ae5cf8e75d30093b3d3cc6f84" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newlen_l_</name></member>
+      <member refid="structsysctl__args_1ac197833adacbdc4f15af9286d5e1c966" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newlen_r_</name></member>
+      <member refid="structsysctl__args_1a8beb0dc50ab5229b180e9850b0cb4afb" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>newp</name></member>
+      <member refid="structsysctl__args_1ae6c53b996c80d5bb1d1be2144d3ac929" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>old_l_</name></member>
+      <member refid="structsysctl__args_1a7c11de41caac948f6f3dc3b4cd589245" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>old_r_</name></member>
+      <member refid="structsysctl__args_1ad82c3aba52eb190fc3dbee14eea74c0f" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldlenp</name></member>
+      <member refid="structsysctl__args_1a5291279ffa17bef536998c690489f355" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldlenp_l_</name></member>
+      <member refid="structsysctl__args_1a601037e6019a71a6c50102506a2e6c25" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldlenp_r_</name></member>
+      <member refid="structsysctl__args_1a879406f4741f55713b15ab7590212073" prot="public" virt="non-virtual"><scope>sysctl_args</scope><name>oldp</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

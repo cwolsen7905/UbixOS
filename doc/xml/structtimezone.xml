@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structtimezone" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtimezone" kind="struct" language="C++" prot="public">
     <compoundname>timezone</compoundname>
     <includes refid="time_8h" local="no">time.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structtimezone_185259977aeb63b17e6ce94f19afdfd99" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timezone::tz_dsttime</definition>
         <argsstring></argsstring>
@@ -15,9 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="69" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="time_8c_1adf30830f5265e55035171c301eb9c3fb" compoundref="time_8c" startline="110" endline="118">gettimeofday</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtimezone_13042f7eff6e1b980728def76b1fa0eb7" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int timezone::tz_minuteswest</definition>
         <argsstring></argsstring>
@@ -28,17 +29,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="68" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="56" bodyend="-1"/>
+        <referencedby refid="time_8c_1adf30830f5265e55035171c301eb9c3fb" compoundref="time_8c" startline="110" endline="118">gettimeofday</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="67" bodyend="70"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>timezone</label>
+        <link refid="structtimezone"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="55" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="55" bodyend="58"/>
     <listofallmembers>
-      <member refid="structtimezone_185259977aeb63b17e6ce94f19afdfd99" prot="public" virt="non-virtual"><scope>timezone</scope><name>tz_dsttime</name></member>
-      <member refid="structtimezone_13042f7eff6e1b980728def76b1fa0eb7" prot="public" virt="non-virtual"><scope>timezone</scope><name>tz_minuteswest</name></member>
+      <member refid="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" prot="public" virt="non-virtual"><scope>timezone</scope><name>tz_dsttime</name></member>
+      <member refid="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" prot="public" virt="non-virtual"><scope>timezone</scope><name>tz_minuteswest</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

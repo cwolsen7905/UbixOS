@@ -1,227 +1,722 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="mem_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="mem_8h" kind="file" language="C++">
     <compoundname>mem.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includes refid="debug_8h" local="yes">net/debug.h</includes>
-    <includes refid="opt_8h" local="yes">net/opt.h</includes>
-    <includes refid="arch_8h" local="yes">net/arch.h</includes>
-    <includedby refid="tcp_8h" local="yes">src/sys/include/net/tcp.h</includedby>
-    <includedby refid="bot_8c" local="yes">src/sys/net/net/bot.c</includedby>
-    <includedby refid="init_8c" local="no">src/sys/net/net/init.c</includedby>
-    <includedby refid="shell_8c" local="yes">src/sys/net/net/shell.c</includedby>
-    <includedby refid="ethernetif_8c" local="yes">src/sys/net/netif/ethernetif.c</includedby>
-    <includedby refid="loopif_8c" local="yes">src/sys/net/netif/loopif.c</includedby>
+    <includes refid="opt_8h" local="no">net/opt.h</includes>
+    <includedby refid="memp__priv_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h</includedby>
+    <includedby refid="stats_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/stats.h</includedby>
+    <includedby refid="tcpip_8c" local="no">C:/Dev/git/UbixOS/sys/net/api/tcpip.c</includedby>
+    <includedby refid="core_2init_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/init.c</includedby>
+    <includedby refid="mem_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/mem.c</includedby>
+    <includedby refid="pbuf_8c" local="yes">C:/Dev/git/UbixOS/sys/net/core/pbuf.c</includedby>
+    <includedby refid="bot_8c" local="yes">C:/Dev/git/UbixOS/sys/net/net/bot.c</includedby>
+    <includedby refid="net_2init_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/init.c</includedby>
+    <includedby refid="shell_8c" local="yes">C:/Dev/git/UbixOS/sys/net/net/shell.c</includedby>
+    <includedby refid="ethernetif_8c" local="yes">C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</includedby>
+    <includedby refid="loopif_8c" local="yes">C:/Dev/git/UbixOS/sys/net/netif/loopif.c</includedby>
     <incdepgraph>
-      <node id="847">
-        <label>arch/cpu.h</label>
-        <link refid="cpu_8h"/>
+      <node id="17">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
       </node>
-      <node id="841">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="842" relation="include">
+      <node id="18">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="15">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="842">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="846">
-        <label>net/arch.h</label>
-        <link refid="arch_8h"/>
-        <childnode refid="847" relation="include">
-        </childnode>
-        <childnode refid="848" relation="include">
+      <node id="13">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="14" relation="include">
         </childnode>
       </node>
-      <node id="845">
+      <node id="12">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
         <label>net/lwipopts.h</label>
         <link refid="lwipopts_8h"/>
       </node>
-      <node id="840">
-        <label>src/sys/include/net/mem.h</label>
-        <link refid="mem.h"/>
-        <childnode refid="841" relation="include">
+      <node id="6">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="843" relation="include">
-        </childnode>
-        <childnode refid="844" relation="include">
-        </childnode>
-        <childnode refid="846" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="844">
+      <node id="5">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
         <label>net/opt.h</label>
         <link refid="opt_8h"/>
-        <childnode refid="845" relation="include">
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="843">
+      <node id="16">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
         <label>net/debug.h</label>
         <link refid="debug_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
       </node>
-      <node id="848">
-        <label>arch/cc.h</label>
-        <link refid="cc_8h"/>
+      <node id="9">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="14">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="861">
-        <label>src/sys/net/net/udpecho.c</label>
-        <link refid="udpecho_8c"/>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
       </node>
-      <node id="863">
-        <label>src/sys/net/netif/tcpdump.c</label>
-        <link refid="tcpdump_8c"/>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/include/net/igmp.h</label>
+        <link refid="igmp_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
       </node>
-      <node id="862">
-        <label>src/sys/net/netif/loopif.c</label>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+      </node>
+      <node id="76">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/loopif.c</label>
         <link refid="loopif_8c"/>
       </node>
-      <node id="850">
-        <label>src/sys/include/net/tcp.h</label>
-        <link refid="tcp_8h"/>
-        <childnode refid="851" relation="include">
-        </childnode>
-        <childnode refid="852" relation="include">
-        </childnode>
-        <childnode refid="855" relation="include">
-        </childnode>
-        <childnode refid="862" relation="include">
-        </childnode>
-        <childnode refid="863" relation="include">
-        </childnode>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
+        <link refid="block_8c"/>
       </node>
-      <node id="864">
-        <label>src/sys/net/netif/ethernetif.c</label>
-        <link refid="ethernetif_8c"/>
-      </node>
-      <node id="859">
-        <label>src/sys/net/net/bot.c</label>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/net/net/bot.c</label>
         <link refid="bot_8c"/>
       </node>
-      <node id="855">
-        <label>src/sys/net/api/tcpip.c</label>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
+      </node>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
         <link refid="tcpip_8c"/>
       </node>
-      <node id="853">
-        <label>src/sys/include/net/tcpip.h</label>
-        <link refid="tcpip_8h"/>
-        <childnode refid="854" relation="include">
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/slipif.h</label>
+        <link refid="slipif_8h"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/include/net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="19" relation="include">
         </childnode>
-        <childnode refid="855" relation="include">
+        <childnode refid="21" relation="include">
         </childnode>
-        <childnode refid="856" relation="include">
+        <childnode refid="63" relation="include">
         </childnode>
       </node>
-      <node id="852">
-        <label>src/sys/include/net/api_msg.h</label>
-        <link refid="api__msg_8h"/>
-        <childnode refid="853" relation="include">
-        </childnode>
-        <childnode refid="857" relation="include">
-        </childnode>
-        <childnode refid="854" relation="include">
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="860">
-        <label>src/sys/net/net/shell.c</label>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp.h</label>
+        <link refid="icmp_8h"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp6.h</label>
+        <link refid="icmp6_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/include/vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="74">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
         <link refid="shell_8c"/>
       </node>
-      <node id="857">
-        <label>src/sys/net/api/api_lib.c</label>
-        <link refid="api__lib_8c"/>
-      </node>
-      <node id="849">
-        <label>src/sys/include/net/mem.h</label>
-        <link refid="mem.h"/>
-        <childnode refid="850" relation="include">
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="65" relation="include">
         </childnode>
-        <childnode refid="859" relation="include">
+        <childnode refid="66" relation="include">
         </childnode>
-        <childnode refid="856" relation="include">
-        </childnode>
-        <childnode refid="860" relation="include">
-        </childnode>
-        <childnode refid="864" relation="include">
-        </childnode>
-        <childnode refid="862" relation="include">
+        <childnode refid="67" relation="include">
         </childnode>
       </node>
-      <node id="856">
-        <label>src/sys/net/net/init.c</label>
-        <link refid="init_8c"/>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
       </node>
-      <node id="851">
-        <label>src/sys/include/net/api.h</label>
-        <link refid="api_8h"/>
-        <childnode refid="852" relation="include">
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="6" relation="include">
         </childnode>
-        <childnode refid="857" relation="include">
+        <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="858" relation="include">
+        <childnode refid="9" relation="include">
         </childnode>
-        <childnode refid="859" relation="include">
+        <childnode refid="14" relation="include">
         </childnode>
-        <childnode refid="860" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
-        <childnode refid="861" relation="include">
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
         </childnode>
       </node>
-      <node id="858">
-        <label>src/sys/net/api/sockets.c</label>
-        <link refid="sockets_8c"/>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_frag.h</label>
+        <link refid="ip6__frag_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
       </node>
-      <node id="854">
-        <label>src/sys/net/api/api_msg.c</label>
-        <link refid="api__msg_8c"/>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</label>
+        <link refid="ip4__frag_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</label>
+        <link refid="f_2ethernet_8h"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/etharp.h</label>
+        <link refid="f_2etharp_8h"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
       </node>
     </invincdepgraph>
       <sectiondef kind="define">
-      <memberdef kind="define" id="mem_8h_148eddc916e5bfd9eda620326ccae4a4e" prot="public" static="no">
-        <name>MEM_ALIGN</name>
-        <param><defname>addr</defname></param>
-        <initializer>(void *)MEM_ALIGN_SIZE((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)addr)</initializer>
+      <memberdef kind="define" id="mem_8h_1a2cf923436027f37ef24b3abd898120a7" prot="public" static="no">
+        <name>MEM_SIZE_F</name>
+        <initializer><ref refid="group__compiler__abstraction_1gaa9d7f6eb2ee9fcc5eda3545dbb1886e0" kindref="member">U16_F</ref></initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" bodystart="77" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="mem_8h_13fa83e155c0188df6647fa1af1302c7b" prot="public" static="no">
-        <name>MEM_ALIGN_SIZE</name>
-        <param><defname>size</defname></param>
-        <initializer>(size + \
-                             ((((size) % (MEM_ALIGNMENT)) == 0)? 0 : \
-                             ((MEM_ALIGNMENT) - ((size) % (MEM_ALIGNMENT)))))</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" bodystart="73" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="mem_8h_146ddfb5564fc2d19ec4e4576d6b3b922" prot="public" static="no">
-        <name>mem_register_reclaim</name>
-        <param><defname>f</defname></param>
-        <param><defname>arg</defname></param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" bodystart="69" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" bodystart="68" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" prot="public" static="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>typedef uInt16 mem_size_t</definition>
+      <memberdef kind="typedef" id="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" prot="public" static="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>typedef u16_t mem_size_t</definition>
         <argsstring></argsstring>
         <name>mem_size_t</name>
         <briefdescription>
@@ -230,11 +725,56 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" bodystart="47" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="67" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" bodystart="67" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="mem_8h_12fd7aa1adf6e394d3be7c7734e7df41a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mem_8h_1ab0bdc525971701883f2065e7fb257a24" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* mem_calloc</definition>
+        <argsstring>(mem_size_t count, mem_size_t size)</argsstring>
+        <name>mem_calloc</name>
+        <param>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Contiguously allocates enough space for count objects that are size bytes of memory each and returns a pointer to the allocated memory.</para>
+<para>The allocated memory is filled with bytes of value zero.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>number of objects to allocate </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>size of the objects to allocate </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>pointer to allocated memory / NULL pointer if there is an error </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="75" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="765" bodyend="776" declfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" declline="75" declcolumn="6"/>
+        <references refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" compoundref="mem_8c" startline="603" endline="742">mem_malloc</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+      </memberdef>
+      <memberdef kind="function" id="mem_8h_1a2fd7aa1adf6e394d3be7c7734e7df41a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mem_free</definition>
         <argsstring>(void *mem)</argsstring>
@@ -242,16 +782,38 @@
         <param>
           <type>void *</type>
           <declname>mem</declname>
+          <defname>rmem</defname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Put a struct mem back on the heap</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rmem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>is the data portion of a struct mem as returned by a previous call to <ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc()</ref> </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="55"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="76" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="419" bodyend="465" declfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" declline="76" declcolumn="7"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__debugging__levels_1ga0269bdc51f1e8a5ecf9af72c6e1c996c" compoundref="debug_8h" startline="57">LWIP_DBG_LEVEL_SERIOUS</references>
+        <references refid="group__debugging__levels_1ga988147559b78642ac881815b66023646" compoundref="debug_8h" startline="83">LWIP_DBG_TRACE</references>
+        <references refid="debug_8h_1a63a04edf7ff63c951bd8706711956cdb" compoundref="debug_8h" startline="164">LWIP_DEBUGF</references>
+        <references refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" compoundref="mem_8c" startline="321">LWIP_MEM_FREE_DECL_PROTECT</references>
+        <references refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" compoundref="lwipopts_8h" startline="54">MEM_ALIGNMENT</references>
+        <references refid="lwipopts_8h_1a2d7bc380695eeedb1af50c3808613afe" compoundref="lwipopts_8h" startline="455">MEM_DEBUG</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="tcpip_8c_1a55b4de3765c6a37b3f2b26a11603771c" compoundref="tcpip_8c" startline="491" endline="493">mem_free_callback</referencedby>
+        <referencedby refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</referencedby>
       </memberdef>
-      <memberdef kind="function" id="mem_8h_144a136e3b70c36abb6f8dc060c778113" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mem_8h_1a44a136e3b70c36abb6f8dc060c778113" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mem_init</definition>
         <argsstring>(void)</argsstring>
@@ -262,176 +824,192 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Zero the heap and initialize start, end and lowest-free </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="51"/>
-        <referencedby refid="init_8c_122b2914249628f6cba7d4e1f138c969f" compoundref="init_8c" startline="50" endline="63">net_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="72" column="7" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="382" bodyend="410" declfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" declline="72" declcolumn="7"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="lwipopts_8h_1a97343214666ee6dcb18c0bd77b441ea7" compoundref="lwipopts_8h" startline="54">MEM_ALIGNMENT</references>
+        <references refid="mem_8c_1ade9cedd48e9a482120e29c010352ee5c" compoundref="mem_8c" startline="281">SIZEOF_STRUCT_MEM</references>
+        <referencedby refid="core_2init_8c_1a0c1a18439524d2f4a5e51d25c0ca2ce9" compoundref="core_2init_8c" startline="333" endline="381">lwip_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="mem_8h_1932aa40d85b14cb7331625e012d12335" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mem_8h_1a932aa40d85b14cb7331625e012d12335" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void *</type>
         <definition>void* mem_malloc</definition>
         <argsstring>(mem_size_t size)</argsstring>
         <name>mem_malloc</name>
         <param>
-          <type><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref></type>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
           <declname>size</declname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Allocate a block of memory with a minimum of &apos;size&apos; bytes.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>is the minimum size of the requested block in bytes. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>pointer to allocated memory or NULL if no free memory was found.</para>
+</simplesect>
+Note that the returned value will always be aligned (as defined by MEM_ALIGNMENT). </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="53"/>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="74" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="603" bodyend="742" declfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" declline="74" declcolumn="6"/>
+        <references refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" compoundref="arch_8h" startline="221">LWIP_MEM_ALIGN_SIZE</references>
+        <references refid="mem_8c_1a016a07ea84e1d75386765b90015b6698" compoundref="mem_8c" startline="325">LWIP_MEM_ALLOC_DECL_PROTECT</references>
+        <references refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" compoundref="mem_8c" startline="282">MEM_SIZE_ALIGNED</references>
+        <references refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" compoundref="mem_8c" startline="280">MIN_SIZE_ALIGNED</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="group__sys__mutex_1ga4d4eb9afe5965fa2661dd54ff55d616a" compoundref="sys__arch_8c" startline="153" endline="155">sys_mutex_lock</references>
+        <referencedby refid="ethernetif_8c_1a7ce979d0ec31575ecf17998b7bd9abb2" compoundref="ethernetif_8c" startline="302" endline="344">ethernetif_init</referencedby>
+        <referencedby refid="mem_8c_1ab0bdc525971701883f2065e7fb257a24" compoundref="mem_8c" startline="765" endline="776">mem_calloc</referencedby>
+        <referencedby refid="group__pbuf_1gacfcb0a2af918658ba0afe36499c65f47" compoundref="pbuf_8c" startline="248" endline="405">pbuf_alloc</referencedby>
       </memberdef>
-      <memberdef kind="function" id="mem_8h_12319b30a933f44a443103f5a3ab68e04" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mem_8h_1a5e39a108c44d8a72df0b30a117cb62e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void *</type>
-        <definition>void* mem_malloc2</definition>
-        <argsstring>(mem_size_t size)</argsstring>
-        <name>mem_malloc2</name>
-        <param>
-          <type><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref></type>
-          <declname>size</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="54"/>
-      </memberdef>
-      <memberdef kind="function" id="mem_8h_19dd60a76f40fa38023308f24869eaec6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* mem_realloc</definition>
+        <definition>void* mem_trim</definition>
         <argsstring>(void *mem, mem_size_t size)</argsstring>
-        <name>mem_realloc</name>
+        <name>mem_trim</name>
         <param>
           <type>void *</type>
           <declname>mem</declname>
+          <defname>rmem</defname>
         </param>
         <param>
-          <type><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref></type>
+          <type><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref></type>
           <declname>size</declname>
+          <defname>newsize</defname>
         </param>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>Shrink memory returned by <ref refid="mem_8c_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc()</ref>.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rmem</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>pointer to memory allocated by mem_malloc the is to be shrinked </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>newsize</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>required size after shrinking (needs to be smaller than or equal to the previous size) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>for compatibility reasons: is always == rmem, at the moment or NULL if newsize is &gt; old size, in which case rmem is NOT touched or freed! </para>
+</simplesect>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="56"/>
-      </memberdef>
-      <memberdef kind="function" id="mem_8h_100f0522f4402773c4748242b805dee97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* mem_reallocm</definition>
-        <argsstring>(void *mem, mem_size_t size)</argsstring>
-        <name>mem_reallocm</name>
-        <param>
-          <type>void *</type>
-          <declname>mem</declname>
-        </param>
-        <param>
-          <type><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref></type>
-          <declname>size</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h" line="57"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h" line="73" column="6" bodyfile="C:/Dev/git/UbixOS/sys/net/core/mem.c" bodystart="478" bodyend="592" declfile="C:/Dev/git/UbixOS/sys/include/net/mem.h" declline="73" declcolumn="6"/>
+        <references refid="debug_8h_1a94ad086267808462beae2b38f91996ed" compoundref="debug_8h" startline="116">LWIP_ASSERT</references>
+        <references refid="group__compiler__abstraction_1gaef204be511fd32f681b55abc08e9ae18" compoundref="arch_8h" startline="221">LWIP_MEM_ALIGN_SIZE</references>
+        <references refid="mem_8c_1a581c4edded02d92caf7a938c801a618e" compoundref="mem_8c" startline="321">LWIP_MEM_FREE_DECL_PROTECT</references>
+        <references refid="mem_8c_1a78ed2097d5d3e2ca4599b2ca3d91493a" compoundref="mem_8c" startline="282">MEM_SIZE_ALIGNED</references>
+        <references refid="mem_8c_1a97c704b85f71b6e61b0098b4a0a743cd" compoundref="mem_8c" startline="280">MIN_SIZE_ALIGNED</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <referencedby refid="group__pbuf_1ga50abfe830a33a1a47a562febee66015d" compoundref="pbuf_8c" startline="493" endline="555">pbuf_realloc</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
+<para>Heap API </para>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
-<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
-<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
-<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
-<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
-<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
-<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
-<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
-<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
-<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: mem_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_MEM_H__</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_MEM_H__</highlight></codeline>
-<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001-2004<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/>documentation</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>The<sp/>name<sp/>of<sp/>the<sp/>author<sp/>may<sp/>not<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>SHALL<sp/>THE<sp/>AUTHOR<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LWIP_HDR_MEM_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_HDR_MEM_H</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_SIZE<sp/>&gt;<sp/>64000l</highlight></codeline>
-<codeline lineno="45"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref>;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight></codeline>
-<codeline lineno="47" refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref>;</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_SIZE<sp/>&gt;<sp/>64000<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_LIBC_MALLOC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="49"><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mem_8h_144a136e3b70c36abb6f8dc060c778113" kindref="member">mem_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_SIZE_F<sp/>SZT_F</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_1932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(<ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_12319b30a933f44a443103f5a3ab68e04" kindref="member">mem_malloc2</ref>(<ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mem_8h_12fd7aa1adf6e394d3be7c7734e7df41a" kindref="member">mem_free</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem);</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_19dd60a76f40fa38023308f24869eaec6" kindref="member">mem_realloc</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem,<sp/><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_100f0522f4402773c4748242b805dee97" kindref="member">mem_reallocm</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem,<sp/><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>MEM_PERF</highlight></codeline>
-<codeline lineno="60"><highlight class="preprocessor"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>mem_perf_start(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>mem_perf_init(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*fname);</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_PERF<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>MEM_RECLAIM</highlight></codeline>
-<codeline lineno="65"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref><sp/>(*mem_reclaim_func)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/><ref refid="mem_8h_165c0b1c284dfb0b59b1d514cac6c584e" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mem_8h_146ddfb5564fc2d19ec4e4576d6b3b922" kindref="member">mem_register_reclaim</ref>(mem_reclaim_func<sp/>f,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>mem_reclaim(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight></codeline>
-<codeline lineno="69" refid="mem_8h_146ddfb5564fc2d19ec4e4576d6b3b922" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>mem_register_reclaim(f,<sp/>arg)</highlight></codeline>
-<codeline lineno="70"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_RECLAIM<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#elif<sp/>MEM_USE_POOLS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_SIZE_F<sp/>U16_F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MEM_SIZE<sp/>would<sp/>have<sp/>to<sp/>be<sp/>aligned,<sp/>but<sp/>using<sp/>64000<sp/>here<sp/>instead<sp/>of</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*<sp/>65535<sp/>leaves<sp/>some<sp/>room<sp/>for<sp/>alignment...</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEM_SIZE<sp/>&gt;<sp/>64000L</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga4c14294869aceba3ef9d4c0c302d0f33" kindref="member">u32_t</ref><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_SIZE_F<sp/>U32_F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref><sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref>;</highlight></codeline>
+<codeline lineno="68" refid="mem_8h_1a2cf923436027f37ef24b3abd898120a7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_SIZE_F<sp/>U16_F</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEM_SIZE<sp/>&gt;<sp/>64000<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="71"><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight></codeline>
-<codeline lineno="73" refid="mem_8h_13fa83e155c0188df6647fa1af1302c7b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_ALIGN_SIZE(size)<sp/>(size<sp/>+<sp/>\</highlight></codeline>
-<codeline lineno="74"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((((size)<sp/>%<sp/>(MEM_ALIGNMENT))<sp/>==<sp/>0)?<sp/>0<sp/>:<sp/>\</highlight></codeline>
-<codeline lineno="75"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((MEM_ALIGNMENT)<sp/>-<sp/>((size)<sp/>%<sp/>(MEM_ALIGNMENT)))))</highlight></codeline>
-<codeline lineno="76"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="77" refid="mem_8h_148eddc916e5bfd9eda620326ccae4a4e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_ALIGN(addr)<sp/>(void<sp/>*)MEM_ALIGN_SIZE((uInt32)addr)</highlight></codeline>
-<codeline lineno="78"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_MEM_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a44a136e3b70c36abb6f8dc060c778113" kindref="member">mem_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_1a5e39a108c44d8a72df0b30a117cb62e4" kindref="member">mem_trim</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmem" kindref="compound">mem</ref>,<sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_1a932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="mem_8h_1ab0bdc525971701883f2065e7fb257a24" kindref="member">mem_calloc</ref>(<ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>count,<sp/><ref refid="mem_8h_1a49bff6e5dd4cb95fe6dc0670962bbf54" kindref="member">mem_size_t</ref><sp/>size);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><ref refid="mem_8h_1a2fd7aa1adf6e394d3be7c7734e7df41a" kindref="member">mem_free</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structmem" kindref="compound">mem</ref>);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_HDR_MEM_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/mem.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/mem.h"/>
   </compounddef>
 </doxygen>

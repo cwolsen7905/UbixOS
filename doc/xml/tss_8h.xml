@@ -1,413 +1,724 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="tss_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="tss_8h" kind="file" language="C++">
     <compoundname>tss.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="sched_8h" local="no">src/sys/include/ubixos/sched.h</includedby>
-    <includedby refid="main_8c" local="no">src/sys/init/main.c</includedby>
-    <includedby refid="bioscall_8c" local="no">src/sys/kernel/bioscall.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="armv6_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</includedby>
+    <includedby refid="i386_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</includedby>
+    <includedby refid="sched_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/sched.h</includedby>
+    <includedby refid="main_8c" local="no">C:/Dev/git/UbixOS/sys/init/main.c</includedby>
     <incdepgraph>
-      <node id="4009">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4010" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="4010">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="4008">
-        <label>src/sys/include/sys/tss.h</label>
-        <link refid="tss.h"/>
-        <childnode refid="4009" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4012">
-        <label>src/sys/include/ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="4013" relation="include">
-        </childnode>
-        <childnode refid="4028" relation="include">
-        </childnode>
-        <childnode refid="4033" relation="include">
-        </childnode>
-        <childnode refid="4041" relation="include">
-        </childnode>
-        <childnode refid="4043" relation="include">
-        </childnode>
-        <childnode refid="4016" relation="include">
-        </childnode>
-        <childnode refid="4045" relation="include">
-        </childnode>
-        <childnode refid="4046" relation="include">
-        </childnode>
-        <childnode refid="4034" relation="include">
-        </childnode>
-        <childnode refid="4057" relation="include">
-        </childnode>
-        <childnode refid="4049" relation="include">
-        </childnode>
-        <childnode refid="4044" relation="include">
-        </childnode>
-        <childnode refid="4058" relation="include">
-        </childnode>
-        <childnode refid="4031" relation="include">
-        </childnode>
-        <childnode refid="4038" relation="include">
-        </childnode>
-        <childnode refid="4059" relation="include">
-        </childnode>
-        <childnode refid="4019" relation="include">
-        </childnode>
-        <childnode refid="4039" relation="include">
-        </childnode>
-        <childnode refid="4025" relation="include">
-        </childnode>
-        <childnode refid="4042" relation="include">
-        </childnode>
-        <childnode refid="4032" relation="include">
-        </childnode>
-        <childnode refid="4060" relation="include">
-        </childnode>
-        <childnode refid="4040" relation="include">
-        </childnode>
-        <childnode refid="4024" relation="include">
-        </childnode>
-        <childnode refid="4053" relation="include">
-        </childnode>
-        <childnode refid="4061" relation="include">
-        </childnode>
-        <childnode refid="4062" relation="include">
-        </childnode>
-        <childnode refid="4063" relation="include">
-        </childnode>
-      </node>
-      <node id="4018">
-        <label>src/sys/pci/hd.c</label>
-        <link refid="hd_8c"/>
-      </node>
-      <node id="4033">
-        <label>src/sys/include/ubixos/endtask.h</label>
-        <link refid="endtask_8h"/>
-        <childnode refid="4034" relation="include">
-        </childnode>
-        <childnode refid="4030" relation="include">
-        </childnode>
-        <childnode refid="4035" relation="include">
-        </childnode>
-        <childnode refid="4036" relation="include">
-        </childnode>
-        <childnode refid="4037" relation="include">
-        </childnode>
-        <childnode refid="4038" relation="include">
-        </childnode>
-        <childnode refid="4019" relation="include">
-        </childnode>
-        <childnode refid="4039" relation="include">
-        </childnode>
-        <childnode refid="4040" relation="include">
-        </childnode>
-      </node>
-      <node id="4051">
-        <label>src/sys/kernel/vitals.c</label>
-        <link refid="vitals_8c"/>
-      </node>
-      <node id="4029">
-        <label>src/sys/kernel/elf.c</label>
-        <link refid="elf_8c"/>
-      </node>
-      <node id="4026">
-        <label>src/sys/mpi/message.c</label>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/mpi/message.c</label>
         <link refid="message_8c"/>
       </node>
-      <node id="4032">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod_8c"/>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
       </node>
-      <node id="4027">
-        <label>src/sys/mpi/system.c</label>
-        <link refid="system_8c"/>
-      </node>
-      <node id="4037">
-        <label>src/sys/kernel/kern_sysctl.c</label>
-        <link refid="kern__sysctl_8c"/>
-      </node>
-      <node id="4047">
-        <label>src/sys/include/ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="4016" relation="include">
-        </childnode>
-        <childnode refid="4034" relation="include">
-        </childnode>
-        <childnode refid="4048" relation="include">
-        </childnode>
-        <childnode refid="4049" relation="include">
-        </childnode>
-        <childnode refid="4044" relation="include">
-        </childnode>
-        <childnode refid="4019" relation="include">
-        </childnode>
-        <childnode refid="4025" relation="include">
-        </childnode>
-        <childnode refid="4050" relation="include">
-        </childnode>
-        <childnode refid="4042" relation="include">
-        </childnode>
-        <childnode refid="4051" relation="include">
-        </childnode>
-        <childnode refid="4052" relation="include">
-        </childnode>
-        <childnode refid="4053" relation="include">
-        </childnode>
-        <childnode refid="4054" relation="include">
-        </childnode>
-        <childnode refid="4055" relation="include">
-        </childnode>
-        <childnode refid="4056" relation="include">
-        </childnode>
-      </node>
-      <node id="4060">
-        <label>src/sys/lib/kmalloc.c</label>
-        <link refid="kmalloc_8c"/>
-      </node>
-      <node id="4063">
-        <label>src/sys/vmm/paging.c</label>
-        <link refid="paging_8c"/>
-      </node>
-      <node id="4022">
-        <label>src/sys/ubixfs/directory.c</label>
-        <link refid="directory_8c"/>
-      </node>
-      <node id="4036">
-        <label>src/sys/kernel/kern_sig.c</label>
-        <link refid="kern__sig_8c"/>
-      </node>
-      <node id="4042">
-        <label>src/sys/kernel/ubthread.c</label>
-        <link refid="ubthread_8c"/>
-      </node>
-      <node id="4025">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="4052">
-        <label>src/sys/lib/ogprintf.cc</label>
-        <link refid="ogprintf_8cc"/>
-      </node>
-      <node id="4031">
-        <label>src/sys/kernel/ld.c</label>
-        <link refid="ld_8c"/>
-      </node>
-      <node id="4044">
-        <label>src/sys/kernel/fork.c</label>
-        <link refid="fork_8c"/>
-      </node>
-      <node id="4011">
-        <label>src/sys/include/sys/tss.h</label>
-        <link refid="tss.h"/>
-        <childnode refid="4012" relation="include">
-        </childnode>
-        <childnode refid="4017" relation="include">
-        </childnode>
-        <childnode refid="4057" relation="include">
-        </childnode>
-      </node>
-      <node id="4020">
-        <label>src/sys/ubixfs/block.c</label>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
         <link refid="block_8c"/>
       </node>
-      <node id="4038">
-        <label>src/sys/kernel/sched.c</label>
-        <link refid="sched_8c"/>
-      </node>
-      <node id="4013">
-        <label>src/sys/include/mpi/mpi.h</label>
-        <link refid="mpi_8h"/>
-        <childnode refid="4014" relation="include">
+      <node id="79">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="55" relation="include">
         </childnode>
-        <childnode refid="4019" relation="include">
+        <childnode refid="80" relation="include">
         </childnode>
-        <childnode refid="4025" relation="include">
+        <childnode refid="64" relation="include">
         </childnode>
-        <childnode refid="4026" relation="include">
+        <childnode refid="44" relation="include">
         </childnode>
-        <childnode refid="4027" relation="include">
+        <childnode refid="70" relation="include">
         </childnode>
       </node>
-      <node id="4043">
-        <label>src/sys/include/ubixos/fork.h</label>
-        <link refid="fork_8h"/>
-        <childnode refid="4044" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
         </childnode>
       </node>
-      <node id="4021">
-        <label>src/sys/ubixfs/dirCache.c</label>
-        <link refid="dirCache_8c"/>
-      </node>
-      <node id="4024">
-        <label>src/sys/ubixfs/ubixfs.c</label>
-        <link refid="ubixfs_8c"/>
-      </node>
-      <node id="4017">
-        <label>src/sys/init/main.c</label>
-        <link refid="main_8c"/>
-      </node>
-      <node id="4014">
-        <label>src/sys/include/ubixfs/ubixfs.h</label>
-        <link refid="ubixfs_8h"/>
-        <childnode refid="4015" relation="include">
-        </childnode>
-        <childnode refid="4016" relation="include">
-        </childnode>
-        <childnode refid="4019" relation="include">
-        </childnode>
-        <childnode refid="4020" relation="include">
-        </childnode>
-        <childnode refid="4021" relation="include">
-        </childnode>
-        <childnode refid="4022" relation="include">
-        </childnode>
-        <childnode refid="4023" relation="include">
-        </childnode>
-        <childnode refid="4024" relation="include">
-        </childnode>
-      </node>
-      <node id="4057">
-        <label>src/sys/kernel/bioscall.c</label>
-        <link refid="bioscall_8c"/>
-      </node>
-      <node id="4046">
-        <label>src/sys/include/ubixos/ubthread.h</label>
-        <link refid="ubthread_8h"/>
-        <childnode refid="4047" relation="include">
-        </childnode>
-        <childnode refid="4042" relation="include">
-        </childnode>
-      </node>
-      <node id="4019">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
-      </node>
-      <node id="4048">
-        <label>src/sys/isa/ne2k.c</label>
-        <link refid="ne2k_8c"/>
-      </node>
-      <node id="4041">
-        <label>src/sys/include/ubixos/exec.h</label>
-        <link refid="exec_8h"/>
-        <childnode refid="4017" relation="include">
-        </childnode>
-        <childnode refid="4030" relation="include">
-        </childnode>
-        <childnode refid="4019" relation="include">
-        </childnode>
-        <childnode refid="4025" relation="include">
-        </childnode>
-        <childnode refid="4042" relation="include">
-        </childnode>
-        <childnode refid="4024" relation="include">
-        </childnode>
-      </node>
-      <node id="4045">
-        <label>src/sys/include/ubixos/syscalls.h</label>
-        <link refid="syscalls_8h"/>
-        <childnode refid="4019" relation="include">
-        </childnode>
-      </node>
-      <node id="4015">
-        <label>src/sys/include/pci/hd.h</label>
-        <link refid="hd_8h"/>
-        <childnode refid="4016" relation="include">
-        </childnode>
-        <childnode refid="4018" relation="include">
-        </childnode>
-      </node>
-      <node id="4034">
-        <label>src/sys/isa/atkbd.c</label>
-        <link refid="atkbd_8c"/>
-      </node>
-      <node id="4062">
-        <label>src/sys/vmm/pagefault.c</label>
+      <node id="87">
+        <label>C:/Dev/git/UbixOS/sys/vmm/pagefault.c</label>
         <link refid="pagefault_8c"/>
       </node>
-      <node id="4023">
-        <label>src/sys/ubixfs/thread.c</label>
-        <link refid="thread_8c"/>
+      <node id="84">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="4016">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="4017" relation="include">
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="83">
+        <label>C:/Dev/git/UbixOS/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/syscalls.h</label>
+        <link refid="syscalls_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
         </childnode>
       </node>
-      <node id="4054">
-        <label>src/sys/vfs/mount.c</label>
-        <link refid="mount_8c"/>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
       </node>
-      <node id="4050">
-        <label>src/sys/kernel/time.c</label>
-        <link refid="time_8c"/>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/mpi/mpi_syscalls.c</label>
+        <link refid="mpi__syscalls_8c"/>
       </node>
-      <node id="4056">
-        <label>src/sys/vmm/vmm_memory.c</label>
-        <link refid="vmm__memory_8c"/>
+      <node id="85">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
       </node>
-      <node id="4059">
-        <label>src/sys/kernel/spinlock.c</label>
-        <link refid="spinlock_8c"/>
-      </node>
-      <node id="4028">
-        <label>src/sys/include/ubixos/elf.h</label>
-        <link refid="elf_8h"/>
-        <childnode refid="4029" relation="include">
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="35" relation="include">
         </childnode>
-        <childnode refid="4030" relation="include">
+        <childnode refid="6" relation="include">
         </childnode>
-        <childnode refid="4031" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="4019" relation="include">
+        <childnode refid="36" relation="include">
         </childnode>
-        <childnode refid="4032" relation="include">
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
         </childnode>
       </node>
-      <node id="4035">
-        <label>src/sys/kernel/kern_descrip.c</label>
-        <link refid="kern__descrip_8c"/>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
       </node>
-      <node id="4049">
-        <label>src/sys/kernel/endtask.c</label>
-        <link refid="endtask_8c"/>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
       </node>
-      <node id="4053">
-        <label>src/sys/vfs/file.c</label>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
         <link refid="file_8c"/>
       </node>
-      <node id="4058">
-        <label>src/sys/kernel/gen_calls.c</label>
-        <link refid="gen__calls_8c"/>
-      </node>
-      <node id="4040">
-        <label>src/sys/sys/idt.c</label>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/sys/idt.c</label>
         <link refid="idt_8c"/>
       </node>
-      <node id="4039">
-        <label>src/sys/kernel/syscall_new.c</label>
-        <link refid="syscall__new_8c"/>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
       </node>
-      <node id="4030">
-        <label>src/sys/kernel/exec.c</label>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/spinlock.c</label>
+        <link refid="armv6_2spinlock_8c"/>
+      </node>
+      <node id="77">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/access.h</label>
+        <link refid="access_8h"/>
+        <childnode refid="78" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/spinlock.c</label>
+        <link refid="i386_2spinlock_8c"/>
+      </node>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/include/net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+      </node>
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/include/mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="81">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="82">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vfs_calls.c</label>
+        <link refid="vfs__calls_8c"/>
+      </node>
+      <node id="75">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/fork.h</label>
+        <link refid="fork_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
         <link refid="exec_8c"/>
       </node>
-      <node id="4061">
-        <label>src/sys/vmm/getfreevirtualpage.c</label>
+      <node id="80">
+        <label>C:/Dev/git/UbixOS/sys/kernel/sem.c</label>
+        <link refid="sem_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</label>
+        <link refid="armv6_2bioscall_8c"/>
+      </node>
+      <node id="89">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c</label>
+        <link refid="vmm__mmap_8c"/>
+      </node>
+      <node id="88">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="74">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/net/core/sys.c</label>
+        <link refid="sys_8c"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="78">
+        <label>C:/Dev/git/UbixOS/sys/kernel/access.c</label>
+        <link refid="access_8c"/>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+      </node>
+      <node id="86">
+        <label>C:/Dev/git/UbixOS/sys/vmm/getfreevirtualpage.c</label>
         <link refid="getfreevirtualpage_8c"/>
       </node>
-      <node id="4055">
-        <label>src/sys/vfs/vfs.c</label>
-        <link refid="vfs_8c"/>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/kernel/descrip.c</label>
+        <link refid="descrip_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls_posix.c</label>
+        <link refid="syscalls__posix_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="89" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscalls.c</label>
+        <link refid="syscalls_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/trap.c</label>
+        <link refid="trap_8c"/>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="76">
+        <label>C:/Dev/git/UbixOS/sys/sys/elf.c</label>
+        <link refid="sys_2elf_8c"/>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
       </node>
     </invincdepgraph>
     <innerclass refid="structi386__frame" prot="public">i386_frame</innerclass>
@@ -418,150 +729,116 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: tss_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_TSS_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_TSS_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35" refid="structtssStruct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>{</highlight></codeline>
-<codeline lineno="36" refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" kindref="member">back_link</ref>;</highlight></codeline>
-<codeline lineno="37" refid="structtssStruct_15a9ed0bb862500aa29307a7f4fd4ee36" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_15a9ed0bb862500aa29307a7f4fd4ee36" kindref="member">back_link_reserved</ref>;</highlight></codeline>
-<codeline lineno="38" refid="structtssStruct_11017372aed82d7305586c330fa222b3b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_11017372aed82d7305586c330fa222b3b" kindref="member">esp0</ref>;</highlight></codeline>
-<codeline lineno="39" refid="structtssStruct_126d03018de8c122451661bfe9d030541" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_126d03018de8c122451661bfe9d030541" kindref="member">ss0</ref>;</highlight></codeline>
-<codeline lineno="40" refid="structtssStruct_1b1b9b5aab74cff2b3b4587233e93ad36" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1b1b9b5aab74cff2b3b4587233e93ad36" kindref="member">ss0_reserved</ref>;</highlight></codeline>
-<codeline lineno="41" refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" kindref="member">esp1</ref>;</highlight></codeline>
-<codeline lineno="42" refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" kindref="member">ss1</ref>;</highlight></codeline>
-<codeline lineno="43" refid="structtssStruct_15b36f67a614b608eb6bcd0244b41dfc7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_15b36f67a614b608eb6bcd0244b41dfc7" kindref="member">ss1_reserved</ref>;</highlight></codeline>
-<codeline lineno="44" refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" kindref="member">esp2</ref>;</highlight></codeline>
-<codeline lineno="45" refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" kindref="member">ss2</ref>;</highlight></codeline>
-<codeline lineno="46" refid="structtssStruct_11d4e3ad07e369b4f0b0ca32d7cf8fcbc" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_11d4e3ad07e369b4f0b0ca32d7cf8fcbc" kindref="member">ss2_reserved</ref>;</highlight></codeline>
-<codeline lineno="47" refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" kindref="member">cr3</ref>;</highlight></codeline>
-<codeline lineno="48" refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref>;</highlight></codeline>
-<codeline lineno="49" refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref>;</highlight></codeline>
-<codeline lineno="50" refid="structtssStruct_175825d1693047c99df1911b3af4d613f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref>,<ref refid="structtssStruct_17ba37dceca6d9363ea799091138d4601" kindref="member">ecx</ref>,<ref refid="structtssStruct_175825d1693047c99df1911b3af4d613f" kindref="member">edx</ref>,<ref refid="structtssStruct_1d0df6b4fe61e708d94656809727747cb" kindref="member">ebx</ref>;</highlight></codeline>
-<codeline lineno="51" refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref>;</highlight></codeline>
-<codeline lineno="52" refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref>;</highlight></codeline>
-<codeline lineno="53" refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" kindref="member">esi</ref>;</highlight></codeline>
-<codeline lineno="54" refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" kindref="member">edi</ref>;</highlight></codeline>
-<codeline lineno="55" refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref>;</highlight></codeline>
-<codeline lineno="56" refid="structtssStruct_1706ff5b0bbdf6ce2ba79e77d37848ea5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1706ff5b0bbdf6ce2ba79e77d37848ea5" kindref="member">es_reserved</ref>;</highlight></codeline>
-<codeline lineno="57" refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref>;</highlight></codeline>
-<codeline lineno="58" refid="structtssStruct_13b682cd59382e5a72f9bf1041297ad7d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_13b682cd59382e5a72f9bf1041297ad7d" kindref="member">cs_reserved</ref>;</highlight></codeline>
-<codeline lineno="59" refid="structtssStruct_1340a29782d3306ba84176c543725d70a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1340a29782d3306ba84176c543725d70a" kindref="member">ss</ref>;</highlight></codeline>
-<codeline lineno="60" refid="structtssStruct_1b05293d973c5a52d39ec624c962bcb99" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1b05293d973c5a52d39ec624c962bcb99" kindref="member">ss_reserved</ref>;</highlight></codeline>
-<codeline lineno="61" refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref>;</highlight></codeline>
-<codeline lineno="62" refid="structtssStruct_1baff113a5d3fe5a6a21d3f0458117707" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1baff113a5d3fe5a6a21d3f0458117707" kindref="member">ds_reserved</ref>;</highlight></codeline>
-<codeline lineno="63" refid="structtssStruct_18114a585123181ec835f8db3e029d390" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structfs" kindref="compound">fs</ref>;</highlight></codeline>
-<codeline lineno="64" refid="structtssStruct_173ff4ba9eb35acecda388729d14dca97" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_173ff4ba9eb35acecda388729d14dca97" kindref="member">fs_reserved</ref>;</highlight></codeline>
-<codeline lineno="65" refid="structtssStruct_18dfa44423504293405785371d0e7b076" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_18dfa44423504293405785371d0e7b076" kindref="member">gs</ref>;</highlight></codeline>
-<codeline lineno="66" refid="structtssStruct_141489b8a7ce86e3c94936b859df791a7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_141489b8a7ce86e3c94936b859df791a7" kindref="member">gs_reserved</ref>;</highlight></codeline>
-<codeline lineno="67" refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" kindref="member">ldt</ref>;</highlight></codeline>
-<codeline lineno="68" refid="structtssStruct_179a97b47c34eeb1661049eb3541e88e3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_179a97b47c34eeb1661049eb3541e88e3" kindref="member">ldt_reserved</ref>;</highlight></codeline>
-<codeline lineno="69" refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" kindref="member">trace_bitmap</ref>;</highlight></codeline>
-<codeline lineno="70" refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" kindref="member">io_map</ref>;</highlight></codeline>
-<codeline lineno="71" refid="structtssStruct_176bd5ca48e7593668342ad40170790f5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><ref refid="structtssStruct_176bd5ca48e7593668342ad40170790f5" kindref="member">io_space</ref>[8192];</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight></codeline>
-<codeline lineno="74" refid="structi387Struct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structi387Struct" kindref="compound">i387Struct</ref><sp/>{</highlight></codeline>
-<codeline lineno="75" refid="structi387Struct_18749a1a1ac484b27a99f0761f463be00" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_18749a1a1ac484b27a99f0761f463be00" kindref="member">cwd</ref>;</highlight></codeline>
-<codeline lineno="76" refid="structi387Struct_1478ea6e724fd053ec82f996d5e17892b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1478ea6e724fd053ec82f996d5e17892b" kindref="member">swd</ref>;</highlight></codeline>
-<codeline lineno="77" refid="structi387Struct_1f95c8955b91ef8f937f5074f91a719ae" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1f95c8955b91ef8f937f5074f91a719ae" kindref="member">twd</ref>;</highlight></codeline>
-<codeline lineno="78" refid="structi387Struct_14f318581c995247dc97b4983437259d6" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_14f318581c995247dc97b4983437259d6" kindref="member">fip</ref>;</highlight></codeline>
-<codeline lineno="79" refid="structi387Struct_173816f32b26fba0bc195abaf3ce473f5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_173816f32b26fba0bc195abaf3ce473f5" kindref="member">fcs</ref>;</highlight></codeline>
-<codeline lineno="80" refid="structi387Struct_150982bb78021968b7e2b63f541fc5366" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_150982bb78021968b7e2b63f541fc5366" kindref="member">foo</ref>;</highlight></codeline>
-<codeline lineno="81" refid="structi387Struct_1900260a0885da80f5e6ad017c583fa29" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1900260a0885da80f5e6ad017c583fa29" kindref="member">fos</ref>;</highlight></codeline>
-<codeline lineno="82" refid="structi387Struct_138dacb0d88798eb06da9e5969d134e8a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_138dacb0d88798eb06da9e5969d134e8a" kindref="member">st_space</ref>[20];<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>8*10<sp/>bytes<sp/>for<sp/>each<sp/>FP-reg<sp/>=<sp/>80<sp/>bytes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"></highlight></codeline>
-<codeline lineno="85" refid="structi386__frame" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structi386__frame" kindref="compound">i386_frame</ref><sp/>{</highlight></codeline>
-<codeline lineno="86" refid="structi386__frame_10ce9046ede02346b13eeb84668b88600" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_10ce9046ede02346b13eeb84668b88600" kindref="member">gs</ref>;</highlight></codeline>
-<codeline lineno="87" refid="structi386__frame_158f8fbea4a52a31f59304fab00a31608" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structfs" kindref="compound">fs</ref>;</highlight></codeline>
-<codeline lineno="88" refid="structi386__frame_1c02b314c7392943613915ce20b0b6c29" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_1c02b314c7392943613915ce20b0b6c29" kindref="member">es</ref>;</highlight></codeline>
-<codeline lineno="89" refid="structi386__frame_10a9212f678429305f296862a065eae28" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_10a9212f678429305f296862a065eae28" kindref="member">ds</ref>;</highlight></codeline>
-<codeline lineno="90" refid="structi386__frame_14f72b16e5f2ff034afa82de9229face6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_14f72b16e5f2ff034afa82de9229face6" kindref="member">ss</ref>;</highlight></codeline>
-<codeline lineno="91" refid="structi386__frame_161c0ccde421dc6aac659dda5236b2593" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_161c0ccde421dc6aac659dda5236b2593" kindref="member">edi</ref>;</highlight></codeline>
-<codeline lineno="92" refid="structi386__frame_14e207fc8d3fe3eb3024826fd73774b74" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_14e207fc8d3fe3eb3024826fd73774b74" kindref="member">esi</ref>;</highlight></codeline>
-<codeline lineno="93" refid="structi386__frame_1dcf6812a951acee52fce378a3c935b1f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_1dcf6812a951acee52fce378a3c935b1f" kindref="member">ebp</ref>;</highlight></codeline>
-<codeline lineno="94" refid="structi386__frame_1ecdc0871fc77e76675a61310e1c67f92" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_1ecdc0871fc77e76675a61310e1c67f92" kindref="member">esp</ref>;</highlight></codeline>
-<codeline lineno="95" refid="structi386__frame_153a7ba5ffb902f7f1cfa1bbfaad9caba" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_153a7ba5ffb902f7f1cfa1bbfaad9caba" kindref="member">ebx</ref>;</highlight></codeline>
-<codeline lineno="96" refid="structi386__frame_108c82da73c44988b8a0f922c53d57cd8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_108c82da73c44988b8a0f922c53d57cd8" kindref="member">edx</ref>;</highlight></codeline>
-<codeline lineno="97" refid="structi386__frame_19c070d809c0e3a61dae1e627e2175194" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_19c070d809c0e3a61dae1e627e2175194" kindref="member">ecx</ref>;</highlight></codeline>
-<codeline lineno="98" refid="structi386__frame_16bdccd94414ae6d4bbcab072c246d3f3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_16bdccd94414ae6d4bbcab072c246d3f3" kindref="member">eax</ref>;</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="100"><highlight class="comment"><sp/><sp/>uInt32<sp/>vector;</highlight></codeline>
-<codeline lineno="101"><highlight class="comment"><sp/><sp/>uInt32<sp/>error_code;</highlight></codeline>
-<codeline lineno="102"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="103" refid="structi386__frame_1ef87f1d1d6f1ad030c95773e7eedfa16" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_1ef87f1d1d6f1ad030c95773e7eedfa16" kindref="member">eip</ref>;</highlight></codeline>
-<codeline lineno="104" refid="structi386__frame_19f6fc16fdbb8b50c1bb918752f24b4bd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_19f6fc16fdbb8b50c1bb918752f24b4bd" kindref="member">cs</ref>;</highlight></codeline>
-<codeline lineno="105" refid="structi386__frame_163e8e0c4531c08958e53b3748b48b082" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_163e8e0c4531c08958e53b3748b48b082" kindref="member">flags</ref>;</highlight></codeline>
-<codeline lineno="106" refid="structi386__frame_1bbfc7b0ada36bd69608adfa39f5fc133" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_1bbfc7b0ada36bd69608adfa39f5fc133" kindref="member">user_esp</ref>;</highlight></codeline>
-<codeline lineno="107" refid="structi386__frame_13b8a869c050932532940fd73c32ea4d2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structi386__frame_13b8a869c050932532940fd73c32ea4d2" kindref="member">user_ss</ref>;</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"></highlight></codeline>
-<codeline lineno="110"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="111"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="113"><highlight class="comment"><sp/>$Log: tss_8h.xml,v $
-<codeline lineno="113"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:53  reddawg
-<codeline lineno="113"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="113"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="114"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:15<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="115"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="116"><highlight class="comment"></highlight></codeline>
-<codeline lineno="117"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="118"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="119"><highlight class="comment"></highlight></codeline>
-<codeline lineno="120"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:53<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="121"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="122"><highlight class="comment"></highlight></codeline>
-<codeline lineno="123"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/27<sp/>07:42:29<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="124"><highlight class="comment"><sp/>*burp*</highlight></codeline>
-<codeline lineno="125"><highlight class="comment"></highlight></codeline>
-<codeline lineno="126"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/27<sp/>07:40:41<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="127"><highlight class="comment"><sp/>does<sp/>it<sp/>compile<sp/>now?</highlight></codeline>
-<codeline lineno="128"><highlight class="comment"></highlight></codeline>
-<codeline lineno="129"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/27<sp/>07:27:50<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="130"><highlight class="comment"><sp/>chg:<sp/>I<sp/>was<sp/>fooled<sp/>thought<sp/>we<sp/>failed<sp/>but<sp/>it<sp/>was<sp/>a<sp/>casting<sp/>issue</highlight></codeline>
-<codeline lineno="131"><highlight class="comment"></highlight></codeline>
-<codeline lineno="132"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/07/22<sp/>20:53:07<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="133"><highlight class="comment"><sp/>atkbd:<sp/>fixed<sp/>problem</highlight></codeline>
-<codeline lineno="134"><highlight class="comment"></highlight></codeline>
-<codeline lineno="135"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:12:17<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="136"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="137"><highlight class="comment"></highlight></codeline>
-<codeline lineno="138"><highlight class="comment"></highlight></codeline>
-<codeline lineno="139"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="140"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_TSS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_TSS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="structtssStruct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>{</highlight></codeline>
+<codeline lineno="35" refid="structtssStruct_1afecbe8ea2cfebfb4d1a0aa7b6ebcac2c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1afecbe8ea2cfebfb4d1a0aa7b6ebcac2c" kindref="member">back_link</ref>;</highlight></codeline>
+<codeline lineno="36" refid="structtssStruct_1a5a9ed0bb862500aa29307a7f4fd4ee36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a5a9ed0bb862500aa29307a7f4fd4ee36" kindref="member">back_link_reserved</ref>;</highlight></codeline>
+<codeline lineno="37" refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a1017372aed82d7305586c330fa222b3b" kindref="member">esp0</ref>;</highlight></codeline>
+<codeline lineno="38" refid="structtssStruct_1a26d03018de8c122451661bfe9d030541" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a26d03018de8c122451661bfe9d030541" kindref="member">ss0</ref>;</highlight></codeline>
+<codeline lineno="39" refid="structtssStruct_1ab1b9b5aab74cff2b3b4587233e93ad36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1ab1b9b5aab74cff2b3b4587233e93ad36" kindref="member">ss0_reserved</ref>;</highlight></codeline>
+<codeline lineno="40" refid="structtssStruct_1ad5ef8867200562fd8262f70312beff4d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1ad5ef8867200562fd8262f70312beff4d" kindref="member">esp1</ref>;</highlight></codeline>
+<codeline lineno="41" refid="structtssStruct_1a6abf05d9a8f6356860a5606ffbadc989" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a6abf05d9a8f6356860a5606ffbadc989" kindref="member">ss1</ref>;</highlight></codeline>
+<codeline lineno="42" refid="structtssStruct_1a5b36f67a614b608eb6bcd0244b41dfc7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a5b36f67a614b608eb6bcd0244b41dfc7" kindref="member">ss1_reserved</ref>;</highlight></codeline>
+<codeline lineno="43" refid="structtssStruct_1a60c88f3cd3f2110cb24be62444f42cfb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a60c88f3cd3f2110cb24be62444f42cfb" kindref="member">esp2</ref>;</highlight></codeline>
+<codeline lineno="44" refid="structtssStruct_1a5a79ace5652b01cc25fc5ba7ff45bfa8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a5a79ace5652b01cc25fc5ba7ff45bfa8" kindref="member">ss2</ref>;</highlight></codeline>
+<codeline lineno="45" refid="structtssStruct_1a1d4e3ad07e369b4f0b0ca32d7cf8fcbc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a1d4e3ad07e369b4f0b0ca32d7cf8fcbc" kindref="member">ss2_reserved</ref>;</highlight></codeline>
+<codeline lineno="46" refid="structtssStruct_1a8d312ed3dd0ea7a0f801c08a8cc4afd0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a8d312ed3dd0ea7a0f801c08a8cc4afd0" kindref="member">cr3</ref>;</highlight></codeline>
+<codeline lineno="47" refid="structtssStruct_1a3e758f2138799d63fc803f7e4db4f5b4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a3e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref>;</highlight></codeline>
+<codeline lineno="48" refid="structtssStruct_1aa85f1fbaf622e0c6a39963da27de0194" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1aa85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref>;</highlight></codeline>
+<codeline lineno="49" refid="structtssStruct_1a75825d1693047c99df1911b3af4d613f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a6f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref>,<sp/><ref refid="structtssStruct_1a7ba37dceca6d9363ea799091138d4601" kindref="member">ecx</ref>,<sp/><ref refid="structtssStruct_1a75825d1693047c99df1911b3af4d613f" kindref="member">edx</ref>,<sp/><ref refid="structtssStruct_1ad0df6b4fe61e708d94656809727747cb" kindref="member">ebx</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structtssStruct_1a85412a87dbdb8eda612c77bce8055a2c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a85412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structtssStruct_1ac2d32620149e07c40ee87696ef2509c2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1ac2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structtssStruct_1a8beab5808aad776957d4544f6b139d4e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a8beab5808aad776957d4544f6b139d4e" kindref="member">esi</ref>;</highlight></codeline>
+<codeline lineno="53" refid="structtssStruct_1aa52b515706cd37e166c8eba348d5e68b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1aa52b515706cd37e166c8eba348d5e68b" kindref="member">edi</ref>;</highlight></codeline>
+<codeline lineno="54" refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1acd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref>;</highlight></codeline>
+<codeline lineno="55" refid="structtssStruct_1a706ff5b0bbdf6ce2ba79e77d37848ea5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a706ff5b0bbdf6ce2ba79e77d37848ea5" kindref="member">es_reserved</ref>;</highlight></codeline>
+<codeline lineno="56" refid="structtssStruct_1a6d9085ec5af0fa1fe1de7015ad99c9e3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a6d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref>;</highlight></codeline>
+<codeline lineno="57" refid="structtssStruct_1a3b682cd59382e5a72f9bf1041297ad7d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a3b682cd59382e5a72f9bf1041297ad7d" kindref="member">cs_reserved</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structtssStruct_1a340a29782d3306ba84176c543725d70a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a340a29782d3306ba84176c543725d70a" kindref="member">ss</ref>;</highlight></codeline>
+<codeline lineno="59" refid="structtssStruct_1ab05293d973c5a52d39ec624c962bcb99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1ab05293d973c5a52d39ec624c962bcb99" kindref="member">ss_reserved</ref>;</highlight></codeline>
+<codeline lineno="60" refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a01ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref>;</highlight></codeline>
+<codeline lineno="61" refid="structtssStruct_1abaff113a5d3fe5a6a21d3f0458117707" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1abaff113a5d3fe5a6a21d3f0458117707" kindref="member">ds_reserved</ref>;</highlight></codeline>
+<codeline lineno="62" refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a8114a585123181ec835f8db3e029d390" kindref="member">fs</ref>;</highlight></codeline>
+<codeline lineno="63" refid="structtssStruct_1a73ff4ba9eb35acecda388729d14dca97" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a73ff4ba9eb35acecda388729d14dca97" kindref="member">fs_reserved</ref>;</highlight></codeline>
+<codeline lineno="64" refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a8dfa44423504293405785371d0e7b076" kindref="member">gs</ref>;</highlight></codeline>
+<codeline lineno="65" refid="structtssStruct_1a41489b8a7ce86e3c94936b859df791a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a41489b8a7ce86e3c94936b859df791a7" kindref="member">gs_reserved</ref>;</highlight></codeline>
+<codeline lineno="66" refid="structtssStruct_1ad7b6a367e1c2a38e1ee6c8e5dad955f7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1ad7b6a367e1c2a38e1ee6c8e5dad955f7" kindref="member">ldt</ref>;</highlight></codeline>
+<codeline lineno="67" refid="structtssStruct_1a79a97b47c34eeb1661049eb3541e88e3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a79a97b47c34eeb1661049eb3541e88e3" kindref="member">ldt_reserved</ref>;</highlight></codeline>
+<codeline lineno="68" refid="structtssStruct_1a52ac0b54c6b2c71450c62d7fc911f2e2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a52ac0b54c6b2c71450c62d7fc911f2e2" kindref="member">trace_bitmap</ref>;</highlight></codeline>
+<codeline lineno="69" refid="structtssStruct_1a611a0a044f99f092ace469ce2381bb33" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a611a0a044f99f092ace469ce2381bb33" kindref="member">io_map</ref>;</highlight></codeline>
+<codeline lineno="70" refid="structtssStruct_1a76bd5ca48e7593668342ad40170790f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structtssStruct_1a76bd5ca48e7593668342ad40170790f5" kindref="member">io_space</ref>[8192];</highlight></codeline>
+<codeline lineno="71"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="structi387Struct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structi387Struct" kindref="compound">i387Struct</ref><sp/>{</highlight></codeline>
+<codeline lineno="74" refid="structi387Struct_1a8749a1a1ac484b27a99f0761f463be00" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a8749a1a1ac484b27a99f0761f463be00" kindref="member">cwd</ref>;</highlight></codeline>
+<codeline lineno="75" refid="structi387Struct_1a478ea6e724fd053ec82f996d5e17892b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a478ea6e724fd053ec82f996d5e17892b" kindref="member">swd</ref>;</highlight></codeline>
+<codeline lineno="76" refid="structi387Struct_1af95c8955b91ef8f937f5074f91a719ae" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1af95c8955b91ef8f937f5074f91a719ae" kindref="member">twd</ref>;</highlight></codeline>
+<codeline lineno="77" refid="structi387Struct_1a4f318581c995247dc97b4983437259d6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a4f318581c995247dc97b4983437259d6" kindref="member">fip</ref>;</highlight></codeline>
+<codeline lineno="78" refid="structi387Struct_1a73816f32b26fba0bc195abaf3ce473f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a73816f32b26fba0bc195abaf3ce473f5" kindref="member">fcs</ref>;</highlight></codeline>
+<codeline lineno="79" refid="structi387Struct_1a50982bb78021968b7e2b63f541fc5366" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a50982bb78021968b7e2b63f541fc5366" kindref="member">foo</ref>;</highlight></codeline>
+<codeline lineno="80" refid="structi387Struct_1a900260a0885da80f5e6ad017c583fa29" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a900260a0885da80f5e6ad017c583fa29" kindref="member">fos</ref>;</highlight></codeline>
+<codeline lineno="81" refid="structi387Struct_1a38dacb0d88798eb06da9e5969d134e8a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structi387Struct_1a38dacb0d88798eb06da9e5969d134e8a" kindref="member">st_space</ref>[20];<sp/></highlight><highlight class="comment">/*<sp/>8*10<sp/>bytes<sp/>for<sp/>each<sp/>FP-reg<sp/>=<sp/>80<sp/>bytes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="structi386__frame" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structi386__frame" kindref="compound">i386_frame</ref><sp/>{</highlight></codeline>
+<codeline lineno="85" refid="structi386__frame_1a394facbd47407a0a660e9a2ac486ae41" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a394facbd47407a0a660e9a2ac486ae41" kindref="member">gs</ref>;</highlight></codeline>
+<codeline lineno="86" refid="structi386__frame_1a280f931d25a3013787d6872f29844446" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a280f931d25a3013787d6872f29844446" kindref="member">fs</ref>;</highlight></codeline>
+<codeline lineno="87" refid="structi386__frame_1ae516ad326b1adfc190ccfcbd878fab88" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1ae516ad326b1adfc190ccfcbd878fab88" kindref="member">es</ref>;</highlight></codeline>
+<codeline lineno="88" refid="structi386__frame_1a453b37f2301fdc5018ac4a2b4577a48e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a453b37f2301fdc5018ac4a2b4577a48e" kindref="member">ds</ref>;</highlight></codeline>
+<codeline lineno="89" refid="structi386__frame_1a1b45e07b3d1a843351d2775f7a9f8b36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a1b45e07b3d1a843351d2775f7a9f8b36" kindref="member">ss</ref>;</highlight></codeline>
+<codeline lineno="90" refid="structi386__frame_1adb872c338754cf34f31c3237c0744c5a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1adb872c338754cf34f31c3237c0744c5a" kindref="member">edi</ref>;</highlight></codeline>
+<codeline lineno="91" refid="structi386__frame_1a695259228feafd38874d23d1d1c1f94c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a695259228feafd38874d23d1d1c1f94c" kindref="member">esi</ref>;</highlight></codeline>
+<codeline lineno="92" refid="structi386__frame_1a41628a27790fd3a5e7841964e2cfb567" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a41628a27790fd3a5e7841964e2cfb567" kindref="member">ebp</ref>;</highlight></codeline>
+<codeline lineno="93" refid="structi386__frame_1a0638834b0dfdb225a01af4c6fa50574c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a0638834b0dfdb225a01af4c6fa50574c" kindref="member">esp</ref>;</highlight></codeline>
+<codeline lineno="94" refid="structi386__frame_1a9b8ab2ce067172be7f7b47dd1fdff33b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a9b8ab2ce067172be7f7b47dd1fdff33b" kindref="member">ebx</ref>;</highlight></codeline>
+<codeline lineno="95" refid="structi386__frame_1a49cc86b5a4cfc70acf54b6cc7e8c4799" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a49cc86b5a4cfc70acf54b6cc7e8c4799" kindref="member">edx</ref>;</highlight></codeline>
+<codeline lineno="96" refid="structi386__frame_1a5894cb5ead4ba1d3f560436bb626824e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a5894cb5ead4ba1d3f560436bb626824e" kindref="member">ecx</ref>;</highlight></codeline>
+<codeline lineno="97" refid="structi386__frame_1a99f494972f50e39ae9a68efe43994a15" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a99f494972f50e39ae9a68efe43994a15" kindref="member">eax</ref>;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="99"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>uint32_t<sp/>vector;</highlight></codeline>
+<codeline lineno="100"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>uint32_t<sp/>error_code;</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="structi386__frame_1a031746b975400ea26eac2e8dcbc2bb13" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a031746b975400ea26eac2e8dcbc2bb13" kindref="member">eip</ref>;</highlight></codeline>
+<codeline lineno="103" refid="structi386__frame_1af1046cdf3670b054d9d6e0c482cac2c5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1af1046cdf3670b054d9d6e0c482cac2c5" kindref="member">cs</ref>;</highlight></codeline>
+<codeline lineno="104" refid="structi386__frame_1ac11c20ed9037e398c478834c9c1aa381" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1ac11c20ed9037e398c478834c9c1aa381" kindref="member">flags</ref>;</highlight></codeline>
+<codeline lineno="105" refid="structi386__frame_1aae0679acc1998f636b00761b546ed656" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1aae0679acc1998f636b00761b546ed656" kindref="member">user_esp</ref>;</highlight></codeline>
+<codeline lineno="106" refid="structi386__frame_1a9476e37c269008baa66d60171b6aaf8d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structi386__frame_1a9476e37c269008baa66d60171b6aaf8d" kindref="member">user_ss</ref>;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_SYS_TSS_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/tss.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/tss.h"/>
   </compounddef>
 </doxygen>

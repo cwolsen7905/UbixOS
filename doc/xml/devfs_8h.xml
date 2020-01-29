@@ -1,95 +1,215 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="devfs_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="devfs_8h" kind="file" language="C++">
     <compoundname>devfs.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includes refid="file_8h" local="no">vfs/file.h</includes>
-    <includedby refid="devfs_8c" local="no">src/sys/devfs/devfs.c</includedby>
-    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
-    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
-    <includedby refid="hd_8c" local="no">src/sys/pci/hd.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="include_2vfs_2file_8h" local="no">vfs/file.h</includes>
+    <includedby refid="devfs_8c" local="no">C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</includedby>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <includedby refid="fdc_8c" local="no">C:/Dev/git/UbixOS/sys/isa/fdc.c</includedby>
+    <includedby refid="hd_8c" local="no">C:/Dev/git/UbixOS/sys/pci/hd.c</includedby>
     <incdepgraph>
-      <node id="3171">
-        <label>src/sys/include/devfs/devfs.h</label>
-        <link refid="devfs.h"/>
-        <childnode refid="3172" relation="include">
+      <node id="20">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="3174" relation="include">
-        </childnode>
-      </node>
-      <node id="3172">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3173" relation="include">
+        <childnode refid="21" relation="include">
         </childnode>
       </node>
-      <node id="3173">
+      <node id="13">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="14">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="17">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="11">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="3174">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="3172" relation="include">
-        </childnode>
-        <childnode refid="3175" relation="include">
-        </childnode>
-        <childnode refid="3176" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="3176">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="3172" relation="include">
+      <node id="21">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="3175">
+      <node id="10">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="3172" relation="include">
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/devfs/devfs.h</label>
+        <link refid="devfs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3182">
-        <label>src/sys/pci/hd.c</label>
-        <link refid="hd_8c"/>
-      </node>
-      <node id="3177">
-        <label>src/sys/include/devfs/devfs.h</label>
-        <link refid="devfs.h"/>
-        <childnode refid="3178" relation="include">
-        </childnode>
-        <childnode refid="3179" relation="include">
-        </childnode>
-        <childnode refid="3181" relation="include">
-        </childnode>
-        <childnode refid="3182" relation="include">
-        </childnode>
-      </node>
-      <node id="3180">
-        <label>src/sys/init/main.c</label>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
       </node>
-      <node id="3179">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="3180" relation="include">
-        </childnode>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/isa/fdc.c</label>
+        <link refid="fdc_8c"/>
       </node>
-      <node id="3178">
-        <label>src/sys/devfs/devfs.c</label>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
         <link refid="devfs_8c"/>
       </node>
-      <node id="3181">
-        <label>src/sys/isa/fdc.c</label>
-        <link refid="fdc_8c"/>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/devfs/devfs.h</label>
+        <link refid="devfs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
       </node>
     </invincdepgraph>
     <innerclass refid="structdevfs__devices" prot="public">devfs_devices</innerclass>
     <innerclass refid="structdevfs__info" prot="public">devfs_info</innerclass>
       <sectiondef kind="func">
-      <memberdef kind="function" id="devfs_8h_1c74c840a034d38b197e93bf883001d0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="devfs_8h_1ac74c840a034d38b197e93bf883001d0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int devfs_init</definition>
         <argsstring>()</argsstring>
@@ -100,17 +220,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="215" bodyend="240"/>
-        <references refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" compoundref="devfs_8c" startline="50" endline="62">devfs_initialize</references>
-        <references refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</references>
-        <references refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</references>
-        <references refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
-        <references refid="mount_8h_11255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="47" endline="94">vfs_mount</references>
-        <references refid="vfs_8h_18652b1ccbcf7d2a872c5781640f7d59a" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="48" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c" bodystart="211" bodyend="235" declfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" declline="48" declcolumn="5"/>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
       </memberdef>
-      <memberdef kind="function" id="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="devfs_8h_1ad568bae84bef3691539f1b1d0f6a54b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int devfs_makeNode</definition>
         <argsstring>(char *name, uInt8 type, uInt16 major, uInt16 minor)</argsstring>
@@ -120,15 +233,15 @@
           <declname>name</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
           <declname>major</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
           <declname>minor</declname>
         </param>
         <briefdescription>
@@ -137,26 +250,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="178" bodyend="213"/>
-        <references refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" compoundref="devfs_8c" startline="44">devfs_len</references>
-        <references refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" compoundref="devfs_8c" startline="41">devfsSpinLock</references>
-        <references refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" compoundref="devfs_8h" startline="46">devfs_info::deviceList</references>
-        <references refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" compoundref="devfs_8h" startline="40">devfs_devices::devMajor</references>
-        <references refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" compoundref="devfs_8h" startline="41">devfs_devices::devMinor</references>
-        <references refid="structdevfs__devices_10200a09acd1456819501f7238df52474" compoundref="devfs_8h" startline="42">devfs_devices::devName</references>
-        <references refid="structdevfs__devices_13316a35e21232bab1603df7426dded2d" compoundref="devfs_8h" startline="39">devfs_devices::devType</references>
-        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" compoundref="devfs_8h" startline="37">devfs_devices::next</references>
-        <references refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" compoundref="devfs_8h" startline="38">devfs_devices::prev</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-        <references refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" compoundref="strlen_8S" startline="4">strlen</references>
-        <references refid="mount_8h_1a8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="132" endline="142">vfs_findMount</references>
-        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
-        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" line="49" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c" bodystart="174" bodyend="209" declfile="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h" declline="49" declcolumn="5"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="fdc_8c_1a2fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="61" endline="75">fdc_init</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -164,102 +260,98 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: devfs_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_DEVFS_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_DEVFS_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="structdevfs__devices" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>{</highlight></codeline>
-<codeline lineno="37" refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*<ref refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="38" refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*<ref refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" kindref="member">prev</ref>;</highlight></codeline>
-<codeline lineno="39" refid="structdevfs__devices_13316a35e21232bab1603df7426dded2d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structdevfs__devices_13316a35e21232bab1603df7426dded2d" kindref="member">devType</ref>;</highlight></codeline>
-<codeline lineno="40" refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" kindref="member">devMajor</ref>;</highlight></codeline>
-<codeline lineno="41" refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" kindref="member">devMinor</ref>;</highlight></codeline>
-<codeline lineno="42" refid="structdevfs__devices_10200a09acd1456819501f7238df52474" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdevfs__devices_10200a09acd1456819501f7238df52474" kindref="member">devName</ref>[32];</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight></codeline>
-<codeline lineno="45" refid="structdevfs__info" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__info" kindref="compound">devfs_info</ref><sp/>{</highlight></codeline>
-<codeline lineno="46" refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref>;</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight></codeline>
-<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1c74c840a034d38b197e93bf883001d0d" kindref="member">devfs_init</ref>();</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1d568bae84bef3691539f1b1d0f6a54b4" kindref="member">devfs_makeNode</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>type,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>major,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>minor);</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="52"><highlight class="comment">int<sp/>devfs_open(char<sp/>*file,fileDescriptor<sp/>*fd);</highlight></codeline>
-<codeline lineno="53"><highlight class="comment">void<sp/>devFSInit(struct<sp/>mountPoints<sp/>*mp);</highlight></codeline>
-<codeline lineno="54"><highlight class="comment">int<sp/>devfs_read(fileDescriptor<sp/>*fd,char<sp/>*data,long<sp/>offset,long<sp/>size);</highlight></codeline>
-<codeline lineno="55"><highlight class="comment">int<sp/>devfs_write(fileDescriptor<sp/>*fd,char<sp/>*data,long<sp/>offset,long<sp/>size);</highlight></codeline>
-<codeline lineno="56"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="59"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>$Log: devfs_8h.xml,v $
-<codeline lineno="61"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:50  reddawg
-<codeline lineno="61"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="61"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="62"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="63"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"></highlight></codeline>
-<codeline lineno="65"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="66"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="67"><highlight class="comment"></highlight></codeline>
-<codeline lineno="68"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:38<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="69"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="70"><highlight class="comment"></highlight></codeline>
-<codeline lineno="71"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/21<sp/>10:02:09<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="72"><highlight class="comment"><sp/>devfs:<sp/>renamed<sp/>functions</highlight></codeline>
-<codeline lineno="73"><highlight class="comment"><sp/>device<sp/>system:<sp/>renamed<sp/>functions</highlight></codeline>
-<codeline lineno="74"><highlight class="comment"><sp/>fdc:<sp/>fixed<sp/>a<sp/>few<sp/>potential<sp/>bugs<sp/>and<sp/>cleaned<sp/>up<sp/>some<sp/>unused<sp/>variables</highlight></codeline>
-<codeline lineno="75"><highlight class="comment"><sp/>strol:<sp/>fixed<sp/>definition</highlight></codeline>
-<codeline lineno="76"><highlight class="comment"><sp/>endtask:<sp/>made<sp/>it<sp/>print<sp/>out<sp/>freepage<sp/>debug<sp/>info</highlight></codeline>
-<codeline lineno="77"><highlight class="comment"><sp/>kmalloc:<sp/>fixed<sp/>a<sp/>huge<sp/>memory<sp/>leak<sp/>we<sp/>had<sp/>some<sp/>unhandled<sp/>descriptor<sp/>insertion<sp/>so<sp/>some<sp/>descriptors<sp/>were<sp/>lost</highlight></codeline>
-<codeline lineno="78"><highlight class="comment"><sp/>ld:<sp/>fixed<sp/>a<sp/>pointer<sp/>conversion</highlight></codeline>
-<codeline lineno="79"><highlight class="comment"><sp/>file:<sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>unused<sp/>variables</highlight></codeline>
-<codeline lineno="80"><highlight class="comment"><sp/>sched:<sp/>broke<sp/>task<sp/>deletion</highlight></codeline>
-<codeline lineno="81"><highlight class="comment"><sp/>kprintf:<sp/>fixed<sp/>ogPrintf<sp/>definition</highlight></codeline>
-<codeline lineno="82"><highlight class="comment"></highlight></codeline>
-<codeline lineno="83"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/14<sp/>12:17:52<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="84"><highlight class="comment"><sp/>devfs:<sp/>devFSEnable<sp/>to<sp/>devfs_init</highlight></codeline>
-<codeline lineno="85"><highlight class="comment"><sp/>Changed<sp/>Startup<sp/>Routines</highlight></codeline>
-<codeline lineno="86"><highlight class="comment"></highlight></codeline>
-<codeline lineno="87"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/21<sp/>14:54:41<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="88"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_DEVFS_DEVFS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_DEVFS_DEVFS_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="structdevfs__devices" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>{</highlight></codeline>
+<codeline lineno="36" refid="structdevfs__devices_1a8da644e221d63a17be9b429f67b6de1d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*<ref refid="structdevfs__devices_1a8da644e221d63a17be9b429f67b6de1d" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="37" refid="structdevfs__devices_1a249566533e1645abb22645cbe47b4bf2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*<ref refid="structdevfs__devices_1a249566533e1645abb22645cbe47b4bf2" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="38" refid="structdevfs__devices_1a3316a35e21232bab1603df7426dded2d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structdevfs__devices_1a3316a35e21232bab1603df7426dded2d" kindref="member">devType</ref>;</highlight></codeline>
+<codeline lineno="39" refid="structdevfs__devices_1a646beef3e609fb306cd3ddb202daf694" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structdevfs__devices_1a646beef3e609fb306cd3ddb202daf694" kindref="member">devMajor</ref>;</highlight></codeline>
+<codeline lineno="40" refid="structdevfs__devices_1a5e53f9e07fd166b03c4cc94cb7ba6cf6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/><ref refid="structdevfs__devices_1a5e53f9e07fd166b03c4cc94cb7ba6cf6" kindref="member">devMinor</ref>;</highlight></codeline>
+<codeline lineno="41" refid="structdevfs__devices_1a0200a09acd1456819501f7238df52474" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdevfs__devices_1a0200a09acd1456819501f7238df52474" kindref="member">devName</ref>[32];</highlight></codeline>
+<codeline lineno="42"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="structdevfs__info" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__info" kindref="compound">devfs_info</ref><sp/>{</highlight></codeline>
+<codeline lineno="45" refid="structdevfs__info_1a290940b7d03a61782eab82c0148b0f06" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*<ref refid="structdevfs__info_1a290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8h_1ac74c840a034d38b197e93bf883001d0d" kindref="member">devfs_init</ref>();</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8h_1ad568bae84bef3691539f1b1d0f6a54b4" kindref="member">devfs_makeNode</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>type,<sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/>major,<sp/><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/>minor);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>int<sp/>devfs_open(char<sp/>*file,fileDescriptor<sp/>*fd);</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>void<sp/>devFSInit(struct<sp/>mountPoints<sp/>*mp);</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>int<sp/>devfs_read(fileDescriptor<sp/>*fd,char<sp/>*data,long<sp/>offset,long<sp/>size);</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>int<sp/>devfs_write(fileDescriptor<sp/>*fd,char<sp/>*data,long<sp/>offset,long<sp/>size);</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>$Log:<sp/>devfs.h,v<sp/>$</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"></highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"></highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:38<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"></highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/21<sp/>10:02:09<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>devfs:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>device<sp/>system:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>fdc:<sp/>fixed<sp/>a<sp/>few<sp/>potential<sp/>bugs<sp/>and<sp/>cleaned<sp/>up<sp/>some<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>strol:<sp/>fixed<sp/>definition</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>endtask:<sp/>made<sp/>it<sp/>print<sp/>out<sp/>freepage<sp/>debug<sp/>info</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/>kmalloc:<sp/>fixed<sp/>a<sp/>huge<sp/>memory<sp/>leak<sp/>we<sp/>had<sp/>some<sp/>unhandled<sp/>descriptor<sp/>insertion<sp/>so<sp/>some<sp/>descriptors<sp/>were<sp/>lost</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>ld:<sp/>fixed<sp/>a<sp/>pointer<sp/>conversion</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>file:<sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>sched:<sp/>broke<sp/>task<sp/>deletion</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>kprintf:<sp/>fixed<sp/>ogPrintf<sp/>definition</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"></highlight></codeline>
+<codeline lineno="82"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/14<sp/>12:17:52<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>devfs:<sp/>devFSEnable<sp/>to<sp/>devfs_init</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"><sp/>Changed<sp/>Startup<sp/>Routines</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"></highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/21<sp/>14:54:41<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"></highlight></codeline>
 <codeline lineno="89"><highlight class="comment"></highlight></codeline>
-<codeline lineno="90"><highlight class="comment"></highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="92"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/devfs.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/devfs/devfs.h"/>
   </compounddef>
 </doxygen>

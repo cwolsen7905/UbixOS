@@ -1,13 +1,45 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structthread" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structthread" kind="struct" language="C++" prot="public">
     <compoundname>thread</compoundname>
     <includes refid="thread_8h" local="no">thread.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structthread_1b95afb0c8c9a817ce1638be443cb5b12" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
-        <definition>uint32_t thread::o_files[64]</definition>
-        <argsstring>[64]</argsstring>
+      <memberdef kind="variable" id="structthread_1ad50525c84c75cd60eace495f3731d457" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int thread::abi</definition>
+        <argsstring></argsstring>
+        <name>abi</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtrapframe" kindref="compound">trapframe</ref> *</type>
+        <definition>struct trapframe* thread::frame</definition>
+        <argsstring></argsstring>
+        <name>frame</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="47" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1a6d945e107f5f3d710b7b571eac2784b5" compoundref="gen__calls_8c" startline="141" endline="145">sys_invalid</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1a68f1e552f18575d52731e9e61ad411fe" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* thread::o_files[512]</definition>
+        <argsstring>[512]</argsstring>
         <name>o_files</name>
         <briefdescription>
         </briefdescription>
@@ -15,15 +47,63 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="39" bodyend="-1"/>
-        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
-        <referencedby refid="kern__descrip_8c_19c93ac280b559128027746bda7c5d6d4" compoundref="kern__descrip_8c" startline="67" endline="88">falloc</referencedby>
-        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
-        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
-        <referencedby refid="kern__descrip_8c_114e228d6e5391a882d3b20ff2466b2ac" compoundref="kern__descrip_8c" startline="141" endline="154">getfd</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="42" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1aec14600d2aa9db1288f00704ba3a55d7" compoundref="descrip_8c" startline="162" endline="171">close</referencedby>
+        <referencedby refid="descrip_8c_1a266f2b3582c66190ca585589f2938065" compoundref="descrip_8c" startline="348" endline="375">dup2</referencedby>
+        <referencedby refid="descrip_8c_1a9c93ac280b559128027746bda7c5d6d4" compoundref="descrip_8c" startline="96" endline="123">falloc</referencedby>
+        <referencedby refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</referencedby>
+        <referencedby refid="descrip_8c_1ae7b881d8f4c6e81d8e10468783ce080f" compoundref="descrip_8c" startline="147" endline="160">fdestroy</referencedby>
+        <referencedby refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" compoundref="descrip_8c" startline="185" endline="197">fstat</referencedby>
+        <referencedby refid="descrip_8c_1a14e228d6e5391a882d3b20ff2466b2ac" compoundref="descrip_8c" startline="214" endline="227">getfd</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structthread_1f3ec0788a84e5cb640a1646d1347998a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structthread_1a55a69c915cf55cf301c9e23eb05013cc" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structrlimit" kindref="compound">rlimit</ref></type>
+        <definition>struct rlimit thread::rlim[RLIM_NLIMITS]</definition>
+        <argsstring>[RLIM_NLIMITS]</argsstring>
+        <name>rlim</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="49" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1abe3341acee6fc13d0806e33bf4950cc0" compoundref="gen__calls_8c" startline="376" endline="448">sys_getrlimit</referencedby>
+        <referencedby refid="gen__calls_8c_1a77e27dec9ce3825037f7b1916f131765" compoundref="gen__calls_8c" startline="450" endline="520">sys_setrlimit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1aa0041bdd41da4a43a6c69327e866336e" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsigaction" kindref="compound">sigaction</ref></type>
+        <definition>struct sigaction thread::sigact[128]</definition>
+        <argsstring>[128]</argsstring>
+        <name>sigact</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="49" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1add3795da6dd256853821910f6fde5569" compoundref="gen__calls_8c" startline="294" endline="308">sys_sigaction</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1a4fd5f5de2f41b7678bb537634990a812" prot="public" static="no" mutable="no">
+        <type><ref refid="select_8h_1a134f0411d52ec19a05b55b4ba2f87c3c" kindref="member">sigset_t</ref></type>
+        <definition>sigset_t thread::sigmask</definition>
+        <argsstring></argsstring>
+        <name>sigmask</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="49" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1adb0dc568dd674705e372495140616236" compoundref="gen__calls_8c" startline="243" endline="292">sys_sigprocmask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1af3ec0788a84e5cb640a1646d1347998a" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int thread::td_retval[2]</definition>
         <argsstring>[2]</argsstring>
@@ -34,26 +114,75 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
-        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
-        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
-        <referencedby refid="kern__descrip_8c_1c26938ed109edd82077382276bc8258c" compoundref="kern__descrip_8c" startline="103" endline="109">getdtablesize</referencedby>
-        <referencedby refid="gen__calls_8c_12cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="59" endline="65">getgid</referencedby>
-        <referencedby refid="gen__calls_8c_14f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="41" endline="47">getpid</referencedby>
-        <referencedby refid="gen__calls_8c_15c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="50" endline="56">getuid</referencedby>
-        <referencedby refid="kern__descrip_8c_1899127227d8b9c9da3bcccc32332c749" compoundref="kern__descrip_8c" startline="131" endline="134">ioctl</referencedby>
-        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
-        <referencedby refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="41" endline="51">pipe</referencedby>
-        <referencedby refid="gen__calls_8c_15eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="125" endline="144">read</referencedby>
-        <referencedby refid="gen__calls_8c_1111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="108" endline="116">readlink</referencedby>
-        <referencedby refid="vfs_8c_13ca4e48103cbadae2952d277d03687be" compoundref="vfs_8c" startline="148" endline="166">sys_open</referencedby>
-        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="descrip_8c_1aec14600d2aa9db1288f00704ba3a55d7" compoundref="descrip_8c" startline="162" endline="171">close</referencedby>
+        <referencedby refid="descrip_8c_1aa825d15d1f3691b7e31917e05ef9f3bc" compoundref="descrip_8c" startline="40" endline="90">fcntl</referencedby>
+        <referencedby refid="descrip_8c_1ac26938ed109edd82077382276bc8258c" compoundref="descrip_8c" startline="176" endline="182">getdtablesize</referencedby>
+        <referencedby refid="gen__calls_8c_1a2cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="70" endline="76">getgid</referencedby>
+        <referencedby refid="gen__calls_8c_1a4f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="52" endline="58">getpid</referencedby>
+        <referencedby refid="gen__calls_8c_1a5c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="61" endline="67">getuid</referencedby>
+        <referencedby refid="descrip_8c_1a899127227d8b9c9da3bcccc32332c749" compoundref="descrip_8c" startline="204" endline="207">ioctl</referencedby>
+        <referencedby refid="vfs__calls_8c_1ab35b14c33a5b03f7617b58b4c0667bd4" compoundref="vfs__calls_8c" startline="399" endline="448">kern_openat</referencedby>
+        <referencedby refid="pipe_8c_1acbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="39" endline="49">pipe</referencedby>
+        <referencedby refid="gen__calls_8c_1a5eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="100" endline="119">read</referencedby>
+        <referencedby refid="gen__calls_8c_1a111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="83" endline="91">readlink</referencedby>
+        <referencedby refid="vfs__calls_8c_1a41fe0d27f7d876628b08c74821e180c8" compoundref="vfs__calls_8c" startline="366" endline="371">sys_access</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2eb9cc767595f53b3c580cd534a0a890" compoundref="file_8c" startline="186" endline="195">sys_chdir</referencedby>
+        <referencedby refid="vfs__calls_8c_1a3195389ea302c069fc2dbf8a08e4c841" compoundref="vfs__calls_8c" startline="99" endline="149">sys_close</referencedby>
+        <referencedby refid="descrip_8c_1a4241417ab42ebe37298b3ad7451a84d3" compoundref="descrip_8c" startline="377" endline="385">sys_dup2</referencedby>
+        <referencedby refid="execve_8c_1ac05d0992d0ab7f05cc3555380ed092a9" compoundref="execve_8c" startline="33" endline="39">sys_execve</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a635e457cca04f0435b1b25d0d6b987df" compoundref="file_8c" startline="76" endline="113">sys_fgetc</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="sysproto__posix_8h_1acf06a7573eb2427ca5649b5df99a48d4" compoundref="file_8c" startline="258" endline="269">sys_fread</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a0b68b7964a860aa2c5acacf5a7d486e6" compoundref="file_8c" startline="119" endline="147">sys_fseek</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a82e4bd23410fa460f7cc7388989ef4fb" compoundref="stat_8c" startline="91" endline="131">sys_fstat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a45d0ab2fb556f121f5478022d847fdd1" compoundref="stat_8c" startline="133" endline="180">sys_fstatat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a1297282a70d9529054df62f0b8c1196b" compoundref="stat_8c" startline="182" endline="237">sys_fstatfs</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1a6b6b8f061ddd1e9631f0858ff0d83ff0" compoundref="file_8c" startline="47" endline="62">sys_fwrite</referencedby>
+        <referencedby refid="vfs__calls_8c_1aec77dd1139b0a36d6aa7b29d08039bc1" compoundref="vfs__calls_8c" startline="373" endline="387">sys_getdirentries</referencedby>
+        <referencedby refid="gen__calls_8c_1a4b9ea4e44afeadecbe639569ef2cc6b4" compoundref="gen__calls_8c" startline="233" endline="236">sys_getegid</referencedby>
+        <referencedby refid="gen__calls_8c_1a95814d9f34da704d5981360d98e23af9" compoundref="gen__calls_8c" startline="228" endline="231">sys_geteuid</referencedby>
+        <referencedby refid="gen__calls_8c_1a60684ca6776c6a48469cd3b07e7302ac" compoundref="gen__calls_8c" startline="310" endline="313">sys_getpgrp</referencedby>
+        <referencedby refid="gen__calls_8c_1a806b59c1d474ceb991d2e61f980b82ad" compoundref="gen__calls_8c" startline="224" endline="227">sys_getpid</referencedby>
+        <referencedby refid="gen__calls_8c_1a26b5c98e54c7a5e8698fba05710936df" compoundref="gen__calls_8c" startline="238" endline="241">sys_getppid</referencedby>
+        <referencedby refid="gen__calls_8c_1ad3d1e6e24307ce2257adadefb46dfa10" compoundref="gen__calls_8c" startline="354" endline="358">sys_gettimeofday</referencedby>
+        <referencedby refid="gen__calls_8c_1a6d945e107f5f3d710b7b571eac2784b5" compoundref="gen__calls_8c" startline="141" endline="145">sys_invalid</referencedby>
+        <referencedby refid="descrip_8c_1ae68dd7969c4aadba4fc099a3624e8aed" compoundref="descrip_8c" startline="229" endline="283">sys_ioctl</referencedby>
+        <referencedby refid="gen__calls_8c_1aefab75d2473503f090345fe18d2629d4" compoundref="gen__calls_8c" startline="78" endline="81">sys_issetugid</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a22d7ac2731d375722cb6fcfaa8b35996" compoundref="file_8c" startline="149" endline="184">sys_lseek</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a5904b4cf0404c2843cffcc05ff2182e8" compoundref="stat_8c" startline="297" endline="300">sys_lstat</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="mpi__syscalls_8c_1a05dfdcd5cf13ea0da5f17ec2ff50b149" compoundref="mpi__syscalls_8c" startline="4" endline="7">sys_mpiCreateMbox</referencedby>
+        <referencedby refid="mpi__syscalls_8c_1a1d7dceb64a31fd348cab540f8adea714" compoundref="mpi__syscalls_8c" startline="9" endline="12">sys_mpiDestroyMbox</referencedby>
+        <referencedby refid="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" compoundref="mpi__syscalls_8c" startline="14" endline="17">sys_mpiFetchMessage</referencedby>
+        <referencedby refid="mpi__syscalls_8c_1a680b099e0eb13af038eb9e34c5191dab" compoundref="mpi__syscalls_8c" startline="19" endline="23">sys_mpiPostMessage</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a985dc19746123edc27f59c56678f81ad" compoundref="vmm__mmap_8c" startline="155" endline="159">sys_munmap</referencedby>
+        <referencedby refid="vfs__calls_8c_1a61bacda2680307d7f33cd2efe52ba2b5" compoundref="vfs__calls_8c" startline="45" endline="97">sys_openat</referencedby>
+        <referencedby refid="kern__pipe_8c_1ab6accb21879bf318f953d5e4124db685" compoundref="kern__pipe_8c" startline="36" endline="69">sys_pipe2</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="vfs__calls_8c_1a35d9649c48f61f1511e9d5de290e4991" compoundref="vfs__calls_8c" startline="389" endline="397">sys_readlink</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a460135dd17a4894e163f59465c88c502" compoundref="file_8c" startline="220" endline="223">sys_rename</referencedby>
+        <referencedby refid="descrip_8c_1a6eb9bf7af8ef45b0c37ca703f6007db5" compoundref="descrip_8c" startline="285" endline="346">sys_select</referencedby>
+        <referencedby refid="sys__arch_8c_1aa2dd3c49552bada777725bd4a3ee19a4" compoundref="sys__arch_8c" startline="540" endline="548">sys_sendto</referencedby>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+        <referencedby refid="sys__arch_8c_1afab8740b07db1e3546145e3835182324" compoundref="sys__arch_8c" startline="529" endline="538">sys_setsockopt</referencedby>
+        <referencedby refid="gen__calls_8c_1add3795da6dd256853821910f6fde5569" compoundref="gen__calls_8c" startline="294" endline="308">sys_sigaction</referencedby>
+        <referencedby refid="gen__calls_8c_1adb0dc568dd674705e372495140616236" compoundref="gen__calls_8c" startline="243" endline="292">sys_sigprocmask</referencedby>
+        <referencedby refid="sys__arch_8c_1ad76124831716632ba4c77d30d15817de" compoundref="sys__arch_8c" startline="502" endline="527">sys_socket</referencedby>
+        <referencedby refid="sysproto__posix_8h_1adc863cd02e90335388170f0289e97189" compoundref="stat_8c" startline="302" endline="305">sys_stat</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a6194ac39a3ce5a21050d2a9a3117b433" compoundref="stat_8c" startline="239" endline="294">sys_statfs</referencedby>
+        <referencedby refid="gen__calls_8c_1a5df9e80cc5dda0f70fae4699168cf4b6" compoundref="gen__calls_8c" startline="186" endline="222">sys_sysarch</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+        <referencedby refid="vfs__calls_8c_1a159495d16f0ec154193733ad4fb1fc71" compoundref="vfs__calls_8c" startline="293" endline="364">sys_write</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1aa023f30aed656a766f6aca5d9eeb5f46" compoundref="kernel_2syscall_8c" startline="179" endline="184">sysGetFreePage</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structthread_1c770300b493b2ea844e634b7c98c4f6a" prot="public" static="no" mutable="no">
-        <type>char *</type>
-        <definition>char* thread::vm_daddr</definition>
+      <memberdef kind="variable" id="structthread_1ae4165d082b98f27dab6bfeeefb76e060" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long thread::vm_daddr</definition>
         <argsstring></argsstring>
         <name>vm_daddr</name>
         <briefdescription>
@@ -62,17 +191,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="40" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="43" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="i386_2fork_8c" startline="144" endline="204">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
-        <definition>int32_t thread::vm_dsize</definition>
+      <memberdef kind="variable" id="structthread_1ac5ce95b5be4422e5f5a61f081547d425" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long thread::vm_dsize</definition>
         <argsstring></argsstring>
         <name>vm_dsize</name>
         <briefdescription>
@@ -81,24 +208,96 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="44" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="i386_2fork_8c" startline="144" endline="204">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1ad0eacc093248865db3d911c3c17e6d92" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long thread::vm_taddr</definition>
+        <argsstring></argsstring>
+        <name>vm_taddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="45" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="i386_2fork_8c" startline="144" endline="204">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1a06071e22f28a91ba81be0bcac20381be" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a8f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref></type>
+        <definition>u_long thread::vm_tsize</definition>
+        <argsstring></argsstring>
+        <name>vm_tsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="46" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="i386_2fork_8c" startline="144" endline="204">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="37" bodyend="42"/>
+    <collaborationgraph>
+      <node id="5">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+      <node id="2">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+      <node id="4">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+      <node id="1">
+        <label>thread</label>
+        <link refid="structthread"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+frame</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+sigmask</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+rlim</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+sigact</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/thread.h" line="40" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/thread.h" bodystart="40" bodyend="52"/>
     <listofallmembers>
-      <member refid="structthread_1b95afb0c8c9a817ce1638be443cb5b12" prot="public" virt="non-virtual"><scope>thread</scope><name>o_files</name></member>
-      <member refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" prot="public" virt="non-virtual"><scope>thread</scope><name>td_retval</name></member>
-      <member refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_daddr</name></member>
-      <member refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_dsize</name></member>
+      <member refid="structthread_1ad50525c84c75cd60eace495f3731d457" prot="public" virt="non-virtual"><scope>thread</scope><name>abi</name></member>
+      <member refid="structthread_1a44c91c2feae7dd69a8edd9bb8fe601c9" prot="public" virt="non-virtual"><scope>thread</scope><name>frame</name></member>
+      <member refid="structthread_1a68f1e552f18575d52731e9e61ad411fe" prot="public" virt="non-virtual"><scope>thread</scope><name>o_files</name></member>
+      <member refid="structthread_1a55a69c915cf55cf301c9e23eb05013cc" prot="public" virt="non-virtual"><scope>thread</scope><name>rlim</name></member>
+      <member refid="structthread_1aa0041bdd41da4a43a6c69327e866336e" prot="public" virt="non-virtual"><scope>thread</scope><name>sigact</name></member>
+      <member refid="structthread_1a4fd5f5de2f41b7678bb537634990a812" prot="public" virt="non-virtual"><scope>thread</scope><name>sigmask</name></member>
+      <member refid="structthread_1af3ec0788a84e5cb640a1646d1347998a" prot="public" virt="non-virtual"><scope>thread</scope><name>td_retval</name></member>
+      <member refid="structthread_1ae4165d082b98f27dab6bfeeefb76e060" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_daddr</name></member>
+      <member refid="structthread_1ac5ce95b5be4422e5f5a61f081547d425" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_dsize</name></member>
+      <member refid="structthread_1ad0eacc093248865db3d911c3c17e6d92" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_taddr</name></member>
+      <member refid="structthread_1a06071e22f28a91ba81be0bcac20381be" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_tsize</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

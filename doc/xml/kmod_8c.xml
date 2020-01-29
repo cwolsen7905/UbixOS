@@ -1,224 +1,573 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="kmod_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kmod_8c" kind="file" language="C++">
     <compoundname>kmod.c</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
     <includes refid="kmod_8h" local="no">ubixos/kmod.h</includes>
     <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
-    <includes refid="elf_8h" local="no">ubixos/elf.h</includes>
+    <includes refid="sys_2elf_8h" local="no">sys/elf.h</includes>
     <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
     <includes refid="lists_8h" local="no">ubixos/lists.h</includes>
     <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
     <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
-    <includes refid="vfs_8h" local="no">vfs/vfs.h</includes>
+    <includes refid="include_2vfs_2vfs_8h" local="no">vfs/vfs.h</includes>
     <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
     <includes refid="string_8h" local="no">string.h</includes>
     <includes refid="assert_8h" local="no">assert.h</includes>
     <incdepgraph>
-      <node id="5634">
-        <label>sys/thread.h</label>
-        <link refid="thread_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
         </childnode>
       </node>
-      <node id="5636">
+      <node id="39">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="35">
         <label>ubixos/kpanic.h</label>
         <link refid="kpanic_8h"/>
       </node>
-      <node id="5628">
-        <label>ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="5625" relation="include">
-        </childnode>
-        <childnode refid="5629" relation="include">
-        </childnode>
-        <childnode refid="5630" relation="include">
-        </childnode>
-        <childnode refid="5633" relation="include">
-        </childnode>
-        <childnode refid="5634" relation="include">
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="5638">
-        <label>ubixos/spinlock.h</label>
-        <link refid="spinlock_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="34">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="55">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
         </childnode>
       </node>
-      <node id="5624">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod.c"/>
-        <childnode refid="5625" relation="include">
-        </childnode>
-        <childnode refid="5627" relation="include">
-        </childnode>
-        <childnode refid="5628" relation="include">
-        </childnode>
-        <childnode refid="5635" relation="include">
-        </childnode>
-        <childnode refid="5636" relation="include">
-        </childnode>
-        <childnode refid="5637" relation="include">
-        </childnode>
-        <childnode refid="5638" relation="include">
-        </childnode>
-        <childnode refid="5639" relation="include">
-        </childnode>
-        <childnode refid="5640" relation="include">
-        </childnode>
-        <childnode refid="5641" relation="include">
-        </childnode>
-        <childnode refid="5644" relation="include">
-        </childnode>
-        <childnode refid="5646" relation="include">
-        </childnode>
-        <childnode refid="5647" relation="include">
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="5637">
+      <node id="43">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="64">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
         <label>ubixos/lists.h</label>
         <link refid="lists_8h"/>
       </node>
-      <node id="5625">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5626" relation="include">
+      <node id="60">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
         </childnode>
       </node>
-      <node id="5626">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
       </node>
-      <node id="5645">
+      <node id="62">
         <label>vmm/paging.h</label>
         <link refid="paging_8h"/>
-        <childnode refid="5625" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="5642" relation="include">
+        <childnode refid="42" relation="include">
         </childnode>
-        <childnode refid="5634" relation="include">
-        </childnode>
-      </node>
-      <node id="5646">
-        <label>string.h</label>
-        <link refid="string_8h"/>
-        <childnode refid="5625" relation="include">
+        <childnode refid="13" relation="include">
         </childnode>
       </node>
-      <node id="5630">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
-        <childnode refid="5631" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="5632" relation="include">
+        <childnode refid="6" relation="include">
         </childnode>
-      </node>
-      <node id="5633">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="5625" relation="include">
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="5640">
-        <label>lib/kmalloc.h</label>
-        <link refid="kmalloc_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
         </childnode>
       </node>
-      <node id="5644">
+      <node id="29">
+        <label>sys/elf32.h</label>
+        <link refid="elf32_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
         <label>vmm/vmm.h</label>
         <link refid="vmm_8h"/>
-        <childnode refid="5645" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="5625" relation="include">
+        <childnode refid="62" relation="include">
         </childnode>
       </node>
-      <node id="5641">
+      <node id="40">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
         <label>vfs/vfs.h</label>
-        <link refid="vfs_8h"/>
-        <childnode refid="5625" relation="include">
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="5630" relation="include">
+        <childnode refid="11" relation="include">
         </childnode>
-        <childnode refid="5632" relation="include">
+        <childnode refid="24" relation="include">
         </childnode>
-        <childnode refid="5642" relation="include">
+        <childnode refid="42" relation="include">
         </childnode>
-        <childnode refid="5634" relation="include">
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
         </childnode>
       </node>
-      <node id="5632">
+      <node id="46">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="24">
         <label>vfs/mount.h</label>
         <link refid="mount_8h"/>
-        <childnode refid="5625" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="5639">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5627">
-        <label>ubixos/kmod.h</label>
-        <link refid="kmod_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
         </childnode>
       </node>
-      <node id="5647">
+      <node id="63">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="65">
         <label>assert.h</label>
         <link refid="assert_8h"/>
       </node>
-      <node id="5631">
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="54">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ubixos/kmod.h</label>
+        <link refid="kmod_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="28">
+        <label>i386/elf.h</label>
+        <link refid="i386_2elf_8h"/>
+      </node>
+      <node id="33">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="50">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>sys/elf64.h</label>
+        <link refid="elf64_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="5625" relation="include">
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="5642">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="5643" relation="include">
-        </childnode>
-        <childnode refid="5634" relation="include">
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5635">
-        <label>ubixos/elf.h</label>
-        <link refid="elf_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="30">
+        <label>sys/elf_common.h</label>
+        <link refid="elf__common_8h"/>
+      </node>
+      <node id="58">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="45" relation="include">
         </childnode>
-        <childnode refid="5628" relation="include">
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
         </childnode>
       </node>
-      <node id="5643">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="5625" relation="include">
+      <node id="27">
+        <label>sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
-      </node>
-      <node id="5629">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="5625" relation="include">
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
         </childnode>
       </node>
     </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" prot="public" static="no" mutable="no">
+        <type><ref refid="lists_8h_1a680544a1203d80169f21f458fecfe884" kindref="member">List_t</ref> *</type>
+        <definition>List_t* List</definition>
+        <argsstring></argsstring>
+        <name>List</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/kmods/kmod.c" line="43" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kmods/kmod.c" bodystart="43" bodyend="-1"/>
+        <referencedby refid="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="45" endline="68">kmod_add</referencedby>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 kmod_add</definition>
         <argsstring>(const char *kmod_file, const char *name)</argsstring>
         <name>kmod_add</name>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
           <declname>kmod_file</declname>
         </param>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
           <declname>name</declname>
         </param>
         <briefdescription>
@@ -227,24 +576,24 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" bodystart="46" bodyend="73"/>
-        <references refid="lists_8h_1ddb302e5cc32ff6fd65b02523e648764">CreateItem</references>
-        <references refid="struct__item__t_176139a34f13eb90a9bf203579870dbd2" compoundref="lists_8h" startline="11">_item_t::data</references>
-        <references refid="lists_8h_15f388b13396e1961b2a85720edf33712">InitializeList</references>
-        <references refid="lists_8h_1f4e720b926108dabb1a08d09798e76d0">InsertItemAtFront</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kmod_8h_1c9997cda5e69bc2c1fce8c8c343b3d4f" compoundref="kmod_8c" startline="75" endline="211">kmod_load</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" compoundref="kmod_8c" startline="44">List</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+        <location file="C:/Dev/git/UbixOS/sys/kmods/kmod.c" line="45" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kmods/kmod.c" bodystart="45" bodyend="68"/>
+        <references refid="lists_8h_1addb302e5cc32ff6fd65b02523e648764">CreateItem</references>
+        <references refid="struct__item__t_1a76139a34f13eb90a9bf203579870dbd2" compoundref="lists_8h" startline="38">_item_t::data</references>
+        <references refid="lists_8h_1a5f388b13396e1961b2a85720edf33712">InitializeList</references>
+        <references refid="lists_8h_1af4e720b926108dabb1a08d09798e76d0">InsertItemAtFront</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" compoundref="kmod_8c" startline="43">List</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
       </memberdef>
-      <memberdef kind="function" id="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 kmod_load</definition>
         <argsstring>(const char *kmod_file)</argsstring>
         <name>kmod_load</name>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
           <declname>kmod_file</declname>
         </param>
         <briefdescription>
@@ -253,62 +602,34 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" bodystart="75" bodyend="211"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
-        <references refid="structelfHeader_18ff3dd1b27053bc5a2f01afe5403e53b" compoundref="elf_8h" startline="102">elfHeader::eEntry</references>
-        <references refid="elf_8h_18d1ac0f35a8999a4a8a3350ca95ab54b" compoundref="elf_8h" startline="172">ELF32_R_SYM</references>
-        <references refid="elf_8h_1a4ffd69f2c1c03229686bfa3a898db00" compoundref="elf_8h" startline="173">ELF32_R_TYPE</references>
-        <references refid="elf_8h_118371af6e681af62767a92ac64af1ebb" compoundref="elf_8c" startline="107" endline="109">elfGetRelType</references>
-        <references refid="structelfHeader_14635401868104caa04fcb5bb60840df6" compoundref="elf_8h" startline="108">elfHeader::ePhnum</references>
-        <references refid="structelfHeader_1aff1ff2cb64932f1e1a1f6cf3b881787" compoundref="elf_8h" startline="103">elfHeader::ePhoff</references>
-        <references refid="structelfHeader_1a5b9594ecad96ed7448dbcf95da7895f" compoundref="elf_8h" startline="110">elfHeader::eShnum</references>
-        <references refid="structelfHeader_13d8c518903e5e4db018a336edb6ef204" compoundref="elf_8h" startline="104">elfHeader::eShoff</references>
-        <references refid="structelfHeader_18842d2d5aed087cd50914a46461d3f40" compoundref="elf_8h" startline="111">elfHeader::eShstrndx</references>
-        <references refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
-        <references refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
-        <references refid="file_8h_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</references>
-        <references refid="file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" compoundref="kmod_8h" startline="35">LD_START</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" compoundref="elf_8h" startline="120">elfProgramHeader::phMemsz</references>
-        <references refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" compoundref="elf_8h" startline="117">elfProgramHeader::phVaddr</references>
-        <references refid="elf_8h_12121a2f01c51e8462bfd4d47725649d8" compoundref="elf_8h" startline="81">PT_DYNAMIC</references>
-        <references refid="elf_8h_1f9283bc32e6d3e87d2bab2f55bc1949b" compoundref="elf_8h" startline="91">PT_GNU_STACK</references>
-        <references refid="elf_8h_184d7768fd6c6ece599d297090900cf92" compoundref="elf_8h" startline="80">PT_LOAD</references>
-        <references refid="elf_8h_17294b5e14e1cf5becf35236381698f48" compoundref="elf_8h" startline="93">PT_PAX_FLAGS</references>
-        <references refid="elf_8h_1f363b787459afd7e272677d7858572c0" compoundref="elf_8h" startline="40">R_386_32</references>
-        <references refid="elf_8h_1d55eb4ccb6e52c4c03f99b34cc8c690b" compoundref="elf_8h" startline="41">R_386_PC32</references>
-        <references refid="elf_8h_1ee5190154984e6176e1c6804ac13217d" compoundref="elf_8h" startline="47">R_386_RELATIVE</references>
-        <references refid="structelfSectionHeader_1285d41cc0ad6e460792b9524c6db5345" compoundref="elf_8h" startline="131">elfSectionHeader::shSize</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" prot="public" static="no" mutable="no">
-        <type><ref refid="struct__list__t" kindref="compound">List_t</ref> *</type>
-        <definition>List_t* List</definition>
-        <argsstring></argsstring>
-        <name>List</name>
-        <initializer> 0x0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" bodystart="44" bodyend="-1"/>
-        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/kmods/kmod.c" line="70" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kmods/kmod.c" bodystart="70" bodyend="207"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="elf32_8h_1af407354d17dceb417c6e79554a45b31a" compoundref="elf32_8h" startline="147">ELF32_R_SYM</references>
+        <references refid="elf32_8h_1aeecb1a128443aeb30505b409133fc5bf" compoundref="elf32_8h" startline="148">ELF32_R_TYPE</references>
+        <references refid="sys_2elf_8h_1a18371af6e681af62767a92ac64af1ebb" compoundref="kernel_2elf_8c" startline="167" endline="169">elfGetRelType</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" compoundref="file_8c" startline="388" endline="518">fopen</references>
+        <references refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" compoundref="file_8c" startline="291" endline="309">fread</references>
+        <references refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" compoundref="file_8c" startline="326" endline="329">fseek</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" compoundref="kmod_8h" startline="34">LD_START</references>
+        <references refid="string_8h_1ace4b911463887af5e748326323e99a23">memset</references>
+        <references refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="68">PAGE_DEFAULT</references>
+        <references refid="elf__common_8h_1a2121a2f01c51e8462bfd4d47725649d8" compoundref="elf__common_8h" startline="493">PT_DYNAMIC</references>
+        <references refid="elf__common_8h_1af9283bc32e6d3e87d2bab2f55bc1949b" compoundref="elf__common_8h" startline="502">PT_GNU_STACK</references>
+        <references refid="elf__common_8h_1a84d7768fd6c6ece599d297090900cf92" compoundref="elf__common_8h" startline="492">PT_LOAD</references>
+        <references refid="elf__common_8h_1af363b787459afd7e272677d7858572c0" compoundref="elf__common_8h" startline="867">R_386_32</references>
+        <references refid="elf__common_8h_1ad55eb4ccb6e52c4c03f99b34cc8c690b" compoundref="elf__common_8h" startline="868">R_386_PC32</references>
+        <references refid="elf__common_8h_1aee5190154984e6176e1c6804ac13217d" compoundref="elf__common_8h" startline="874">R_386_RELATIVE</references>
+        <references refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c">strcmp</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="paging_8h_1adea68f248df43bddee62a09d945304b0" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</references>
+        <referencedby refid="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="45" endline="68">kmod_add</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -316,222 +637,218 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: kmod_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmod_8h" kindref="compound">ubixos/kmod.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="elf_8h" kindref="compound">ubixos/elf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lists_8h" kindref="compound">ubixos/lists.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vfs_8h" kindref="compound">vfs/vfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44" refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" refkind="member"><highlight class="normal"><ref refid="struct__list__t" kindref="compound">List_t</ref><sp/>*<ref refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="46" refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" refkind="member"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="kmod_8h_106399dbabee4a7e746b17c66a343d38f" kindref="member">kmod_add</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*kmod_file,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)</highlight></codeline>
-<codeline lineno="47"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>addr<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct__item__t" kindref="compound">Item_t</ref><sp/>*tmp;</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structkmod__struct" kindref="compound">kmod_t</ref><sp/>*kmods;</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>addr<sp/>=<sp/><ref refid="kmod_8h_1c9997cda5e69bc2c1fce8c8c343b3d4f" kindref="member">kmod_load</ref>(kmod_file);</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(addr<sp/>==<sp/>0x0)</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref><sp/>==<sp/>0x0)</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref><sp/>=<sp/><ref refid="lists_8h_15f388b13396e1961b2a85720edf33712" kindref="member">InitializeList</ref>();</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp<sp/>=<sp/><ref refid="lists_8h_1ddb302e5cc32ff6fd65b02523e648764" kindref="member">CreateItem</ref>();</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lists_8h_1f4e720b926108dabb1a08d09798e76d0" kindref="member">InsertItemAtFront</ref>(<ref refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref>,<sp/>tmp);</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>kmods<sp/>=<sp/><ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal"><sp/>*kmods);</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmp-&gt;<ref refid="struct__item__t_176139a34f13eb90a9bf203579870dbd2" kindref="member">data</ref><sp/>=<sp/>kmods;</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(kmods<sp/>==<sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;kmod_add:<sp/>unable<sp/>to<sp/>allocate<sp/>memory!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
-<codeline lineno="73"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75" refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" refkind="member"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="kmod_8h_1c9997cda5e69bc2c1fce8c8c343b3d4f" kindref="member">kmod_load</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*kmod_file)<sp/>{</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rel<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sym<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*newLoc<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;<sp/></highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*shStr<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*dynStr<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/><sp/><sp/>*kmod_fd<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="structelfHeader" kindref="compound">elfHeader</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*binaryHeader<sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="structelfProgramHeader" kindref="compound">elfProgramHeader</ref><sp/>*programHeader<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="structelfSectionHeader" kindref="compound">elfSectionHeader</ref><sp/>*sectionHeader<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="structelfDynSym" kindref="compound">elfDynSym</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*relSymTab<sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="structelfPltInfo" kindref="compound">elfPltInfo</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*elfRel<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Open<sp/>kernel<sp/>module<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/>kmod_fd<sp/>=<sp/><ref refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" kindref="member">fopen</ref>(kmod_file,</highlight><highlight class="stringliteral">&quot;rb&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(kmod_fd<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Can<sp/>not<sp/>open<sp/>%s\n&quot;</highlight><highlight class="normal">,kmod_file);</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>load<sp/>module<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,0x0,0x0);</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/>binaryHeader<sp/>=<sp/>(<ref refid="structelfHeader" kindref="compound">elfHeader</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structelfHeader" kindref="compound">elfHeader</ref>));</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(binaryHeader<sp/>==<sp/>0x0)</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;kmod:<sp/>out<sp/>of<sp/>memory\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(binaryHeader);</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(binaryHeader,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfHeader),1,kmod_fd);</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"></highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/>programHeader<sp/>=<sp/>(<ref refid="structelfProgramHeader" kindref="compound">elfProgramHeader</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structelfProgramHeader" kindref="compound">elfProgramHeader</ref>)*binaryHeader-&gt;<ref refid="structelfHeader_14635401868104caa04fcb5bb60840df6" kindref="member">ePhnum</ref>);</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(programHeader);</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,binaryHeader-&gt;<ref refid="structelfHeader_1aff1ff2cb64932f1e1a1f6cf3b881787" kindref="member">ePhoff</ref>,0);</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(programHeader,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structelfSectionHeader" kindref="compound">elfSectionHeader</ref>),binaryHeader-&gt;<ref refid="structelfHeader_14635401868104caa04fcb5bb60840df6" kindref="member">ePhnum</ref>,kmod_fd);</highlight></codeline>
-<codeline lineno="114"><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/>sectionHeader<sp/>=<sp/>(elfSectionHeader<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfSectionHeader)*binaryHeader-&gt;<ref refid="structelfHeader_1a5b9594ecad96ed7448dbcf95da7895f" kindref="member">eShnum</ref>);</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(sectionHeader);</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,binaryHeader-&gt;<ref refid="structelfHeader_13d8c518903e5e4db018a336edb6ef204" kindref="member">eShoff</ref>,0);</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(sectionHeader,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfSectionHeader),binaryHeader-&gt;<ref refid="structelfHeader_1a5b9594ecad96ed7448dbcf95da7895f" kindref="member">eShnum</ref>,kmod_fd);</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"></highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/>shStr<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[binaryHeader-&gt;<ref refid="structelfHeader_18842d2d5aed087cd50914a46461d3f40" kindref="member">eShstrndx</ref>].shSize);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,sectionHeader[binaryHeader-&gt;<ref refid="structelfHeader_18842d2d5aed087cd50914a46461d3f40" kindref="member">eShstrndx</ref>].shOffset,0);</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(shStr,sectionHeader[binaryHeader-&gt;<ref refid="structelfHeader_18842d2d5aed087cd50914a46461d3f40" kindref="member">eShstrndx</ref>].shSize,1,kmod_fd);</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"></highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;i&lt;binaryHeader-&gt;<ref refid="structelfHeader_14635401868104caa04fcb5bb60840df6" kindref="member">ePhnum</ref>;i++)<sp/>{</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(programHeader[i].phType)<sp/>{</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_184d7768fd6c6ece599d297090900cf92" kindref="member">PT_LOAD</ref>:</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_12121a2f01c51e8462bfd4d47725649d8" kindref="member">PT_DYNAMIC</ref>:</highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newLoc<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)programHeader[i].phVaddr<sp/>+<sp/><ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>;</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="130"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Allocate<sp/>Memory<sp/>Im<sp/>Going<sp/>To<sp/>Have<sp/>To<sp/>Make<sp/>This<sp/>Load<sp/>Memory<sp/>With<sp/>Correct</highlight></codeline>
-<codeline lineno="131"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Settings<sp/>so<sp/>it<sp/>helps<sp/>us<sp/>in<sp/>the<sp/>future</highlight></codeline>
-<codeline lineno="132"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x=0;x<sp/>&lt;<sp/>((programHeader[i].<ref refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" kindref="member">phMemsz</ref>)+4095);x<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>make<sp/>r/w<sp/>or<sp/>ro<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" kindref="member">vmm_remapPage</ref>(<ref refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" kindref="member">vmmFindFreePage</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>),((programHeader[i].<ref refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" kindref="member">phVaddr</ref><sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/><ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>),<ref refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>))<sp/>==<sp/>0x0)<sp/></highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;vmmRemapPage:<sp/>ld\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>((</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)((programHeader[i].phVaddr<sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/><ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>),0x0,0<ref refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" kindref="member">x1000</ref>);</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>Load<sp/>Section<sp/>To<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,programHeader[i].phOffset,0x0);</highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(newLoc,programHeader[i].phFilesz,1,kmod_fd);</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1f9283bc32e6d3e87d2bab2f55bc1949b" kindref="member">PT_GNU_STACK</ref>:</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Tells<sp/>us<sp/>if<sp/>the<sp/>stack<sp/>should<sp/>be<sp/>executable.<sp/><sp/>Failsafe<sp/>to<sp/>executable</highlight></codeline>
-<codeline lineno="145"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>until<sp/>we<sp/>add<sp/>checking<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_17294b5e14e1cf5becf35236381698f48" kindref="member">PT_PAX_FLAGS</ref>:</highlight></codeline>
-<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>sure...<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Unhandled<sp/>Header<sp/>:<sp/>%08x\n&quot;</highlight><highlight class="normal">,<sp/>programHeader[i].phType);</highlight></codeline>
-<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="155"><highlight class="normal"></highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0x0;i&lt;binaryHeader-&gt;<ref refid="structelfHeader_1a5b9594ecad96ed7448dbcf95da7895f" kindref="member">eShnum</ref>;i++)<sp/>{</highlight></codeline>
-<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(sectionHeader[i].shType)<sp/>{</highlight></codeline>
-<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>((shStr<sp/>+<sp/>sectionHeader[i].shName),</highlight><highlight class="stringliteral">&quot;.dynstr&quot;</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
-<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dynStr<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[i].shSize);</highlight></codeline>
-<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,sectionHeader[i].shOffset,0x0);</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(dynStr,sectionHeader[i].shSize,1,kmod_fd);</highlight></codeline>
-<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>9:</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>elfRel<sp/>=<sp/>(<ref refid="structelfPltInfo" kindref="compound">elfPltInfo</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[i].shSize);</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,sectionHeader[i].shOffset,0x0);</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(elfRel,sectionHeader[i].shSize,1,kmod_fd);</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"></highlight></codeline>
-<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x=0x0;x&lt;sectionHeader[i].<ref refid="structelfSectionHeader_1285d41cc0ad6e460792b9524c6db5345" kindref="member">shSize</ref>/</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structelfPltInfo" kindref="compound">elfPltInfo</ref>);x++)<sp/>{</highlight></codeline>
-<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rel<sp/>=<sp/><ref refid="elf_8h_18d1ac0f35a8999a4a8a3350ca95ab54b" kindref="member">ELF32_R_SYM</ref>(elfRel[x].pltInfo);</highlight></codeline>
-<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reMap<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref><sp/>+<sp/>elfRel[x].pltOffset);</highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(<ref refid="elf_8h_1a4ffd69f2c1c03229686bfa3a898db00" kindref="member">ELF32_R_TYPE</ref>(elfRel[x].pltInfo))<sp/>{</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1f363b787459afd7e272677d7858572c0" kindref="member">R_386_32</ref>:</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/>+=<sp/>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref><sp/>+<sp/>relSymTab[rel].dynValue);</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1d55eb4ccb6e52c4c03f99b34cc8c690b" kindref="member">R_386_PC32</ref>:</highlight></codeline>
-<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/>+=<sp/>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref><sp/>+<sp/>relSymTab[rel].dynValue)<sp/>-<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)reMap;</highlight></codeline>
-<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1ee5190154984e6176e1c6804ac13217d" kindref="member">R_386_RELATIVE</ref>:</highlight></codeline>
-<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/>+=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>;</highlight></codeline>
-<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
-<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[0x%X][0x%X](%i)[%s]\n&quot;</highlight><highlight class="normal">,elfRel[x].pltOffset,elfRel[x].pltInfo,rel,<ref refid="elf_8h_118371af6e681af62767a92ac64af1ebb" kindref="member">elfGetRelType</ref>(<ref refid="elf_8h_1a4ffd69f2c1c03229686bfa3a898db00" kindref="member">ELF32_R_TYPE</ref>(elfRel[x].pltInfo)));</highlight></codeline>
-<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;relTab<sp/>[%s][0x%X][0x%X]\n&quot;</highlight><highlight class="normal">,dynStr<sp/>+<sp/>relSymTab[rel].dynName,relSymTab[rel].dynValue,relSymTab[rel].dynName);</highlight></codeline>
-<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(elfRel);</highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>11:</highlight></codeline>
-<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>relSymTab<sp/>=<sp/>(<ref refid="structelfDynSym" kindref="compound">elfDynSym</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[i].shSize);</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(kmod_fd,sectionHeader[i].shOffset,0x0);</highlight></codeline>
-<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(relSymTab,sectionHeader[i].shSize,1,kmod_fd);</highlight></codeline>
-<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sym<sp/>=<sp/>i;</highlight></codeline>
-<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"></highlight></codeline>
-<codeline lineno="200"><highlight class="normal"><sp/><sp/>i<sp/>=<sp/>binaryHeader-&gt;<ref refid="structelfHeader_18ff3dd1b27053bc5a2f01afe5403e53b" kindref="member">eEntry</ref><sp/>+<sp/><ref refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>;</highlight></codeline>
-<codeline lineno="201"><highlight class="normal"></highlight></codeline>
-<codeline lineno="202"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(dynStr);</highlight></codeline>
-<codeline lineno="203"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(shStr);</highlight></codeline>
-<codeline lineno="204"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(relSymTab);</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(sectionHeader);</highlight></codeline>
-<codeline lineno="206"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(programHeader);</highlight></codeline>
-<codeline lineno="207"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(binaryHeader);</highlight></codeline>
-<codeline lineno="208"><highlight class="normal"><sp/><sp/><ref refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" kindref="member">fclose</ref>(kmod_fd);</highlight></codeline>
-<codeline lineno="209"><highlight class="normal"></highlight></codeline>
-<codeline lineno="210"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)i);</highlight></codeline>
-<codeline lineno="211"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="212"><highlight class="normal"></highlight></codeline>
-<codeline lineno="213"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="214"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="215"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmod_8h" kindref="compound">ubixos/kmod.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_2elf_8h" kindref="compound">sys/elf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lists_8h" kindref="compound">ubixos/lists.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2vfs_2vfs_8h" kindref="compound">vfs/vfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" refkind="member"><highlight class="normal"><ref refid="struct__list__t" kindref="compound">List_t</ref><sp/>*<ref refid="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" refkind="member"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="kmod_8c_1af2a085a786b2cf77d53da7f364948cd4" kindref="member">kmod_add</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*kmod_file,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>addr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="struct__item__t" kindref="compound">Item_t</ref><sp/>*tmp;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="structkmod__struct" kindref="compound">kmod_t</ref><sp/>*kmods;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>addr<sp/>=<sp/><ref refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" kindref="member">kmod_load</ref>(kmod_file);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(addr<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref><sp/>=<sp/><ref refid="lists_8h_1a5f388b13396e1961b2a85720edf33712" kindref="member">InitializeList</ref>();</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>tmp<sp/>=<sp/><ref refid="lists_8h_1addb302e5cc32ff6fd65b02523e648764" kindref="member">CreateItem</ref>();</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="lists_8h_1af4e720b926108dabb1a08d09798e76d0" kindref="member">InsertItemAtFront</ref>(<ref refid="kmod_8c_1aef05a41ecb31fc37647810e583f3d37b" kindref="member">List</ref>,<sp/>tmp);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>kmods<sp/>=<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal"><sp/>*kmods);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>tmp-&gt;<ref refid="struct__item__t_1a76139a34f13eb90a9bf203579870dbd2" kindref="member">data</ref><sp/>=<sp/>kmods;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(kmods<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;kmod_add:<sp/>unable<sp/>to<sp/>allocate<sp/>memory!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" refkind="member"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" kindref="member">kmod_load</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*kmod_file)<sp/>{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>rel<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>sym<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*newLoc<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*shStr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*dynStr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*reMap<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*kmod_fd<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>elfHeader<sp/>*binaryHeader<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>elfProgramHeader<sp/>*programHeader<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/>elfSectionHeader<sp/>*sectionHeader<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/>elfDynSym<sp/>*relSymTab<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>elfPltInfo<sp/>*elfRel<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Open<sp/>kernel<sp/>module<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>kmod_fd<sp/>=<sp/><ref refid="file_8c_1a249f3bc0af043dc5ac3c9aa8646986af" kindref="member">fopen</ref>(kmod_file,<sp/></highlight><highlight class="stringliteral">&quot;rb&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(kmod_fd<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Can<sp/>not<sp/>open<sp/>%s\n&quot;</highlight><highlight class="normal">,<sp/>kmod_file);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>load<sp/>module<sp/>header<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>0x0,<sp/>0x0);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>binaryHeader<sp/>=<sp/>(elfHeader<sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfHeader));</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(binaryHeader<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;kmod:<sp/>out<sp/>of<sp/>memory\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0x0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(binaryHeader);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(binaryHeader,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfHeader),<sp/>1,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/>programHeader<sp/>=<sp/>(elfProgramHeader<sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfProgramHeader)<sp/>*<sp/>binaryHeader-&gt;ePhnum);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(programHeader);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>binaryHeader-&gt;ePhoff,<sp/>0);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(programHeader,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfSectionHeader),<sp/>binaryHeader-&gt;ePhnum,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>sectionHeader<sp/>=<sp/>(elfSectionHeader<sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfSectionHeader)<sp/>*<sp/>binaryHeader-&gt;eShnum);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="assert_8h_1ad6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert</ref>(sectionHeader);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>binaryHeader-&gt;eShoff,<sp/>0);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(sectionHeader,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfSectionHeader),<sp/>binaryHeader-&gt;eShnum,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>shStr<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[binaryHeader-&gt;eShstrndx].shSize);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>sectionHeader[binaryHeader-&gt;eShstrndx].shOffset,<sp/>0);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(shStr,<sp/>sectionHeader[binaryHeader-&gt;eShstrndx].shSize,<sp/>1,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>binaryHeader-&gt;ePhnum;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(programHeader[i].phType)<sp/>{</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1a84d7768fd6c6ece599d297090900cf92" kindref="member">PT_LOAD</ref>:</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1a2121a2f01c51e8462bfd4d47725649d8" kindref="member">PT_DYNAMIC</ref>:</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>newLoc<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>programHeader[i].phVaddr<sp/>+<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Allocate<sp/>Memory<sp/>Im<sp/>Going<sp/>To<sp/>Have<sp/>To<sp/>Make<sp/>This<sp/>Load<sp/>Memory<sp/>With<sp/>Correct</highlight></codeline>
+<codeline lineno="125"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Settings<sp/>so<sp/>it<sp/>helps<sp/>us<sp/>in<sp/>the<sp/>future</highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0;<sp/>x<sp/>&lt;<sp/>((programHeader[i].phMemsz)<sp/>+<sp/>4095);<sp/>x<sp/>+=<sp/>0x1000)<sp/>{</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>make<sp/>r/w<sp/>or<sp/>ro<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="paging_8h_1adea68f248df43bddee62a09d945304b0" kindref="member">vmm_remapPage</ref>(<ref refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" kindref="member">vmm_findFreePage</ref>(<ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>),<sp/>((programHeader[i].phVaddr<sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>),<sp/><ref refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>))<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;vmmRemapPage:<sp/>ld\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="string_8h_1ace4b911463887af5e748326323e99a23" kindref="member">memset</ref>((</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<sp/>((programHeader[i].phVaddr<sp/>&amp;<sp/>0xFFFFF000)<sp/>+<sp/>x<sp/>+<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>),<sp/>0x0,<sp/>0x1000);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Now<sp/>Load<sp/>Section<sp/>To<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>programHeader[i].phOffset,<sp/>0x0);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(newLoc,<sp/>programHeader[i].phFilesz,<sp/>1,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1af9283bc32e6d3e87d2bab2f55bc1949b" kindref="member">PT_GNU_STACK</ref>:</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Tells<sp/>us<sp/>if<sp/>the<sp/>stack<sp/>should<sp/>be<sp/>executable.<sp/><sp/>Failsafe<sp/>to<sp/>executable</highlight></codeline>
+<codeline lineno="139"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>until<sp/>we<sp/>add<sp/>checking<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_IGNORE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PT_PAX_FLAGS:</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>sure...<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Unhandled<sp/>Header<sp/>:<sp/>%08x\n&quot;</highlight><highlight class="normal">,<sp/>programHeader[i].phType);</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0x0;<sp/>i<sp/>&lt;<sp/>binaryHeader-&gt;eShnum;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(sectionHeader[i].shType)<sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>3:</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>((shStr<sp/>+<sp/>sectionHeader[i].shName),<sp/></highlight><highlight class="stringliteral">&quot;.dynstr&quot;</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dynStr<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[i].shSize);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>sectionHeader[i].shOffset,<sp/>0x0);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(dynStr,<sp/>sectionHeader[i].shSize,<sp/>1,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>9:</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>elfRel<sp/>=<sp/>(elfPltInfo<sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[i].shSize);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>sectionHeader[i].shOffset,<sp/>0x0);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(elfRel,<sp/>sectionHeader[i].shSize,<sp/>1,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>0x0;<sp/>x<sp/>&lt;<sp/>sectionHeader[i].shSize<sp/>/<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(elfPltInfo);<sp/>x++)<sp/>{</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rel<sp/>=<sp/><ref refid="elf32_8h_1af407354d17dceb417c6e79554a45b31a" kindref="member">ELF32_R_SYM</ref>(elfRel[x].pltInfo);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>reMap<sp/>=<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>*)<sp/>((<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref><sp/>+<sp/>elfRel[x].pltOffset);</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(<ref refid="elf32_8h_1aeecb1a128443aeb30505b409133fc5bf" kindref="member">ELF32_R_TYPE</ref>(elfRel[x].pltInfo))<sp/>{</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1af363b787459afd7e272677d7858572c0" kindref="member">R_386_32</ref>:</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/>+=<sp/>((<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref><sp/>+<sp/>relSymTab[rel].dynValue);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1ad55eb4ccb6e52c4c03f99b34cc8c690b" kindref="member">R_386_PC32</ref>:</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/>+=<sp/>((<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref><sp/>+<sp/>relSymTab[rel].dynValue)<sp/>-<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/>reMap;</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="elf__common_8h_1aee5190154984e6176e1c6804ac13217d" kindref="member">R_386_RELATIVE</ref>:</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*reMap<sp/>+=<sp/>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[0x%X][0x%X](%i)[%s]\n&quot;</highlight><highlight class="normal">,<sp/>elfRel[x].pltOffset,<sp/>elfRel[x].pltInfo,<sp/>rel,<sp/><ref refid="sys_2elf_8h_1a18371af6e681af62767a92ac64af1ebb" kindref="member">elfGetRelType</ref>(<ref refid="elf32_8h_1aeecb1a128443aeb30505b409133fc5bf" kindref="member">ELF32_R_TYPE</ref>(elfRel[x].pltInfo)));</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;relTab<sp/>[%s][0x%X][0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>dynStr<sp/>+<sp/>relSymTab[rel].dynName,<sp/>relSymTab[rel].dynValue,<sp/>relSymTab[rel].dynName);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(elfRel);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>11:</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>relSymTab<sp/>=<sp/>(elfDynSym<sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(sectionHeader[i].shSize);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1aac4e345a7fcee61422a6b35b54f22def" kindref="member">fseek</ref>(kmod_fd,<sp/>sectionHeader[i].shOffset,<sp/>0x0);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="file_8c_1ac539f57edd90fcd088fd3baa10319166" kindref="member">fread</ref>(relSymTab,<sp/>sectionHeader[i].shSize,<sp/>1,<sp/>kmod_fd);</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sym<sp/>=<sp/>i;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>i<sp/>=<sp/>binaryHeader-&gt;eEntry<sp/>+<sp/><ref refid="kmod_8h_1af4d6f389174a00e0de80e1ea0e23e956" kindref="member">LD_START</ref>;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(dynStr);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(shStr);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(relSymTab);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(sectionHeader);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(programHeader);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(binaryHeader);</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><ref refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" kindref="member">fclose</ref>(kmod_fd);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>((<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref>)<sp/>i);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="210"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="211"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/kmods/kmod.c"/>
   </compounddef>
 </doxygen>

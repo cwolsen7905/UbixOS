@@ -1,22 +1,22 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="io_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="io_8c" kind="file" language="C++">
     <compoundname>io.c</compoundname>
     <includes refid="io_8h" local="no">sys/io.h</includes>
     <incdepgraph>
-      <node id="5886">
-        <label>src/sys/sys/io.c</label>
-        <link refid="io.c"/>
-        <childnode refid="5887" relation="include">
-        </childnode>
-      </node>
-      <node id="5887">
+      <node id="2">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/sys/io.c</label>
+        <link refid="io_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="io_8c_1af23f1fbc404bc35bda28093de44de3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1aaf23f1fbc404bc35bda28093de44de3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>unsigned char</type>
         <definition>unsigned char inportByte</definition>
         <argsstring>(unsigned int port)</argsstring>
@@ -26,48 +26,43 @@
           <declname>port</declname>
         </param>
         <briefdescription>
-<para>input one byte from specified port </para>        </briefdescription>
+<para>input one byte from specified port </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for reading </para></parameterdescription>
+<para>address of port for reading </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>returns unsigned char value </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>returns unsigned char value </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="39" bodyend="47"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="atkbd_8c_155bc6540b1b12c4eb0dd00877a2d68c5" compoundref="atkbd_8c" startline="203" endline="214">atkbd_scan</referencedby>
-        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
-        <referencedby refid="vmm__memory_8c_11a89fbc2f80ca828332c5ef31801faa3" compoundref="vmm__memory_8c" startline="104" endline="174">countMemory</referencedby>
-        <referencedby refid="ne2k_8c_193484a1eaa8e1b265202c6cccfed65f3" compoundref="ne2k_8c" startline="223" endline="277">dp_recv</referencedby>
-        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
-        <referencedby refid="fdc_8c_1e266cdb34b69c65cfc108bbc72a4e3ff" compoundref="fdc_8c" startline="116" endline="127">getByte</referencedby>
-        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
-        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
-        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
-        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
-        <referencedby refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" compoundref="mouse_8c" startline="38" endline="57">kbdRead</referencedby>
-        <referencedby refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" compoundref="mouse_8c" startline="59" endline="73">kbdWrite</referencedby>
-        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
-        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
-        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
-        <referencedby refid="ne2k_8c_11e664af4b82fdc7971db793f0e9b3ebd" compoundref="ne2k_8c" startline="191" endline="221">ne2kHandler</referencedby>
-        <referencedby refid="pci_8c_109d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="182" endline="208">pciRead</referencedby>
-        <referencedby refid="ne2k_8c_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</referencedby>
-        <referencedby refid="fdc_8c_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</referencedby>
-        <referencedby refid="atkbd_8c_175680b4d84b721b03a3454677758a21e" compoundref="atkbd_8c" startline="321" endline="326">setLED</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
-        <referencedby refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" compoundref="time_8c" startline="51" endline="54">timeCmosRead</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="fdc_8c_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="38" column="15" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="38" bodyend="46"/>
+        <referencedby refid="video_8c_1a05d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="37" endline="56">backSpace</referencedby>
+        <referencedby refid="vmm__memory_8c_1a1a89fbc2f80ca828332c5ef31801faa3" compoundref="vmm__memory_8c" startline="109" endline="210">countMemory</referencedby>
+        <referencedby refid="fdc_8c_1a4b5fded251628524148377601d44377a" compoundref="fdc_8c" startline="127" endline="198">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_1ae266cdb34b69c65cfc108bbc72a4e3ff" compoundref="fdc_8c" startline="114" endline="125">getByte</referencedby>
+        <referencedby refid="hd_8c_1ab01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="221" endline="354">hdInit</referencedby>
+        <referencedby refid="hd_8c_1ac285c40dfad18aac6ae2eaa77b4a06c8" compoundref="hd_8c" startline="423" endline="488">hdRead</referencedby>
+        <referencedby refid="hd_8c_1a57d5cca1b1006db82038567edf6e6ac1" compoundref="hd_8c" startline="356" endline="421">hdWrite</referencedby>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+        <referencedby refid="8259_8c_1ad53c4c3d65338bf63d4efd4da1cf7703" compoundref="8259_8c" startline="104" endline="117">irqDisable</referencedby>
+        <referencedby refid="8259_8c_1a7d628ae64fdc8f3433b4930cefa8ae4a" compoundref="8259_8c" startline="75" endline="88">irqEnable</referencedby>
+        <referencedby refid="video_8c_1a5429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="58" endline="106">kprint</referencedby>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="ne2k_8c_1af6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="113" endline="160">PCtoNIC</referencedby>
+        <referencedby refid="fdc_8c_1ae708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="101" endline="112">sendByte</referencedby>
+        <referencedby refid="atkbd_8c_1a75680b4d84b721b03a3454677758a21e" compoundref="atkbd_8c" startline="336" endline="343">setLED</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="function" id="io_8c_199e868cf7689cdc2fe248505f2c5cb16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1a99e868cf7689cdc2fe248505f2c5cb16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>unsigned long</type>
         <definition>unsigned long inportDWord</definition>
         <argsstring>(unsigned int port)</argsstring>
@@ -77,24 +72,32 @@
           <declname>port</declname>
         </param>
         <briefdescription>
-<para>input one double word from specified port </para>        </briefdescription>
+<para>input one double word from specified port </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for reading </para></parameterdescription>
+<para>address of port for reading </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>returns unsigned double word value </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>returns unsigned double word value </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="134" bodyend="142"/>
-        <referencedby refid="pci_8c_109d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="182" endline="208">pciRead</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="133" column="15" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="133" bodyend="141"/>
+        <referencedby refid="lnc_8c_1ad1848f3fed3685285d6218e19bec1605" compoundref="lnc_8c" startline="89" endline="92">lnc_readBCR32</referencedby>
+        <referencedby refid="lnc_8c_1afe2d2cf61518c2dbc5abbf42cadec6b2" compoundref="lnc_8c" startline="69" endline="72">lnc_readCSR32</referencedby>
+        <referencedby refid="lnc_8c_1ab42934c99afb63e4dab3859307feeb80" compoundref="lnc_8c" startline="589" endline="591">lnc_reset32</referencedby>
+        <referencedby refid="lnc_8c_1a63b705fcc8bfad509be7dcb6bef7d821" compoundref="lnc_8c" startline="593" endline="609">lnc_switchDWord</referencedby>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
       </memberdef>
-      <memberdef kind="function" id="io_8c_1e3d5e82956e7a9c2ca5e812f532f6074" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1ae3d5e82956e7a9c2ca5e812f532f6074" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>unsigned short</type>
         <definition>unsigned short inportWord</definition>
         <argsstring>(unsigned int port)</argsstring>
@@ -104,33 +107,37 @@
           <declname>port</declname>
         </param>
         <briefdescription>
-<para>input one word from specified port </para>        </briefdescription>
+<para>input one word from specified port </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for reading </para></parameterdescription>
+<para>address of port for reading </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-<simplesect kind="return"><para>returns unsigned short value </para></simplesect>
-</para>        </detaileddescription>
+<simplesect kind="return"><para>returns unsigned short value </para>
+</simplesect>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="56" bodyend="64"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="ne2k_8c_182ba0a2f0d1c6dc1381e5c15118bb5ef" compoundref="ne2k_8c" startline="279" endline="295">getblock</referencedby>
-        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
-        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
-        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
-        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
-        <referencedby refid="ne2k_8c_145a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="164" endline="189">NICtoPC</referencedby>
-        <referencedby refid="pci_8c_109d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="182" endline="208">pciRead</referencedby>
-        <referencedby refid="lnc_8c_1d560806451deb128b0e343a0caa8995f" compoundref="lnc_8c" startline="98" endline="101">readBcr</referencedby>
-        <referencedby refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="55" column="16" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="55" bodyend="63"/>
+        <referencedby refid="hd_8c_1ab01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="221" endline="354">hdInit</referencedby>
+        <referencedby refid="hd_8c_1ac285c40dfad18aac6ae2eaa77b4a06c8" compoundref="hd_8c" startline="423" endline="488">hdRead</referencedby>
+        <referencedby refid="lnc_8c_1ac698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="231" endline="252">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_1a213face33ee64fb988be9fa980589253" compoundref="lnc_8c" startline="84" endline="87">lnc_readBCR</referencedby>
+        <referencedby refid="lnc_8c_1a752b6613ae8e3adf7c11e20bd94be152" compoundref="lnc_8c" startline="64" endline="67">lnc_readCSR</referencedby>
+        <referencedby refid="lnc_8c_1a4acfee627f5b840fa9491efcd0ef384d" compoundref="lnc_8c" startline="585" endline="587">lnc_reset</referencedby>
+        <referencedby refid="lnc_8c_1a63b705fcc8bfad509be7dcb6bef7d821" compoundref="lnc_8c" startline="593" endline="609">lnc_switchDWord</referencedby>
+        <referencedby refid="lnc_8c_1a6fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="368" endline="392">lncInt</referencedby>
+        <referencedby refid="ne2k_8c_1a45a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="162" endline="185">NICtoPC</referencedby>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
       </memberdef>
-      <memberdef kind="function" id="io_8c_1f28ebc45a7edfcfa426f4161983f857d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1af28ebc45a7edfcfa426f4161983f857d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void outportByte</definition>
         <argsstring>(unsigned int port, unsigned char value)</argsstring>
@@ -144,66 +151,55 @@
           <declname>value</declname>
         </param>
         <briefdescription>
-<para>outputut one byte to specified port </para>        </briefdescription>
+<para>outputut one byte to specified port </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for writing </para></parameterdescription>
+<para>address of port for writing </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>value</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>byte to output to port </para></parameterdescription>
+<para>byte to output to port </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-</para>        </detaileddescription>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="73" bodyend="79"/>
-        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="atkbd_8c_155bc6540b1b12c4eb0dd00877a2d68c5" compoundref="atkbd_8c" startline="203" endline="214">atkbd_scan</referencedby>
-        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
-        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
-        <referencedby refid="video_8c_19d7e8af417b6d543da691e9c0e2f6f9f" compoundref="video_8c" startline="115" endline="126">clearScreen</referencedby>
-        <referencedby refid="vmm__memory_8c_11a89fbc2f80ca828332c5ef31801faa3" compoundref="vmm__memory_8c" startline="104" endline="174">countMemory</referencedby>
-        <referencedby refid="ne2k_8c_193484a1eaa8e1b265202c6cccfed65f3" compoundref="ne2k_8c" startline="223" endline="277">dp_recv</referencedby>
-        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
-        <referencedby refid="fdc_8c_15042dfaf2327990b6d1e1a7d3e01751c" compoundref="fdc_8c" startline="98" endline="101">floppyIsrhndlr</referencedby>
-        <referencedby refid="ne2k_8c_182ba0a2f0d1c6dc1381e5c15118bb5ef" compoundref="ne2k_8c" startline="279" endline="295">getblock</referencedby>
-        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
-        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
-        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
-        <referencedby refid="8259_8c_18045101c57cc1791817412b1016794b4" compoundref="8259_8c" startline="42" endline="60">i8259_init</referencedby>
-        <referencedby refid="8259_8c_1371dc14d6686c2005baaa0be4b26ab87" compoundref="8259_8c" startline="81" endline="88">irqDisable</referencedby>
-        <referencedby refid="8259_8c_149b612db44e9e81ee7bad138264d6e32" compoundref="8259_8c" startline="67" endline="74">irqEnable</referencedby>
-        <referencedby refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" compoundref="mouse_8c" startline="59" endline="73">kbdWrite</referencedby>
-        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
-        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
-        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
-        <referencedby refid="fdc_8c_194483feb4903fca9643813faae8a76ee" compoundref="fdc_8c" startline="207" endline="212">motorOn</referencedby>
-        <referencedby refid="mouse_8c_1db1403c2c7c25ea9b2826c504f8eb502" compoundref="mouse_8c" startline="141" endline="148">mouseHandler</referencedby>
-        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
-        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
-        <referencedby refid="ne2k_8c_11e664af4b82fdc7971db793f0e9b3ebd" compoundref="ne2k_8c" startline="191" endline="221">ne2kHandler</referencedby>
-        <referencedby refid="ne2k_8c_145a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="164" endline="189">NICtoPC</referencedby>
-        <referencedby refid="pci_8c_1562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="210" endline="233">pciWrite</referencedby>
-        <referencedby refid="ne2k_8c_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</referencedby>
-        <referencedby refid="pit_8c_1d7178bcaf8f93f5c16d41305f7338951" compoundref="pit_8c" startline="64" endline="74">pit_init</referencedby>
-        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
-        <referencedby refid="fdc_8c_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</referencedby>
-        <referencedby refid="atkbd_8c_175680b4d84b721b03a3454677758a21e" compoundref="atkbd_8c" startline="321" endline="326">setLED</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
-        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
-        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
-        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="72" column="6" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="72" bodyend="78"/>
+        <referencedby refid="dma_8c_1ae136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="57" endline="69">_dmaXfer</referencedby>
+        <referencedby refid="video_8c_1a05d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="37" endline="56">backSpace</referencedby>
+        <referencedby refid="vmm__memory_8c_1a1a89fbc2f80ca828332c5ef31801faa3" compoundref="vmm__memory_8c" startline="109" endline="210">countMemory</referencedby>
+        <referencedby refid="hd_8c_1ab01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="221" endline="354">hdInit</referencedby>
+        <referencedby refid="hd_8c_1ac285c40dfad18aac6ae2eaa77b4a06c8" compoundref="hd_8c" startline="423" endline="488">hdRead</referencedby>
+        <referencedby refid="hd_8c_1a57d5cca1b1006db82038567edf6e6ac1" compoundref="hd_8c" startline="356" endline="421">hdWrite</referencedby>
+        <referencedby refid="8259_8c_1a8045101c57cc1791817412b1016794b4" compoundref="8259_8c" startline="41" endline="59">i8259_init</referencedby>
+        <referencedby refid="8259_8c_1ad53c4c3d65338bf63d4efd4da1cf7703" compoundref="8259_8c" startline="104" endline="117">irqDisable</referencedby>
+        <referencedby refid="8259_8c_1a7d628ae64fdc8f3433b4930cefa8ae4a" compoundref="8259_8c" startline="75" endline="88">irqEnable</referencedby>
+        <referencedby refid="video_8c_1a5429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="58" endline="106">kprint</referencedby>
+        <referencedby refid="lnc_8c_1a6fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="368" endline="392">lncInt</referencedby>
+        <referencedby refid="mouse_8c_1adb1403c2c7c25ea9b2826c504f8eb502" compoundref="mouse_8c" startline="131" endline="138">mouseHandler</referencedby>
+        <referencedby refid="ne2k_8c_1a45a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="162" endline="185">NICtoPC</referencedby>
+        <referencedby refid="classogDisplay__UbixOS_1aee63ac2373d79c6fadd02c84334d0dfb" compoundref="ogDisplay__UbixOS_8cc" startline="266" endline="276">ogDisplay_UbixOS::ogSetPalette</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
+        <referencedby refid="ne2k_8c_1af6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="113" endline="160">PCtoNIC</referencedby>
+        <referencedby refid="pit_8c_1ad7178bcaf8f93f5c16d41305f7338951" compoundref="pit_8c" startline="62" endline="72">pit_init</referencedby>
+        <referencedby refid="fdc_8c_1a3aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+        <referencedby refid="fdc_8c_1ae708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="101" endline="112">sendByte</referencedby>
+        <referencedby refid="atkbd_8c_1a75680b4d84b721b03a3454677758a21e" compoundref="atkbd_8c" startline="336" endline="343">setLED</referencedby>
+        <referencedby refid="classogDisplay__UbixOS_1a7efbf741bacc04a07fc4ecb7d695c54f" compoundref="ogDisplay__UbixOS_8cc" startline="211" endline="221">ogDisplay_UbixOS::SetPal</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="function" id="io_8c_1f0c1dd5717007bf73b6c5119dfe7eaf2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1af0c1dd5717007bf73b6c5119dfe7eaf2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void outportByteP</definition>
         <argsstring>(unsigned int port, unsigned char value)</argsstring>
@@ -217,31 +213,35 @@
           <declname>value</declname>
         </param>
         <briefdescription>
-<para>outputut one byte to specified port with a delay </para>        </briefdescription>
+<para>outputut one byte to specified port with a delay </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for writing </para></parameterdescription>
+<para>address of port for writing </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>value</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>byte to output to port </para></parameterdescription>
+<para>byte to output to port </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-</para>        </detaileddescription>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="88" bodyend="95"/>
-        <referencedby refid="pit_8c_1d7178bcaf8f93f5c16d41305f7338951" compoundref="pit_8c" startline="64" endline="74">pit_init</referencedby>
-        <referencedby refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" compoundref="time_8c" startline="51" endline="54">timeCmosRead</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="87" column="6" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="87" bodyend="94"/>
+        <referencedby refid="ne2k_8c_1af6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="113" endline="160">PCtoNIC</referencedby>
+        <referencedby refid="pit_8c_1ad7178bcaf8f93f5c16d41305f7338951" compoundref="pit_8c" startline="62" endline="72">pit_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="io_8c_12e2ad8d744ae4b35ea37d39dcfea1296" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1a2e2ad8d744ae4b35ea37d39dcfea1296" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void outportDWord</definition>
         <argsstring>(unsigned int port, unsigned long value)</argsstring>
@@ -255,31 +255,40 @@
           <declname>value</declname>
         </param>
         <briefdescription>
-<para>outputut one double word to specified port </para>        </briefdescription>
+<para>outputut one double word to specified port </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for writing </para></parameterdescription>
+<para>address of port for writing </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>value</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>double word to output to port </para></parameterdescription>
+<para>double word to output to port </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-</para>        </detaileddescription>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="119" bodyend="125"/>
-        <referencedby refid="pci_8c_109d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="182" endline="208">pciRead</referencedby>
-        <referencedby refid="pci_8c_1562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="210" endline="233">pciWrite</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="118" column="6" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="118" bodyend="124"/>
+        <referencedby refid="lnc_8c_1ad1848f3fed3685285d6218e19bec1605" compoundref="lnc_8c" startline="89" endline="92">lnc_readBCR32</referencedby>
+        <referencedby refid="lnc_8c_1afe2d2cf61518c2dbc5abbf42cadec6b2" compoundref="lnc_8c" startline="69" endline="72">lnc_readCSR32</referencedby>
+        <referencedby refid="lnc_8c_1a63b705fcc8bfad509be7dcb6bef7d821" compoundref="lnc_8c" startline="593" endline="609">lnc_switchDWord</referencedby>
+        <referencedby refid="lnc_8c_1abc22d59a1dab450fde08b50ef668974a" compoundref="lnc_8c" startline="79" endline="82">lnc_writeBCR32</referencedby>
+        <referencedby refid="lnc_8c_1a343a05a27f9bf30d01eda3470668e624" compoundref="lnc_8c" startline="59" endline="62">lnc_writeCSR32</referencedby>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
       </memberdef>
-      <memberdef kind="function" id="io_8c_183686182f83df195d065a6a45232e644" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="io_8c_1a83686182f83df195d065a6a45232e644" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void outportWord</definition>
         <argsstring>(unsigned int port, unsigned short value)</argsstring>
@@ -293,36 +302,39 @@
           <declname>value</declname>
         </param>
         <briefdescription>
-<para>outputut one word to specified port </para>        </briefdescription>
+<para>outputut one word to specified port </para>
+        </briefdescription>
         <detaileddescription>
 <para><parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>port</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>address of port for writing </para></parameterdescription>
+<para>address of port for writing </para>
+</parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
 <parametername>value</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>word to output to port </para></parameterdescription>
+<para>word to output to port </para>
+</parameterdescription>
 </parameteritem>
 </parameterlist>
-</para>        </detaileddescription>
+</para>
+        </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c" bodystart="104" bodyend="110"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
-        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
-        <referencedby refid="pci_8c_1562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="210" endline="233">pciWrite</referencedby>
-        <referencedby refid="ne2k_8c_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</referencedby>
-        <referencedby refid="lnc_8c_1d560806451deb128b0e343a0caa8995f" compoundref="lnc_8c" startline="98" endline="101">readBcr</referencedby>
-        <referencedby refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</referencedby>
-        <referencedby refid="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" compoundref="lnc_8c" startline="93" endline="96">writeBcr</referencedby>
-        <referencedby refid="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/sys/io.c" line="103" column="6" bodyfile="C:/Dev/git/UbixOS/sys/sys/io.c" bodystart="103" bodyend="109"/>
+        <referencedby refid="hd_8c_1a57d5cca1b1006db82038567edf6e6ac1" compoundref="hd_8c" startline="356" endline="421">hdWrite</referencedby>
+        <referencedby refid="lnc_8c_1a213face33ee64fb988be9fa980589253" compoundref="lnc_8c" startline="84" endline="87">lnc_readBCR</referencedby>
+        <referencedby refid="lnc_8c_1a752b6613ae8e3adf7c11e20bd94be152" compoundref="lnc_8c" startline="64" endline="67">lnc_readCSR</referencedby>
+        <referencedby refid="lnc_8c_1a7542af3f8b6969da5e51db96f6013efe" compoundref="lnc_8c" startline="74" endline="77">lnc_writeBCR</referencedby>
+        <referencedby refid="lnc_8c_1a7ddaf6c2816ca0adea2397a0ccbc101b" compoundref="lnc_8c" startline="54" endline="57">lnc_writeCSR</referencedby>
+        <referencedby refid="lnc_8c_1a6fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="368" endline="392">lncInt</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
+        <referencedby refid="ne2k_8c_1af6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="113" endline="160">PCtoNIC</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -330,104 +342,99 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: io_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight></codeline>
-<codeline lineno="39" refid="io_8c_1af23f1fbc404bc35bda28093de44de3c" refkind="member"><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port)<sp/>{</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>retVal;</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;inb<sp/>%%dx,%%al&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(retVal)</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port)</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(retVal);</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56" refid="io_8c_1e3d5e82956e7a9c2ca5e812f532f6074" refkind="member"><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" kindref="member">inportWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port)<sp/>{</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>retVal;</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;inw<sp/>%%dx,%%ax&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(retVal)</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port)</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(retVal);</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight></codeline>
-<codeline lineno="73" refid="io_8c_1f28ebc45a7edfcfa426f4161983f857d" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outb<sp/>%%al,%%dx&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight></codeline>
-<codeline lineno="88" refid="io_8c_1f0c1dd5717007bf73b6c5119dfe7eaf2" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8h_1f0c1dd5717007bf73b6c5119dfe7eaf2" kindref="member">outportByteP</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outb<sp/>%%al,%%dx\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outb<sp/>%%al,$0x80\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/>}<sp/><sp/></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"></highlight></codeline>
-<codeline lineno="104" refid="io_8c_183686182f83df195d065a6a45232e644" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outw<sp/>%%ax,%%dx&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"></highlight></codeline>
-<codeline lineno="119" refid="io_8c_12e2ad8d744ae4b35ea37d39dcfea1296" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8h_12e2ad8d744ae4b35ea37d39dcfea1296" kindref="member">outportDWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outl<sp/>%%eax,%%dx&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"></highlight></codeline>
-<codeline lineno="134" refid="io_8c_199e868cf7689cdc2fe248505f2c5cb16" refkind="member"><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="io_8h_18d6617406b264c7f9e143adab8406791" kindref="member">inportDWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port)<sp/>{</highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>retVal;</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;inl<sp/>%%dx,%%eax&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(retVal)</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port)</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(retVal);</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"></highlight></codeline>
-<codeline lineno="144"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="145"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="146"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="io_8c_1aaf23f1fbc404bc35bda28093de44de3c" refkind="member"><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="io_8c_1aaf23f1fbc404bc35bda28093de44de3c" kindref="member">inportByte</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port)<sp/>{</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>retVal;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;inb<sp/>%%dx,%%al&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(retVal)</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port)</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(retVal);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="io_8c_1ae3d5e82956e7a9c2ca5e812f532f6074" refkind="member"><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="io_8c_1ae3d5e82956e7a9c2ca5e812f532f6074" kindref="member">inportWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port)<sp/>{</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>retVal;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;inw<sp/>%%dx,%%ax&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(retVal)</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port)</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(retVal);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="io_8c_1af28ebc45a7edfcfa426f4161983f857d" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8c_1af28ebc45a7edfcfa426f4161983f857d" kindref="member">outportByte</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outb<sp/>%%al,%%dx&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="io_8c_1af0c1dd5717007bf73b6c5119dfe7eaf2" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8c_1af0c1dd5717007bf73b6c5119dfe7eaf2" kindref="member">outportByteP</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outb<sp/>%%al,%%dx\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outb<sp/>%%al,$0x80\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="io_8c_1a83686182f83df195d065a6a45232e644" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8c_1a83686182f83df195d065a6a45232e644" kindref="member">outportWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outw<sp/>%%ax,%%dx&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="io_8c_1a2e2ad8d744ae4b35ea37d39dcfea1296" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io_8c_1a2e2ad8d744ae4b35ea37d39dcfea1296" kindref="member">outportDWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>value)<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;outl<sp/>%%eax,%%dx&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port),<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal"><sp/>(value)</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="io_8c_1a99e868cf7689cdc2fe248505f2c5cb16" refkind="member"><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="io_8c_1a99e868cf7689cdc2fe248505f2c5cb16" kindref="member">inportDWord</ref>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>port)<sp/>{</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>retVal;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;inl<sp/>%%dx,%%eax&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;=a&quot;</highlight><highlight class="normal"><sp/>(retVal)</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;d&quot;</highlight><highlight class="normal"><sp/>(port)</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(retVal);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal">}</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/io.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/sys/io.c"/>
   </compounddef>
 </doxygen>

@@ -1,117 +1,278 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="system_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="system_8c" kind="file" language="C++">
     <compoundname>system.c</compoundname>
     <includes refid="mpi_8h" local="no">mpi/mpi.h</includes>
     <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
-    <includes refid="lib_2string_8h" local="no">lib/string.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
     <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
     <incdepgraph>
-      <node id="5798">
-        <label>sys/thread.h</label>
-        <link refid="thread_8h"/>
-        <childnode refid="5790" relation="include">
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
         </childnode>
       </node>
-      <node id="5792">
-        <label>ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="5790" relation="include">
-        </childnode>
-        <childnode refid="5793" relation="include">
-        </childnode>
-        <childnode refid="5794" relation="include">
-        </childnode>
-        <childnode refid="5797" relation="include">
-        </childnode>
-        <childnode refid="5798" relation="include">
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5801">
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
         <label>ubixos/spinlock.h</label>
         <link refid="spinlock_8h"/>
-        <childnode refid="5790" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5788">
-        <label>src/sys/mpi/system.c</label>
-        <link refid="system.c"/>
-        <childnode refid="5789" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+        <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="5799" relation="include">
+        <childnode refid="27" relation="include">
         </childnode>
-        <childnode refid="5800" relation="include">
+        <childnode refid="28" relation="include">
         </childnode>
-        <childnode refid="5801" relation="include">
+        <childnode refid="30" relation="include">
         </childnode>
-      </node>
-      <node id="5790">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5791" relation="include">
+        <childnode refid="31" relation="include">
         </childnode>
       </node>
-      <node id="5791">
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="10">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="5800">
-        <label>lib/string.h</label>
-        <link refid="lib_2string_8h"/>
-        <childnode refid="5790" relation="include">
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="5794">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="5790" relation="include">
-        </childnode>
-        <childnode refid="5795" relation="include">
-        </childnode>
-        <childnode refid="5796" relation="include">
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5797">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="5790" relation="include">
-        </childnode>
-      </node>
-      <node id="5799">
-        <label>lib/kmalloc.h</label>
-        <link refid="kmalloc_8h"/>
-        <childnode refid="5790" relation="include">
-        </childnode>
-      </node>
-      <node id="5789">
-        <label>mpi/mpi.h</label>
-        <link refid="mpi_8h"/>
-        <childnode refid="5790" relation="include">
-        </childnode>
-        <childnode refid="5792" relation="include">
-        </childnode>
-      </node>
-      <node id="5796">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="5790" relation="include">
-        </childnode>
-      </node>
-      <node id="5795">
+      <node id="12">
         <label>ubixfs/dirCache.h</label>
         <link refid="dirCache_8h"/>
-        <childnode refid="5790" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="5793">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="5790" relation="include">
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </incdepgraph>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="system_8c_1ac312330417e35a3eb23ab89de51fb03f" prot="public" static="yes" mutable="no">
+        <type><ref refid="mpi_8h_1a99197a2cb698de0f05cd0dbba8231b57" kindref="member">mpi_mbox_t</ref> *</type>
+        <definition>mpi_mbox_t* mboxList</definition>
+        <argsstring></argsstring>
+        <name>mboxList</name>
+        <initializer>= 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="36" column="19" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="system_8c_1ae9a74cb57efd25d0e4bf3ab760d33203" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structspinLock" kindref="compound">spinLock</ref></type>
+        <definition>struct spinLock mpiSpinLock</definition>
+        <argsstring></argsstring>
+        <name>mpiSpinLock</name>
+        <initializer>= <ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="36" column="19" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="system_8c_17fe5c18f6d5c29d15a74277234d18739" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="system_8c_1a7fe5c18f6d5c29d15a74277234d18739" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mpi_createMbox</definition>
         <argsstring>(char *name)</argsstring>
@@ -126,25 +287,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="69" bodyend="97"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" compoundref="system_8c" startline="35">mboxList</references>
-        <references refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" compoundref="system_8c" startline="47" endline="57">mpi_findMbox</references>
-        <references refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" compoundref="system_8c" startline="36">mpiSpinLock</references>
-        <references refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" compoundref="mpi_8h" startline="50">mpi_mbox::name</references>
-        <references refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" compoundref="mpi_8h" startline="46">mpi_mbox::next</references>
-        <references refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" compoundref="mpi_8h" startline="51">mpi_mbox::pid</references>
-        <references refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" compoundref="mpi_8h" startline="47">mpi_mbox::prev</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-        <referencedby refid="message_8c_1de5ea992c4d9e08de1701e01fdc3bffb" compoundref="message_8c" startline="32" endline="36">sysMpiCreateMbox</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
-        <referencedby refid="thread_8c_1fb3cddd76d07e866207fefe920a5f76d" compoundref="thread_8c" startline="39" endline="59">ubixfs_thread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="68" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="68" bodyend="97"/>
+        <referencedby refid="mpi__syscalls_8c_1a05dfdcd5cf13ea0da5f17ec2ff50b149" compoundref="mpi__syscalls_8c" startline="4" endline="7">sys_mpiCreateMbox</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="function" id="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="system_8c_1abde5afef3a059fc7e8f355486f80a4cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mpi_destroyMbox</definition>
         <argsstring>(char *name)</argsstring>
@@ -159,22 +306,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="234" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="234" bodyend="255"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" compoundref="system_8c" startline="35">mboxList</references>
-        <references refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" compoundref="system_8c" startline="36">mpiSpinLock</references>
-        <references refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" compoundref="mpi_8h" startline="50">mpi_mbox::name</references>
-        <references refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" compoundref="mpi_8h" startline="46">mpi_mbox::next</references>
-        <references refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" compoundref="mpi_8h" startline="51">mpi_mbox::pid</references>
-        <references refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" compoundref="mpi_8h" startline="47">mpi_mbox::prev</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
-        <referencedby refid="message_8c_18fcdfabbd961f748861095cff4888d33" compoundref="message_8c" startline="38" endline="42">sysMpiDestroyMbox</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="231" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="231" bodyend="252"/>
+        <referencedby refid="mpi__syscalls_8c_1a1d7dceb64a31fd348cab540f8adea714" compoundref="mpi__syscalls_8c" startline="9" endline="12">sys_mpiDestroyMbox</referencedby>
       </memberdef>
-      <memberdef kind="function" id="system_8c_176ba344daaa7e476f1d23c4f23f31615" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="system_8c_1a76ba344daaa7e476f1d23c4f23f31615" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mpi_fetchMessage</definition>
         <argsstring>(char *name, mpi_message_t *msg)</argsstring>
@@ -184,7 +319,7 @@
           <declname>name</declname>
         </param>
         <param>
-          <type><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref> *</type>
+          <type><ref refid="mpi_8h_1a1b45387020c48a66e8defc7a6dadb562" kindref="member">mpi_message_t</ref> *</type>
           <declname>msg</declname>
         </param>
         <briefdescription>
@@ -193,28 +328,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="189" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="189" bodyend="223"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" compoundref="mpi_8h" startline="39">mpi_message::data</references>
-        <references refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" compoundref="mpi_8h" startline="40">mpi_message::header</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="mpi_8h_1c146c3c7afc6f342ae4f476bd46d924a" compoundref="mpi_8h" startline="36">MESSAGE_LENGTH</references>
-        <references refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" compoundref="system_8c" startline="47" endline="57">mpi_findMbox</references>
-        <references refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" compoundref="system_8c" startline="36">mpiSpinLock</references>
-        <references refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" compoundref="mpi_8h" startline="48">mpi_mbox::msg</references>
-        <references refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" compoundref="mpi_8h" startline="42">mpi_message::next</references>
-        <references refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" compoundref="mpi_8h" startline="41">mpi_message::pid</references>
-        <references refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" compoundref="mpi_8h" startline="51">mpi_mbox::pid</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <referencedby refid="message_8c_158f7059c13adec6defb52da4cb7352ec" compoundref="message_8c" startline="50" endline="54">sysMpiFetchMessage</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
-        <referencedby refid="thread_8c_1fb3cddd76d07e866207fefe920a5f76d" compoundref="thread_8c" startline="39" endline="59">ubixfs_thread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="187" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="187" bodyend="221"/>
+        <referencedby refid="mpi__syscalls_8c_1a692c753823e9e36da087f20d584eeb65" compoundref="mpi__syscalls_8c" startline="14" endline="17">sys_mpiFetchMessage</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="function" id="system_8c_14c1ab97a8c5205302e9f2a588bedc730" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref> *</type>
+      <memberdef kind="function" id="system_8c_1a4c1ab97a8c5205302e9f2a588bedc730" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="mpi_8h_1a99197a2cb698de0f05cd0dbba8231b57" kindref="member">mpi_mbox_t</ref> *</type>
         <definition>static mpi_mbox_t* mpi_findMbox</definition>
         <argsstring>(char *name)</argsstring>
         <name>mpi_findMbox</name>
@@ -228,30 +347,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="47" bodyend="57"/>
-        <references refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" compoundref="system_8c" startline="35">mboxList</references>
-        <references refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" compoundref="mpi_8h" startline="50">mpi_mbox::name</references>
-        <references refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" compoundref="mpi_8h" startline="46">mpi_mbox::next</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
-        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="47" column="20" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="47" bodyend="57"/>
       </memberdef>
-      <memberdef kind="function" id="system_8c_127f6a180049b096910c4ffd8b152fbb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="system_8c_1a4dc0165654e72a26ca3d2bb25555a962" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mpi_postMessage</definition>
-        <argsstring>(char *name, uInt32 type, mpi_message_t *msg)</argsstring>
+        <argsstring>(char *name, uint32_t type, mpi_message_t *msg)</argsstring>
         <name>mpi_postMessage</name>
         <param>
           <type>char *</type>
           <declname>name</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref> *</type>
+          <type><ref refid="mpi_8h_1a1b45387020c48a66e8defc7a6dadb562" kindref="member">mpi_message_t</ref> *</type>
           <declname>msg</declname>
         </param>
         <briefdescription>
@@ -260,32 +372,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="143" bodyend="178"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" compoundref="mpi_8h" startline="39">mpi_message::data</references>
-        <references refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" compoundref="mpi_8h" startline="40">mpi_message::header</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="mpi_8h_1c146c3c7afc6f342ae4f476bd46d924a" compoundref="mpi_8h" startline="36">MESSAGE_LENGTH</references>
-        <references refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" compoundref="system_8c" startline="47" endline="57">mpi_findMbox</references>
-        <references refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" compoundref="system_8c" startline="36">mpiSpinLock</references>
-        <references refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" compoundref="mpi_8h" startline="48">mpi_mbox::msg</references>
-        <references refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" compoundref="mpi_8h" startline="49">mpi_mbox::msgLast</references>
-        <references refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" compoundref="mpi_8h" startline="42">mpi_message::next</references>
-        <references refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" compoundref="mpi_8h" startline="41">mpi_message::pid</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
-        <referencedby refid="message_8c_1c3e393b470de85c934df79a854965380" compoundref="message_8c" startline="44" endline="48">sysMpiPostMessage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="141" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="141" bodyend="177"/>
       </memberdef>
-      <memberdef kind="function" id="system_8c_1806e9deddf18f8be353745a16e8f5e85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="system_8c_1a806e9deddf18f8be353745a16e8f5e85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mpi_spam</definition>
         <argsstring>(uInt32 type, void *data)</argsstring>
         <name>mpi_spam</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
           <declname>type</declname>
         </param>
         <param>
@@ -298,60 +393,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="108" bodyend="132"/>
-        <references refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" compoundref="mpi_8h" startline="39">mpi_message::data</references>
-        <references refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" compoundref="mpi_8h" startline="40">mpi_message::header</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" compoundref="system_8c" startline="35">mboxList</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="mpi_8h_1c146c3c7afc6f342ae4f476bd46d924a" compoundref="mpi_8h" startline="36">MESSAGE_LENGTH</references>
-        <references refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" compoundref="system_8c" startline="36">mpiSpinLock</references>
-        <references refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" compoundref="mpi_8h" startline="48">mpi_mbox::msg</references>
-        <references refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" compoundref="mpi_8h" startline="49">mpi_mbox::msgLast</references>
-        <references refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" compoundref="mpi_8h" startline="42">mpi_message::next</references>
-        <references refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" compoundref="mpi_8h" startline="46">mpi_mbox::next</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <referencedby refid="message_8c_1e934ac60836d49ece65eabf48175c33c" compoundref="message_8c" startline="56" endline="60">sysMpiSpam</referencedby>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="system_8c_1c312330417e35a3eb23ab89de51fb03f" prot="public" static="yes" mutable="no">
-        <type><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref> *</type>
-        <definition>mpi_mbox_t* mboxList</definition>
-        <argsstring></argsstring>
-        <name>mboxList</name>
-        <initializer> 0x0</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="35" bodyend="-1"/>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" compoundref="system_8c" startline="47" endline="57">mpi_findMbox</referencedby>
-        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="system_8c_1204601b33f94cee6b1bca752c3088e3c" prot="public" static="yes" mutable="no">
-        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
-        <definition>spinLock_t mpiSpinLock</definition>
-        <argsstring></argsstring>
-        <name>mpiSpinLock</name>
-        <initializer> SPIN_LOCK_INITIALIZER</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c" bodystart="36" bodyend="-1"/>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
-        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
-        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/mpi/system.c" line="107" column="5" bodyfile="C:/Dev/git/UbixOS/sys/mpi/system.c" bodystart="107" bodyend="131"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -359,266 +401,269 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: system_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mpi_8h" kindref="compound">mpi/mpi.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lib_2string_8h" kindref="compound">lib/string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mpi_8h" kindref="compound">mpi/mpi.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35" refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/><sp/>*<ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="36" refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><sp/><ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="39"><highlight class="comment"></highlight></codeline>
-<codeline lineno="40"><highlight class="comment"><sp/>Function:<sp/>static<sp/>mpiMbox_t<sp/>*<sp/>mpiFindMbox(char<sp/>*name)</highlight></codeline>
-<codeline lineno="41"><highlight class="comment"></highlight></codeline>
-<codeline lineno="42"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>find<sp/>a<sp/>mail<sp/>box<sp/>that<sp/>matches<sp/>the<sp/>supplied<sp/>name</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"></highlight></codeline>
-<codeline lineno="44"><highlight class="comment"><sp/>Notes:<sp/>This<sp/>function<sp/>is<sp/>not<sp/>task-safe!<sp/><sp/>Lock<sp/>must<sp/>be<sp/>done<sp/>before<sp/>call.</highlight></codeline>
-<codeline lineno="45"><highlight class="comment"></highlight></codeline>
-<codeline lineno="46"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47" refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*<sp/><ref refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" kindref="member">mpi_findMbox</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(mbox<sp/>=<sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref>;mbox;mbox<sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(mbox-&gt;<ref refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" kindref="member">name</ref>,name))<sp/>{</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(mbox);</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mboxList<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structspinLock" kindref="compound">spinLock</ref><sp/>mpiSpinLock<sp/>=<sp/><ref refid="spinlock_8h_1a0fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"></highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>Function:<sp/>static<sp/>mpiMbox_t<sp/>*<sp/>mpiFindMbox(char<sp/>*name)</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>find<sp/>a<sp/>mail<sp/>box<sp/>that<sp/>matches<sp/>the<sp/>supplied<sp/>name</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"></highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>Notes:<sp/>This<sp/>function<sp/>is<sp/>not<sp/>task-safe!<sp/><sp/>Lock<sp/>must<sp/>be<sp/>done<sp/>before<sp/>call.</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"></highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*<sp/>mpi_findMbox(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(mbox<sp/>=<sp/>mboxList;<sp/>mbox;<sp/>mbox<sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(mbox-&gt;<ref refid="structmpi__mbox_1a1dd212ba5f9ee0acea4c50534510e0d8" kindref="member">name</ref>,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(mbox);</highlight></codeline>
 <codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="60"><highlight class="comment"></highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiCreateMbox(char<sp/>*name)</highlight></codeline>
-<codeline lineno="62"><highlight class="comment"></highlight></codeline>
-<codeline lineno="63"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>create<sp/>a<sp/>new<sp/>mailbox<sp/>if<sp/>it<sp/>fails<sp/>it<sp/>will<sp/>return<sp/>-1</highlight></codeline>
-<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>otherwise<sp/>it<sp/>returns<sp/>0x0</highlight></codeline>
-<codeline lineno="65"><highlight class="comment"></highlight></codeline>
-<codeline lineno="66"><highlight class="comment"><sp/>Notes:</highlight></codeline>
-<codeline lineno="67"><highlight class="comment"></highlight></codeline>
-<codeline lineno="68"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="69" refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi_8h_1454c70b9013b47d4e8fd0e45af331c69" kindref="member">mpi_createMbox</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" kindref="member">mpi_findMbox</ref>(name)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/>mbox<sp/>=<sp/>(<ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref>));</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(mbox-&gt;<ref refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" kindref="member">name</ref>,name);</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" kindref="member">pid</ref><sp/>=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref><sp/><sp/><sp/>=<sp/>mbox;</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref>;</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref>-&gt;<ref refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>mbox;</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>mbox;</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="100"><highlight class="comment"></highlight></codeline>
-<codeline lineno="101"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiSpam(uInt32<sp/>type,void<sp/>*data)</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"></highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiCreateMbox(char<sp/>*name)</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"></highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>create<sp/>a<sp/>new<sp/>mailbox<sp/>if<sp/>it<sp/>fails<sp/>it<sp/>will<sp/>return<sp/>-1</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>otherwise<sp/>it<sp/>returns<sp/>0x0</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"></highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="68" refid="system_8c_1a7fe5c18f6d5c29d15a74277234d18739" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="system_8c_1a7fe5c18f6d5c29d15a74277234d18739" kindref="member">mpi_createMbox</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mpi_findMbox(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>mbox<sp/>=<sp/>(<ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref>));</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(mbox-&gt;<ref refid="structmpi__mbox_1a1dd212ba5f9ee0acea4c50534510e0d8" kindref="member">name</ref>,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab9e2e323d303e4f0aa69bdb2066b92ba" kindref="member">pid</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mboxList<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>mboxList<sp/>=<sp/>mbox;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref><sp/>=<sp/>mboxList;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>mboxList-&gt;<ref refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>mbox;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>mboxList<sp/>=<sp/>mbox;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
 <codeline lineno="102"><highlight class="comment"></highlight></codeline>
-<codeline lineno="103"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>send<sp/>a<sp/>message<sp/>to<sp/>every<sp/>mailbox</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiSpam(uInt32<sp/>type,void<sp/>*data)</highlight></codeline>
 <codeline lineno="104"><highlight class="comment"></highlight></codeline>
-<codeline lineno="105"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>send<sp/>a<sp/>message<sp/>to<sp/>every<sp/>mailbox</highlight></codeline>
 <codeline lineno="106"><highlight class="comment"></highlight></codeline>
-<codeline lineno="107"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="108" refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi_8h_1ebee857d028fff3e542529c5b711e06a" kindref="member">mpi_spam</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>type,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*data)<sp/>{</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/><sp/><sp/><sp/>*mbox<sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*message<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
+<codeline lineno="107" refid="system_8c_1a806e9deddf18f8be353745a16e8f5e85" refkind="member"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="108"><highlight class="comment"></highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="system_8c_1a806e9deddf18f8be353745a16e8f5e85" kindref="member">mpi_spam</ref>(<ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>type,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*data)<sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*message<sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="113"><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(mbox<sp/>=<sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref>;mbox;mbox<sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>message<sp/>=<sp/>(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref>));</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>message-&gt;<ref refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref><sp/>=<sp/>type;</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(message-&gt;<ref refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,data,<ref refid="mpi_8h_1c146c3c7afc6f342ae4f476bd46d924a" kindref="member">MESSAGE_LENGTH</ref>);</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>message-&gt;<ref refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"></highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>message;</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref>-&gt;<ref refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>message;</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>message;</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"></highlight></codeline>
-<codeline lineno="134"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="135"><highlight class="comment"></highlight></codeline>
-<codeline lineno="136"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiPostMessage(char<sp/>*name,uInt32<sp/>type,void<sp/>*data)</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(mbox<sp/>=<sp/>mboxList;<sp/>mbox;<sp/>mbox<sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>message<sp/>=<sp/>(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref>));</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>message-&gt;<ref refid="structmpi__message_1a218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref><sp/>=<sp/>type;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(message-&gt;<ref refid="structmpi__message_1a0f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<sp/>data,<sp/><ref refid="mpi_8h_1ac146c3c7afc6f342ae4f476bd46d924a" kindref="member">MESSAGE_LENGTH</ref>);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>message-&gt;<ref refid="structmpi__message_1ab0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>=<sp/>message;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref>-&gt;<ref refid="structmpi__message_1ab0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>message;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref><sp/>=<sp/>message;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="134"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
 <codeline lineno="137"><highlight class="comment"></highlight></codeline>
-<codeline lineno="138"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>post<sp/>a<sp/>message<sp/>to<sp/>specified<sp/>mailbox</highlight></codeline>
+<codeline lineno="138"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiPostMessage(char<sp/>*name,uInt32<sp/>type,void<sp/>*data)</highlight></codeline>
 <codeline lineno="139"><highlight class="comment"></highlight></codeline>
-<codeline lineno="140"><highlight class="comment"><sp/>Notes:</highlight></codeline>
-<codeline lineno="141"><highlight class="comment"></highlight></codeline>
-<codeline lineno="142"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="143" refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi_8h_11c2c24c44767f282cddb50a9affa3f55" kindref="member">mpi_postMessage</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>type,<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*msg)<sp/>{</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/><sp/><sp/><sp/>*mbox<sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*message<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="146"><highlight class="normal"></highlight></codeline>
-<codeline lineno="147"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
+<codeline lineno="140"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>post<sp/>a<sp/>message<sp/>to<sp/>specified<sp/>mailbox</highlight></codeline>
+<codeline lineno="141" refid="system_8c_1a4dc0165654e72a26ca3d2bb25555a962" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="142"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="143"><highlight class="comment"></highlight></codeline>
+<codeline lineno="144"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="system_8c_1a4dc0165654e72a26ca3d2bb25555a962" kindref="member">mpi_postMessage</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>type,<sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*msg)<sp/>{</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*message<sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="148"><highlight class="normal"></highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><sp/><sp/>mbox<sp/>=<sp/><ref refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" kindref="member">mpi_findMbox</ref>(name);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;mpiSpinLock);</highlight></codeline>
 <codeline lineno="150"><highlight class="normal"></highlight></codeline>
-<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
-<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="155"><highlight class="normal"></highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/>message<sp/>=<sp/>(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref>));</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/>mbox<sp/>=<sp/>mpi_findMbox(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline lineno="157"><highlight class="normal"></highlight></codeline>
-<codeline lineno="158"><highlight class="normal"><sp/><sp/>message-&gt;<ref refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref><sp/>=<sp/>msg-&gt;<ref refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref>;</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(message-&gt;<ref refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,msg-&gt;<ref refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<ref refid="mpi_8h_1c146c3c7afc6f342ae4f476bd46d924a" kindref="member">MESSAGE_LENGTH</ref>);</highlight></codeline>
-<codeline lineno="160"><highlight class="normal"><sp/><sp/>message-&gt;<ref refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" kindref="member">pid</ref><sp/><sp/><sp/><sp/>=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
-<codeline lineno="161"><highlight class="normal"><sp/><sp/>message-&gt;<ref refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"></highlight></codeline>
-<codeline lineno="163"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>message;</highlight></codeline>
-<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref>-&gt;<ref refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>message;</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>message;</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="170"><highlight class="normal"></highlight></codeline>
-<codeline lineno="171"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="172"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/>0x2)<sp/>{</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1c359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref><sp/>!=<sp/>0x0);</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="177"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/>message<sp/>=<sp/>(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref>));</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/>message-&gt;<ref refid="structmpi__message_1a218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref><sp/>=<sp/>msg-&gt;<ref refid="structmpi__message_1a218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref>;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(message-&gt;<ref refid="structmpi__message_1a0f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<sp/>msg-&gt;<ref refid="structmpi__message_1a0f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<sp/><ref refid="mpi_8h_1ac146c3c7afc6f342ae4f476bd46d924a" kindref="member">MESSAGE_LENGTH</ref>);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/>message-&gt;<ref refid="structmpi__message_1aebe00f8f5a01ec8d4f56f8fab455ca8c" kindref="member">pid</ref><sp/>=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/>message-&gt;<ref refid="structmpi__message_1ab0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>=<sp/>message;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref>-&gt;<ref refid="structmpi__message_1ab0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref><sp/>=<sp/>message;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref><sp/>=<sp/>message;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(type<sp/>==<sp/>0x2)<sp/>{</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1ac359cd90f2d9d09b5340a615c6a24e98" kindref="member">msgLast</ref><sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>;</highlight></codeline>
 <codeline lineno="178"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline lineno="179"><highlight class="normal"></highlight></codeline>
-<codeline lineno="180"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="181"><highlight class="comment"></highlight></codeline>
-<codeline lineno="182"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiFetchMessage(char<sp/>*name,mpiMessage_t<sp/>*msg)</highlight></codeline>
-<codeline lineno="183"><highlight class="comment"></highlight></codeline>
-<codeline lineno="184"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>fetch<sp/>the<sp/>next<sp/>message<sp/>out<sp/>of<sp/>the<sp/>specified<sp/>mailbox</highlight></codeline>
-<codeline lineno="185"><highlight class="comment"></highlight></codeline>
-<codeline lineno="186"><highlight class="comment"><sp/>Notes:</highlight></codeline>
-<codeline lineno="187"><highlight class="comment"></highlight></codeline>
-<codeline lineno="188"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="189" refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi_8h_122e0e1e2617b3b69b2088c3fd41b7036" kindref="member">mpi_fetchMessage</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*msg)<sp/>{</highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/><sp/><sp/><sp/>*mbox<sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="191"><highlight class="normal"><sp/><sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*tmpMsg<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="192"><highlight class="normal"></highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="194"><highlight class="normal"></highlight></codeline>
-<codeline lineno="195"><highlight class="normal"><sp/><sp/>mbox<sp/>=<sp/><ref refid="system_8c_14c1ab97a8c5205302e9f2a588bedc730" kindref="member">mpi_findMbox</ref>(name);</highlight></codeline>
-<codeline lineno="196"><highlight class="normal"></highlight></codeline>
-<codeline lineno="197"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
-<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="201"><highlight class="normal"></highlight></codeline>
-<codeline lineno="202"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="206"><highlight class="normal"></highlight></codeline>
-<codeline lineno="207"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" kindref="member">pid</ref><sp/>!=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
-<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="211"><highlight class="normal"></highlight></codeline>
-<codeline lineno="212"><highlight class="normal"><sp/><sp/>msg-&gt;<ref refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref>;</highlight></codeline>
-<codeline lineno="213"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(msg-&gt;<ref refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<ref refid="mpi_8h_1c146c3c7afc6f342ae4f476bd46d924a" kindref="member">MESSAGE_LENGTH</ref>);</highlight></codeline>
-<codeline lineno="214"><highlight class="normal"><sp/><sp/>msg-&gt;<ref refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" kindref="member">pid</ref><sp/><sp/><sp/><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" kindref="member">pid</ref>;</highlight></codeline>
-<codeline lineno="215"><highlight class="normal"></highlight></codeline>
-<codeline lineno="216"><highlight class="normal"><sp/><sp/>tmpMsg<sp/><sp/><sp/><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>;</highlight></codeline>
-<codeline lineno="217"><highlight class="normal"><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1b69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="218"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="219"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(tmpMsg);</highlight></codeline>
-<codeline lineno="220"><highlight class="normal"></highlight></codeline>
-<codeline lineno="221"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="222"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="223"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="224"><highlight class="normal"></highlight></codeline>
-<codeline lineno="225"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="226"><highlight class="comment"></highlight></codeline>
-<codeline lineno="227"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiDestroyMbox(char<sp/>*name)</highlight></codeline>
-<codeline lineno="228"><highlight class="comment"></highlight></codeline>
-<codeline lineno="229"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>fetch<sp/>the<sp/>next<sp/>message<sp/>out<sp/>of<sp/>the<sp/>specified<sp/>mailbox</highlight></codeline>
-<codeline lineno="230"><highlight class="comment"></highlight></codeline>
-<codeline lineno="231"><highlight class="comment"><sp/>Notes:</highlight></codeline>
-<codeline lineno="232"><highlight class="comment"></highlight></codeline>
-<codeline lineno="233"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="234" refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mpi_8h_19b34d23f75ad6a36e1f9f62814a33547" kindref="member">mpi_destroyMbox</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="235"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/><sp/><sp/><sp/>*mbox<sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="236"><highlight class="normal"></highlight></codeline>
-<codeline lineno="237"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="238"><highlight class="normal"></highlight></codeline>
-<codeline lineno="239"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(mbox<sp/>=<sp/><ref refid="system_8c_1c312330417e35a3eb23ab89de51fb03f" kindref="member">mboxList</ref>;mbox;mbox=mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(mbox-&gt;<ref refid="structmpi__mbox_11dd212ba5f9ee0acea4c50534510e0d8" kindref="member">name</ref>,name))<sp/>{</highlight></codeline>
-<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(mbox-&gt;<ref refid="structmpi__mbox_1b9e2e323d303e4f0aa69bdb2066b92ba" kindref="member">pid</ref><sp/>!=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
-<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref>-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1d8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>-&gt;<ref refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref>;</highlight></codeline>
-<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(mbox);</highlight></codeline>
-<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="252"><highlight class="normal"></highlight></codeline>
-<codeline lineno="253"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="system_8c_1204601b33f94cee6b1bca752c3088e3c" kindref="member">mpiSpinLock</ref>);</highlight></codeline>
-<codeline lineno="254"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
-<codeline lineno="255"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="256"><highlight class="normal"></highlight></codeline>
-<codeline lineno="257"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="258"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="259"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="184"><highlight class="comment"></highlight></codeline>
+<codeline lineno="185"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiFetchMessage(char<sp/>*name,mpiMessage_t<sp/>*msg)</highlight></codeline>
+<codeline lineno="186"><highlight class="comment"></highlight></codeline>
+<codeline lineno="187" refid="system_8c_1a76ba344daaa7e476f1d23c4f23f31615" refkind="member"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>fetch<sp/>the<sp/>next<sp/>message<sp/>out<sp/>of<sp/>the<sp/>specified<sp/>mailbox</highlight></codeline>
+<codeline lineno="188"><highlight class="comment"></highlight></codeline>
+<codeline lineno="189"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="190"><highlight class="comment"></highlight></codeline>
+<codeline lineno="191"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="system_8c_1a76ba344daaa7e476f1d23c4f23f31615" kindref="member">mpi_fetchMessage</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*msg)<sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><ref refid="structmpi__message" kindref="compound">mpi_message_t</ref><sp/>*tmpMsg<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/>mbox<sp/>=<sp/>mpi_findMbox(<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1ab9e2e323d303e4f0aa69bdb2066b92ba" kindref="member">pid</ref><sp/>!=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/>msg-&gt;<ref refid="structmpi__message_1a218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1a218677ef8c9f6457e4008c20c79eed8d" kindref="member">header</ref>;</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><ref refid="string_8h_1ae33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(msg-&gt;<ref refid="structmpi__message_1a0f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1a0f190328e34c27044a954f9f088d5ca2" kindref="member">data</ref>,<sp/><ref refid="mpi_8h_1ac146c3c7afc6f342ae4f476bd46d924a" kindref="member">MESSAGE_LENGTH</ref>);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/>msg-&gt;<ref refid="structmpi__message_1aebe00f8f5a01ec8d4f56f8fab455ca8c" kindref="member">pid</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1aebe00f8f5a01ec8d4f56f8fab455ca8c" kindref="member">pid</ref>;</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/>tmpMsg<sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ab69ac18686e2132261481320dc5e57d1" kindref="member">msg</ref>-&gt;<ref refid="structmpi__message_1ab0773f30b407ced06f0b52de72b7aebb" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(tmpMsg);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="226"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="229"><highlight class="comment"></highlight></codeline>
+<codeline lineno="230"><highlight class="comment"><sp/>Function:<sp/>int<sp/>mpiDestroyMbox(char<sp/>*name)</highlight></codeline>
+<codeline lineno="231" refid="system_8c_1abde5afef3a059fc7e8f355486f80a4cd" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="232"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>fetch<sp/>the<sp/>next<sp/>message<sp/>out<sp/>of<sp/>the<sp/>specified<sp/>mailbox</highlight></codeline>
+<codeline lineno="233"><highlight class="comment"></highlight></codeline>
+<codeline lineno="234"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="235"><highlight class="comment"></highlight></codeline>
+<codeline lineno="236"><highlight class="comment"><sp/>*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="system_8c_1abde5afef3a059fc7e8f355486f80a4cd" kindref="member">mpi_destroyMbox</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><ref refid="structmpi__mbox" kindref="compound">mpi_mbox_t</ref><sp/>*mbox<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" kindref="member">spinLock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(mbox<sp/>=<sp/>mboxList;<sp/>mbox;<sp/>mbox<sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(mbox-&gt;<ref refid="structmpi__mbox_1a1dd212ba5f9ee0acea4c50534510e0d8" kindref="member">name</ref>,<sp/><ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mbox-&gt;<ref refid="structmpi__mbox_1ab9e2e323d303e4f0aa69bdb2066b92ba" kindref="member">pid</ref><sp/>!=<sp/><ref refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref>-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>mbox-&gt;<ref refid="structmpi__mbox_1ad8e3ec3d239e749dd9138875f72ead29" kindref="member">next</ref>-&gt;<ref refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref><sp/>=<sp/>mbox-&gt;<ref refid="structmpi__mbox_1a522d718a5601a2b84d451a63c3b548b7" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(mbox);</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><ref refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" kindref="member">spinUnlock</ref>(&amp;mpiSpinLock);</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(-1);</highlight></codeline>
+<codeline lineno="258"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="261"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="262"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/system.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/mpi/system.c"/>
   </compounddef>
 </doxygen>

@@ -1,189 +1,80 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="sys__call__new_8S" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="sys__call__new_8S" kind="file" language="C++">
     <compoundname>sys_call_new.S</compoundname>
-      <sectiondef kind="define">
-      <memberdef kind="define" id="sys__call__new_8S_1c5e2f6e61c60ee07f949be2525082e59" prot="public" static="no">
-        <name>FAKE_MCOUNT</name>
-        <param><defname>caller</defname></param>
-        <initializer>pushl caller ; call __mcount ; popl %ecx</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="30" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="30" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="sys__call__new_8S_1735df2a5e087b5aaa2a36581952f7866" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32</type>
-        <definition>globl _sysCall_new text code32 _sysCall_new</definition>
-        <argsstring></argsstring>
-        <name>_sysCall_new</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="sys__call__new_8S_1bf8ddf6928259c0057aa3377e79b093e" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> pushal pushl ds pushl es pushl <ref refid="structfs" kindref="compound">fs</ref> movl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl ds movl es movl <ref refid="structfs" kindref="compound">fs</ref> call syscall popl <ref refid="structfs" kindref="compound">fs</ref> popl es popl ds popal</type>
-        <definition>globl _sysCall_new text code32 esp pushal pushl ds pushl es pushl fs movl eax movl ds movl es movl fs call syscall popl fs popl es popl ds popal addl</definition>
-        <argsstring></argsstring>
-        <name>addl</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="sys__call__new_8S_1e746cb10fae7ebdc395c8d0fd6caa393" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> pushal pushl ds pushl es pushl <ref refid="structfs" kindref="compound">fs</ref> movl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl ds movl es movl</type>
-        <definition>globl _sysCall_new text code32 esp pushal pushl ds pushl es pushl fs movl eax movl ds movl es movl eax</definition>
-        <argsstring></argsstring>
-        <name>eax</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="sys__call__new_8S_16e39ba69e971c800bdfbff702d005922" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> pushal pushl ds pushl es pushl <ref refid="structfs" kindref="compound">fs</ref> movl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl ds movl</type>
-        <definition>globl _sysCall_new text code32 esp pushal pushl ds pushl es pushl fs movl eax movl ds movl eax</definition>
-        <argsstring></argsstring>
-        <name>eax</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="sys__call__new_8S_1473ea09abea6794e728e94419ed88a58" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> pushal pushl ds pushl es pushl <ref refid="structfs" kindref="compound">fs</ref> movl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl</type>
-        <definition>globl _sysCall_new text code32 esp pushal pushl ds pushl es pushl fs movl eax movl eax</definition>
-        <argsstring></argsstring>
-        <name>eax</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="sys__call__new_8S_1c0aa53448547721172ba6c04377a5a57" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> pushal pushl ds pushl es pushl <ref refid="structfs" kindref="compound">fs</ref> movl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> movl ds movl es movl <ref refid="structfs" kindref="compound">fs</ref> call syscall popl <ref refid="structfs" kindref="compound">fs</ref> popl es popl ds popal <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> iret</type>
-        <definition>globl _sysCall_new text code32 esp pushal pushl ds pushl es pushl fs movl eax movl ds movl es movl fs call syscall popl fs popl es popl ds popal esp iret invalidSysCall</definition>
-        <argsstring></argsstring>
-        <name>invalidSysCall</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="sys__call__new_8S_130b6e71edd4733436756286d0713d000" prot="public" static="no" mutable="no">
-        <type>globl _sysCall_new text code32 <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> pushal pushl ds pushl es pushl <ref refid="structfs" kindref="compound">fs</ref> movl</type>
-        <definition>globl _sysCall_new text code32 esp pushal pushl ds pushl es pushl fs movl x10</definition>
-        <argsstring></argsstring>
-        <name>x10</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S" bodystart="37" bodyend="-1"/>
-      </memberdef>
-      </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: sys__call__new_8S.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30" refid="sys__call__new_8S_1c5e2f6e61c60ee07f949be2525082e59" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FAKE_MCOUNT(caller)<sp/><sp/><sp/><sp/><sp/>pushl<sp/>caller<sp/>;<sp/>call<sp/>__mcount<sp/>;<sp/>popl<sp/>%ecx</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal">.globl<sp/><ref refid="sys__call__new_8S_1735df2a5e087b5aaa2a36581952f7866" kindref="member">_sysCall_new</ref></highlight></codeline>
-<codeline lineno="33"><highlight class="normal">.text</highlight></codeline>
-<codeline lineno="34"><highlight class="normal">.code32</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"><ref refid="sys__call__new_8S_1735df2a5e087b5aaa2a36581952f7866" kindref="member">_sysCall_new</ref>:</highlight></codeline>
-<codeline lineno="36"><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>$2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sizeof<sp/>&quot;int<sp/>0x80&quot;<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37" refid="sys__call__new_8S_130b6e71edd4733436756286d0713d000" refkind="member"><highlight class="normal"><sp/><sp/>subl<sp/><sp/><sp/><sp/>$4,%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>skip<sp/>over<sp/>tf_trapno<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"><sp/><sp/>pushal</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>%ds</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>%es</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>%<ref refid="structfs" kindref="compound">fs</ref></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>switch<sp/>to<sp/>kernel<sp/>segments<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/><sp/><sp/>$0x10,%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/><sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,%ds</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/><sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,%es</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/><sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,%<ref refid="structfs" kindref="compound">fs</ref></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//FAKE_MCOUNT(TF_EIP(%esp))</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/>call<sp/><sp/><sp/><sp/><ref refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" kindref="member">syscall</ref></highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//MEXITCOUNT</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//jmp<sp/><sp/><sp/><sp/><sp/>doreti</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/>popl<sp/><sp/><sp/><sp/>%<ref refid="structfs" kindref="compound">fs</ref></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/>popl<sp/><sp/><sp/><sp/>%es</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/>popl<sp/><sp/><sp/><sp/>%ds</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/>popal</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="sys__call__new_8S_1bf8ddf6928259c0057aa3377e79b093e" kindref="member">addl</ref><sp/><sp/><sp/><sp/>$8,%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><ref refid="sys__call__new_8S_1c0aa53448547721172ba6c04377a5a57" kindref="member">invalidSysCall</ref>:</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/>push<sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/>call<sp/><ref refid="syscall_8h_19e2ae445f23217d134a21e636a16b101" kindref="member">invalidCall</ref></highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/>pop<sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/>$-1,%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/>iret</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="66"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="67"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">/*-</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline><highlight class="normal"><sp/>*/</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">#define<sp/>FAKE_MCOUNT(caller)<sp/><sp/><sp/><sp/><sp/>pushl<sp/>caller<sp/>;<sp/>call<sp/>__mcount<sp/>;<sp/>popl<sp/>%ecx</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">.globl<sp/>_sysCall_new</highlight></codeline>
+<codeline><highlight class="normal">.text</highlight></codeline>
+<codeline><highlight class="normal">.code32</highlight></codeline>
+<codeline><highlight class="normal">_sysCall_new:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>$2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>sizeof<sp/>&quot;int<sp/>0x80&quot;<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>subl<sp/><sp/><sp/><sp/>$4,%esp<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>skip<sp/>over<sp/>tf_trapno<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushal</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>%ds</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>%es</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pushl<sp/><sp/><sp/>%fs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>/*<sp/>switch<sp/>to<sp/>kernel<sp/>segments<sp/>*/</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>movl<sp/><sp/><sp/><sp/>$0x10,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>movl<sp/><sp/><sp/><sp/>%eax,%ds</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>movl<sp/><sp/><sp/><sp/>%eax,%es</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>movl<sp/><sp/><sp/><sp/>%eax,%fs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//FAKE_MCOUNT(TF_EIP(%esp))</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>call<sp/><sp/><sp/><sp/>syscall</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//MEXITCOUNT</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>//jmp<sp/><sp/><sp/><sp/><sp/>doreti</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>popl<sp/><sp/><sp/><sp/>%fs</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>popl<sp/><sp/><sp/><sp/>%es</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>popl<sp/><sp/><sp/><sp/>%ds</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>popal</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>addl<sp/><sp/><sp/><sp/>$8,%esp</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline><highlight class="normal">invalidSysCall:</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>push<sp/>%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>call<sp/>invalidCall</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>pop<sp/>%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>movl<sp/>$-1,%eax</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/>iret</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">/***</highlight></codeline>
+<codeline><highlight class="normal"><sp/>END</highlight></codeline>
+<codeline><highlight class="normal"><sp/>***/</highlight></codeline>
+<codeline></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sys_call_new.S"/>
+    <location file="C:/Dev/git/UbixOS/sys/arch/armv6/sys_call_new.S"/>
   </compounddef>
 </doxygen>

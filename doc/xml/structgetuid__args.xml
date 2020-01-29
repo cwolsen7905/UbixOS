@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structgetuid__args" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structgetuid__args" kind="struct" language="C++" prot="public">
     <compoundname>getuid_args</compoundname>
-    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structgetuid__args_1dab9950a92eaf8ebdbd25d221d3010a1" prot="public" static="no" mutable="no">
-        <type><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref></type>
+      <memberdef kind="variable" id="structgetuid__args_1adab9950a92eaf8ebdbd25d221d3010a1" prot="public" static="no" mutable="no">
+        <type><ref refid="sysproto_8h_1abd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref></type>
         <definition>register_t getuid_args::dummy</definition>
         <argsstring></argsstring>
         <name>dummy</name>
@@ -15,16 +15,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="102" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="102" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="366" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="366" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="101" bodyend="103"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>getuid_args</label>
+        <link refid="structgetuid__args"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="365" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="365" bodyend="367"/>
     <listofallmembers>
-      <member refid="structgetuid__args_1dab9950a92eaf8ebdbd25d221d3010a1" prot="public" virt="non-virtual"><scope>getuid_args</scope><name>dummy</name></member>
+      <member refid="structgetuid__args_1adab9950a92eaf8ebdbd25d221d3010a1" prot="public" virt="non-virtual"><scope>getuid_args</scope><name>dummy</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -27,6 +27,7 @@
  */
 
 #include <sys/descrip.h>
+
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <lib/kprintf.h>
@@ -66,7 +67,7 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
 
           //td->o_files[uap->fd] = 0;
 
-          if (!fdestroy(td, fp, uap->fd))
+          if (fdestroy(td, fp, uap->fd) != 0x0)
             kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fp, td->o_files[uap->fd]);
 
           kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
@@ -92,7 +93,6 @@ int fcntl(struct thread *td, struct sys_fcntl_args *uap) {
 int sys_fcntl(struct thread *td, struct sys_fcntl_args *uap) {
   return (fcntl(td, uap));
 }
-
 
 int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 
@@ -125,6 +125,25 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 
 #include <sys/ioctl.h>
 
+/**
+ * \brief   This destroys a thread local file descriptor.
+ *
+ * \details This function will destroy the thread local file file specified as fd,
+ *          for sanity it requires the file descriptor id and memory address to check before destroying.
+ *
+ * \note    This text shall only show you, how such a \"note\" section
+ *          is looking. There is nothing which really needs your notice,
+ *          so you do not really need to read this section.
+ *
+ * \param[in] td Pointer to thread which initiated the syscall.
+ * \param[in] fp Pointer to the thread local file which you want to destroy.
+ * \param[in] fd File descriptor id that points to the thread local file which you want to destroy.
+ *
+ * \return        The error return code of the function.
+ *
+ * \retval        0    The function is successfully executed
+ * \retval        -1    An error occurred
+ */
 int fdestroy(struct thread *td, struct file *fp, int fd) {
   int error = 0;
 
@@ -337,7 +356,8 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
   else if (td->o_files[to] != 0x0) {
 
     fclose(((struct file*) td->o_files[to])->fd);
-    fdestroy(td, (struct file*) td->o_files[to], to);
+    if (fdestroy(td, (struct file*) td->o_files[to], to) != 0x0)
+      kprintf("[%s:%i] Error with fdestroy!", __FILE__, __LINE__);
   }
 
   fp = (struct file*) td->o_files[from];

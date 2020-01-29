@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structsigaction__args" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsigaction__args" kind="struct" language="C++" prot="public">
     <compoundname>sigaction_args</compoundname>
-    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sysproto_posix.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structsigaction__args_1f7994bee9dd3e398d407a1e156508c13" prot="public" static="no" mutable="no">
-        <type>sigaction *</type>
-        <definition>struct sigaction* sigaction_args::act</definition>
+      <memberdef kind="variable" id="structsigaction__args_1aff49898a647a4a992a6c3dd6215cb07d" prot="public" static="no" mutable="no">
+        <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> struct <ref refid="structsigaction" kindref="compound">sigaction</ref> *</type>
+        <definition>const struct sigaction* sigaction_args::act</definition>
         <argsstring></argsstring>
         <name>act</name>
         <briefdescription>
@@ -15,9 +15,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="128" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="428" column="27" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="428" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_15a4a1f284b1224cc0af3935a95257f91" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1a5a4a1f284b1224cc0af3935a95257f91" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sigaction_args::act_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -28,12 +28,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="128" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="427" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="427" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_1e04263ad9f217e6f8f5301e6c1f3914e" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1a715c2558389670963f0a0032156aa722" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sigaction_args::act_r_[(sizeof(register_t)&lt;=sizeof(const struct sigaction *)?0:sizeof(register_t)-sizeof(const struct sigaction *))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(const struct sigaction *)?0:sizeof(register_t)-sizeof(const struct sigaction *))]</argsstring>
+        <definition>char sigaction_args::act_r_[(sizeof(register_t)&lt;=sizeof(const struct sigaction *) ? 0 :sizeof(register_t) - sizeof(const struct sigaction *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const struct sigaction *) ? 0 :sizeof(register_t) - sizeof(const struct sigaction *))]</argsstring>
         <name>act_r_</name>
         <briefdescription>
         </briefdescription>
@@ -41,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="128" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="429" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="429" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_1713abc5f1b16ac64540b27601e6dee39" prot="public" static="no" mutable="no">
-        <type>sigaction *</type>
+      <memberdef kind="variable" id="structsigaction__args_1a713abc5f1b16ac64540b27601e6dee39" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsigaction" kindref="compound">sigaction</ref> *</type>
         <definition>struct sigaction* sigaction_args::oact</definition>
         <argsstring></argsstring>
         <name>oact</name>
@@ -54,9 +54,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="129" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="129" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="431" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="431" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_1dd3ba9fa50b310b05f062b05593d153c" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1add3ba9fa50b310b05f062b05593d153c" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sigaction_args::oact_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -67,12 +67,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="129" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="129" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="430" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="430" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_136ed75576165fb5d4ee4252b4210fef1" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1a97e2751f93784a0d2ab1b19019acdbf6" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sigaction_args::oact_r_[(sizeof(register_t)&lt;=sizeof(struct sigaction *)?0:sizeof(register_t)-sizeof(struct sigaction *))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct sigaction *)?0:sizeof(register_t)-sizeof(struct sigaction *))]</argsstring>
+        <definition>char sigaction_args::oact_r_[(sizeof(register_t)&lt;=sizeof(struct sigaction *) ? 0 :sizeof(register_t) - sizeof(struct sigaction *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct sigaction *) ? 0 :sizeof(register_t) - sizeof(struct sigaction *))]</argsstring>
         <name>oact_r_</name>
         <briefdescription>
         </briefdescription>
@@ -80,9 +80,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="129" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="129" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="432" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="432" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_142dbd06bb30b4a5543452b6dd9b830c4" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1a42dbd06bb30b4a5543452b6dd9b830c4" prot="public" static="no" mutable="no">
         <type>int</type>
         <definition>int sigaction_args::sig</definition>
         <argsstring></argsstring>
@@ -93,9 +93,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="127" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="425" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="425" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_106ae46d30337213d9d3fe79eee509fb8" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1a06ae46d30337213d9d3fe79eee509fb8" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char sigaction_args::sig_l_[0]</definition>
         <argsstring>[0]</argsstring>
@@ -106,12 +106,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="127" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="424" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="424" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsigaction__args_101ccead6735204b33cee342470cd314e" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsigaction__args_1a5ba69980e42ddb806e488d10dc01e880" prot="public" static="no" mutable="no">
         <type>char</type>
-        <definition>char sigaction_args::sig_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
-        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <definition>char sigaction_args::sig_r_[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int) ? 0 :sizeof(register_t) - sizeof(int))]</argsstring>
         <name>sig_r_</name>
         <briefdescription>
         </briefdescription>
@@ -119,24 +119,45 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="127" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="426" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="426" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="126" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="126" bodyend="130"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>sigaction_args</label>
+        <link refid="structsigaction__args"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+act</edgelabel>
+          <edgelabel>+oact</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" line="423" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/sysproto_posix.h" bodystart="423" bodyend="433"/>
     <listofallmembers>
-      <member refid="structsigaction__args_1f7994bee9dd3e398d407a1e156508c13" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>act</name></member>
-      <member refid="structsigaction__args_15a4a1f284b1224cc0af3935a95257f91" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>act_l_</name></member>
-      <member refid="structsigaction__args_1e04263ad9f217e6f8f5301e6c1f3914e" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>act_r_</name></member>
-      <member refid="structsigaction__args_1713abc5f1b16ac64540b27601e6dee39" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>oact</name></member>
-      <member refid="structsigaction__args_1dd3ba9fa50b310b05f062b05593d153c" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>oact_l_</name></member>
-      <member refid="structsigaction__args_136ed75576165fb5d4ee4252b4210fef1" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>oact_r_</name></member>
-      <member refid="structsigaction__args_142dbd06bb30b4a5543452b6dd9b830c4" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>sig</name></member>
-      <member refid="structsigaction__args_106ae46d30337213d9d3fe79eee509fb8" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>sig_l_</name></member>
-      <member refid="structsigaction__args_101ccead6735204b33cee342470cd314e" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>sig_r_</name></member>
+      <member refid="structsigaction__args_1aff49898a647a4a992a6c3dd6215cb07d" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>act</name></member>
+      <member refid="structsigaction__args_1a5a4a1f284b1224cc0af3935a95257f91" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>act_l_</name></member>
+      <member refid="structsigaction__args_1a715c2558389670963f0a0032156aa722" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>act_r_</name></member>
+      <member refid="structsigaction__args_1a713abc5f1b16ac64540b27601e6dee39" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>oact</name></member>
+      <member refid="structsigaction__args_1add3ba9fa50b310b05f062b05593d153c" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>oact_l_</name></member>
+      <member refid="structsigaction__args_1a97e2751f93784a0d2ab1b19019acdbf6" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>oact_r_</name></member>
+      <member refid="structsigaction__args_1a42dbd06bb30b4a5543452b6dd9b830c4" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>sig</name></member>
+      <member refid="structsigaction__args_1a06ae46d30337213d9d3fe79eee509fb8" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>sig_l_</name></member>
+      <member refid="structsigaction__args_1a5ba69980e42ddb806e488d10dc01e880" prot="public" virt="non-virtual"><scope>sigaction_args</scope><name>sig_r_</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

@@ -1,12 +1,97 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structtaskStruct" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structtaskStruct" kind="struct" language="C++" prot="public">
     <compoundname>taskStruct</compoundname>
     <includes refid="sched_8h" local="no">sched.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structtaskStruct_13cf9920106f9b0d96dff475faf7aa0d6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 taskStruct::gid</definition>
+      <memberdef kind="variable" id="structtaskStruct_1aad1bb2739ac10fee60034dcff753a076" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t taskStruct::children</definition>
+        <argsstring></argsstring>
+        <name>children</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="88" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="88" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a00f8b36f846969cf4eb3a5a90511a9e6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t taskStruct::counter</definition>
+        <argsstring></argsstring>
+        <name>counter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="84" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a8809ffe255164c6030ba8e3fc885d19e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t taskStruct::egid</definition>
+        <argsstring></argsstring>
+        <name>egid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="75" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="75" bodyend="-1"/>
+        <referencedby refid="access_8c_1a0e5f21be079a3e8f83618c8c6e062c5a" compoundref="access_8c" startline="76" endline="89">in_group_p</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a5978d69d1b59cc1b731c8a0bf51cf4d8" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t taskStruct::euid</definition>
+        <argsstring></argsstring>
+        <name>euid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="74" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="74" bodyend="-1"/>
+        <referencedby refid="namei_8c_1a441ab26a551f04aa4901a4b2c6b9d71a" compoundref="namei_8c" startline="52" endline="66">permission</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a9f97dde2520726b5e413fe9440a565e9" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* taskStruct::exec</definition>
+        <argsstring></argsstring>
+        <name>exec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="82" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a8900c1caf1b8c278e981464a68b0e53f" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2vfs_2file_8h_1acc7b57f2d3766b4977ebbe64aa38608b" kindref="member">fileDescriptor_t</ref> *</type>
+        <definition>fileDescriptor_t* taskStruct::files[MAX_OFILES]</definition>
+        <argsstring>[MAX_OFILES]</argsstring>
+        <name>files</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="71" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="71" bodyend="-1"/>
+        <referencedby refid="exec_8h_1a82087e9a98b3a265b5a19266d0fc5970" compoundref="i386__exec_8c" startline="148" endline="227">execThread</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1aa9363ba2e18b68870b9a7bd42a012fc3" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t taskStruct::gid</definition>
         <argsstring></argsstring>
         <name>gid</name>
         <briefdescription>
@@ -15,15 +100,32 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="63" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="gen__calls_8c_12cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="59" endline="65">getgid</referencedby>
-        <referencedby refid="syscall_8c_1e96a621ca025dd8af6bc3c8288cc0cb7" compoundref="syscall_8c" startline="142" endline="146">sysGetGid</referencedby>
-        <referencedby refid="syscall_8c_1c21d2c80c103093157c7929814b23265" compoundref="syscall_8c" startline="161" endline="172">sysSetGid</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="73" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="gen__calls_8c_1a2cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="70" endline="76">getgid</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1a4b9ea4e44afeadecbe639569ef2cc6b4" compoundref="gen__calls_8c" startline="233" endline="236">sys_getegid</referencedby>
+        <referencedby refid="access_8c_1a5375d82bafca30d9e46cd4a2f90e0b0e" compoundref="access_8c" startline="59" endline="61">sys_getGID</referencedby>
+        <referencedby refid="access_8c_1a2f790b60f547274cdc5c8381c7b8bff8" compoundref="access_8c" startline="63" endline="74">sys_setGID</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1ae96a621ca025dd8af6bc3c8288cc0cb7" compoundref="arch_2armv6_2syscall_8c" startline="137" endline="141">sysGetGid</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_1dd14a764ee7ba0830bd837b54a8cb003" prot="public" static="no" mutable="no">
-        <type><ref refid="structi387Struct" kindref="compound">i387Struct</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1acd3e1b38b3c5efef5ebe92112ae083ab" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t taskStruct::groups[32]</definition>
+        <argsstring>[32]</argsstring>
+        <name>groups</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="85" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="access_8c_1a0e5f21be079a3e8f83618c8c6e062c5a" compoundref="access_8c" startline="76" endline="89">in_group_p</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1add14a764ee7ba0830bd837b54a8cb003" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structi387Struct" kindref="compound">i387Struct</ref></type>
         <definition>struct i387Struct taskStruct::i387</definition>
         <argsstring></argsstring>
         <name>i387</name>
@@ -33,11 +135,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="59" bodyend="-1"/>
-        <referencedby refid="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="424" endline="447">mathStateRestore</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="66" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="68" bodyend="-1"/>
+        <referencedby refid="idt_8c_1a6423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="763" endline="786">mathStateRestore</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_130966587a60db6b40c8be6c387e11d81" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
         <definition>pidType taskStruct::id</definition>
         <argsstring></argsstring>
         <name>id</name>
@@ -47,73 +149,90 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="55" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
-        <referencedby refid="idt_8c_1e4129d156580fb5d485a440995d24dc2" compoundref="idt_8c" startline="197" endline="201">_int0</referencedby>
-        <referencedby refid="idt_8c_1ce97dc326d244a0766e196bba26be437" compoundref="idt_8c" startline="203" endline="207">_int1</referencedby>
-        <referencedby refid="idt_8c_1e70dab5ac99d0fef2314f9cdf41751b1" compoundref="idt_8c" startline="263" endline="267">_int10</referencedby>
-        <referencedby refid="idt_8c_17fcf84f4c51eab2ed23e415bc89ad6e5" compoundref="idt_8c" startline="269" endline="273">_int11</referencedby>
-        <referencedby refid="idt_8c_152a2ea8642cffdd21dcd42dbb9f4fcb6" compoundref="idt_8c" startline="275" endline="279">_int12</referencedby>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="idt_8c_1e8c1c195a8aae25a942c0078946da3cb" compoundref="idt_8c" startline="209" endline="213">_int2</referencedby>
-        <referencedby refid="idt_8c_1f5d44f2bc5a77196c3697d4560f5ae6a" compoundref="idt_8c" startline="215" endline="219">_int3</referencedby>
-        <referencedby refid="idt_8c_147bd8cbcfb5e3df37012c7c8dc253a71" compoundref="idt_8c" startline="221" endline="225">_int4</referencedby>
-        <referencedby refid="idt_8c_13d95bf7a1212d5078495fdae84a2f708" compoundref="idt_8c" startline="227" endline="231">_int5</referencedby>
-        <referencedby refid="idt_8c_1514bba9e7774eab1afba32c99c25cecb" compoundref="idt_8c" startline="233" endline="237">_int6</referencedby>
-        <referencedby refid="idt_8c_12444cd2a62fc14b2d7f404b0fad5bf1b" compoundref="idt_8c" startline="239" endline="255">_int8</referencedby>
-        <referencedby refid="idt_8c_1fe33101eba72b18d919a8a49af733564" compoundref="idt_8c" startline="257" endline="261">_int9</referencedby>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="endtask_8c_162d64dfdc841301f6ddfb8b79453a6c5" compoundref="endtask_8c" startline="46" endline="67">endTask</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="gen__calls_8c_14f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="41" endline="47">getpid</referencedby>
-        <referencedby refid="idt_8c_1dbf451ce0d6ecb3c485382616bee1de4" compoundref="idt_8c" startline="187" endline="195">intNull</referencedby>
-        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
-        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
-        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
-        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
-        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
-        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
-        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
-        <referencedby refid="sched_8c_118e47c4bb14b30f210b7b93c611a3782" compoundref="sched_8c" startline="175" endline="192">sched_deleteTask</referencedby>
-        <referencedby refid="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" compoundref="sched_8c" startline="69" endline="81">sched_init</referencedby>
-        <referencedby refid="sched_8c_1ddf5d772556328769f19029d068d97e3" compoundref="sched_8c" startline="241" endline="244">schedEndTask</referencedby>
-        <referencedby refid="sched_8c_19cf37ade4c1f6184b33014ac2015e8ed" compoundref="sched_8c" startline="216" endline="226">schedFindTask</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="syscall_8c_1fe946867553f08182c48bb1dac56f1ca" compoundref="syscall_8c" startline="174" endline="177">sysExit</referencedby>
-        <referencedby refid="syscall_8c_11db3bfbad534c2fa75c02646fcf80a90" compoundref="syscall_8c" startline="196" endline="204">sysGetFreePage</referencedby>
-        <referencedby refid="syscall_8c_1850d08e73e21c01850eea87fbe334fb6" compoundref="syscall_8c" startline="129" endline="134">sysGetpid</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
-        <referencedby refid="ubthread_8c_1a13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="81" endline="90">ubthread_mutex_lock</referencedby>
-        <referencedby refid="ubthread_8c_1fea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="92" endline="103">ubthread_mutex_unlock</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="63" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="63" bodyend="-1"/>
+        <referencedby refid="idt_8c_1a8a3ea6df190181b987577b14c99c6f9b" compoundref="idt_8c" startline="633" endline="637">__alignmentCheck</referencedby>
+        <referencedby refid="idt_8c_1a93a791c71216d3dd3550e193c805102f" compoundref="idt_8c" startline="285" endline="289">__debug</referencedby>
+        <referencedby refid="idt_8c_1adccd9730ac2b0fa6ef3b41cec9af2162" compoundref="idt_8c" startline="259" endline="263">__divideError</referencedby>
+        <referencedby refid="idt_8c_1a0f0ee5dbd5337bac161bd2490ad21397" compoundref="idt_8c" startline="382" endline="386">__doubleFault</referencedby>
+        <referencedby refid="idt_8c_1a867bddfec4bbeb769465d958bcbda312" compoundref="idt_8c" startline="607" endline="611">__floatingPoint</referencedby>
+        <referencedby refid="idt_8c_1ac51d829134fa5beed7f8fb62e8c297b3" compoundref="idt_8c" startline="658" endline="662">__machineCheck</referencedby>
+        <referencedby refid="idt_8c_1ae45963ae287b44ec905a7924207657e4" compoundref="idt_8c" startline="311" endline="315">__nmi</referencedby>
+        <referencedby refid="idt_8c_1ad3beb87208d6cbc992574f9e04f6f2be" compoundref="idt_8c" startline="737" endline="741">__security</referencedby>
+        <referencedby refid="idt_8c_1a8ec618b934fbea05a071a13c8f338d7e" compoundref="idt_8c" startline="684" endline="688">__simd</referencedby>
+        <referencedby refid="idt_8c_1a848a9f54eb3ac3c0046824e1a0b97eb2" compoundref="idt_8c" startline="711" endline="715">__virtualization</referencedby>
+        <referencedby refid="i386_2bioscall_8c_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="i386_2bioscall_8c" startline="40" endline="91">biosCall</referencedby>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+        <referencedby refid="gen__calls_8c_1a4f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="52" endline="58">getpid</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1aaf261b06fab146a232b1b55ab16123eb" compoundref="kernel_2syscall_8c" startline="101" endline="112">invalidCall</referencedby>
+        <referencedby refid="syscall__posix_8c_1a732bce33711189953191fb779fa98c3a" compoundref="syscall__posix_8c" startline="124" endline="135">invalidCall_posix</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="group__pbuf_1gab0dd696fb4b6bc65e548944584f1738b" compoundref="pbuf_8c" startline="715" endline="792">pbuf_free</referencedby>
+        <referencedby refid="sched_8h_1addf5d772556328769f19029d068d97e3" compoundref="armv6_2sched_8c" startline="228" endline="231">schedEndTask</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="gen__calls_8c_1ac94a3863f0a2d89003e5bdfc18baffa0" compoundref="gen__calls_8c" startline="45" endline="49">sys_exit</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1a806b59c1d474ceb991d2e61f980b82ad" compoundref="gen__calls_8c" startline="224" endline="227">sys_getpid</referencedby>
+        <referencedby refid="gen__calls_8c_1a6d945e107f5f3d710b7b571eac2784b5" compoundref="gen__calls_8c" startline="141" endline="145">sys_invalid</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a1db3bfbad534c2fa75c02646fcf80a90" compoundref="arch_2armv6_2syscall_8c" startline="188" endline="196">sysGetFreePage</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a850d08e73e21c01850eea87fbe334fb6" compoundref="arch_2armv6_2syscall_8c" startline="125" endline="129">sysGetpid</referencedby>
+        <referencedby refid="sde_8cc_1a769e7f0a3b5204fd1298d710f36cdfa6" compoundref="sde_8cc" startline="45" endline="145">sysSDE</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
+        <referencedby refid="ubthread_8c_1aa13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="88" endline="107">ubthread_mutex_lock</referencedby>
+        <referencedby refid="ubthread_8c_1afea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="109" endline="127">ubthread_mutex_unlock</referencedby>
+        <referencedby refid="pagefault_8c_1a046643b9b8c1ad9efffaaaeb5ff11431" compoundref="pagefault_8c" startline="53" endline="147">vmm_pageFault</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_17930577bf37a9eb337761a9374def70e" prot="public" static="no" mutable="no">
-        <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
-        <definition>fileDescriptor* taskStruct::imageFd</definition>
+      <memberdef kind="variable" id="structtaskStruct_1add1b9d00cb13c5c4f1c6f1302adc9023" prot="public" static="no" mutable="no">
+        <type>struct taskStruct::@20</type>
+        <definition>struct taskStruct::@20  taskStruct::inodes</definition>
         <argsstring></argsstring>
-        <name>imageFd</name>
+        <name>inodes</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="61" bodyend="-1"/>
-        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="83" column="12"/>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_124272198855555e9548c0c0350f917ea" prot="public" static="no" mutable="no">
-        <type><ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
+      <memberdef kind="variable" id="structtaskStruct_1a37bc269b3215f72572568efc6666b324" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t taskStruct::last_exit</definition>
+        <argsstring></argsstring>
+        <name>last_exit</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="89" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="89" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1a8b81e719c8b5bba5dbf58a2623937fd1" compoundref="gen__calls_8c" startline="147" endline="184">sys_wait4</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1af9287e6221da3f32c0575426e6d7c8c5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char taskStruct::name[256]</definition>
+        <argsstring>[256]</argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="64" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a24272198855555e9548c0c0350f917ea" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
         <definition>struct taskStruct* taskStruct::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -123,16 +242,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="57" bodyend="-1"/>
-        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
-        <referencedby refid="sched_8c_1ee1d1286c2a03f57a76d84682839d581" compoundref="sched_8c" startline="194" endline="201">sched_addDelTask</referencedby>
-        <referencedby refid="sched_8c_118e47c4bb14b30f210b7b93c611a3782" compoundref="sched_8c" startline="175" endline="192">sched_deleteTask</referencedby>
-        <referencedby refid="sched_8c_19608fa7a57005270e866d0a8b3a933f3" compoundref="sched_8c" startline="203" endline="212">sched_getDelTask</referencedby>
-        <referencedby refid="sched_8c_19cf37ade4c1f6184b33014ac2015e8ed" compoundref="sched_8c" startline="216" endline="226">schedFindTask</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="66" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="66" bodyend="-1"/>
+        <referencedby refid="sched_8h_1ae969273d772018d111e1f0344eb550f8" compoundref="armv6_2sched_8c" startline="186" endline="193">sched_addDelTask</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" prot="public" static="no" mutable="no">
-        <type><ref refid="structosInfo" kindref="compound">osInfo</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structosInfo" kindref="compound">osInfo</ref></type>
         <definition>struct osInfo taskStruct::oInfo</definition>
         <argsstring></argsstring>
         <name>oInfo</name>
@@ -142,22 +256,67 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="60" bodyend="-1"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="file_8c_1911a71c3e0e08149a11b2b05a50b3b97" compoundref="file_8c" startline="102" endline="109">sysChDir</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="syscall_8c_1a1858601da45332a2cd7d43bb3bcb80d" compoundref="syscall_8c" startline="228" endline="233">sysGetCwd</referencedby>
-        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
-        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="66" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="69" bodyend="-1"/>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2eb9cc767595f53b3c580cd534a0a890" compoundref="file_8c" startline="186" endline="195">sys_chdir</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a5ad4ab96ec36d0f1763b9540edaf0128" compoundref="file_8c" startline="197" endline="218">sys_fchdir</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1a96b9eebf3580117ce76158b2d53f188f" compoundref="kernel_2syscall_8c" startline="204" endline="222">sys_getcwd</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1aa1858601da45332a2cd7d43bb3bcb80d" compoundref="arch_2armv6_2syscall_8c" startline="216" endline="220">sysGetCwd</referencedby>
+        <referencedby refid="file_8c_1a81e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="576" endline="609">sysMkDir</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" prot="public" static="no" mutable="no">
-        <type><ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
+      <memberdef kind="variable" id="structtaskStruct_1a39cb96040e69ca7368014054e14ac65b" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
+        <definition>struct taskStruct* taskStruct::parent</definition>
+        <argsstring></argsstring>
+        <name>parent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="90" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="90" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1aa48ed6126ded7be4fddb44a860b16bf5" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t taskStruct::pgrp</definition>
+        <argsstring></argsstring>
+        <name>pgrp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="87" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="87" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1a60684ca6776c6a48469cd3b07e7302ac" compoundref="gen__calls_8c" startline="310" endline="313">sys_getpgrp</referencedby>
+        <referencedby refid="gen__calls_8c_1ab1d502aa002a2db41f75f375c9981afe" compoundref="gen__calls_8c" startline="315" endline="352">sys_setpgid</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1ad49b0543ec4947a98bb7bd771a93bc3b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        <definition>pidType taskStruct::ppid</definition>
+        <argsstring></argsstring>
+        <name>ppid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="86" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="86" bodyend="-1"/>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="gen__calls_8c_1a26b5c98e54c7a5e8698fba05710936df" compoundref="gen__calls_8c" startline="238" endline="241">sys_getppid</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtaskStruct" kindref="compound">taskStruct</ref> *</type>
         <definition>struct taskStruct* taskStruct::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -167,13 +326,50 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="56" bodyend="-1"/>
-        <referencedby refid="sched_8c_1ee1d1286c2a03f57a76d84682839d581" compoundref="sched_8c" startline="194" endline="201">sched_addDelTask</referencedby>
-        <referencedby refid="sched_8c_118e47c4bb14b30f210b7b93c611a3782" compoundref="sched_8c" startline="175" endline="192">sched_deleteTask</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="65" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="65" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" prot="public" static="no" mutable="no">
-        <type><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9" kindref="member">tState</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1af4443906fe46d7ba14818177943ac02f" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* taskStruct::pwd</definition>
+        <argsstring></argsstring>
+        <name>pwd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="80" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1aa3610b89866c904ca5531b91ae17c875" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structinode" kindref="compound">inode</ref> *</type>
+        <definition>struct inode* taskStruct::root</definition>
+        <argsstring></argsstring>
+        <name>root</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="81" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="81" bodyend="-1"/>
+        <referencedby refid="namei_8c_1ad77c16b56493b15a0ffa0f3aedbffb71" compoundref="namei_8c" startline="68" endline="115">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a49308eda68f73862a3c0c0a42e37c858" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t taskStruct::sgid</definition>
+        <argsstring></argsstring>
+        <name>sgid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="75" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" prot="public" static="no" mutable="no">
+        <type><ref refid="sched_8h_1a3fb333b67375561d327e9b5a8ffa03b9" kindref="member">tState</ref></type>
         <definition>tState taskStruct::state</definition>
         <argsstring></argsstring>
         <name>state</name>
@@ -183,17 +379,29 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="62" bodyend="-1"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
-        <referencedby refid="sched_8c_12cbadd034400c65dbd11fd4892ddf26e" compoundref="sched_8c" startline="281" endline="287">sched_setStatus</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
-        <referencedby refid="syscall_8c_1618ade9098959166434c56fedf05f71a" compoundref="syscall_8c" startline="179" endline="187">sysCheckPid</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="72" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="sched_8h_1a51101e12c9236ea1286477695c110482" compoundref="armv6_2sched_8c" startline="265" endline="271">sched_setStatus</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a618ade9098959166434c56fedf05f71a" compoundref="arch_2armv6_2syscall_8c" startline="173" endline="180">sysCheckPid</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" prot="public" static="no" mutable="no">
-        <type><ref refid="structthread" kindref="compound">thread</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1a5ca01dab2f99235c1d23018e8974644a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t taskStruct::suid</definition>
+        <argsstring></argsstring>
+        <name>suid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="74" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structthread" kindref="compound">thread</ref></type>
         <definition>struct thread taskStruct::td</definition>
         <argsstring></argsstring>
         <name>td</name>
@@ -203,23 +411,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="67" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
-        <referencedby refid="gen__calls_8c_12cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="59" endline="65">getgid</referencedby>
-        <referencedby refid="gen__calls_8c_14f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="41" endline="47">getpid</referencedby>
-        <referencedby refid="gen__calls_8c_15c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="50" endline="56">getuid</referencedby>
-        <referencedby refid="gen__calls_8c_1111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="108" endline="116">readlink</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
-        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="77" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="78" bodyend="-1"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="i386_2fork_8c" startline="144" endline="204">fork_copyProcess</referencedby>
+        <referencedby refid="descrip_8c_1aebab3bde2588cf74aad5b90cab9e7d30" compoundref="descrip_8c" startline="185" endline="197">fstat</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1ab47807607e76a25f1af877bff76e5cd3" compoundref="kernel_2syscall_8c" startline="43" endline="99">sys_call</referencedby>
+        <referencedby refid="syscall__posix_8c_1a36e904a79ceddf1f6e28a7959ac55b99" compoundref="syscall__posix_8c" startline="42" endline="122">sys_call_posix</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_14563a310626d4f4ea885f4532356abb3" prot="public" static="no" mutable="no">
-        <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+      <memberdef kind="variable" id="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" prot="public" static="no" mutable="no">
+        <type><ref refid="tty_8h_1ab4a376d082a021be5b9520e6c4987065" kindref="member">tty_term</ref> *</type>
         <definition>tty_term* taskStruct::term</definition>
         <argsstring></argsstring>
         <name>term</name>
@@ -229,15 +432,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="66" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="file_8c_104b3a6449e24cc27188e1f4b9a9d8225" compoundref="file_8c" startline="59" endline="86">sysFgetc</referencedby>
-        <referencedby refid="file_8c_11a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="49" endline="57">sysFwrite</referencedby>
-        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="77" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="77" bodyend="-1"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a635e457cca04f0435b1b25d0d6b987df" compoundref="file_8c" startline="76" endline="113">sys_fgetc</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="include_2vfs_2file_8h_1a6b6b8f061ddd1e9631f0858ff0d83ff0" compoundref="file_8c" startline="47" endline="62">sys_fwrite</referencedby>
+        <referencedby refid="vfs__calls_8c_1a883455624440fedf2b1af73d313e0ade" compoundref="vfs__calls_8c" startline="239" endline="291">sys_pread</referencedby>
+        <referencedby refid="vfs__calls_8c_1a7678726e58a6393050f3b26e0b9b3152" compoundref="vfs__calls_8c" startline="151" endline="237">sys_read</referencedby>
+        <referencedby refid="file_8c_1a1a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="66" endline="74">sysFwrite</referencedby>
+        <referencedby refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" compoundref="armv6_2systemtask_8c" startline="47" endline="117">systemTask</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" prot="public" static="no" mutable="no">
-        <type><ref refid="structtssStruct" kindref="compound">tssStruct</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structtssStruct" kindref="compound">tssStruct</ref></type>
         <definition>struct tssStruct taskStruct::tss</definition>
         <argsstring></argsstring>
         <name>tss</name>
@@ -247,18 +454,17 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="58" bodyend="-1"/>
-        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
-        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="66" column="21" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="67" bodyend="-1"/>
+        <referencedby refid="bioscall_8h_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_11f9e02ebf24ff1cd76fab75e4c6b0fe1" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 taskStruct::uid</definition>
+      <memberdef kind="variable" id="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t taskStruct::uid</definition>
         <argsstring></argsstring>
         <name>uid</name>
         <briefdescription>
@@ -267,16 +473,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="64" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-        <referencedby refid="gen__calls_8c_15c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="50" endline="56">getuid</referencedby>
-        <referencedby refid="syscall_8c_120b15028f242e382e441fff69880b55b" compoundref="syscall_8c" startline="136" endline="140">sysGetUid</referencedby>
-        <referencedby refid="syscall_8c_187ae7b6cdc0230fbdf65c167a776e9ad" compoundref="syscall_8c" startline="113" endline="117">sysPasswd</referencedby>
-        <referencedby refid="syscall_8c_1201b5066c18eb41f32293f2f0338264b" compoundref="syscall_8c" startline="148" endline="159">sysSetUid</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="73" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="armv6_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="armv6_2fork_8c" startline="48" endline="97">fork_copyProcess</referencedby>
+        <referencedby refid="gen__calls_8c_1a5c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="61" endline="67">getuid</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+        <referencedby refid="access_8c_1ad481d200b2b0cc6fa1ef4f50ba74b61d" compoundref="access_8c" startline="55" endline="57">sys_getEUID</referencedby>
+        <referencedby refid="gen__calls_8c_1a95814d9f34da704d5981360d98e23af9" compoundref="gen__calls_8c" startline="228" endline="231">sys_geteuid</referencedby>
+        <referencedby refid="access_8c_1a191a0476bfcb185d8d22ed931f4d975d" compoundref="access_8c" startline="51" endline="53">sys_getUID</referencedby>
+        <referencedby refid="access_8c_1a2bf535530dc717d50a761ccfb9d0e3f8" compoundref="access_8c" startline="43" endline="49">sys_setUID</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a20b15028f242e382e441fff69880b55b" compoundref="arch_2armv6_2syscall_8c" startline="131" endline="135">sysGetUid</referencedby>
+        <referencedby refid="arch_2armv6_2syscall_8c_1a87ae7b6cdc0230fbdf65c167a776e9ad" compoundref="arch_2armv6_2syscall_8c" startline="112" endline="115">sysPasswd</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structtaskStruct_1fe3af11009b07961be7296b360827669" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+      <memberdef kind="variable" id="structtaskStruct_1afe3af11009b07961be7296b360827669" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
         <definition>uInt16 taskStruct::usedMath</definition>
         <argsstring></argsstring>
         <name>usedMath</name>
@@ -286,9 +496,25 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="65" bodyend="-1"/>
-        <referencedby refid="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="424" endline="447">mathStateRestore</referencedby>
-        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="76" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="76" bodyend="-1"/>
+        <referencedby refid="idt_8c_1a6423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="763" endline="786">mathStateRestore</referencedby>
+        <referencedby refid="sched_8h_1a92458df2063761371869cdfe0c9b4ee3" compoundref="armv6_2sched_8c" startline="135" endline="165">schedNewTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtaskStruct_1ae0c0e11b4b74672335d8cdb9e157333a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char taskStruct::username[256]</definition>
+        <argsstring>[256]</argsstring>
+        <name>username</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="91" column="10" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="91" bodyend="-1"/>
+        <referencedby refid="i386_2sched_8c_1a92458df2063761371869cdfe0c9b4ee3" compoundref="i386_2sched_8c" startline="156" endline="192">schedNewTask</referencedby>
+        <referencedby refid="gen__calls_8c_1aa52846421fb6bb39fb090a155cbfbdab" compoundref="gen__calls_8c" startline="360" endline="366">sys_getlogin</referencedby>
+        <referencedby refid="gen__calls_8c_1a2c9b502d95322a6c040cf0f87f15aeba" compoundref="gen__calls_8c" startline="368" endline="374">sys_setlogin</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -296,158 +522,324 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="596">
+      <node id="13">
         <label>i387Struct</label>
         <link refid="structi387Struct"/>
       </node>
-      <node id="610">
+      <node id="12">
+        <label>ufs1_dinode</label>
+        <link refid="structufs1__dinode"/>
+      </node>
+      <node id="31">
         <label>tssStruct</label>
         <link refid="structtssStruct"/>
       </node>
-      <node id="598">
+      <node id="29">
         <label>tty_termNode</label>
         <link refid="structtty__termNode"/>
       </node>
-      <node id="606">
+      <node id="26">
         <label>device_resource</label>
         <link refid="structdevice__resource"/>
       </node>
-      <node id="605">
+      <node id="25">
         <label>device_node</label>
         <link refid="structdevice__node"/>
-        <childnode refid="606" relation="usage">
-          <edgelabel>devRec</edgelabel>
+        <childnode refid="26" relation="usage">
+          <edgelabel>+devRec</edgelabel>
         </childnode>
-        <childnode refid="607" relation="usage">
-          <edgelabel>devInfo</edgelabel>
+        <childnode refid="27" relation="usage">
+          <edgelabel>+devInfo</edgelabel>
         </childnode>
-        <childnode refid="605" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="25" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="609">
+      <node id="30">
         <label>osInfo</label>
         <link refid="structosInfo"/>
       </node>
-      <node id="600">
+      <node id="5">
+        <label>msdos_sb_info</label>
+        <link refid="structmsdos__sb__info"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+fat_wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="18">
+        <label>sigaction</label>
+        <link refid="structsigaction"/>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+sa_mask</edgelabel>
+        </childnode>
+      </node>
+      <node id="20">
         <label>cacheNode</label>
         <link refid="structcacheNode"/>
-        <childnode refid="600" relation="usage">
-          <edgelabel>prev
-next
-parent
-fileListTail
-fileListHead</edgelabel>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+fileListTail</edgelabel>
+          <edgelabel>+fileListHead</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="603">
+      <node id="3">
+        <label>msdos_inode_info</label>
+        <link refid="structmsdos__inode__info"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+i_old</edgelabel>
+          <edgelabel>+i_depend</edgelabel>
+        </childnode>
+      </node>
+      <node id="23">
         <label>ubixDiskLabel</label>
         <link refid="structubixDiskLabel"/>
-        <childnode refid="604" relation="usage">
-          <edgelabel>partitions</edgelabel>
+        <childnode refid="24" relation="usage">
+          <edgelabel>+partitions</edgelabel>
         </childnode>
       </node>
-      <node id="604">
+      <node id="2">
+        <label>inode</label>
+        <link refid="structinode"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+msdos_i</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+i_sb</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+i_prev</edgelabel>
+          <edgelabel>+i_bound_by</edgelabel>
+          <edgelabel>+i_hash_next</edgelabel>
+          <edgelabel>+i_next</edgelabel>
+          <edgelabel>+i_bound_to</edgelabel>
+          <edgelabel>+i_hash_prev</edgelabel>
+          <edgelabel>+i_mount</edgelabel>
+        </childnode>
+        <childnode refid="8" relation="usage">
+          <edgelabel>+i_sem</edgelabel>
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>+pipe_i</edgelabel>
+        </childnode>
+        <childnode refid="10" relation="usage">
+          <edgelabel>+ufs2_i</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+i_wait</edgelabel>
+        </childnode>
+        <childnode refid="11" relation="usage">
+          <edgelabel>+i_op</edgelabel>
+        </childnode>
+        <childnode refid="12" relation="usage">
+          <edgelabel>+ufs1_i</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
         <label>ubixDiskLabel::ubixPartitions</label>
         <link refid="structubixDiskLabel_1_1ubixPartitions"/>
       </node>
-      <node id="599">
-        <label>fileDescriptorStruct</label>
-        <link refid="structfileDescriptorStruct"/>
-        <childnode refid="600" relation="usage">
-          <edgelabel>cacheNode</edgelabel>
-        </childnode>
-        <childnode refid="601" relation="usage">
-          <edgelabel>dmadat</edgelabel>
-        </childnode>
-        <childnode refid="602" relation="usage">
-          <edgelabel>mp</edgelabel>
-        </childnode>
-        <childnode refid="599" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
-        </childnode>
+      <node id="7">
+        <label>super_operations</label>
+        <link refid="structsuper__operations"/>
       </node>
-      <node id="602">
+      <node id="16">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+      <node id="22">
         <label>vfs_mountPoint</label>
         <link refid="structvfs__mountPoint"/>
-        <childnode refid="603" relation="usage">
-          <edgelabel>diskLabel</edgelabel>
+        <childnode refid="23" relation="usage">
+          <edgelabel>+diskLabel</edgelabel>
         </childnode>
-        <childnode refid="605" relation="usage">
-          <edgelabel>device</edgelabel>
+        <childnode refid="25" relation="usage">
+          <edgelabel>+device</edgelabel>
         </childnode>
-        <childnode refid="608" relation="usage">
-          <edgelabel>fs</edgelabel>
+        <childnode refid="28" relation="usage">
+          <edgelabel>+fs</edgelabel>
         </childnode>
-        <childnode refid="602" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
-      <node id="595">
+      <node id="4">
+        <label>super_block</label>
+        <link refid="structsuper__block"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>+msdos_sb</edgelabel>
+        </childnode>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+s_mounted</edgelabel>
+          <edgelabel>+s_covered</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+s_wait</edgelabel>
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>+s_op</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
         <label>taskStruct</label>
         <link refid="structtaskStruct"/>
-        <childnode refid="595" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+exec</edgelabel>
+          <edgelabel>+root</edgelabel>
+          <edgelabel>+pwd</edgelabel>
         </childnode>
-        <childnode refid="596" relation="usage">
-          <edgelabel>i387</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+parent</edgelabel>
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
-        <childnode refid="597" relation="usage">
-          <edgelabel>td</edgelabel>
+        <childnode refid="13" relation="usage">
+          <edgelabel>+i387</edgelabel>
         </childnode>
-        <childnode refid="598" relation="usage">
-          <edgelabel>term</edgelabel>
+        <childnode refid="14" relation="usage">
+          <edgelabel>+td</edgelabel>
         </childnode>
-        <childnode refid="599" relation="usage">
-          <edgelabel>imageFd</edgelabel>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+files</edgelabel>
         </childnode>
-        <childnode refid="609" relation="usage">
-          <edgelabel>oInfo</edgelabel>
+        <childnode refid="29" relation="usage">
+          <edgelabel>+term</edgelabel>
         </childnode>
-        <childnode refid="610" relation="usage">
-          <edgelabel>tss</edgelabel>
+        <childnode refid="30" relation="usage">
+          <edgelabel>+oInfo</edgelabel>
+        </childnode>
+        <childnode refid="31" relation="usage">
+          <edgelabel>+tss</edgelabel>
         </childnode>
       </node>
-      <node id="607">
+      <node id="15">
+        <label>trapframe</label>
+        <link refid="structtrapframe"/>
+      </node>
+      <node id="27">
         <label>device_interface</label>
         <link refid="structdevice__interface"/>
       </node>
-      <node id="601">
+      <node id="8">
+        <label>semaphore</label>
+        <link refid="structsemaphore"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+inode</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>+cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>+dmadat</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>+mp</edgelabel>
+        </childnode>
+      </node>
+      <node id="21">
         <label>dmadat</label>
         <link refid="structdmadat"/>
       </node>
-      <node id="597">
+      <node id="9">
+        <label>pipe_inode_info</label>
+        <link refid="structpipe__inode__info"/>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+wait</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>wait_queue</label>
+        <link refid="structwait__queue"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+task</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="17">
+        <label>rlimit</label>
+        <link refid="structrlimit"/>
+      </node>
+      <node id="14">
         <label>thread</label>
         <link refid="structthread"/>
+        <childnode refid="15" relation="usage">
+          <edgelabel>+frame</edgelabel>
+        </childnode>
+        <childnode refid="16" relation="usage">
+          <edgelabel>+sigmask</edgelabel>
+        </childnode>
+        <childnode refid="17" relation="usage">
+          <edgelabel>+rlim</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>+sigact</edgelabel>
+        </childnode>
       </node>
-      <node id="608">
+      <node id="10">
+        <label>ufs2_dinode</label>
+        <link refid="structufs2__dinode"/>
+      </node>
+      <node id="11">
+        <label>inode_operations</label>
+        <link refid="structinode__operations"/>
+      </node>
+      <node id="28">
         <label>fileSystem</label>
         <link refid="structfileSystem"/>
-        <childnode refid="608" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="28" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="54" bodyend="68"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" line="62" column="25" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/sched.h" bodystart="62" bodyend="92"/>
     <listofallmembers>
-      <member refid="structtaskStruct_13cf9920106f9b0d96dff475faf7aa0d6" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>gid</name></member>
-      <member refid="structtaskStruct_1dd14a764ee7ba0830bd837b54a8cb003" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>i387</name></member>
-      <member refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>id</name></member>
-      <member refid="structtaskStruct_17930577bf37a9eb337761a9374def70e" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>imageFd</name></member>
-      <member refid="structtaskStruct_124272198855555e9548c0c0350f917ea" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>next</name></member>
-      <member refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>oInfo</name></member>
-      <member refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>prev</name></member>
-      <member refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>state</name></member>
-      <member refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>td</name></member>
-      <member refid="structtaskStruct_14563a310626d4f4ea885f4532356abb3" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>term</name></member>
-      <member refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>tss</name></member>
-      <member refid="structtaskStruct_11f9e02ebf24ff1cd76fab75e4c6b0fe1" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>uid</name></member>
-      <member refid="structtaskStruct_1fe3af11009b07961be7296b360827669" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>usedMath</name></member>
+      <member refid="structtaskStruct_1aad1bb2739ac10fee60034dcff753a076" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>children</name></member>
+      <member refid="structtaskStruct_1a00f8b36f846969cf4eb3a5a90511a9e6" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>counter</name></member>
+      <member refid="structtaskStruct_1a8809ffe255164c6030ba8e3fc885d19e" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>egid</name></member>
+      <member refid="structtaskStruct_1a5978d69d1b59cc1b731c8a0bf51cf4d8" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>euid</name></member>
+      <member refid="structtaskStruct_1a9f97dde2520726b5e413fe9440a565e9" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>exec</name></member>
+      <member refid="structtaskStruct_1a8900c1caf1b8c278e981464a68b0e53f" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>files</name></member>
+      <member refid="structtaskStruct_1aa9363ba2e18b68870b9a7bd42a012fc3" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>gid</name></member>
+      <member refid="structtaskStruct_1acd3e1b38b3c5efef5ebe92112ae083ab" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>groups</name></member>
+      <member refid="structtaskStruct_1add14a764ee7ba0830bd837b54a8cb003" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>i387</name></member>
+      <member refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>id</name></member>
+      <member refid="structtaskStruct_1add1b9d00cb13c5c4f1c6f1302adc9023" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>inodes</name></member>
+      <member refid="structtaskStruct_1a37bc269b3215f72572568efc6666b324" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>last_exit</name></member>
+      <member refid="structtaskStruct_1af9287e6221da3f32c0575426e6d7c8c5" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>name</name></member>
+      <member refid="structtaskStruct_1a24272198855555e9548c0c0350f917ea" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>next</name></member>
+      <member refid="structtaskStruct_1a0933c70230d4ac8bc9953640c979f8d7" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>oInfo</name></member>
+      <member refid="structtaskStruct_1a39cb96040e69ca7368014054e14ac65b" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>parent</name></member>
+      <member refid="structtaskStruct_1aa48ed6126ded7be4fddb44a860b16bf5" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>pgrp</name></member>
+      <member refid="structtaskStruct_1ad49b0543ec4947a98bb7bd771a93bc3b" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>ppid</name></member>
+      <member refid="structtaskStruct_1ab3f996cf31b4c69ad5cadf21eb97b312" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>prev</name></member>
+      <member refid="structtaskStruct_1af4443906fe46d7ba14818177943ac02f" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>pwd</name></member>
+      <member refid="structtaskStruct_1aa3610b89866c904ca5531b91ae17c875" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>root</name></member>
+      <member refid="structtaskStruct_1a49308eda68f73862a3c0c0a42e37c858" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>sgid</name></member>
+      <member refid="structtaskStruct_1ab085a40e09975d9ebf55b393f9549710" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>state</name></member>
+      <member refid="structtaskStruct_1a5ca01dab2f99235c1d23018e8974644a" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>suid</name></member>
+      <member refid="structtaskStruct_1a481c2e7084fec272e616d3fb984036e2" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>td</name></member>
+      <member refid="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>term</name></member>
+      <member refid="structtaskStruct_1a4c8accd7c0d5bb5ce426dc982bfc8519" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>tss</name></member>
+      <member refid="structtaskStruct_1a2d4f1664132da8b58cc4dfb25ac3509a" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>uid</name></member>
+      <member refid="structtaskStruct_1afe3af11009b07961be7296b360827669" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>usedMath</name></member>
+      <member refid="structtaskStruct_1ae0c0e11b4b74672335d8cdb9e157333a" prot="public" virt="non-virtual"><scope>taskStruct</scope><name>username</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

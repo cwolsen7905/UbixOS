@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structmemDescriptor" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structmemDescriptor" kind="struct" language="C++" prot="public">
     <compoundname>memDescriptor</compoundname>
     <includes refid="kmalloc_8h" local="no">kmalloc.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structmemDescriptor_1aa1d1c6fe6d86d782b64c1ca467250cb9" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* memDescriptor::baseAddr</definition>
         <argsstring></argsstring>
@@ -15,13 +15,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="46" bodyend="-1"/>
-        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
-        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
-        <referencedby refid="kmalloc_8c_1e86fd9a9efa965202367d84e53bc7c85" compoundref="kmalloc_8c" startline="185" endline="234">mergeMemBlocks</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="45" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="kmalloc_8c_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structmemDescriptor_1058bea66f641af082849f748d83ea065" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="variable" id="structmemDescriptor_1a058bea66f641af082849f748d83ea065" prot="public" static="no" mutable="no">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 memDescriptor::limit</definition>
         <argsstring></argsstring>
         <name>limit</name>
@@ -31,14 +29,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="47" bodyend="-1"/>
-        <referencedby refid="kmalloc_8c_1eb1c3f1ef8eb9063c2e5c4af488dd2d0" compoundref="kmalloc_8c" startline="124" endline="173">insertFreeDesc</referencedby>
-        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
-        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
-        <referencedby refid="kmalloc_8c_1e86fd9a9efa965202367d84e53bc7c85" compoundref="kmalloc_8c" startline="185" endline="234">mergeMemBlocks</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="46" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="46" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmemDescriptor_1fef7871e9eb4790c4593ddfaddcd028f" prot="public" static="no" mutable="no">
-        <type><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref> *</type>
+      <memberdef kind="variable" id="structmemDescriptor_1afef7871e9eb4790c4593ddfaddcd028f" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref> *</type>
         <definition>struct memDescriptor* memDescriptor::next</definition>
         <argsstring></argsstring>
         <name>next</name>
@@ -48,15 +42,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="45" bodyend="-1"/>
-        <referencedby refid="kmalloc_8c_1f6c4ea5cb961c72548d92ff65d7e33a4" compoundref="kmalloc_8c" startline="67" endline="110">getEmptyDesc</referencedby>
-        <referencedby refid="kmalloc_8c_1eb1c3f1ef8eb9063c2e5c4af488dd2d0" compoundref="kmalloc_8c" startline="124" endline="173">insertFreeDesc</referencedby>
-        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
-        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
-        <referencedby refid="kmalloc_8c_1e86fd9a9efa965202367d84e53bc7c85" compoundref="kmalloc_8c" startline="185" endline="234">mergeMemBlocks</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="44" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="44" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structmemDescriptor_11c3d40435fbd7093299235a8684d8b66" prot="public" static="no" mutable="no">
-        <type><ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref> *</type>
+      <memberdef kind="variable" id="structmemDescriptor_1a1c3d40435fbd7093299235a8684d8b66" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structmemDescriptor" kindref="compound">memDescriptor</ref> *</type>
         <definition>struct memDescriptor* memDescriptor::prev</definition>
         <argsstring></argsstring>
         <name>prev</name>
@@ -66,12 +55,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="44" bodyend="-1"/>
-        <referencedby refid="kmalloc_8c_1f6c4ea5cb961c72548d92ff65d7e33a4" compoundref="kmalloc_8c" startline="67" endline="110">getEmptyDesc</referencedby>
-        <referencedby refid="kmalloc_8c_1eb1c3f1ef8eb9063c2e5c4af488dd2d0" compoundref="kmalloc_8c" startline="124" endline="173">insertFreeDesc</referencedby>
-        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
-        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
-        <referencedby refid="kmalloc_8c_1e86fd9a9efa965202367d84e53bc7c85" compoundref="kmalloc_8c" startline="185" endline="234">mergeMemBlocks</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="43" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="43" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -79,21 +63,21 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="537">
+      <node id="1">
         <label>memDescriptor</label>
         <link refid="structmemDescriptor"/>
-        <childnode refid="537" relation="usage">
-          <edgelabel>prev
-next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+prev</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kmalloc.h" bodystart="43" bodyend="50"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" line="42" column="22" bodyfile="C:/Dev/git/UbixOS/sys/include/lib/kmalloc.h" bodystart="42" bodyend="49"/>
     <listofallmembers>
-      <member refid="structmemDescriptor_1a1d1c6fe6d86d782b64c1ca467250cb9" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>baseAddr</name></member>
-      <member refid="structmemDescriptor_1058bea66f641af082849f748d83ea065" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>limit</name></member>
-      <member refid="structmemDescriptor_1fef7871e9eb4790c4593ddfaddcd028f" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>next</name></member>
-      <member refid="structmemDescriptor_11c3d40435fbd7093299235a8684d8b66" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>prev</name></member>
+      <member refid="structmemDescriptor_1aa1d1c6fe6d86d782b64c1ca467250cb9" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>baseAddr</name></member>
+      <member refid="structmemDescriptor_1a058bea66f641af082849f748d83ea065" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>limit</name></member>
+      <member refid="structmemDescriptor_1afef7871e9eb4790c4593ddfaddcd028f" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>next</name></member>
+      <member refid="structmemDescriptor_1a1c3d40435fbd7093299235a8684d8b66" prot="public" virt="non-virtual"><scope>memDescriptor</scope><name>prev</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

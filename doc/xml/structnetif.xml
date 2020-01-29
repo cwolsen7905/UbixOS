@@ -1,84 +1,104 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structnetif" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structnetif" kind="struct" language="C++" prot="public">
     <compoundname>netif</compoundname>
     <includes refid="netif_8h" local="no">netif.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" prot="public" static="no" mutable="no">
-        <type><ref refid="structip__addr" kindref="compound">ip_addr</ref></type>
-        <definition>struct ip_addr netif::gw</definition>
+      <memberdef kind="variable" id="structnetif_1a1c171db6097bbb6f09f63549a66e00ea" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t netif::flags</definition>
         <argsstring></argsstring>
-        <name>gw</name>
+        <name>flags</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>flags (<simplesect kind="see"><para><ref refid="group__netif__flags" kindref="compound">Flags</ref>) </para>
+</simplesect>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="53" bodyend="-1"/>
-        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="313" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="313" bodyend="-1"/>
+        <referencedby refid="group__netif_1ga66970b5877dd6b0cae906bfa78d0cb4c" compoundref="netif_8c" startline="241" endline="338">netif_add</referencedby>
+        <referencedby refid="netif_8c_1a5532f93d68c874fb99c681bff2165385" compoundref="netif_8c" startline="203" endline="211">netif_input</referencedby>
+        <referencedby refid="group__netif_1ga9c6e541f0c184e1ea61a5cd8afe3e979" compoundref="netif_8c" startline="377" endline="462">netif_remove</referencedby>
+        <referencedby refid="group__netif_1ga641d07ed8c31fe5306bc01605a6790cf" compoundref="netif_8c" startline="682" endline="700">netif_set_down</referencedby>
+        <referencedby refid="group__netif_1ga34e37a1e8e358760dc1c43887922c7db" compoundref="netif_8c" startline="760" endline="766">netif_set_link_down</referencedby>
+        <referencedby refid="group__netif_1gae0d2975f189277990e9d5276fdd9e9ea" compoundref="netif_8c" startline="735" endline="753">netif_set_link_up</referencedby>
+        <referencedby refid="group__netif_1gaf19693be401a265a52d2a56c65753121" compoundref="netif_8c" startline="624" endline="637">netif_set_up</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_118e73df74457dd1cb02d61d24e3ba924" prot="public" static="no" mutable="no">
-        <type>char</type>
-        <definition>char netif::hwaddr[6]</definition>
-        <argsstring>[6]</argsstring>
+      <memberdef kind="variable" id="structnetif_1aee967965d999fc1a4c40a66709304e69" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t netif::hwaddr[6U]</definition>
+        <argsstring>[6U]</argsstring>
         <name>hwaddr</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>link level hardware address of this interface </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="54" bodyend="-1"/>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="311" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="311" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_16a3101eb624d17937618618a57e2e570" prot="public" static="no" mutable="no">
-        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref>(*</type>
-        <definition>err_t(*  netif::input)(struct pbuf *p, struct netif *inp)</definition>
-        <argsstring>)(struct pbuf *p, struct netif *inp)</argsstring>
+      <memberdef kind="variable" id="structnetif_1afe1181561cb16241f3cb5ed01e567d42" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t netif::hwaddr_len</definition>
+        <argsstring></argsstring>
+        <name>hwaddr_len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>number of bytes used in hwaddr </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="309" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="309" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structnetif_1a8fe4f1b7b0d710216287da9615164a5c" prot="public" static="no" mutable="no">
+        <type><ref refid="netif_8h_1ab2302b1b64ac7b95f24c6bab754a575e" kindref="member">netif_input_fn</ref></type>
+        <definition>netif_input_fn netif::input</definition>
+        <argsstring></argsstring>
         <name>input</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>This function is called by the network device driver to pass a packet up the TCP/IP stack. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="58"/>
-        <referencedby refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" compoundref="ethernetif_8c" startline="275" endline="306">ethernetif_input</referencedby>
-        <referencedby refid="loopif_8c_172717f7b688d6aea03dacce84437632c" compoundref="loopif_8c" startline="46" endline="68">loopif_output</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="252" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="252" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_1d666097c02e7d7e82ea838b0c721470d" prot="public" static="no" mutable="no">
-        <type><ref refid="structip__addr" kindref="compound">ip_addr</ref></type>
-        <definition>struct ip_addr netif::ip_addr</definition>
+      <memberdef kind="variable" id="structnetif_1acaaac9b415a7be73eb8a287c8ed18a8d" prot="public" static="no" mutable="no">
+        <type><ref refid="netif_8h_1ab75e9d808bc1b788bea84213e6a111ed" kindref="member">netif_linkoutput_fn</ref></type>
+        <definition>netif_linkoutput_fn netif::linkoutput</definition>
         <argsstring></argsstring>
-        <name>ip_addr</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="arp_8c_157a25dd51cf73f048ad5364ecc2f040b" compoundref="arp_8c" startline="197" endline="250">arp_arp_input</referencedby>
-        <referencedby refid="arp_8c_1916d08dbb8f4a38e1e904a8a018b000c" compoundref="arp_8c" startline="181" endline="194">arp_ip_input</referencedby>
-        <referencedby refid="arp_8c_19d1287b9a80c370797b2ac5c63f70e2e" compoundref="arp_8c" startline="266" endline="302">arp_query</referencedby>
-        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="structnetif_1bf9e416b29a3de59c78b141b8eed37cc" prot="public" static="no" mutable="no">
-        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref>(*</type>
-        <definition>err_t(*  netif::linkoutput)(struct netif *netif, struct pbuf *p)</definition>
-        <argsstring>)(struct netif *netif, struct pbuf *p)</argsstring>
         <name>linkoutput</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>This function is called by ethernet_output() when it wants to send a packet on the interface. This function outputs the pbuf as-is on the link medium. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="67"/>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="263" column="23" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="263" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_1a7ce979d0ec31575ecf17998b7bd9abb2" compoundref="ethernetif_8c" startline="302" endline="344">ethernetif_init</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_132fca6ffd28bb9af3f891a378827a67e" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnetif_1aca7d56b4e0f822b0ced2885f222b8d48" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga77570ac4fcab86864fa1916e55676da2" kindref="member">u16_t</ref></type>
+        <definition>u16_t netif::mtu</definition>
+        <argsstring></argsstring>
+        <name>mtu</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>maximum transfer unit (in bytes) </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="307" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="307" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structnetif_1a32fca6ffd28bb9af3f891a378827a67e" prot="public" static="no" mutable="no">
         <type>char</type>
         <definition>char netif::name[2]</definition>
         <argsstring>[2]</argsstring>
@@ -86,70 +106,49 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>descriptive abbreviation </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="63" bodyend="-1"/>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
-        <referencedby refid="loopif_8c_16a09bc9672b52ada560f16b66deb76a2" compoundref="loopif_8c" startline="71" endline="76">loopif_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="315" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="315" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_1a7ce979d0ec31575ecf17998b7bd9abb2" compoundref="ethernetif_8c" startline="302" endline="344">ethernetif_init</referencedby>
+        <referencedby refid="loopif_8c_1a6a09bc9672b52ada560f16b66deb76a2" compoundref="loopif_8c" startline="71" endline="76">loopif_init</referencedby>
+        <referencedby refid="group__netif_1ga69c93a139e8a1f6ef4e3d076a2897def" compoundref="netif_8c" startline="472" endline="493">netif_find</referencedby>
+        <referencedby refid="group__netif_1gac90f290edd005238d62aa94c4ac9dea3" compoundref="netif_8c" startline="604" endline="616">netif_set_default</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" prot="public" static="no" mutable="no">
-        <type><ref refid="structip__addr" kindref="compound">ip_addr</ref></type>
-        <definition>struct ip_addr netif::netmask</definition>
-        <argsstring></argsstring>
-        <name>netmask</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="52" bodyend="-1"/>
-        <referencedby refid="arp_8c_1916d08dbb8f4a38e1e904a8a018b000c" compoundref="arp_8c" startline="181" endline="194">arp_ip_input</referencedby>
-        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="structnetif_1e77736b64df442242795220d76be6b86" prot="public" static="no" mutable="no">
-        <type><ref refid="structnetif" kindref="compound">netif</ref> *</type>
+      <memberdef kind="variable" id="structnetif_1ae77736b64df442242795220d76be6b86" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
         <definition>struct netif* netif::next</definition>
         <argsstring></argsstring>
         <name>next</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>pointer to next in linked list </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="49" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="235" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="235" bodyend="-1"/>
+        <referencedby refid="group__netif_1ga69c93a139e8a1f6ef4e3d076a2897def" compoundref="netif_8c" startline="472" endline="493">netif_find</referencedby>
+        <referencedby refid="group__netif_1ga9c6e541f0c184e1ea61a5cd8afe3e979" compoundref="netif_8c" startline="377" endline="462">netif_remove</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_179f6bfc95928144230b3cf9a8f15029b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 netif::num</definition>
+      <memberdef kind="variable" id="structnetif_1ab7ef01e505dd2feb781fe86756b1c973" prot="public" static="no" mutable="no">
+        <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
+        <definition>u8_t netif::num</definition>
         <argsstring></argsstring>
         <name>num</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>number of this interface </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="50" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="317" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="317" bodyend="-1"/>
+        <referencedby refid="group__netif_1ga66970b5877dd6b0cae906bfa78d0cb4c" compoundref="netif_8c" startline="241" endline="338">netif_add</referencedby>
+        <referencedby refid="group__netif_1ga69c93a139e8a1f6ef4e3d076a2897def" compoundref="netif_8c" startline="472" endline="493">netif_find</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structnetif_1b180ab98b90830ed15503822405e5a23" prot="public" static="no" mutable="no">
-        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref>(*</type>
-        <definition>err_t(*  netif::output)(struct netif *netif, struct pbuf *p, struct ip_addr *ipaddr)</definition>
-        <argsstring>)(struct netif *netif, struct pbuf *p, struct ip_addr *ipaddr)</argsstring>
-        <name>output</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="66"/>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
-        <referencedby refid="loopif_8c_16a09bc9672b52ada560f16b66deb76a2" compoundref="loopif_8c" startline="71" endline="76">loopif_init</referencedby>
-      </memberdef>
-      <memberdef kind="variable" id="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structnetif_1a809cc57c0dff09c5c9ae45b02c2002f3" prot="public" static="no" mutable="no">
         <type>void *</type>
         <definition>void* netif::state</definition>
         <argsstring></argsstring>
@@ -157,51 +156,53 @@
         <briefdescription>
         </briefdescription>
         <detaileddescription>
+<para>This field can be set by the device driver and could point to state information for the device. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="71" bodyend="-1"/>
-        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
-        <referencedby refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" compoundref="ethernetif_8c" startline="275" endline="306">ethernetif_input</referencedby>
-        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
-        <referencedby refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" compoundref="ethernetif_8c" startline="81" endline="101">low_level_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="287" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="287" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_1a7ce979d0ec31575ecf17998b7bd9abb2" compoundref="ethernetif_8c" startline="302" endline="344">ethernetif_init</referencedby>
+        <referencedby refid="ethernetif_8c_1a6b594ba7163978faa6f67288054079ac" compoundref="ethernetif_8c" startline="270" endline="288">ethernetif_input</referencedby>
+        <referencedby refid="group__netif_1ga66970b5877dd6b0cae906bfa78d0cb4c" compoundref="netif_8c" startline="241" endline="338">netif_add</referencedby>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
+<para>Generic data structure used for all lwIP network interfaces. The following fields should be filled in by the initialization function for the device driver: hwaddr_len, hwaddr[], mtu, flags </para>
     </detaileddescription>
     <collaborationgraph>
-      <node id="272">
-        <label>ip_addr</label>
-        <link refid="structip__addr"/>
+      <node id="2">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+next</edgelabel>
+        </childnode>
       </node>
-      <node id="271">
+      <node id="1">
         <label>netif</label>
         <link refid="structnetif"/>
-        <childnode refid="271" relation="usage">
-          <edgelabel>next</edgelabel>
+        <childnode refid="1" relation="usage">
+          <edgelabel>+linkoutput</edgelabel>
+          <edgelabel>+next</edgelabel>
         </childnode>
-        <childnode refid="272" relation="usage">
-          <edgelabel>netmask
-ip_addr
-gw</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+input</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" bodystart="48" bodyend="72"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/netif.h" line="233" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/net/netif.h" bodystart="233" bodyend="349"/>
     <listofallmembers>
-      <member refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" prot="public" virt="non-virtual"><scope>netif</scope><name>gw</name></member>
-      <member refid="structnetif_118e73df74457dd1cb02d61d24e3ba924" prot="public" virt="non-virtual"><scope>netif</scope><name>hwaddr</name></member>
-      <member refid="structnetif_16a3101eb624d17937618618a57e2e570" prot="public" virt="non-virtual"><scope>netif</scope><name>input</name></member>
-      <member refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" prot="public" virt="non-virtual"><scope>netif</scope><name>ip_addr</name></member>
-      <member refid="structnetif_1bf9e416b29a3de59c78b141b8eed37cc" prot="public" virt="non-virtual"><scope>netif</scope><name>linkoutput</name></member>
-      <member refid="structnetif_132fca6ffd28bb9af3f891a378827a67e" prot="public" virt="non-virtual"><scope>netif</scope><name>name</name></member>
-      <member refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" prot="public" virt="non-virtual"><scope>netif</scope><name>netmask</name></member>
-      <member refid="structnetif_1e77736b64df442242795220d76be6b86" prot="public" virt="non-virtual"><scope>netif</scope><name>next</name></member>
-      <member refid="structnetif_179f6bfc95928144230b3cf9a8f15029b" prot="public" virt="non-virtual"><scope>netif</scope><name>num</name></member>
-      <member refid="structnetif_1b180ab98b90830ed15503822405e5a23" prot="public" virt="non-virtual"><scope>netif</scope><name>output</name></member>
-      <member refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" prot="public" virt="non-virtual"><scope>netif</scope><name>state</name></member>
+      <member refid="structnetif_1a1c171db6097bbb6f09f63549a66e00ea" prot="public" virt="non-virtual"><scope>netif</scope><name>flags</name></member>
+      <member refid="structnetif_1aee967965d999fc1a4c40a66709304e69" prot="public" virt="non-virtual"><scope>netif</scope><name>hwaddr</name></member>
+      <member refid="structnetif_1afe1181561cb16241f3cb5ed01e567d42" prot="public" virt="non-virtual"><scope>netif</scope><name>hwaddr_len</name></member>
+      <member refid="structnetif_1a8fe4f1b7b0d710216287da9615164a5c" prot="public" virt="non-virtual"><scope>netif</scope><name>input</name></member>
+      <member refid="structnetif_1acaaac9b415a7be73eb8a287c8ed18a8d" prot="public" virt="non-virtual"><scope>netif</scope><name>linkoutput</name></member>
+      <member refid="structnetif_1aca7d56b4e0f822b0ced2885f222b8d48" prot="public" virt="non-virtual"><scope>netif</scope><name>mtu</name></member>
+      <member refid="structnetif_1a32fca6ffd28bb9af3f891a378827a67e" prot="public" virt="non-virtual"><scope>netif</scope><name>name</name></member>
+      <member refid="structnetif_1ae77736b64df442242795220d76be6b86" prot="public" virt="non-virtual"><scope>netif</scope><name>next</name></member>
+      <member refid="structnetif_1ab7ef01e505dd2feb781fe86756b1c973" prot="public" virt="non-virtual"><scope>netif</scope><name>num</name></member>
+      <member refid="structnetif_1a809cc57c0dff09c5c9ae45b02c2002f3" prot="public" virt="non-virtual"><scope>netif</scope><name>state</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

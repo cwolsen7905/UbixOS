@@ -1,186 +1,436 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="mount_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="mount_8c" kind="file" language="C++">
     <compoundname>mount.c</compoundname>
     <includes refid="mount_8h" local="no">vfs/mount.h</includes>
     <includes refid="vitals_8h" local="no">ubixos/vitals.h</includes>
     <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
     <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
-    <includes refid="lib_2string_8h" local="no">lib/string.h</includes>
-    <includes refid="device_8h" local="no">sys/device.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="include_2sys_2device_8h" local="no">sys/device.h</includes>
     <incdepgraph>
-      <node id="6071">
-        <label>sys/thread.h</label>
-        <link refid="thread_8h"/>
-        <childnode refid="6062" relation="include">
+      <node id="24">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
         </childnode>
       </node>
-      <node id="6077">
+      <node id="37">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
+      </node>
+      <node id="38">
         <label>ubixos/kpanic.h</label>
         <link refid="kpanic_8h"/>
       </node>
-      <node id="6066">
-        <label>ubixos/sched.h</label>
-        <link refid="sched_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-        <childnode refid="6067" relation="include">
-        </childnode>
-        <childnode refid="6068" relation="include">
-        </childnode>
-        <childnode refid="6070" relation="include">
-        </childnode>
-        <childnode refid="6071" relation="include">
-        </childnode>
-      </node>
-      <node id="6064">
-        <label>ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="6065" relation="include">
-        </childnode>
-        <childnode refid="6074" relation="include">
-        </childnode>
-      </node>
-      <node id="6062">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="6063" relation="include">
-        </childnode>
-      </node>
-      <node id="6063">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="6080">
-        <label>lib/string.h</label>
-        <link refid="lib_2string_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6072">
-        <label>ubixos/time.h</label>
-        <link refid="time_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-        <childnode refid="6073" relation="include">
-        </childnode>
-      </node>
-      <node id="6068">
-        <label>vfs/file.h</label>
-        <link refid="file_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-        <childnode refid="6069" relation="include">
-        </childnode>
-        <childnode refid="6061" relation="include">
-        </childnode>
-      </node>
-      <node id="6070">
-        <label>sys/tss.h</label>
-        <link refid="tss_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6078">
-        <label>lib/kmalloc.h</label>
-        <link refid="kmalloc_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6074">
-        <label>vfs/vfs.h</label>
-        <link refid="vfs_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-        <childnode refid="6068" relation="include">
-        </childnode>
-        <childnode refid="6061" relation="include">
-        </childnode>
-        <childnode refid="6075" relation="include">
-        </childnode>
-        <childnode refid="6071" relation="include">
-        </childnode>
-      </node>
-      <node id="6061">
-        <label>vfs/mount.h</label>
-        <link refid="mount_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6079">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6065">
-        <label>ubixos/ubthread.h</label>
-        <link refid="ubthread_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-        <childnode refid="6066" relation="include">
-        </childnode>
-        <childnode refid="6072" relation="include">
-        </childnode>
-      </node>
-      <node id="6069">
-        <label>ubixfs/dirCache.h</label>
-        <link refid="dirCache_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6060">
-        <label>src/sys/vfs/mount.c</label>
-        <link refid="mount.c"/>
-        <childnode refid="6061" relation="include">
-        </childnode>
-        <childnode refid="6064" relation="include">
-        </childnode>
-        <childnode refid="6077" relation="include">
-        </childnode>
-        <childnode refid="6078" relation="include">
-        </childnode>
-        <childnode refid="6079" relation="include">
-        </childnode>
-        <childnode refid="6080" relation="include">
-        </childnode>
-        <childnode refid="6081" relation="include">
-        </childnode>
-      </node>
-      <node id="6075">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="6076" relation="include">
-        </childnode>
-        <childnode refid="6071" relation="include">
-        </childnode>
-      </node>
-      <node id="6076">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6067">
-        <label>ubixos/tty.h</label>
-        <link refid="tty_8h"/>
-        <childnode refid="6062" relation="include">
-        </childnode>
-      </node>
-      <node id="6073">
+      <node id="35">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
-      <node id="6081">
+      <node id="44">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>strings.h</label>
+        <link refid="strings_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="2">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="21">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="43">
+        <label>net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>net/priv/memp_std.h</label>
+        <link refid="memp__std_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="34">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
         <label>sys/device.h</label>
-        <link refid="device_8h"/>
-        <childnode refid="6062" relation="include">
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
         </childnode>
       </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="mount_8c_17404fbe67653dda57672539b003deecd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mount_8c_1a7404fbe67653dda57672539b003deecd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vfs_addMount</definition>
         <argsstring>(struct vfs_mountPoint *mp)</argsstring>
@@ -195,15 +445,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c" bodystart="105" bodyend="121"/>
-        <references refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" compoundref="vitals_8h" startline="46">vitalsStruct::mountPoints</references>
-        <references refid="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" compoundref="mount_8h" startline="37">vfs_mountPoint::next</references>
-        <references refid="structvfs__mountPoint_1e283964876a0043b3dd91b5596621439" compoundref="mount_8h" startline="36">vfs_mountPoint::prev</references>
-        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
-        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c" line="102" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c" bodystart="102" bodyend="118"/>
+        <references refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" compoundref="vitals_8h" startline="45">vitalsStruct::mountPoints</references>
+        <references refid="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" compoundref="mount_8h" startline="68">vfs_mountPoint::next</references>
+        <references refid="structvfs__mountPoint_1ae283964876a0043b3dd91b5596621439" compoundref="mount_8h" startline="67">vfs_mountPoint::prev</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <referencedby refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="45" endline="92">vfs_mount</referencedby>
       </memberdef>
-      <memberdef kind="function" id="mount_8c_1a8cc926aa9badb781158b6738b1b0f2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+      <memberdef kind="function" id="mount_8c_1aa8cc926aa9badb781158b6738b1b0f2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
         <definition>struct vfs_mountPoint* vfs_findMount</definition>
         <argsstring>(char *mountPoint)</argsstring>
         <name>vfs_findMount</name>
@@ -217,18 +467,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c" line="132" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c" bodystart="132" bodyend="142"/>
-        <references refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" compoundref="mount_8h" startline="43">vfs_mountPoint::mountPoint</references>
-        <references refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" compoundref="vitals_8h" startline="46">vitalsStruct::mountPoints</references>
-        <references refid="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" compoundref="mount_8h" startline="37">vfs_mountPoint::next</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
-        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
-        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
-        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
-        <referencedby refid="file_8c_1da4d877b19c34ce3137e0c35dab6e947" compoundref="file_8c" startline="480" endline="498">unlink</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c" line="128" column="21" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c" bodystart="128" bodyend="138"/>
+        <references refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" compoundref="mount_8h" startline="74">vfs_mountPoint::mountPoint</references>
+        <references refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" compoundref="vitals_8h" startline="45">vitalsStruct::mountPoints</references>
+        <references refid="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" compoundref="mount_8h" startline="68">vfs_mountPoint::next</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c">strcmp</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <referencedby refid="include_2vfs_2file_8h_1aa5a3a3f92ecea1381616825ba8646306" compoundref="file_8c" startline="388" endline="518">fopen</referencedby>
       </memberdef>
-      <memberdef kind="function" id="mount_8c_18379310fce9e1a500f602059516e25f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mount_8c_1a8379310fce9e1a500f602059516e25f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vfs_mount</definition>
         <argsstring>(int major, int minor, int partition, int vfsType, char *mountPoint, char *perms)</argsstring>
@@ -263,24 +511,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c" bodystart="47" bodyend="94"/>
-        <references refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="39">vfs_mountPoint::device</references>
-        <references refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</references>
-        <references refid="structvfs__mountPoint_1654fe61c60a0044082a7651cb2e29b8e" compoundref="mount_8h" startline="38">vfs_mountPoint::fs</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" compoundref="mount_8h" startline="43">vfs_mountPoint::mountPoint</references>
-        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
-        <references refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" compoundref="mount_8h" startline="42">vfs_mountPoint::partition</references>
-        <references refid="structvfs__mountPoint_19fc7cfceb0706b0d4aa835a6efbb1295" compoundref="mount_8h" startline="44">vfs_mountPoint::perms</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-        <references refid="mount_8h_17404fbe67653dda57672539b003deecd" compoundref="mount_8c" startline="105" endline="121">vfs_addMount</references>
-        <references refid="vfs_8c_1c49aa10a62b250834a055476c849b7b3" compoundref="vfs_8c" startline="59" endline="72">vfsFindFS</references>
-        <references refid="structfileSystem_163cc4eb02c498b7ae04d3cedba288822">fileSystem::vfsInitFS</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
-        <referencedby refid="devfs_8h_1c74c840a034d38b197e93bf883001d0d" compoundref="devfs_8c" startline="215" endline="240">devfs_init</referencedby>
-        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c" line="45" column="5" bodyfile="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c" bodystart="45" bodyend="92"/>
+        <references refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="70">vfs_mountPoint::device</references>
+        <references refid="include_2sys_2device_8h_1a0002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="82" endline="96">device_find</references>
+        <references refid="structvfs__mountPoint_1a654fe61c60a0044082a7651cb2e29b8e" compoundref="mount_8h" startline="69">vfs_mountPoint::fs</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="241" endline="331">kmalloc</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" compoundref="include_2sys_2device_8h" startline="40">device_node::minor</references>
+        <references refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" compoundref="mount_8h" startline="74">vfs_mountPoint::mountPoint</references>
+        <references refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="fat__string_8h" startline="17">NULL</references>
+        <references refid="structvfs__mountPoint_1a26cf95c23f79647d61dc6396bbeb94a6" compoundref="mount_8h" startline="73">vfs_mountPoint::partition</references>
+        <references refid="structvfs__mountPoint_1a9fc7cfceb0706b0d4aa835a6efbb1295" compoundref="mount_8h" startline="75">vfs_mountPoint::perms</references>
+        <references refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="278" endline="286">sprintf</references>
+        <references refid="mount_8c_1a7404fbe67653dda57672539b003deecd" compoundref="mount_8c" startline="102" endline="118">vfs_addMount</references>
+        <references refid="vfs_8c_1ac49aa10a62b250834a055476c849b7b3" compoundref="vfs_8c" startline="57" endline="70">vfsFindFS</references>
+        <references refid="structfileSystem_1a1a162bc57655bb47dbbdc2e1285f08e5" compoundref="include_2vfs_2vfs_8h" startline="62">fileSystem::vfsInitFS</references>
+        <references refid="structfileSystem_1aa1b7987f710ba203dffb15590ff58ce0" compoundref="include_2vfs_2vfs_8h" startline="70">fileSystem::vfsType</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -288,154 +535,153 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: mount_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lib_2string_8h" kindref="compound">lib/string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
-<codeline lineno="39"><highlight class="comment"></highlight></codeline>
-<codeline lineno="40"><highlight class="comment">Function:<sp/>mount(int<sp/>driveId,int<sp/>partition,int<sp/>fsType,char<sp/>*mountPoint,char<sp/>*perms)</highlight></codeline>
-<codeline lineno="41"><highlight class="comment"></highlight></codeline>
-<codeline lineno="42"><highlight class="comment">Description:<sp/>mount<sp/>adds<sp/>a<sp/>mount<sp/>point<sp/>and<sp/>returns<sp/>0<sp/>if<sp/>successful<sp/>1<sp/>if<sp/>it<sp/>fails</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"></highlight></codeline>
-<codeline lineno="44"><highlight class="comment">Notes:</highlight></codeline>
-<codeline lineno="45"><highlight class="comment"></highlight></codeline>
-<codeline lineno="46"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47" refid="mount_8c_18379310fce9e1a500f602059516e25f0" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mount_8h_11255ebfdcd5f7048ffe187e836f8eb28" kindref="member">vfs_mount</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>major,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>minor,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>vfsType,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref>,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structvfs__mountPoint_19fc7cfceb0706b0d4aa835a6efbb1295" kindref="member">perms</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*mp<sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/><sp/>*<ref refid="structdevice" kindref="compound">device</ref><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>Memory<sp/>For<sp/>Mount<sp/>Point<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((mp<sp/>=<sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>vfs_mountPoint)))<sp/>==<sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;vfs_mount:<sp/>failed<sp/>to<sp/>allocate<sp/>mp\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Copy<sp/>Mount<sp/>Point<sp/>Into<sp/>Buffer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(mp-&gt;<ref refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref>,mountPoint);</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Pointer<sp/>To<sp/>Physical<sp/>Drive<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/>device<sp/>=<sp/><ref refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(major,minor);</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"></highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Up<sp/>Mp<sp/>Defaults<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" kindref="member">device</ref><sp/><sp/><sp/><sp/>=<sp/>device;</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1654fe61c60a0044082a7651cb2e29b8e" kindref="member">fs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="vfs_8c_1c49aa10a62b250834a055476c849b7b3" kindref="member">vfsFindFS</ref>(vfsType);</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref><sp/>=<sp/>partition;</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_19fc7cfceb0706b0d4aa835a6efbb1295" kindref="member">perms</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>*perms;</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mp-&gt;<ref refid="structvfs__mountPoint_1654fe61c60a0044082a7651cb2e29b8e" kindref="member">fs</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sysErr(systemErr,&quot;File<sp/>System<sp/>Type:<sp/>%i<sp/>Not<sp/>Found\n&quot;,fsType);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;File<sp/>System<sp/>Type:<sp/>%i<sp/>Not<sp/>Found\n&quot;</highlight><highlight class="normal">,vfsType);</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*What<sp/>is<sp/>this<sp/>for?<sp/>10/6/2006<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="74"><highlight class="comment"><sp/><sp/>if<sp/>(device<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="75"><highlight class="comment"><sp/><sp/><sp/><sp/>mp-&gt;diskLabel<sp/>=<sp/>(struct<sp/>ubixDiskLabel<sp/>*)kmalloc(512);</highlight></codeline>
-<codeline lineno="76"><highlight class="comment"><sp/><sp/><sp/><sp/>mp-&gt;device-&gt;devInfo-&gt;read(mp-&gt;device-&gt;devInfo-&gt;info,mp-&gt;diskLabel,1,1);</highlight></codeline>
-<codeline lineno="77"><highlight class="comment"><sp/><sp/><sp/><sp/>kprintf(&quot;READING<sp/>SECTOR&quot;);</highlight></codeline>
-<codeline lineno="78"><highlight class="comment"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="79"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Add<sp/>Mountpoint<sp/>If<sp/>It<sp/>Fails<sp/>Free<sp/>And<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="mount_8h_17404fbe67653dda57672539b003deecd" kindref="member">vfs_addMount</ref>(mp)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(mp);</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Initialize<sp/>The<sp/>File<sp/>System<sp/>If<sp/>It<sp/>Fails<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mp-&gt;<ref refid="structvfs__mountPoint_1654fe61c60a0044082a7651cb2e29b8e" kindref="member">fs</ref>-&gt;<ref refid="structfileSystem_163cc4eb02c498b7ae04d3cedba288822" kindref="member">vfsInitFS</ref>(mp)<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(mp);</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
-<codeline lineno="97"><highlight class="comment"></highlight></codeline>
-<codeline lineno="98"><highlight class="comment">Function:<sp/>vfs_addMount(struct<sp/>vfs_mountPoint<sp/>*mp)</highlight></codeline>
-<codeline lineno="99"><highlight class="comment"></highlight></codeline>
-<codeline lineno="100"><highlight class="comment">Description:<sp/>This<sp/>function<sp/>adds<sp/>a<sp/>mount<sp/>point<sp/>to<sp/>the<sp/>system</highlight></codeline>
-<codeline lineno="101"><highlight class="comment"></highlight></codeline>
-<codeline lineno="102"><highlight class="comment">Notes:</highlight></codeline>
-<codeline lineno="103"><highlight class="comment"></highlight></codeline>
-<codeline lineno="104"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="105" refid="mount_8c_17404fbe67653dda57672539b003deecd" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mount_8h_17404fbe67653dda57672539b003deecd" kindref="member">vfs_addMount</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/><sp/>*mp)<sp/>{</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>If<sp/>There<sp/>Are<sp/>No<sp/>Existing<sp/>Mounts<sp/>Make<sp/>It<sp/>The<sp/>First<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1e283964876a0043b3dd91b5596621439" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" kindref="member">next</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref><sp/>=<sp/>mp;</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" kindref="member">next</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref>;</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref>-&gt;<ref refid="structvfs__mountPoint_1e283964876a0043b3dd91b5596621439" kindref="member">prev</ref><sp/>=<sp/>mp;</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1e283964876a0043b3dd91b5596621439" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>mp;</highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"></highlight></codeline>
-<codeline lineno="123"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
-<codeline lineno="124"><highlight class="comment"></highlight></codeline>
-<codeline lineno="125"><highlight class="comment">Function:<sp/>vfs_findMount(char<sp/>*mountPoint)</highlight></codeline>
-<codeline lineno="126"><highlight class="comment"></highlight></codeline>
-<codeline lineno="127"><highlight class="comment">Description:<sp/>This<sp/>function<sp/>finds<sp/>a<sp/>particular<sp/>mount<sp/>point</highlight></codeline>
-<codeline lineno="128"><highlight class="comment"></highlight></codeline>
-<codeline lineno="129"><highlight class="comment">Notes:</highlight></codeline>
-<codeline lineno="130"><highlight class="comment"></highlight></codeline>
-<codeline lineno="131"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="132" refid="mount_8c_1a8cc926aa9badb781158b6738b1b0f2d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*<ref refid="mount_8h_1a8cc926aa9badb781158b6738b1b0f2d" kindref="member">vfs_findMount</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*tmpMp<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpMp=<ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref>;tmpMp;tmpMp=tmpMp-&gt;<ref refid="structvfs__mountPoint_11e30c95f66f6d267c97654c49275ec9b" kindref="member">next</ref>)<sp/>{</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(tmpMp-&gt;<ref refid="structvfs__mountPoint_130136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref>,mountPoint)<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpMp);</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>NULL<sp/>If<sp/>Mount<sp/>Point<sp/>Not<sp/>Found<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"></highlight></codeline>
-<codeline lineno="144"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="145"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="146"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vitals_8h" kindref="compound">ubixos/vitals.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"></highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>Function:<sp/>mount(int<sp/>driveId,int<sp/>partition,int<sp/>fsType,char<sp/>*mountPoint,char<sp/>*perms)</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"></highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>Description:<sp/>mount<sp/>adds<sp/>a<sp/>mount<sp/>point<sp/>and<sp/>returns<sp/>0<sp/>if<sp/>successful<sp/>1<sp/>if<sp/>it<sp/>fails</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"></highlight></codeline>
+<codeline lineno="45" refid="mount_8h_1a1255ebfdcd5f7048ffe187e836f8eb28" refkind="member"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mount_8c_1a8379310fce9e1a500f602059516e25f0" kindref="member">vfs_mount</ref>(<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>major,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>minor,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>partition,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>vfsType,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*mountPoint,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*perms<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*mp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*<ref refid="structdevice" kindref="compound">device</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>Memory<sp/>For<sp/>Mount<sp/>Point<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>(mp<sp/>=<sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*)<sp/><ref refid="kmalloc_8h_1a150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref>)<sp/>))<sp/>==<sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref><sp/>)</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;vfs_mount:<sp/>failed<sp/>to<sp/>allocate<sp/>mp\n&quot;</highlight><highlight class="normal"><sp/>);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Copy<sp/>Mount<sp/>Point<sp/>Into<sp/>Buffer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1ac38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(<sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref>,<sp/>mountPoint<sp/>);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Pointer<sp/>To<sp/>Physical<sp/>Drive<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><ref refid="structdevice" kindref="compound">device</ref><sp/>=<sp/><ref refid="include_2sys_2device_8h_1a0002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(<sp/>major,<sp/><ref refid="structdevice__node_1a3817327901b55e2ca15b2e4dfa20789f" kindref="member">minor</ref><sp/>);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Up<sp/>Mp<sp/>Defaults<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a5683a99774aaf81116e1765eb2509df5" kindref="member">device</ref><sp/>=<sp/><ref refid="structdevice" kindref="compound">device</ref>;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a654fe61c60a0044082a7651cb2e29b8e" kindref="member">fs</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfileSystem" kindref="compound">fileSystem</ref><sp/>*)<sp/><ref refid="vfs_8c_1ac49aa10a62b250834a055476c849b7b3" kindref="member">vfsFindFS</ref>(<sp/><ref refid="structfileSystem_1aa1b7987f710ba203dffb15590ff58ce0" kindref="member">vfsType</ref><sp/>);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a26cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref><sp/>=<sp/>partition;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a9fc7cfceb0706b0d4aa835a6efbb1295" kindref="member">perms</ref><sp/>=<sp/>*perms;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a654fe61c60a0044082a7651cb2e29b8e" kindref="member">fs</ref><sp/>==<sp/>0x0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sysErr(systemErr,&quot;File<sp/>System<sp/>Type:<sp/>%i<sp/>Not<sp/>Found\n&quot;,fsType);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(<sp/></highlight><highlight class="stringliteral">&quot;File<sp/>System<sp/>Type:<sp/>%i<sp/>Not<sp/>Found\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="structfileSystem_1aa1b7987f710ba203dffb15590ff58ce0" kindref="member">vfsType</ref><sp/>);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*What<sp/>is<sp/>this<sp/>for?<sp/>10/6/2006<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/><sp/><sp/>if<sp/>(device<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/><sp/><sp/>mp-&gt;diskLabel<sp/>=<sp/>(struct<sp/>ubixDiskLabel<sp/>*)kmalloc(512);</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/><sp/><sp/>mp-&gt;device-&gt;devInfo-&gt;read(mp-&gt;device-&gt;devInfo-&gt;info,mp-&gt;diskLabel,1,1);</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/><sp/><sp/>kprintf(&quot;READING<sp/>SECTOR&quot;);</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Add<sp/>Mountpoint<sp/>If<sp/>It<sp/>Fails<sp/>Free<sp/>And<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="mount_8c_1a7404fbe67653dda57672539b003deecd" kindref="member">vfs_addMount</ref>(<sp/>mp<sp/>)<sp/>!=<sp/>0x0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(<sp/>mp<sp/>);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Initialize<sp/>The<sp/>File<sp/>System<sp/>If<sp/>It<sp/>Fails<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a654fe61c60a0044082a7651cb2e29b8e" kindref="member">fs</ref>-&gt;<ref refid="structfileSystem_1a1a162bc57655bb47dbbdc2e1285f08e5" kindref="member">vfsInitFS</ref>(<sp/>mp<sp/>)<sp/>==<sp/>0x0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" kindref="member">kfree</ref>(<sp/>mp<sp/>);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x1);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"></highlight></codeline>
+<codeline lineno="97"><highlight class="comment"><sp/>Function:<sp/>vfs_addMount(struct<sp/>vfs_mountPoint<sp/>*mp)</highlight></codeline>
+<codeline lineno="98"><highlight class="comment"></highlight></codeline>
+<codeline lineno="99"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>adds<sp/>a<sp/>mount<sp/>point<sp/>to<sp/>the<sp/>system</highlight></codeline>
+<codeline lineno="100"><highlight class="comment"></highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="102" refid="mount_8h_1a7404fbe67653dda57672539b003deecd" refkind="member"><highlight class="comment"></highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mount_8c_1a7404fbe67653dda57672539b003deecd" kindref="member">vfs_addMount</ref>(<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*mp<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>If<sp/>There<sp/>Are<sp/>No<sp/>Existing<sp/>Mounts<sp/>Make<sp/>It<sp/>The<sp/>First<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref><sp/>==<sp/>0x0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1ae283964876a0043b3dd91b5596621439" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" kindref="member">next</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref><sp/>=<sp/>mp;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" kindref="member">next</ref><sp/>=<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref>;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref>-&gt;<ref refid="structvfs__mountPoint_1ae283964876a0043b3dd91b5596621439" kindref="member">prev</ref><sp/>=<sp/>mp;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_1ae283964876a0043b3dd91b5596621439" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref><sp/>=<sp/>mp;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="123"><highlight class="comment"></highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/>Function:<sp/>vfs_findMount(char<sp/>*mountPoint)</highlight></codeline>
+<codeline lineno="125"><highlight class="comment"></highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>finds<sp/>a<sp/>particular<sp/>mount<sp/>point</highlight></codeline>
+<codeline lineno="127"><highlight class="comment"></highlight></codeline>
+<codeline lineno="128" refid="mount_8h_1aa8cc926aa9badb781158b6738b1b0f2d" refkind="member"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"></highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/>************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*<ref refid="mount_8c_1aa8cc926aa9badb781158b6738b1b0f2d" kindref="member">vfs_findMount</ref>(<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*tmpMp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<sp/>tmpMp<sp/>=<sp/><ref refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_1a292bf1e7a31e9f88ca279aa6227287f3" kindref="member">mountPoints</ref>;<sp/>tmpMp;<sp/>tmpMp<sp/>=<sp/>tmpMp-&gt;<ref refid="structvfs__mountPoint_1a1e30c95f66f6d267c97654c49275ec9b" kindref="member">next</ref><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<sp/><ref refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(<sp/>tmpMp-&gt;<ref refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref>,<sp/><ref refid="structvfs__mountPoint_1a30136b0c8a7040142fefc3b3d8038eaf" kindref="member">mountPoint</ref><sp/>)<sp/>==<sp/>0x0<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(tmpMp);</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>NULL<sp/>If<sp/>Mount<sp/>Point<sp/>Not<sp/>Found<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="fat__string_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="144"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/vfs/mount.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/fs/vfs/mount.c"/>
   </compounddef>
 </doxygen>

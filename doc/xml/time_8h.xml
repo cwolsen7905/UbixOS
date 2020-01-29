@@ -1,168 +1,1817 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="time_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="time_8h" kind="file" language="C++">
     <compoundname>time.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="__timespec_8h" local="no">sys/_timespec.h</includes>
     <includes refid="io_8h" local="no">sys/io.h</includes>
-    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
-    <includedby refid="ubthread_8h" local="no">src/sys/include/ubixos/ubthread.h</includedby>
-    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
-    <includedby refid="time_8c" local="no">src/sys/kernel/time.c</includedby>
-    <includedby refid="ubthread_8c" local="no">src/sys/kernel/ubthread.c</includedby>
+    <includedby refid="arch_2armv6_2syscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</includedby>
+    <includedby refid="cc_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/arch/cc.h</includedby>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <includedby refid="ubthread_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h</includedby>
+    <includedby refid="sem_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/sem.c</includedby>
+    <includedby refid="time_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/time.c</includedby>
+    <includedby refid="ubthread_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/ubthread.c</includedby>
     <incdepgraph>
-      <node id="4458">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4459" relation="include">
-        </childnode>
-      </node>
-      <node id="4459">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="4457">
-        <label>src/sys/include/ubixos/time.h</label>
-        <link refid="time.h"/>
-        <childnode refid="4458" relation="include">
-        </childnode>
-        <childnode refid="4460" relation="include">
-        </childnode>
-      </node>
-      <node id="4460">
+      <node id="9">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4474">
-        <label>src/sys/kernel/vitals.c</label>
-        <link refid="vitals_8c"/>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
       </node>
-      <node id="4465">
-        <label>src/sys/include/ubixos/vitals.h</label>
-        <link refid="vitals_8h"/>
-        <childnode refid="4462" relation="include">
+      <node id="138">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/fsm.h</label>
+        <link refid="fsm_8h"/>
+      </node>
+      <node id="188">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/arp.c</label>
+        <link refid="arp_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_frag.c</label>
+        <link refid="ip6__frag_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/include/net/igmp.h</label>
+        <link refid="igmp_8h"/>
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="4466" relation="include">
+        <childnode refid="9" relation="include">
         </childnode>
-        <childnode refid="4467" relation="include">
+        <childnode refid="22" relation="include">
         </childnode>
-        <childnode refid="4468" relation="include">
-        </childnode>
-        <childnode refid="4469" relation="include">
-        </childnode>
-        <childnode refid="4470" relation="include">
-        </childnode>
-        <childnode refid="4471" relation="include">
-        </childnode>
-        <childnode refid="4472" relation="include">
-        </childnode>
-        <childnode refid="4473" relation="include">
-        </childnode>
-        <childnode refid="4474" relation="include">
-        </childnode>
-        <childnode refid="4475" relation="include">
-        </childnode>
-        <childnode refid="4476" relation="include">
-        </childnode>
-        <childnode refid="4477" relation="include">
-        </childnode>
-        <childnode refid="4478" relation="include">
-        </childnode>
-        <childnode refid="4479" relation="include">
+        <childnode refid="14" relation="include">
         </childnode>
       </node>
-      <node id="4473">
-        <label>src/sys/kernel/ubthread.c</label>
-        <link refid="ubthread_8c"/>
-      </node>
-      <node id="4471">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="4475">
-        <label>src/sys/lib/ogprintf.cc</label>
+      <node id="67">
+        <label>C:/Dev/git/UbixOS/sys/lib/ogprintf.cc</label>
         <link refid="ogprintf_8cc"/>
       </node>
-      <node id="4461">
-        <label>src/sys/include/ubixos/time.h</label>
-        <link refid="time.h"/>
-        <childnode refid="4462" relation="include">
+      <node id="168">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/icmp.c</label>
+        <link refid="icmp_8c"/>
+      </node>
+      <node id="112">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/loopif.c</label>
+        <link refid="loopif_8c"/>
+      </node>
+      <node id="48">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/block.c</label>
+        <link refid="block_8c"/>
+      </node>
+      <node id="178">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6_addr.c</label>
+        <link refid="ip6__addr_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/net/core/inet_chksum.c</label>
+        <link refid="inet__chksum_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="181">
+        <label>C:/Dev/git/UbixOS/sys/net/core/raw.c</label>
+        <link refid="raw_8c"/>
+      </node>
+      <node id="90">
+        <label>C:/Dev/git/UbixOS/sys/net/core/def.c</label>
+        <link refid="def_8c"/>
+      </node>
+      <node id="206">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="197" relation="include">
         </childnode>
-        <childnode refid="4464" relation="include">
+        <childnode refid="207" relation="include">
         </childnode>
-        <childnode refid="4470" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="4472" relation="include">
+        <childnode refid="79" relation="include">
         </childnode>
-        <childnode refid="4473" relation="include">
+        <childnode refid="101" relation="include">
         </childnode>
       </node>
-      <node id="4469">
-        <label>src/sys/kernel/fork.c</label>
-        <link refid="fork_8c"/>
+      <node id="93">
+        <label>C:/Dev/git/UbixOS/sys/include/net/dhcp.h</label>
+        <link refid="dhcp_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
       </node>
-      <node id="4463">
-        <label>src/sys/init/main.c</label>
+      <node id="68">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
+      </node>
+      <node id="114">
+        <label>C:/Dev/git/UbixOS/sys/include/net/nd6.h</label>
+        <link refid="nd6_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
       </node>
-      <node id="4464">
-        <label>src/sys/include/ubixos/ubthread.h</label>
-        <link refid="ubthread_8h"/>
-        <childnode refid="4465" relation="include">
+      <node id="91">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
+      </node>
+      <node id="49">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="55">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
+      </node>
+      <node id="191">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/icmp.h</label>
+        <link refid="prot_2icmp_8h"/>
+        <childnode refid="25" relation="include">
         </childnode>
-        <childnode refid="4473" relation="include">
+      </node>
+      <node id="192">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/icmp6.h</label>
+        <link refid="prot_2icmp6_8h"/>
+        <childnode refid="30" relation="include">
         </childnode>
       </node>
-      <node id="4470">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
+      <node id="70">
+        <label>C:/Dev/git/UbixOS/sys/sde/sde.cc</label>
+        <link refid="sde_8cc"/>
       </node>
-      <node id="4467">
-        <label>src/sys/isa/ne2k.c</label>
-        <link refid="ne2k_8c"/>
+      <node id="97">
+        <label>C:/Dev/git/UbixOS/sys/include/net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
       </node>
-      <node id="4466">
-        <label>src/sys/isa/atkbd.c</label>
+      <node id="173">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/dhcp6.c</label>
+        <link refid="dhcp6_8c"/>
+      </node>
+      <node id="69">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="43">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/inode.c</label>
+        <link refid="inode_8c"/>
+      </node>
+      <node id="60">
+        <label>C:/Dev/git/UbixOS/sys/isa/atkbd.c</label>
         <link refid="atkbd_8c"/>
       </node>
-      <node id="4462">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="4463" relation="include">
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="83">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/slipif.h</label>
+        <link refid="slipif_8h"/>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/fs/fat/fat.c</label>
+        <link refid="fat_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/include/net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
         </childnode>
       </node>
-      <node id="4477">
-        <label>src/sys/vfs/mount.c</label>
-        <link refid="mount_8c"/>
-      </node>
-      <node id="4472">
-        <label>src/sys/kernel/time.c</label>
-        <link refid="time_8c"/>
-      </node>
-      <node id="4479">
-        <label>src/sys/vmm/vmm_memory.c</label>
-        <link refid="vmm__memory_8c"/>
-      </node>
-      <node id="4468">
-        <label>src/sys/kernel/endtask.c</label>
-        <link refid="endtask_8c"/>
-      </node>
-      <node id="4476">
-        <label>src/sys/vfs/file.c</label>
+      <node id="42">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
         <link refid="file_8c"/>
       </node>
-      <node id="4478">
-        <label>src/sys/vfs/vfs.c</label>
+      <node id="159">
+        <label>C:/Dev/git/UbixOS/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="155">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppol2tp.h</label>
+        <link refid="pppol2tp_8h"/>
+      </node>
+      <node id="106">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4.h</label>
+        <link refid="ip4_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="109">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/memp_priv.h</label>
+        <link refid="memp__priv_8h"/>
+        <childnode refid="110" relation="include">
+        </childnode>
+      </node>
+      <node id="102">
+        <label>C:/Dev/git/UbixOS/sys/include/net/errno.h</label>
+        <link refid="net_2errno_8h"/>
+        <childnode refid="89" relation="include">
+        </childnode>
+      </node>
+      <node id="176">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/inet6.c</label>
+        <link refid="inet6_8c"/>
+      </node>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp.h</label>
+        <link refid="icmp_8h"/>
+      </node>
+      <node id="118">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/api_msg.h</label>
+        <link refid="api__msg_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="95">
+        <label>C:/Dev/git/UbixOS/sys/include/net/dns.h</label>
+        <link refid="dns_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="204">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/access.h</label>
+        <link refid="access_8h"/>
+        <childnode refid="205" relation="include">
+        </childnode>
+      </node>
+      <node id="201">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet.h</label>
+        <link refid="inet_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="120">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcp_priv.h</label>
+        <link refid="tcp__priv_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="174">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ethip6.c</label>
+        <link refid="ethip6_8c"/>
+      </node>
+      <node id="98">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="99" relation="include">
+        </childnode>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="154">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppoe.h</label>
+        <link refid="pppoe_8h"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/include/net/icmp6.h</label>
+        <link refid="icmp6_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="99">
+        <label>C:/Dev/git/UbixOS/sys/include/net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="184">
+        <label>C:/Dev/git/UbixOS/sys/net/core/tcp_in.c</label>
+        <link refid="tcp__in_8c"/>
+      </node>
+      <node id="101">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="182">
+        <label>C:/Dev/git/UbixOS/sys/net/core/stats.c</label>
+        <link refid="stats_8c"/>
+      </node>
+      <node id="151">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppapi.h</label>
+        <link refid="pppapi_8h"/>
+      </node>
+      <node id="45">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/vfs.c</label>
         <link refid="vfs_8c"/>
       </node>
+      <node id="139">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ipcp.h</label>
+        <link refid="ipcp_8h"/>
+      </node>
+      <node id="166">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/dhcp.c</label>
+        <link refid="dhcp_8c"/>
+      </node>
+      <node id="84">
+        <label>C:/Dev/git/UbixOS/sys/include/net/snmp.h</label>
+        <link refid="snmp_8h"/>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="196">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="197" relation="include">
+        </childnode>
+        <childnode refid="198" relation="include">
+        </childnode>
+        <childnode refid="204" relation="include">
+        </childnode>
+        <childnode refid="206" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+      </node>
+      <node id="89">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="62">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="76">
+        <label>C:/Dev/git/UbixOS/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="132">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/chap-md5.h</label>
+        <link refid="chap-md5_8h"/>
+      </node>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/include/net/autoip.h</label>
+        <link refid="autoip_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="147">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/md5.h</label>
+        <link refid="md5_8h"/>
+      </node>
+      <node id="134">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/chap_ms.h</label>
+        <link refid="chap__ms_8h"/>
+      </node>
+      <node id="161">
+        <label>C:/Dev/git/UbixOS/sys/net/api/netbuf.c</label>
+        <link refid="netbuf_8c"/>
+      </node>
+      <node id="78">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>C:/Dev/git/UbixOS/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="125">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+        <childnode refid="126" relation="include">
+        </childnode>
+      </node>
+      <node id="117">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netifapi.h</label>
+        <link refid="netifapi_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+      </node>
+      <node id="127">
+        <label>C:/Dev/git/UbixOS/sys/include/net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="126" relation="include">
+        </childnode>
+      </node>
+      <node id="148">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/sha1.h</label>
+        <link refid="sha1_8h"/>
+      </node>
+      <node id="165">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/autoip.c</label>
+        <link refid="autoip_8c"/>
+      </node>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="104">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ethip6.h</label>
+        <link refid="ethip6_8h"/>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="199">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="167">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/etharp.c</label>
+        <link refid="etharp_8c"/>
+      </node>
+      <node id="111">
+        <label>C:/Dev/git/UbixOS/sys/include/net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="108">
+        <label>C:/Dev/git/UbixOS/sys/include/net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+      </node>
+      <node id="207">
+        <label>C:/Dev/git/UbixOS/sys/kernel/sem.c</label>
+        <link refid="sem_8c"/>
+      </node>
+      <node id="57">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="71">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="105">
+        <label>C:/Dev/git/UbixOS/sys/include/net/init.h</label>
+        <link refid="net_2init_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/include/vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="163">
+        <label>C:/Dev/git/UbixOS/sys/net/core/dns.c</label>
+        <link refid="dns_8c"/>
+      </node>
+      <node id="74">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="197">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/include/net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="202">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall_posix.c</label>
+        <link refid="syscall__posix_8c"/>
+      </node>
+      <node id="103">
+        <label>C:/Dev/git/UbixOS/sys/include/net/etharp.h</label>
+        <link refid="etharp_8h"/>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="100">
+        <label>C:/Dev/git/UbixOS/sys/net/core/sys.c</label>
+        <link refid="sys_8c"/>
+      </node>
+      <node id="46">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="189">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/dns.h</label>
+        <link refid="prot_2dns_8h"/>
+      </node>
+      <node id="140">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ipv6cp.h</label>
+        <link refid="ipv6cp_8h"/>
+      </node>
+      <node id="152">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppcrypt.h</label>
+        <link refid="pppcrypt_8h"/>
+      </node>
+      <node id="172">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/ip4_frag.c</label>
+        <link refid="ip4__frag_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="205">
+        <label>C:/Dev/git/UbixOS/sys/kernel/access.c</label>
+        <link refid="access_8c"/>
+      </node>
+      <node id="141">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/lcp.h</label>
+        <link refid="lcp_8h"/>
+      </node>
+      <node id="124">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sockets.h</label>
+        <link refid="sockets_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="175">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/icmp6.c</label>
+        <link refid="icmp6_8c"/>
+      </node>
+      <node id="129">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/lowpan6.h</label>
+        <link refid="lowpan6_8h"/>
+      </node>
+      <node id="77">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="149">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp.h</label>
+        <link refid="ppp_8h"/>
+      </node>
+      <node id="156">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppos.h</label>
+        <link refid="pppos_8h"/>
+      </node>
+      <node id="119">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/nd6_priv.h</label>
+        <link refid="nd6__priv_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="85">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/etharp.h</label>
+        <link refid="prot_2etharp_8h"/>
+      </node>
+      <node id="80">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/include/net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_frag.h</label>
+        <link refid="ip6__frag_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="137">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/eui64.h</label>
+        <link refid="eui64_8h"/>
+      </node>
+      <node id="146">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/md4.h</label>
+        <link refid="md4_8h"/>
+      </node>
+      <node id="44">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/namei.c</label>
+        <link refid="namei_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="96" relation="include">
+        </childnode>
+        <childnode refid="189" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="190" relation="include">
+        </childnode>
+        <childnode refid="191" relation="include">
+        </childnode>
+        <childnode refid="192" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+        <childnode refid="193" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="194" relation="include">
+        </childnode>
+        <childnode refid="195" relation="include">
+        </childnode>
+        <childnode refid="123" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>C:/Dev/git/UbixOS/sys/fs/common/gpt.c</label>
+        <link refid="gpt_8c"/>
+      </node>
+      <node id="190">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h</label>
+        <link refid="prot_2ethernet_8h"/>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/fs/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="135">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/eap.h</label>
+        <link refid="eap_8h"/>
+      </node>
+      <node id="107">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6.h</label>
+        <link refid="ip6_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="122">
+        <label>C:/Dev/git/UbixOS/sys/include/net/raw.h</label>
+        <link refid="raw_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_frag.h</label>
+        <link refid="ip4__frag_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="157">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/upap.h</label>
+        <link refid="upap_8h"/>
+      </node>
+      <node id="131">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ccp.h</label>
+        <link refid="ccp_8h"/>
+      </node>
+      <node id="94">
+        <label>C:/Dev/git/UbixOS/sys/include/net/dhcp6.h</label>
+        <link refid="dhcp6_8h"/>
+      </node>
+      <node id="72">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="133">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/chap-new.h</label>
+        <link refid="chap-new_8h"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="88">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip6_addr.h</label>
+        <link refid="ip6__addr_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/include/net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="93" relation="include">
+        </childnode>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="96" relation="include">
+        </childnode>
+        <childnode refid="102" relation="include">
+        </childnode>
+        <childnode refid="103" relation="include">
+        </childnode>
+        <childnode refid="104" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="106" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="113" relation="include">
+        </childnode>
+        <childnode refid="114" relation="include">
+        </childnode>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="116" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="117" relation="include">
+        </childnode>
+        <childnode refid="97" relation="include">
+        </childnode>
+        <childnode refid="118" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="119" relation="include">
+        </childnode>
+        <childnode refid="120" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="121" relation="include">
+        </childnode>
+        <childnode refid="122" relation="include">
+        </childnode>
+        <childnode refid="123" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="124" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="125" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="99" relation="include">
+        </childnode>
+        <childnode refid="127" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="128" relation="include">
+        </childnode>
+        <childnode refid="130" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="159" relation="include">
+        </childnode>
+        <childnode refid="160" relation="include">
+        </childnode>
+        <childnode refid="161" relation="include">
+        </childnode>
+        <childnode refid="162" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="163" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="164" relation="include">
+        </childnode>
+        <childnode refid="165" relation="include">
+        </childnode>
+        <childnode refid="166" relation="include">
+        </childnode>
+        <childnode refid="167" relation="include">
+        </childnode>
+        <childnode refid="168" relation="include">
+        </childnode>
+        <childnode refid="169" relation="include">
+        </childnode>
+        <childnode refid="170" relation="include">
+        </childnode>
+        <childnode refid="171" relation="include">
+        </childnode>
+        <childnode refid="172" relation="include">
+        </childnode>
+        <childnode refid="173" relation="include">
+        </childnode>
+        <childnode refid="174" relation="include">
+        </childnode>
+        <childnode refid="175" relation="include">
+        </childnode>
+        <childnode refid="176" relation="include">
+        </childnode>
+        <childnode refid="177" relation="include">
+        </childnode>
+        <childnode refid="178" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="179" relation="include">
+        </childnode>
+        <childnode refid="180" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="181" relation="include">
+        </childnode>
+        <childnode refid="182" relation="include">
+        </childnode>
+        <childnode refid="100" relation="include">
+        </childnode>
+        <childnode refid="183" relation="include">
+        </childnode>
+        <childnode refid="184" relation="include">
+        </childnode>
+        <childnode refid="185" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="186" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="187" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="63">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="56">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="160">
+        <label>C:/Dev/git/UbixOS/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip.h</label>
+        <link refid="ip_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/include/net/debug.h</label>
+        <link refid="debug_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="188" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip4_addr.h</label>
+        <link refid="ip4__addr_8h"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/include/net/ip_addr.h</label>
+        <link refid="ip__addr_8h"/>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+      </node>
+      <node id="136">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ecp.h</label>
+        <link refid="ecp_8h"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/fs/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="126">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/tcpdump.c</label>
+        <link refid="tcpdump_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/fs/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="185">
+        <label>C:/Dev/git/UbixOS/sys/net/core/tcp_out.c</label>
+        <link refid="tcp__out_8c"/>
+      </node>
+      <node id="162">
+        <label>C:/Dev/git/UbixOS/sys/net/api/sockets.c</label>
+        <link refid="sockets_8c"/>
+      </node>
+      <node id="195">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/udp.h</label>
+        <link refid="prot_2udp_8h"/>
+      </node>
+      <node id="115">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netbuf.h</label>
+        <link refid="netbuf_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="187">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernet.c</label>
+        <link refid="ethernet_8c"/>
+      </node>
+      <node id="153">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/pppdebug.h</label>
+        <link refid="pppdebug_8h"/>
+      </node>
+      <node id="130">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_opts.h</label>
+        <link refid="ppp__opts_8h"/>
+        <childnode refid="131" relation="include">
+        </childnode>
+        <childnode refid="132" relation="include">
+        </childnode>
+        <childnode refid="133" relation="include">
+        </childnode>
+        <childnode refid="134" relation="include">
+        </childnode>
+        <childnode refid="135" relation="include">
+        </childnode>
+        <childnode refid="136" relation="include">
+        </childnode>
+        <childnode refid="137" relation="include">
+        </childnode>
+        <childnode refid="138" relation="include">
+        </childnode>
+        <childnode refid="139" relation="include">
+        </childnode>
+        <childnode refid="140" relation="include">
+        </childnode>
+        <childnode refid="141" relation="include">
+        </childnode>
+        <childnode refid="142" relation="include">
+        </childnode>
+        <childnode refid="143" relation="include">
+        </childnode>
+        <childnode refid="144" relation="include">
+        </childnode>
+        <childnode refid="145" relation="include">
+        </childnode>
+        <childnode refid="146" relation="include">
+        </childnode>
+        <childnode refid="147" relation="include">
+        </childnode>
+        <childnode refid="148" relation="include">
+        </childnode>
+        <childnode refid="149" relation="include">
+        </childnode>
+        <childnode refid="150" relation="include">
+        </childnode>
+        <childnode refid="151" relation="include">
+        </childnode>
+        <childnode refid="152" relation="include">
+        </childnode>
+        <childnode refid="153" relation="include">
+        </childnode>
+        <childnode refid="154" relation="include">
+        </childnode>
+        <childnode refid="155" relation="include">
+        </childnode>
+        <childnode refid="156" relation="include">
+        </childnode>
+        <childnode refid="157" relation="include">
+        </childnode>
+        <childnode refid="158" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="196" relation="include">
+        </childnode>
+        <childnode refid="207" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="150">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/ppp_impl.h</label>
+        <link refid="ppp__impl_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+      </node>
+      <node id="169">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/igmp.c</label>
+        <link refid="igmp_8c"/>
+      </node>
+      <node id="193">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ip.h</label>
+        <link refid="prot_2ip_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="171">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/ip4_addr.c</label>
+        <link refid="ip4__addr_8c"/>
+      </node>
+      <node id="183">
+        <label>C:/Dev/git/UbixOS/sys/net/core/tcp.c</label>
+        <link refid="tcp_8c"/>
+      </node>
+      <node id="186">
+        <label>C:/Dev/git/UbixOS/sys/net/core/udp.c</label>
+        <link refid="udp_8c"/>
+      </node>
+      <node id="81">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ethernet.h</label>
+        <link refid="f_2ethernet_8h"/>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="123">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sio.h</label>
+        <link refid="sio_8h"/>
+      </node>
+      <node id="96">
+        <label>C:/Dev/git/UbixOS/sys/include/net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="97" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="99" relation="include">
+        </childnode>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+      </node>
+      <node id="121">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/dhcp.h</label>
+        <link refid="prot_2dhcp_8h"/>
+      </node>
+      <node id="87">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/ip4.h</label>
+        <link refid="prot_2ip4_8h"/>
+      </node>
+      <node id="82">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/etharp.h</label>
+        <link refid="f_2etharp_8h"/>
+      </node>
+      <node id="200">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="143">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/mppe.h</label>
+        <link refid="mppe_8h"/>
+      </node>
+      <node id="53">
+        <label>C:/Dev/git/UbixOS/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="92">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="158">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/vj.h</label>
+        <link refid="vj_8h"/>
+      </node>
+      <node id="79">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
+      </node>
+      <node id="142">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/magic.h</label>
+        <link refid="magic_8h"/>
+      </node>
+      <node id="177">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/ip6.c</label>
+        <link refid="ip6_8c"/>
+      </node>
+      <node id="194">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/tcp.h</label>
+        <link refid="prot_2tcp_8h"/>
+      </node>
+      <node id="179">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/mld6.c</label>
+        <link refid="mld6_8c"/>
+      </node>
+      <node id="164">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ip.c</label>
+        <link refid="ip_8c"/>
+      </node>
+      <node id="86">
+        <label>C:/Dev/git/UbixOS/sys/include/net/prot/igmp.h</label>
+        <link refid="prot_2igmp_8h"/>
+      </node>
+      <node id="116">
+        <label>C:/Dev/git/UbixOS/sys/include/net/netdb.h</label>
+        <link refid="netdb_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>C:/Dev/git/UbixOS/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/include/net/inet_chksum.h</label>
+        <link refid="inet__chksum_8h"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="170">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv4/ip4.c</label>
+        <link refid="ip4_8c"/>
+      </node>
+      <node id="180">
+        <label>C:/Dev/git/UbixOS/sys/net/core/ipv6/nd6.c</label>
+        <link refid="nd6_8c"/>
+      </node>
+      <node id="66">
+        <label>C:/Dev/git/UbixOS/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="65">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="203">
+        <label>C:/Dev/git/UbixOS/sys/sys/elf.c</label>
+        <link refid="sys_2elf_8c"/>
+      </node>
+      <node id="113">
+        <label>C:/Dev/git/UbixOS/sys/include/net/mld6.h</label>
+        <link refid="mld6_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="64">
+        <label>C:/Dev/git/UbixOS/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+      <node id="110">
+        <label>C:/Dev/git/UbixOS/sys/include/net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+      </node>
+      <node id="144">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/arc4.h</label>
+        <link refid="arc4_8h"/>
+      </node>
+      <node id="198">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/elf.h</label>
+        <link refid="sys_2elf_8h"/>
+        <childnode refid="199" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="200" relation="include">
+        </childnode>
+        <childnode refid="201" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="202" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="203" relation="include">
+        </childnode>
+      </node>
+      <node id="128">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/lowpan6_opts.h</label>
+        <link refid="lowpan6__opts_8h"/>
+        <childnode refid="129" relation="include">
+        </childnode>
+      </node>
+      <node id="145">
+        <label>C:/Dev/git/UbixOS/sys/include/netif/ppp/polarssl/des.h</label>
+        <link refid="des_8h"/>
+      </node>
     </invincdepgraph>
-    <innerclass refid="structtimespec" prot="public">timespec</innerclass>
     <innerclass refid="structtimeStruct" prot="public">timeStruct</innerclass>
-    <innerclass refid="structtimeval" prot="public">timeval</innerclass>
     <innerclass refid="structtimezone" prot="public">timezone</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="time_8h_1da3d00d14e596527afd939066ebae6bd" prot="public" static="no">
+      <memberdef kind="define" id="time_8h_1ada3d00d14e596527afd939066ebae6bd" prot="public" static="no">
         <name>BCD_TO_BIN</name>
         <param><defname>val</defname></param>
         <initializer>((val)=((val)&amp;15) + ((val)&gt;&gt;4)*10)</initializer>
@@ -172,34 +1821,31 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="38" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="time_8h_1509a01c55cbe47386fe24602b7c7fda1" prot="public" static="no">
+      <memberdef kind="define" id="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" prot="public" static="no">
         <name>DAY</name>
-        <initializer>(24*HOUR)</initializer>
+        <initializer>(24*<ref refid="time_8h_1a4698ae12cf6a8acb5886fffd0ec897e6" kindref="member">HOUR</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="42" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="time_8h_14698ae12cf6a8acb5886fffd0ec897e6" prot="public" static="no">
+      <memberdef kind="define" id="time_8h_1a4698ae12cf6a8acb5886fffd0ec897e6" prot="public" static="no">
         <name>HOUR</name>
-        <initializer>(60*MINUTE)</initializer>
+        <initializer>(60*<ref refid="time_8h_1ac1454fa04f41c693f39425697a137d82" kindref="member">MINUTE</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="41" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="time_8h_1c1454fa04f41c693f39425697a137d82" prot="public" static="no">
+      <memberdef kind="define" id="time_8h_1ac1454fa04f41c693f39425697a137d82" prot="public" static="no">
         <name>MINUTE</name>
         <initializer>60</initializer>
         <briefdescription>
@@ -208,24 +1854,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="40" bodyend="-1"/>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="time_8h_15871356500f559add06ea81d60331b1b" prot="public" static="no">
+      <memberdef kind="define" id="time_8h_1a5871356500f559add06ea81d60331b1b" prot="public" static="no">
         <name>YEAR</name>
-        <initializer>(365*DAY)</initializer>
+        <initializer>(365*<ref refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" kindref="member">DAY</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="43" bodyend="-1"/>
-        <referencedby refid="time_8c_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="43" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="time_8h_1e32f449456d5f1877a9e630e92422c01" prot="public" static="no">
+      <memberdef kind="typedef" id="time_8h_1ae32f449456d5f1877a9e630e92422c01" prot="public" static="no">
         <type>long</type>
         <definition>typedef long suseconds_t</definition>
         <argsstring></argsstring>
@@ -236,24 +1880,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="36" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="typedef" id="time_8h_1c8234dac99fc3a2dcc8b7998afd40d49" prot="public" static="no">
-        <type><ref refid="__types_8h_1c9fb8d211b39b07df423f5c3238c5f5d" kindref="member">__time_t</ref></type>
-        <definition>typedef __time_t time_t</definition>
-        <argsstring></argsstring>
-        <name>time_t</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="46" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="36" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" bodystart="36" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="time_8h_1df30830f5265e55035171c301eb9c3fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="time_8h_1adf30830f5265e55035171c301eb9c3fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int gettimeofday</definition>
         <argsstring>(struct timeval *tp, struct timezone *tzp)</argsstring>
@@ -272,11 +1903,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="110" bodyend="115"/>
-        <references refid="structtimeval_13599199839a89e99a2ce29d45312b5cf" compoundref="time_8h" startline="73">timeval::tv_sec</references>
-        <references refid="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" compoundref="time_8h" startline="74">timeval::tv_usec</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="60" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="110" bodyend="118" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" declline="60" declcolumn="5"/>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structvitalsStruct_1a78832d978f9753eb94bf615dc215f511" compoundref="vitals_8h" startline="38">vitalsStruct::sysUptime</references>
+        <references refid="structvitalsStruct_1a338cf71b9ba1338f47fe955d417b3337" compoundref="vitals_8h" startline="46">vitalsStruct::timeStart</references>
+        <references refid="structtimeval_1aef6ddab1064c430758f9f913b7e4a21e" compoundref="__timeval_8h" startline="18">timeval::tv_sec</references>
+        <references refid="structtimeval_1a810bf8fcd58e255a5c1896d19538b86a" compoundref="__timeval_8h" startline="19">timeval::tv_usec</references>
+        <references refid="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" compoundref="time_8h" startline="57">timezone::tz_dsttime</references>
+        <references refid="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" compoundref="time_8h" startline="56">timezone::tz_minuteswest</references>
+        <referencedby refid="gen__calls_8c_1ad3d1e6e24307ce2257adadefb46dfa10" compoundref="gen__calls_8c" startline="354" endline="358">sys_gettimeofday</referencedby>
+        <referencedby refid="sys__arch_8c_1a29a81985c051357162ad079023a076cd" compoundref="sys__arch_8c" startline="32" endline="35">sys_init</referencedby>
+        <referencedby refid="sys__arch_8c_1aa40706a5e306545035127c0cf198cf49" compoundref="sys__arch_8c" startline="483" endline="495">sys_unix_now</referencedby>
       </memberdef>
-      <memberdef kind="function" id="time_8h_145c7647a44b3b3eef8e44809180e86b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="time_8h_1a45c7647a44b3b3eef8e44809180e86b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int time_init</definition>
         <argsstring>()</argsstring>
@@ -287,22 +1926,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="56" bodyend="90"/>
-        <references refid="time_8h_1da3d00d14e596527afd939066ebae6bd" compoundref="time_8h" startline="38">BCD_TO_BIN</references>
-        <references refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" compoundref="time_8h" startline="61">timeStruct::day</references>
-        <references refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" compoundref="time_8h" startline="60">timeStruct::hour</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" compoundref="time_8h" startline="59">timeStruct::min</references>
-        <references refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" compoundref="time_8h" startline="62">timeStruct::mon</references>
-        <references refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" compoundref="time_8h" startline="58">timeStruct::sec</references>
-        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
-        <references refid="time_8c_1087d7c6ad6802ed3e466ed1d6badf3c9" compoundref="time_8c" startline="51" endline="54">timeCmosRead</references>
-        <references refid="time_8h_150a9563bc49b27c587f341b0336bab7e" compoundref="time_8c" startline="92" endline="108">timeMake</references>
-        <references refid="structvitalsStruct_1c407388b447996ea3bad97aebbb5e1a6" compoundref="vitals_8h" startline="47">vitalsStruct::timeStart</references>
-        <references refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" compoundref="time_8h" startline="63">timeStruct::year</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="62" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="52" bodyend="85" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" declline="62" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="time_8h_150a9563bc49b27c587f341b0336bab7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+      <memberdef kind="function" id="time_8h_1a50a9563bc49b27c587f341b0336bab7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref></type>
         <definition>uInt32 timeMake</definition>
         <argsstring>(struct timeStruct *time)</argsstring>
         <name>timeMake</name>
@@ -316,19 +1943,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/time.c" bodystart="92" bodyend="108"/>
-        <references refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" compoundref="time_8h" startline="42">DAY</references>
-        <references refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" compoundref="time_8h" startline="61">timeStruct::day</references>
-        <references refid="time_8h_14698ae12cf6a8acb5886fffd0ec897e6" compoundref="time_8h" startline="41">HOUR</references>
-        <references refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" compoundref="time_8h" startline="60">timeStruct::hour</references>
-        <references refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" compoundref="time_8h" startline="59">timeStruct::min</references>
-        <references refid="time_8h_1c1454fa04f41c693f39425697a137d82" compoundref="time_8h" startline="40">MINUTE</references>
-        <references refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" compoundref="time_8h" startline="62">timeStruct::mon</references>
-        <references refid="time_8c_145d9da5c4bcc5def21490ffe633b7702" compoundref="time_8c" startline="36">month</references>
-        <references refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" compoundref="time_8h" startline="58">timeStruct::sec</references>
-        <references refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" compoundref="time_8h" startline="63">timeStruct::year</references>
-        <references refid="time_8h_15871356500f559add06ea81d60331b1b" compoundref="time_8h" startline="43">YEAR</references>
-        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" line="63" column="8" bodyfile="C:/Dev/git/UbixOS/sys/kernel/time.c" bodystart="87" bodyend="108" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/time.h" declline="63" declcolumn="8"/>
+        <references refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" compoundref="time_8h" startline="42">DAY</references>
+        <references refid="time_8h_1a5871356500f559add06ea81d60331b1b" compoundref="time_8h" startline="43">YEAR</references>
+        <references refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" compoundref="time_8h" startline="52">timeStruct::year</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -336,118 +1954,96 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: time_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_TIME_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_TIME_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UBIXOS_TIME_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UBIXOS_TIME_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="__timespec_8h" kindref="compound">sys/_timespec.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="time_8h_1e32f449456d5f1877a9e630e92422c01" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="time_8h_1e32f449456d5f1877a9e630e92422c01" kindref="member">suseconds_t</ref>;</highlight></codeline>
+<codeline lineno="36" refid="time_8h_1ae32f449456d5f1877a9e630e92422c01" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="time_8h_1ae32f449456d5f1877a9e630e92422c01" kindref="member">suseconds_t</ref>;</highlight></codeline>
 <codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="time_8h_1da3d00d14e596527afd939066ebae6bd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BCD_TO_BIN(val)<sp/>((val)=((val)&amp;15)<sp/>+<sp/>((val)&gt;&gt;4)*10)</highlight></codeline>
-<codeline lineno="39"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40" refid="time_8h_1c1454fa04f41c693f39425697a137d82" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MINUTE<sp/>60</highlight></codeline>
-<codeline lineno="41" refid="time_8h_14698ae12cf6a8acb5886fffd0ec897e6" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>HOUR<sp/>(60*MINUTE)</highlight></codeline>
-<codeline lineno="42" refid="time_8h_1509a01c55cbe47386fe24602b7c7fda1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DAY<sp/>(24*HOUR)</highlight></codeline>
-<codeline lineno="43" refid="time_8h_15871356500f559add06ea81d60331b1b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>YEAR<sp/>(365*DAY)</highlight></codeline>
-<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_TIME_T_DECLARED</highlight></codeline>
-<codeline lineno="46" refid="time_8h_1c8234dac99fc3a2dcc8b7998afd40d49" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1c9fb8d211b39b07df423f5c3238c5f5d" kindref="member">__time_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref>;</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_TIME_T_DECLARED</highlight></codeline>
-<codeline lineno="48"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="49"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50" refid="structtimespec" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimespec" kindref="compound">timespec</ref><sp/>{</highlight></codeline>
-<codeline lineno="51" refid="structtimespec_1fc3302668d7cb5952f590da69fdd4955" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref><sp/><sp/><ref refid="structtimespec_1fc3302668d7cb5952f590da69fdd4955" kindref="member">tv_sec</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="52" refid="structtimespec_1e3c7510dafa8cbcaede866ed13c99683" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structtimespec_1e3c7510dafa8cbcaede866ed13c99683" kindref="member">tv_nsec</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>nanoseconds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="time_8h_1ada3d00d14e596527afd939066ebae6bd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BCD_TO_BIN(val)<sp/>((val)=((val)&amp;15)<sp/>+<sp/>((val)&gt;&gt;4)*10)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="time_8h_1ac1454fa04f41c693f39425697a137d82" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MINUTE<sp/>60</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="time_8h_1a4698ae12cf6a8acb5886fffd0ec897e6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HOUR<sp/>(60*MINUTE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="time_8h_1a509a01c55cbe47386fe24602b7c7fda1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DAY<sp/>(24*HOUR)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="time_8h_1a5871356500f559add06ea81d60331b1b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>YEAR<sp/>(365*DAY)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="structtimeStruct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>{</highlight></codeline>
+<codeline lineno="47" refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1ae8a295d466724bf589ab44565582058c" kindref="member">sec</ref>;</highlight></codeline>
+<codeline lineno="48" refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1a57b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>;</highlight></codeline>
+<codeline lineno="49" refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1a6c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1a51fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1a4fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1ab445a5158d90b51e249809848de5a9da" kindref="member">year</ref>;</highlight></codeline>
 <codeline lineno="53"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57" refid="structtimeStruct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>{</highlight></codeline>
-<codeline lineno="58" refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1e8a295d466724bf589ab44565582058c" kindref="member">sec</ref>;</highlight></codeline>
-<codeline lineno="59" refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_157b135de22bcb0d4ade7c0409bb5a779" kindref="member">min</ref>;</highlight></codeline>
-<codeline lineno="60" refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_16c0cf112b4706d5cacfb77116578cb5f" kindref="member">hour</ref>;</highlight></codeline>
-<codeline lineno="61" refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_151fdc39a8b730c40aed369102a79fb9d" kindref="member">day</ref>;</highlight></codeline>
-<codeline lineno="62" refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_14fa46e55c82bc273b4333814ee5fd5aa" kindref="member">mon</ref>;</highlight></codeline>
-<codeline lineno="63" refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct_1b445a5158d90b51e249809848de5a9da" kindref="member">year</ref>;</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structtimezone" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>{</highlight></codeline>
+<codeline lineno="56" refid="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimezone_1a3042f7eff6e1b980728def76b1fa0eb7" kindref="member">tz_minuteswest</ref>;<sp/></highlight><highlight class="comment">/*<sp/>minutes<sp/>west<sp/>of<sp/>Greenwich<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structtimezone_1a85259977aeb63b17e6ce94f19afdfd99" kindref="member">tz_dsttime</ref>;<sp/></highlight><highlight class="comment">/*<sp/>type<sp/>of<sp/>dst<sp/>correction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8h_1adf30830f5265e55035171c301eb9c3fb" kindref="member">gettimeofday</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*tp,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*tzp);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8h_1a45c7647a44b3b3eef8e44809180e86b5" kindref="member">time_init</ref>();</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/><ref refid="time_8h_1a50a9563bc49b27c587f341b0336bab7e" kindref="member">timeMake</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>*time);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="66"><highlight class="normal"></highlight></codeline>
-<codeline lineno="67" refid="structtimezone" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>{</highlight></codeline>
-<codeline lineno="68" refid="structtimezone_13042f7eff6e1b980728def76b1fa0eb7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structtimezone_13042f7eff6e1b980728def76b1fa0eb7" kindref="member">tz_minuteswest</ref>;<sp/></highlight><highlight class="comment">/*<sp/>minutes<sp/>west<sp/>of<sp/>Greenwich<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="69" refid="structtimezone_185259977aeb63b17e6ce94f19afdfd99" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structtimezone_185259977aeb63b17e6ce94f19afdfd99" kindref="member">tz_dsttime</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>type<sp/>of<sp/>dst<sp/>correction<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight></codeline>
-<codeline lineno="72" refid="structtimeval" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>{</highlight></codeline>
-<codeline lineno="73" refid="structtimeval_13599199839a89e99a2ce29d45312b5cf" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtimeval_13599199839a89e99a2ce29d45312b5cf" kindref="member">tv_sec</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>seconds<sp/>(XXX<sp/>should<sp/>be<sp/>time_t)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="74" refid="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="time_8h_1e32f449456d5f1877a9e630e92422c01" kindref="member">suseconds_t</ref><sp/><sp/><sp/><sp/><sp/><ref refid="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" kindref="member">tv_usec</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>and<sp/>microseconds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8h_1df30830f5265e55035171c301eb9c3fb" kindref="member">gettimeofday</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeval" kindref="compound">timeval</ref><sp/>*tp,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimezone" kindref="compound">timezone</ref><sp/>*tzp);</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight></codeline>
-<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="time_8h_145c7647a44b3b3eef8e44809180e86b5" kindref="member">time_init</ref>();</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="time_8h_150a9563bc49b27c587f341b0336bab7e" kindref="member">timeMake</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimeStruct" kindref="compound">timeStruct</ref><sp/>*time);</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"></highlight></codeline>
-<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="85"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="87"><highlight class="comment"><sp/>$Log: time_8h.xml,v $
-<codeline lineno="87"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:53  reddawg
-<codeline lineno="87"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="87"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="88"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="89"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="90"><highlight class="comment"></highlight></codeline>
-<codeline lineno="91"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="92"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="93"><highlight class="comment"></highlight></codeline>
-<codeline lineno="94"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:56<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="95"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="96"><highlight class="comment"></highlight></codeline>
-<codeline lineno="97"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/09<sp/>13:37:30<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="98"><highlight class="comment"><sp/>time:<sp/>timeInit<sp/>to<sp/>time_init</highlight></codeline>
-<codeline lineno="99"><highlight class="comment"><sp/>Adjusted<sp/>initialization<sp/>routines</highlight></codeline>
-<codeline lineno="100"><highlight class="comment"></highlight></codeline>
-<codeline lineno="101"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/06/29<sp/>11:41:44<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="102"><highlight class="comment"><sp/>Fixed<sp/>some<sp/>global<sp/>variables</highlight></codeline>
-<codeline lineno="103"><highlight class="comment"></highlight></codeline>
-<codeline lineno="104"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="105"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
-<codeline lineno="106"><highlight class="comment"></highlight></codeline>
-<codeline lineno="107"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="108"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>$Log:<sp/>time.h,v<sp/>$</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"></highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"></highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:56<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"></highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/09<sp/>13:37:30<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>time:<sp/>timeInit<sp/>to<sp/>time_init</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>Adjusted<sp/>initialization<sp/>routines</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"></highlight></codeline>
+<codeline lineno="82"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/06/29<sp/>11:41:44<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>Fixed<sp/>some<sp/>global<sp/>variables</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"></highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"></highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/time.h"/>
   </compounddef>
 </doxygen>

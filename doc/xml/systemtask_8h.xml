@@ -1,48 +1,93 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="systemtask_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="systemtask_8h" kind="file" language="C++">
     <compoundname>systemtask.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includedby refid="main_8c" local="no">src/sys/init/main.c</includedby>
-    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includedby refid="armv6_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</includedby>
+    <includedby refid="i386_2systemtask_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</includedby>
+    <includedby refid="main_8c" local="no">C:/Dev/git/UbixOS/sys/init/main.c</includedby>
     <incdepgraph>
-      <node id="4451">
-        <label>src/sys/include/ubixos/systemtask.h</label>
-        <link refid="systemtask.h"/>
-        <childnode refid="4452" relation="include">
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
         </childnode>
       </node>
-      <node id="4452">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4453" relation="include">
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/systemtask.h</label>
+        <link refid="systemtask_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="4453">
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4454">
-        <label>src/sys/include/ubixos/systemtask.h</label>
-        <link refid="systemtask.h"/>
-        <childnode refid="4455" relation="include">
-        </childnode>
-        <childnode refid="4456" relation="include">
-        </childnode>
-      </node>
-      <node id="4456">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="4455">
-        <label>src/sys/init/main.c</label>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/systemtask.h</label>
+        <link refid="systemtask_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
       </node>
     </invincdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="systemtask_8h_1c7cc6a806237f8657fcdce169319fd7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void systemTask</definition>
         <argsstring>()</argsstring>
@@ -53,35 +98,34 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/systemtask.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/systemtask.c" bodystart="48" bodyend="118"/>
-        <references refid="bioscall_8h_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</references>
-        <references refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" compoundref="mpi_8h" startline="39">mpi_message::data</references>
-        <references refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
-        <references refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" compoundref="mpi_8h" startline="40">mpi_message::header</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="structtaskStruct_17930577bf37a9eb337761a9374def70e" compoundref="sched_8h" startline="61">taskStruct::imageFd</references>
-        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
-        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="mpi_8h_1454c70b9013b47d4e8fd0e45af331c69" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</references>
-        <references refid="mpi_8h_122e0e1e2617b3b69b2088c3fd41b7036" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" compoundref="mpi_8h" startline="41">mpi_message::pid</references>
-        <references refid="kprint_8h_1813254cfe6d658ea82f1dcdf2d927fb8" compoundref="kprintf_8c" startline="35">printOff</references>
-        <references refid="sched_8h_19608fa7a57005270e866d0a8b3a933f3" compoundref="sched_8c" startline="203" endline="212">sched_getDelTask</references>
-        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
-        <references refid="sched_8h_19cf37ade4c1f6184b33014ac2015e8ed" compoundref="sched_8c" startline="216" endline="226">schedFindTask</references>
-        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
-        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
-        <references refid="structvitalsStruct_14f8bcc103c132edae3eb7ed47e6ee024" compoundref="vitals_8h" startline="40">vitalsStruct::sysTicks</references>
-        <references refid="structvitalsStruct_1d4f37dedcce6dcf9d87e1f01221c5b71" compoundref="vitals_8h" startline="41">vitalsStruct::sysUptime</references>
-        <references refid="structtaskStruct_14563a310626d4f4ea885f4532356abb3" compoundref="sched_8h" startline="66">taskStruct::term</references>
-        <references refid="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" compoundref="tty_8c" startline="170" endline="172">tty_find</references>
-        <references refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" compoundref="systemtask_8c" startline="45">videoBuffer</references>
-        <references refid="vmm_8h_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</references>
-        <references refid="ap-boot_8S_17e98760dd541754f39aa9a0060176908" compoundref="ap-boot_8S" startline="6">x10</references>
-        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/ubixos/systemtask.h" line="34" column="6" bodyfile="C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c" bodystart="47" bodyend="117" declfile="C:/Dev/git/UbixOS/sys/include/ubixos/systemtask.h" declline="34" declcolumn="6"/>
+        <references refid="armv6_2bioscall_8c_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="armv6_2bioscall_8c" startline="49" endline="96">biosCall</references>
+        <references refid="structmpi__message_1a0f190328e34c27044a954f9f088d5ca2" compoundref="mpi_8h" startline="38">mpi_message::data</references>
+        <references refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</references>
+        <references refid="file_8c_1a62ac32695420234cb7ccbcfc6cabd4a4" compoundref="file_8c" startline="526" endline="566">fclose</references>
+        <references refid="structtaskStruct_1a8900c1caf1b8c278e981464a68b0e53f" compoundref="sched_8h" startline="71">taskStruct::files</references>
+        <references refid="structmpi__message_1a218677ef8c9f6457e4008c20c79eed8d" compoundref="mpi_8h" startline="39">mpi_message::header</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="io_8h_1a77b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="38" endline="46">inportByte</references>
+        <references refid="kmalloc_8h_1aaa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="342" endline="382">kfree</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="mpi_8h_1a454c70b9013b47d4e8fd0e45af331c69" compoundref="system_8c" startline="68" endline="97">mpi_createMbox</references>
+        <references refid="mpi_8h_1a22e0e1e2617b3b69b2088c3fd41b7036" compoundref="system_8c" startline="187" endline="221">mpi_fetchMessage</references>
+        <references refid="kprintf_8h_1a20b3409b318c04fbc25a13dc10d1c34f" compoundref="kprintf_8c" startline="257">ogprintOff</references>
+        <references refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="72" endline="78">outportByte</references>
+        <references refid="structmpi__message_1aebe00f8f5a01ec8d4f56f8fab455ca8c" compoundref="mpi_8h" startline="40">mpi_message::pid</references>
+        <references refid="kprintf_8h_1a813254cfe6d658ea82f1dcdf2d927fb8" compoundref="kprintf_8c" startline="256">printOff</references>
+        <references refid="armv6_2sched_8c_1a9608fa7a57005270e866d0a8b3a933f3" compoundref="armv6_2sched_8c" startline="195" endline="204">sched_getDelTask</references>
+        <references refid="armv6_2sched_8c_1a08933fe6d593a1c78b9080359f15a0b7" compoundref="armv6_2sched_8c" startline="244" endline="246">sched_yield</references>
+        <references refid="armv6_2sched_8c_1a9cf37ade4c1f6184b33014ac2015e8ed" compoundref="armv6_2sched_8c" startline="207" endline="216">schedFindTask</references>
+        <references refid="sde_8h_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</references>
+        <references refid="string_8h_1a6f3dcb20ff11ff9db5904c3cfb61a38c">strcmp</references>
+        <references refid="vitals_8h_1a67aae71be472453526fc1a0bfbf80280" compoundref="vitals_8c" startline="35">systemVitals</references>
+        <references refid="structvitalsStruct_1a78832d978f9753eb94bf615dc215f511" compoundref="vitals_8h" startline="38">vitalsStruct::sysUptime</references>
+        <references refid="structtaskStruct_1a4563a310626d4f4ea885f4532356abb3" compoundref="sched_8h" startline="77">taskStruct::term</references>
+        <references refid="tty_8h_1a4f96ccac7e60296ef496008d8cbed0ff" compoundref="tty_8c" startline="167" endline="169">tty_find</references>
+        <references refid="vmm_8h_1a6a46a3d519d9f38f00d8b00d2ce60e04" compoundref="vmm__memory_8c" startline="342" endline="393">vmm_freeProcessPages</references>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -89,71 +133,67 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: systemtask_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYSTEMTASK_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SYSTEMTASK_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="systemtask_8h_1c7cc6a806237f8657fcdce169319fd7f" kindref="member">systemTask</ref>();</highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="38"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="40"><highlight class="comment"><sp/>$Log: systemtask_8h.xml,v $
-<codeline lineno="40"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:53  reddawg
-<codeline lineno="40"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="40"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="41"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="42"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="43"><highlight class="comment"></highlight></codeline>
-<codeline lineno="44"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="45"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="46"><highlight class="comment"></highlight></codeline>
-<codeline lineno="47"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:56<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="48"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="49"><highlight class="comment"></highlight></codeline>
-<codeline lineno="50"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/06/04<sp/>17:49:32<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="51"><highlight class="comment"><sp/>Wont<sp/>work<sp/>with<sp/>out<sp/>the<sp/>makefile<sp/>updated</highlight></codeline>
-<codeline lineno="52"><highlight class="comment"></highlight></codeline>
-<codeline lineno="53"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/06/04<sp/>17:33:33<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="54"><highlight class="comment"><sp/>Changed<sp/>idle<sp/>task<sp/>to<sp/>system<sp/>task</highlight></codeline>
-<codeline lineno="55"><highlight class="comment"></highlight></codeline>
-<codeline lineno="56"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="57"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYSTEMTASK_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYSTEMTASK_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="systemtask_8h_1ac7cc6a806237f8657fcdce169319fd7f" kindref="member">systemTask</ref>();</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>$Log:<sp/>systemtask.h,v<sp/>$</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"></highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:56<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"></highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/06/04<sp/>17:49:32<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>Wont<sp/>work<sp/>with<sp/>out<sp/>the<sp/>makefile<sp/>updated</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"></highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/06/04<sp/>17:33:33<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>Changed<sp/>idle<sp/>task<sp/>to<sp/>system<sp/>task</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"></highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"></highlight></codeline>
 <codeline lineno="58"><highlight class="comment"></highlight></codeline>
-<codeline lineno="59"><highlight class="comment"></highlight></codeline>
-<codeline lineno="60"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="61"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/systemtask.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/ubixos/systemtask.h"/>
   </compounddef>
 </doxygen>

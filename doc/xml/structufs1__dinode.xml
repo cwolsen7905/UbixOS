@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structufs1__dinode" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structufs1__dinode" kind="struct" language="C++" prot="public">
     <compoundname>ufs1_dinode</compoundname>
     <includes refid="ufs_8h" local="no">ufs.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structufs1__dinode_1595f269b878c850fbe7970292fbf0ec2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a595f269b878c850fbe7970292fbf0ec2" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_atime</definition>
         <argsstring></argsstring>
         <name>di_atime</name>
@@ -15,10 +15,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="157" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="137" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="137" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1deba42b56bad1b46746b76a261a28ef1" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1adeba42b56bad1b46746b76a261a28ef1" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_atimensec</definition>
         <argsstring></argsstring>
         <name>di_atimensec</name>
@@ -28,10 +28,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="158" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="158" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="138" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="138" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_109bff0a0b5a439618e8893b4f5790368" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a09bff0a0b5a439618e8893b4f5790368" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_blocks</definition>
         <argsstring></argsstring>
         <name>di_blocks</name>
@@ -41,10 +41,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="166" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="166" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="146" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="146" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1db27793d0c34f01326474401ddde1c43" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1adb27793d0c34f01326474401ddde1c43" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_ctime</definition>
         <argsstring></argsstring>
         <name>di_ctime</name>
@@ -54,10 +54,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="161" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="161" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="141" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="141" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_10094b1e1cac8ca65a970968ad2ad0237" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a0094b1e1cac8ca65a970968ad2ad0237" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_ctimensec</definition>
         <argsstring></argsstring>
         <name>di_ctimensec</name>
@@ -67,10 +67,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="162" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="162" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="142" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="142" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1fba310e16ff4dd802733e9ea57c7ce25" prot="public" static="no" mutable="no">
-        <type><ref refid="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1afba310e16ff4dd802733e9ea57c7ce25" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1a6c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref></type>
         <definition>ufs1_daddr_t ufs1_dinode::di_db[12]</definition>
         <argsstring>[12]</argsstring>
         <name>di_db</name>
@@ -80,10 +80,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="163" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="163" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="143" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="143" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1de495b4b40c68ac16fa32c58befcd8c0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1aafdd15ffb8853aacf5b072ec3cf83e0a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t ufs1_dinode::di_flags</definition>
         <argsstring></argsstring>
         <name>di_flags</name>
@@ -93,10 +93,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="165" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="165" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="145" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="145" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_10c83844df5375d0d7e3bf70b1fd20762" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a0c83844df5375d0d7e3bf70b1fd20762" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_gen</definition>
         <argsstring></argsstring>
         <name>di_gen</name>
@@ -106,10 +106,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="167" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="167" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="147" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="147" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_13bead46ad3a23368d9986df416d5c7e2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a2c89daace31a1b7e48b9317a32a8e0ff" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t ufs1_dinode::di_gid</definition>
         <argsstring></argsstring>
         <name>di_gid</name>
@@ -119,10 +119,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="169" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="169" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="149" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="149" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1ea74a32cfbd55a50c23f779583bfb707" prot="public" static="no" mutable="no">
-        <type><ref refid="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1aea74a32cfbd55a50c23f779583bfb707" prot="public" static="no" mutable="no">
+        <type><ref refid="ufs_8h_1a6c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref></type>
         <definition>ufs1_daddr_t ufs1_dinode::di_ib[3]</definition>
         <argsstring>[3]</argsstring>
         <name>di_ib</name>
@@ -132,10 +132,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="164" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="164" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="144" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="144" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_11194f04404015f7da26bd1932773df6a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a1194f04404015f7da26bd1932773df6a" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t ufs1_dinode::di_mode</definition>
         <argsstring></argsstring>
         <name>di_mode</name>
@@ -145,10 +145,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="151" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="131" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="131" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1ddd8686290d360fe1ff97e47b25df5d6" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1addd8686290d360fe1ff97e47b25df5d6" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_mtime</definition>
         <argsstring></argsstring>
         <name>di_mtime</name>
@@ -158,10 +158,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="159" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="159" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="139" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="139" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1e1a12b1b2308f6feb92b210b3fd32c37" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1ae1a12b1b2308f6feb92b210b3fd32c37" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_mtimensec</definition>
         <argsstring></argsstring>
         <name>di_mtimensec</name>
@@ -171,10 +171,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="160" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="160" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="140" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="140" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1588b5e9341bb7c148047efff0ee220a7" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a588b5e9341bb7c148047efff0ee220a7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a3542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref></type>
         <definition>int16_t ufs1_dinode::di_nlink</definition>
         <argsstring></argsstring>
         <name>di_nlink</name>
@@ -184,10 +184,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="152" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="132" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="132" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1eb1915f50d8bd4ef7e10fc68a965bdc7" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1aeb1915f50d8bd4ef7e10fc68a965bdc7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref></type>
         <definition>u_int64_t ufs1_dinode::di_size</definition>
         <argsstring></argsstring>
         <name>di_size</name>
@@ -197,10 +197,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="156" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="136" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="136" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_191a277e4cb6f822b1bd692f5cd06fb97" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a91a277e4cb6f822b1bd692f5cd06fb97" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a6f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
         <definition>int32_t ufs1_dinode::di_spare[2]</definition>
         <argsstring>[2]</argsstring>
         <name>di_spare</name>
@@ -210,11 +210,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="170" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="170" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="150" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="150" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1a998fd67e30e27cbde8ec3cd82380390" prot="public" static="no" mutable="no">
-        <type>ufs1_dinode::@1</type>
-        <definition>union ufs1_dinode::@1  ufs1_dinode::di_u</definition>
+      <memberdef kind="variable" id="structufs1__dinode_1aed1b13367c352a3def247f7c7a9f2d19" prot="public" static="no" mutable="no">
+        <type>union ufs1_dinode::@21</type>
+        <definition>union ufs1_dinode::@21  ufs1_dinode::di_u</definition>
         <argsstring></argsstring>
         <name>di_u</name>
         <briefdescription>
@@ -223,10 +223,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="155"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="135" column="10"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_1f748891980bbd2bd0d3eb22abca89688" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a0adc87e7a871423fb4bbbbfb7daf6f6c" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         <definition>uint32_t ufs1_dinode::di_uid</definition>
         <argsstring></argsstring>
         <name>di_uid</name>
@@ -236,10 +236,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="168" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="168" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="148" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="148" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structufs1__dinode_173e877b335388dfd98354ded9cc2e5ac" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+      <memberdef kind="variable" id="structufs1__dinode_1a73e877b335388dfd98354ded9cc2e5ac" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
         <definition>u_int16_t ufs1_dinode::oldids[2]</definition>
         <argsstring>[2]</argsstring>
         <name>oldids</name>
@@ -249,34 +249,40 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="154" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="154" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="134" column="19" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="134" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="150" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="150" bodyend="171"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>ufs1_dinode</label>
+        <link refid="structufs1__dinode"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" line="130" column="18" bodyfile="C:/Dev/git/UbixOS/sys/include/ufs/ufs.h" bodystart="130" bodyend="151"/>
     <listofallmembers>
-      <member refid="structufs1__dinode_1595f269b878c850fbe7970292fbf0ec2" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_atime</name></member>
-      <member refid="structufs1__dinode_1deba42b56bad1b46746b76a261a28ef1" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_atimensec</name></member>
-      <member refid="structufs1__dinode_109bff0a0b5a439618e8893b4f5790368" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_blocks</name></member>
-      <member refid="structufs1__dinode_1db27793d0c34f01326474401ddde1c43" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_ctime</name></member>
-      <member refid="structufs1__dinode_10094b1e1cac8ca65a970968ad2ad0237" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_ctimensec</name></member>
-      <member refid="structufs1__dinode_1fba310e16ff4dd802733e9ea57c7ce25" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_db</name></member>
-      <member refid="structufs1__dinode_1de495b4b40c68ac16fa32c58befcd8c0" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_flags</name></member>
-      <member refid="structufs1__dinode_10c83844df5375d0d7e3bf70b1fd20762" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_gen</name></member>
-      <member refid="structufs1__dinode_13bead46ad3a23368d9986df416d5c7e2" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_gid</name></member>
-      <member refid="structufs1__dinode_1ea74a32cfbd55a50c23f779583bfb707" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_ib</name></member>
-      <member refid="structufs1__dinode_11194f04404015f7da26bd1932773df6a" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_mode</name></member>
-      <member refid="structufs1__dinode_1ddd8686290d360fe1ff97e47b25df5d6" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_mtime</name></member>
-      <member refid="structufs1__dinode_1e1a12b1b2308f6feb92b210b3fd32c37" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_mtimensec</name></member>
-      <member refid="structufs1__dinode_1588b5e9341bb7c148047efff0ee220a7" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_nlink</name></member>
-      <member refid="structufs1__dinode_1eb1915f50d8bd4ef7e10fc68a965bdc7" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_size</name></member>
-      <member refid="structufs1__dinode_191a277e4cb6f822b1bd692f5cd06fb97" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_spare</name></member>
-      <member refid="structufs1__dinode_1a998fd67e30e27cbde8ec3cd82380390" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_u</name></member>
-      <member refid="structufs1__dinode_1f748891980bbd2bd0d3eb22abca89688" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_uid</name></member>
-      <member refid="structufs1__dinode_173e877b335388dfd98354ded9cc2e5ac" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>oldids</name></member>
+      <member refid="structufs1__dinode_1a595f269b878c850fbe7970292fbf0ec2" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_atime</name></member>
+      <member refid="structufs1__dinode_1adeba42b56bad1b46746b76a261a28ef1" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_atimensec</name></member>
+      <member refid="structufs1__dinode_1a09bff0a0b5a439618e8893b4f5790368" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_blocks</name></member>
+      <member refid="structufs1__dinode_1adb27793d0c34f01326474401ddde1c43" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_ctime</name></member>
+      <member refid="structufs1__dinode_1a0094b1e1cac8ca65a970968ad2ad0237" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_ctimensec</name></member>
+      <member refid="structufs1__dinode_1afba310e16ff4dd802733e9ea57c7ce25" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_db</name></member>
+      <member refid="structufs1__dinode_1aafdd15ffb8853aacf5b072ec3cf83e0a" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_flags</name></member>
+      <member refid="structufs1__dinode_1a0c83844df5375d0d7e3bf70b1fd20762" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_gen</name></member>
+      <member refid="structufs1__dinode_1a2c89daace31a1b7e48b9317a32a8e0ff" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_gid</name></member>
+      <member refid="structufs1__dinode_1aea74a32cfbd55a50c23f779583bfb707" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_ib</name></member>
+      <member refid="structufs1__dinode_1a1194f04404015f7da26bd1932773df6a" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_mode</name></member>
+      <member refid="structufs1__dinode_1addd8686290d360fe1ff97e47b25df5d6" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_mtime</name></member>
+      <member refid="structufs1__dinode_1ae1a12b1b2308f6feb92b210b3fd32c37" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_mtimensec</name></member>
+      <member refid="structufs1__dinode_1a588b5e9341bb7c148047efff0ee220a7" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_nlink</name></member>
+      <member refid="structufs1__dinode_1aeb1915f50d8bd4ef7e10fc68a965bdc7" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_size</name></member>
+      <member refid="structufs1__dinode_1a91a277e4cb6f822b1bd692f5cd06fb97" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_spare</name></member>
+      <member refid="structufs1__dinode_1aed1b13367c352a3def247f7c7a9f2d19" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_u</name></member>
+      <member refid="structufs1__dinode_1a0adc87e7a871423fb4bbbbfb7daf6f6c" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>di_uid</name></member>
+      <member refid="structufs1__dinode_1a73e877b335388dfd98354ded9cc2e5ac" prot="public" virt="non-virtual"><scope>ufs1_dinode</scope><name>oldids</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

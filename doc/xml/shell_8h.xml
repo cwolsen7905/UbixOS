@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="shell_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="shell_8h" kind="file" language="C++">
     <compoundname>shell.h</compoundname>
       <sectiondef kind="func">
-      <memberdef kind="function" id="shell_8h_169b075ef7e4d7bcf5a903d3d75baac02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="shell_8h_1a69b075ef7e4d7bcf5a903d3d75baac02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void shell_init</definition>
         <argsstring>(void)</argsstring>
@@ -17,11 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="114" bodyend="116"/>
-        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
-        <references refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" compoundref="shell_8c" startline="94" endline="112">shell_thread</references>
-        <references refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</references>
-        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/net/net/shell.h" line="38" column="6" declfile="C:/Dev/git/UbixOS/sys/net/net/shell.h" declline="38" declcolumn="6"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -61,15 +57,15 @@
 <codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
 <codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
 <codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: shell_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id:<sp/>shell.h<sp/>54<sp/>2016-01-11<sp/>01:29:55Z<sp/>reddawg<sp/>$</highlight></codeline>
 <codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__SHELL_H__</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__SHELL_H__</highlight></codeline>
-<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8c_169b075ef7e4d7bcf5a903d3d75baac02" kindref="member">shell_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__SHELL_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__SHELL_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8h_1a69b075ef7e4d7bcf5a903d3d75baac02" kindref="member">shell_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__SHELL_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__SHELL_H__<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/net/net/shell.h"/>
   </compounddef>
 </doxygen>

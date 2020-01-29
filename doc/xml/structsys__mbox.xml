@@ -1,61 +1,67 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structsys__mbox" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structsys__mbox" kind="struct" language="C++" prot="public">
     <compoundname>sys_mbox</compoundname>
+    <includes refid="sys__arch_8h" local="no">sys_arch.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structsys__mbox_18db17d5a2fed5c240e46f2644f64fe6b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 sys_mbox::first</definition>
+      <memberdef kind="variable" id="structsys__mbox_1a2bd3eadfaa16d2237607107f2cfed0ee" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> *</type>
+        <definition>struct sys_sem* sys_mbox::empty</definition>
         <argsstring></argsstring>
-        <name>first</name>
+        <name>empty</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="109" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
-        <referencedby refid="sys__arch_8c_1fd77d183bb0693a21119223e72af96c2" compoundref="sys__arch_8c" startline="204" endline="213">sys_mbox_new</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="31" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="31" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsys__mbox_1e88d235ceab3354ef612e0be18456a01" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-        <definition>uInt16 sys_mbox::last</definition>
+      <memberdef kind="variable" id="structsys__mbox_1a1553f21c46b5160df7da394a8981a276" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> *</type>
+        <definition>struct sys_sem* sys_mbox::full</definition>
         <argsstring></argsstring>
-        <name>last</name>
+        <name>full</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="109" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
-        <referencedby refid="sys__arch_8c_1fd77d183bb0693a21119223e72af96c2" compoundref="sys__arch_8c" startline="204" endline="213">sys_mbox_new</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="32" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="32" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsys__mbox_155a1a2b60ec2ffc998debbcdb68cb6fd" prot="public" static="no" mutable="no">
-        <type><ref refid="structsys__sem" kindref="compound">sys_sem</ref> *</type>
-        <definition>struct sys_sem* sys_mbox::mail</definition>
+      <memberdef kind="variable" id="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_mbox::head</definition>
         <argsstring></argsstring>
-        <name>mail</name>
+        <name>head</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="111" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="111" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
-        <referencedby refid="sys__arch_8c_15f93e13777922e6745f5aeb6bb27ee0b" compoundref="sys__arch_8c" startline="215" endline="225">sys_mbox_free</referencedby>
-        <referencedby refid="sys__arch_8c_1fd77d183bb0693a21119223e72af96c2" compoundref="sys__arch_8c" startline="204" endline="213">sys_mbox_new</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="23" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="23" bodyend="-1"/>
+        <referencedby refid="group__sys__mbox_1ga8ff11ed9831af7ca486123f74d4064ac" compoundref="sys__arch_8c" startline="215" endline="249">sys_mbox_post</referencedby>
+        <referencedby refid="group__sys__mbox_1gacc06f47f34de04084e1d49788ce871b6" compoundref="sys__arch_8c" startline="251" endline="285">sys_mbox_trypost</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structsys__mbox_1dc8ebbfd1d184d1edbd541903597cc5a" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structsys__mbox_1a1b56bec7f803273a160fd1812ef9a78d" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structsys__sem" kindref="compound">sys_sem</ref> *</type>
+        <definition>struct sys_sem* sys_mbox::lock</definition>
+        <argsstring></argsstring>
+        <name>lock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="33" column="16" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mbox_1a0670ae55362f4384f247862cd9dd3b51" prot="public" static="no" mutable="no">
         <type>void *</type>
-        <definition>void* sys_mbox::msgs[SYS_MBOX_SIZE]</definition>
-        <argsstring>[SYS_MBOX_SIZE]</argsstring>
+        <definition>void* sys_mbox::msgs[100]</definition>
+        <argsstring>[100]</argsstring>
         <name>msgs</name>
         <briefdescription>
         </briefdescription>
@@ -63,26 +69,33 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="110" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="27" column="8" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="27" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structsys__mbox_14c3d45a63605eee5abf52b98914ad5c7" prot="public" static="no" mutable="no">
-        <type><ref refid="structsys__sem" kindref="compound">sys_sem</ref> *</type>
-        <definition>struct sys_sem* sys_mbox::mutex</definition>
+      <memberdef kind="variable" id="structsys__mbox_1aff3a258c562ed6a62aba85bec6ac1c65" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t sys_mbox::tail</definition>
         <argsstring></argsstring>
-        <name>mutex</name>
+        <name>tail</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="112" bodyend="-1"/>
-        <referencedby refid="sys__arch_8c_1d3bc5455ca12b164bfc78974ff0c1e3c" compoundref="sys__arch_8c" startline="254" endline="293">sys_arch_mbox_fetch</referencedby>
-        <referencedby refid="sys__arch_8c_15f93e13777922e6745f5aeb6bb27ee0b" compoundref="sys__arch_8c" startline="215" endline="225">sys_mbox_free</referencedby>
-        <referencedby refid="sys__arch_8c_1fd77d183bb0693a21119223e72af96c2" compoundref="sys__arch_8c" startline="204" endline="213">sys_mbox_new</referencedby>
-        <referencedby refid="sys__arch_8c_11e7a0edf077b67162d80fefffc8805fb" compoundref="sys__arch_8c" startline="227" endline="252">sys_mbox_post</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="24" column="12" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mbox_1ad6698db8cc389a910fd56d801c9e7887" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sys_mbox::wait_send</definition>
+        <argsstring></argsstring>
+        <name>wait_send</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="35" column="7" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="35" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -90,40 +103,43 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="324">
+      <node id="1">
         <label>sys_mbox</label>
         <link refid="structsys__mbox"/>
-        <childnode refid="325" relation="usage">
-          <edgelabel>mutex
-mail</edgelabel>
+        <childnode refid="2" relation="usage">
+          <edgelabel>+lock</edgelabel>
+          <edgelabel>+full</edgelabel>
+          <edgelabel>+empty</edgelabel>
         </childnode>
       </node>
-      <node id="326">
+      <node id="3">
         <label>ubthread_mutex</label>
         <link refid="structubthread__mutex"/>
       </node>
-      <node id="327">
+      <node id="4">
         <label>ubthread_cond</label>
         <link refid="structubthread__cond"/>
       </node>
-      <node id="325">
+      <node id="2">
         <label>sys_sem</label>
         <link refid="structsys__sem"/>
-        <childnode refid="326" relation="usage">
-          <edgelabel>mutex</edgelabel>
+        <childnode refid="3" relation="usage">
+          <edgelabel>+mutex</edgelabel>
         </childnode>
-        <childnode refid="327" relation="usage">
-          <edgelabel>cond</edgelabel>
+        <childnode refid="4" relation="usage">
+          <edgelabel>+cond</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="108" bodyend="113"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="22" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="22" bodyend="39"/>
     <listofallmembers>
-      <member refid="structsys__mbox_18db17d5a2fed5c240e46f2644f64fe6b" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>first</name></member>
-      <member refid="structsys__mbox_1e88d235ceab3354ef612e0be18456a01" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>last</name></member>
-      <member refid="structsys__mbox_155a1a2b60ec2ffc998debbcdb68cb6fd" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>mail</name></member>
-      <member refid="structsys__mbox_1dc8ebbfd1d184d1edbd541903597cc5a" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>msgs</name></member>
-      <member refid="structsys__mbox_14c3d45a63605eee5abf52b98914ad5c7" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>mutex</name></member>
+      <member refid="structsys__mbox_1a2bd3eadfaa16d2237607107f2cfed0ee" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>empty</name></member>
+      <member refid="structsys__mbox_1a1553f21c46b5160df7da394a8981a276" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>full</name></member>
+      <member refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>head</name></member>
+      <member refid="structsys__mbox_1a1b56bec7f803273a160fd1812ef9a78d" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>lock</name></member>
+      <member refid="structsys__mbox_1a0670ae55362f4384f247862cd9dd3b51" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>msgs</name></member>
+      <member refid="structsys__mbox_1aff3a258c562ed6a62aba85bec6ac1c65" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>tail</name></member>
+      <member refid="structsys__mbox_1ad6698db8cc389a910fd56d801c9e7887" prot="public" virt="non-virtual"><scope>sys_mbox</scope><name>wait_send</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

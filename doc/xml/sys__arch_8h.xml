@@ -1,186 +1,408 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="sys__arch_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="sys__arch_8h" kind="file" language="C++">
     <compoundname>sys_arch.h</compoundname>
-    <includedby refid="sys_8h" local="yes">src/sys/include/net/sys.h</includedby>
+    <includes refid="ubthread_8h" local="no">ubixos/ubthread.h</includes>
+    <includes refid="sem_8h" local="no">ubixos/sem.h</includes>
+    <includedby refid="sys_8h" local="no">C:/Dev/git/UbixOS/sys/include/net/sys.h</includedby>
+    <includedby refid="sys__arch_8c" local="no">C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</includedby>
+    <incdepgraph>
+      <node id="22">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>ubixos/sem.h</label>
+        <link refid="sem_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="30">
+        <label>ubixos/errno.h</label>
+        <link refid="ubixos_2errno_8h"/>
+      </node>
+      <node id="25">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="16">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="19">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="13">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="27">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="7">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
     <invincdepgraph>
-      <node id="560">
-        <label>src/sys/net/net/udpecho.c</label>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/net/net/udpecho.c</label>
         <link refid="udpecho_8c"/>
       </node>
-      <node id="563">
-        <label>src/sys/net/netif/tcpdump.c</label>
-        <link refid="tcpdump_8c"/>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/net/core/mem.c</label>
+        <link refid="mem_8c"/>
       </node>
-      <node id="562">
-        <label>src/sys/net/netif/loopif.c</label>
-        <link refid="loopif_8c"/>
-      </node>
-      <node id="564">
-        <label>src/sys/net/net/sys_arch.c</label>
-        <link refid="sys__arch_8c"/>
-      </node>
-      <node id="548">
-        <label>src/sys/include/net/arch/sys_arch.h</label>
-        <link refid="sys_arch.h"/>
-        <childnode refid="549" relation="include">
-        </childnode>
-      </node>
-      <node id="561">
-        <label>src/sys/include/net/tcp.h</label>
-        <link refid="tcp_8h"/>
-        <childnode refid="550" relation="include">
-        </childnode>
-        <childnode refid="551" relation="include">
-        </childnode>
-        <childnode refid="554" relation="include">
-        </childnode>
-        <childnode refid="562" relation="include">
-        </childnode>
-        <childnode refid="563" relation="include">
-        </childnode>
-      </node>
-      <node id="565">
-        <label>src/sys/net/netif/ethernetif.c</label>
-        <link refid="ethernetif_8c"/>
-      </node>
-      <node id="558">
-        <label>src/sys/net/net/bot.c</label>
-        <link refid="bot_8c"/>
-      </node>
-      <node id="554">
-        <label>src/sys/net/api/tcpip.c</label>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/net/api/tcpip.c</label>
         <link refid="tcpip_8c"/>
       </node>
-      <node id="552">
-        <label>src/sys/include/net/tcpip.h</label>
-        <link refid="tcpip_8h"/>
-        <childnode refid="553" relation="include">
-        </childnode>
-        <childnode refid="554" relation="include">
-        </childnode>
-        <childnode refid="555" relation="include">
-        </childnode>
-      </node>
-      <node id="551">
-        <label>src/sys/include/net/api_msg.h</label>
-        <link refid="api__msg_8h"/>
-        <childnode refid="552" relation="include">
-        </childnode>
-        <childnode refid="556" relation="include">
-        </childnode>
-        <childnode refid="553" relation="include">
-        </childnode>
-      </node>
-      <node id="559">
-        <label>src/sys/net/net/shell.c</label>
-        <link refid="shell_8c"/>
-      </node>
-      <node id="556">
-        <label>src/sys/net/api/api_lib.c</label>
-        <link refid="api__lib_8c"/>
-      </node>
-      <node id="555">
-        <label>src/sys/net/net/init.c</label>
-        <link refid="init_8c"/>
-      </node>
-      <node id="550">
-        <label>src/sys/include/net/api.h</label>
-        <link refid="api_8h"/>
-        <childnode refid="551" relation="include">
-        </childnode>
-        <childnode refid="556" relation="include">
-        </childnode>
-        <childnode refid="557" relation="include">
-        </childnode>
-        <childnode refid="558" relation="include">
-        </childnode>
-        <childnode refid="559" relation="include">
-        </childnode>
-        <childnode refid="560" relation="include">
-        </childnode>
-      </node>
-      <node id="549">
-        <label>src/sys/include/net/sys.h</label>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/net/sys.h</label>
         <link refid="sys_8h"/>
-        <childnode refid="550" relation="include">
+        <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="551" relation="include">
+        <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="561" relation="include">
+        <childnode refid="12" relation="include">
         </childnode>
-        <childnode refid="553" relation="include">
+        <childnode refid="4" relation="include">
         </childnode>
-        <childnode refid="554" relation="include">
+        <childnode refid="11" relation="include">
         </childnode>
-        <childnode refid="555" relation="include">
+        <childnode refid="13" relation="include">
         </childnode>
-        <childnode refid="564" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
-        <childnode refid="560" relation="include">
+        <childnode refid="14" relation="include">
         </childnode>
-        <childnode refid="565" relation="include">
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
         </childnode>
       </node>
-      <node id="557">
-        <label>src/sys/net/api/sockets.c</label>
-        <link refid="sockets_8c"/>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/include/net/timeouts.h</label>
+        <link refid="timeouts_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
       </node>
-      <node id="553">
-        <label>src/sys/net/api/api_msg.c</label>
-        <link refid="api__msg_8c"/>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/include/net/priv/tcpip_priv.h</label>
+        <link refid="tcpip__priv_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/net/core/sys.c</label>
+        <link refid="sys_8c"/>
+      </node>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/net/core/init.c</label>
+        <link refid="core_2init_8c"/>
+      </node>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/net/core/netif.c</label>
+        <link refid="netif_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/net/core/memp.c</label>
+        <link refid="memp_8c"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/net/core/timeouts.c</label>
+        <link refid="timeouts_8c"/>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/net/core/pbuf.c</label>
+        <link refid="pbuf_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/net/net/init.c</label>
+        <link refid="net_2init_8c"/>
       </node>
     </invincdepgraph>
+    <innerclass refid="structsys__mbox" prot="public">sys_mbox</innerclass>
+    <innerclass refid="structsys__mutex" prot="public">sys_mutex</innerclass>
+    <innerclass refid="structsys__thread" prot="public">sys_thread</innerclass>
+    <innerclass refid="structsys__timeouts" prot="public">sys_timeouts</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="sys__arch_8h_1151f190d8a41cf6e2a02e0eec2b75355" prot="public" static="no">
+      <memberdef kind="define" id="sys__arch_8h_1a151f190d8a41cf6e2a02e0eec2b75355" prot="public" static="no">
         <name>SYS_MBOX_NULL</name>
-        <initializer>NULL</initializer>
+        <initializer><ref refid="include_2sys_2types_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref></initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
-        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
-        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
-        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
-        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
-        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
-        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
-        <referencedby refid="api__msg_8c_15271a23a432de3322f8fa228a3f3a11f" compoundref="api__msg_8c" startline="47" endline="63">recv_tcp</referencedby>
-        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
-        <referencedby refid="sys__arch_8c_15f93e13777922e6745f5aeb6bb27ee0b" compoundref="sys__arch_8c" startline="215" endline="225">sys_mbox_free</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="7" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="7" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="sys__arch_8h_1c66fcad3bfe79589054eb31765031544" prot="public" static="no">
-        <name>SYS_SEM_NULL</name>
-        <initializer>NULL</initializer>
+      <memberdef kind="define" id="sys__arch_8h_1ab6084e542da137ecb93bb42ce1087518" prot="public" static="no">
+        <name>SYS_MBOX_SIZE</name>
+        <initializer>100</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" bodystart="39" bodyend="-1"/>
-        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
-        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
-        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
-        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
-        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
-        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
-        <referencedby refid="api__msg_8c_1cfa8c3089ec7810a74fea8d004197343" compoundref="api__msg_8c" startline="96" endline="107">poll_tcp</referencedby>
-        <referencedby refid="api__msg_8c_1603b715a121557dc45c821caab18efc2" compoundref="api__msg_8c" startline="110" endline="119">sent_tcp</referencedby>
-        <referencedby refid="sys__arch_8c_199ef8b5ed640213c1d06d2622889131a" compoundref="sys__arch_8c" startline="379" endline="383">sys_sem_free</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="9" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sys__arch_8h_1ac66fcad3bfe79589054eb31765031544" prot="public" static="no">
+        <name>SYS_SEM_NULL</name>
+        <initializer><ref refid="include_2sys_2types_8h_1a070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="8" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="8" bodyend="-1"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="typedef">
-      <memberdef kind="typedef" id="sys__arch_8h_1ddb49bcb576ed4b88003e526975ed15d" prot="public" static="no">
-        <type><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref> *</type>
-        <definition>typedef struct sys_mbox* sys_mbox_t</definition>
+      <memberdef kind="typedef" id="sys__arch_8h_1afa991a884603f30bcba80b9fc49cd1e2" prot="public" static="no">
+        <type>struct <ref refid="structsys__mbox" kindref="compound">sys_mbox</ref></type>
+        <definition>typedef struct sys_mbox sys_mbox_t</definition>
         <argsstring></argsstring>
         <name>sys_mbox_t</name>
         <briefdescription>
@@ -189,23 +411,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" bodystart="45" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="30" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="41" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="typedef" id="sys__arch_8h_19757ec2132358c603f527a8daeae684e" prot="public" static="no">
-        <type><ref refid="structsys__sem" kindref="compound">sys_sem</ref> *</type>
-        <definition>typedef struct sys_sem* sys_sem_t</definition>
+      <memberdef kind="typedef" id="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" prot="public" static="no">
+        <type>struct <ref refid="structsys__mutex" kindref="compound">sys_mutex</ref></type>
+        <definition>typedef struct sys_mutex sys_mutex_t</definition>
         <argsstring></argsstring>
-        <name>sys_sem_t</name>
+        <name>sys_mutex_t</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" bodystart="42" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="30" column="6" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="20" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="typedef" id="sys__arch_8h_12930394713e07b1b46b0b5396708d911" prot="public" static="no">
-        <type><ref refid="structsys__thread" kindref="compound">sys_thread</ref> *</type>
+      <memberdef kind="typedef" id="sys__arch_8h_1a2930394713e07b1b46b0b5396708d911" prot="public" static="no">
+        <type>struct <ref refid="structsys__thread" kindref="compound">sys_thread</ref> *</type>
         <definition>typedef struct sys_thread* sys_thread_t</definition>
         <argsstring></argsstring>
         <name>sys_thread_t</name>
@@ -215,7 +437,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h" bodystart="48" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" line="50" column="26" bodyfile="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h" bodystart="50" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -223,58 +445,60 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
-<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
-<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
-<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
-<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
-<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
-<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
-<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
-<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
-<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
-<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: sys__arch_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__ARCH_SYS_ARCH_H__</highlight></codeline>
-<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__ARCH_SYS_ARCH_H__</highlight></codeline>
-<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="sys__arch_8h_1151f190d8a41cf6e2a02e0eec2b75355" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_MBOX_NULL<sp/>NULL</highlight></codeline>
-<codeline lineno="39" refid="sys__arch_8h_1c66fcad3bfe79589054eb31765031544" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SYS_SEM_NULL<sp/><sp/>NULL</highlight></codeline>
-<codeline lineno="40"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__sem" kindref="compound">sys_sem</ref>;</highlight></codeline>
-<codeline lineno="42" refid="sys__arch_8h_19757ec2132358c603f527a8daeae684e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>*<sp/><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref>;</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref>;</highlight></codeline>
-<codeline lineno="45" refid="sys__arch_8h_1ddb49bcb576ed4b88003e526975ed15d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>*<ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref>;</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__thread" kindref="compound">sys_thread</ref>;</highlight></codeline>
-<codeline lineno="48" refid="sys__arch_8h_12930394713e07b1b46b0b5396708d911" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__thread" kindref="compound">sys_thread</ref><sp/>*<sp/><ref refid="structsys__thread" kindref="compound">sys_thread_t</ref>;</highlight></codeline>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__ARCH_SYS_ARCH_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>__ARCH_SYS_ARCH_H__</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubthread_8h" kindref="compound">ubixos/ubthread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sem_8h" kindref="compound">ubixos/sem.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="sys__arch_8h_1a151f190d8a41cf6e2a02e0eec2b75355" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_MBOX_NULL<sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="sys__arch_8h_1ac66fcad3bfe79589054eb31765031544" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_SEM_NULL<sp/><sp/>NULL</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="sys__arch_8h_1ab6084e542da137ecb93bb42ce1087518" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SYS_MBOX_SIZE<sp/>100</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Structs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12" refid="structsys__timeouts" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeouts" kindref="compound">sys_timeouts</ref><sp/>{</highlight></codeline>
+<codeline lineno="13" refid="structsys__timeouts_1a80922134cf5f7db06829b6ee49b4954c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sys_timeout<sp/>*<ref refid="structsys__timeouts_1a80922134cf5f7db06829b6ee49b4954c" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16" refid="structsys__mutex" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mutex" kindref="compound">sys_mutex</ref><sp/>{</highlight></codeline>
+<codeline lineno="17" refid="structsys__mutex_1a756aea442175e0bb604f43582d1b0761" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref><sp/><ref refid="structsys__mutex_1a756aea442175e0bb604f43582d1b0761" kindref="member">mutex</ref>;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="sys__arch_8h_1a222e7d52225fc3453d7a2240b9209849" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mutex" kindref="compound">sys_mutex</ref><sp/><ref refid="structsys__mutex" kindref="compound">sys_mutex_t</ref>;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="structsys__mbox" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/>{</highlight></codeline>
+<codeline lineno="23" refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structsys__mbox_1a084e62236b143164e74e37d60ecba19b" kindref="member">head</ref>;</highlight></codeline>
+<codeline lineno="24" refid="structsys__mbox_1aff3a258c562ed6a62aba85bec6ac1c65" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="structsys__mbox_1aff3a258c562ed6a62aba85bec6ac1c65" kindref="member">tail</ref>;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//MrOlsen<sp/>(2017-12-28)<sp/>-<sp/>This<sp/>will<sp/>break<sp/>because<sp/>size<sp/>is<sp/>passable</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27" refid="structsys__mbox_1a0670ae55362f4384f247862cd9dd3b51" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structsys__mbox_1a0670ae55362f4384f247862cd9dd3b51" kindref="member">msgs</ref>[<ref refid="sys__arch_8h_1ab6084e542da137ecb93bb42ce1087518" kindref="member">SYS_MBOX_SIZE</ref>];</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//struct<sp/>ubthread_mutex<sp/>*lock;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="structsys__mbox_1a2bd3eadfaa16d2237607107f2cfed0ee" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>*<ref refid="structsys__mbox_1a2bd3eadfaa16d2237607107f2cfed0ee" kindref="member">empty</ref>;</highlight></codeline>
+<codeline lineno="32" refid="structsys__mbox_1a1553f21c46b5160df7da394a8981a276" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>*<ref refid="structsys__mbox_1a1553f21c46b5160df7da394a8981a276" kindref="member">full</ref>;</highlight></codeline>
+<codeline lineno="33" refid="structsys__mbox_1a1b56bec7f803273a160fd1812ef9a78d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__sem" kindref="compound">sys_sem</ref><sp/>*<ref refid="structsys__mbox_1a1b56bec7f803273a160fd1812ef9a78d" kindref="member">lock</ref>;</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="structsys__mbox_1ad6698db8cc389a910fd56d801c9e7887" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structsys__mbox_1ad6698db8cc389a910fd56d801c9e7887" kindref="member">wait_send</ref>;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//void<sp/>**queue;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//uint32_t<sp/>size;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="sys__arch_8h_1afa991a884603f30bcba80b9fc49cd1e2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__mbox" kindref="compound">sys_mbox</ref><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="structsys__thread" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__thread" kindref="compound">sys_thread</ref><sp/>{</highlight></codeline>
+<codeline lineno="44" refid="structsys__thread_1a30bbf3f21718b4c9579777d2ba4d6528" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__thread" kindref="compound">sys_thread</ref><sp/>*<ref refid="structsys__thread_1a30bbf3f21718b4c9579777d2ba4d6528" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="45" refid="structsys__thread_1abf0a0f75b1958421416c879d8011413b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__timeouts" kindref="compound">sys_timeouts</ref><sp/><ref refid="structsys__thread_1abf0a0f75b1958421416c879d8011413b" kindref="member">timeouts</ref>;</highlight></codeline>
+<codeline lineno="46" refid="structsys__thread_1a109a6dc4db2e0d62aa546ce36f3fbc1b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="structsys__thread_1a109a6dc4db2e0d62aa546ce36f3fbc1b" kindref="member">ubthread</ref>;</highlight></codeline>
+<codeline lineno="47" refid="structsys__thread_1ac440e0aff45f778ef8d397d3db2aea24" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsys__thread_1ac440e0aff45f778ef8d397d3db2aea24" kindref="member">name</ref>[128];</highlight></codeline>
+<codeline lineno="48"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="49"><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__ARCH_SYS_ARCH_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="sys__arch_8h_1a2930394713e07b1b46b0b5396708d911" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsys__thread" kindref="compound">sys_thread</ref><sp/>*<sp/><ref refid="sys__arch_8h_1a2930394713e07b1b46b0b5396708d911" kindref="member">sys_thread_t</ref>;</highlight></codeline>
 <codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/sys_arch.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/arch/sys_arch.h"/>
   </compounddef>
 </doxygen>

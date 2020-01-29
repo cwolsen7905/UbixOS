@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="mouse_8c" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="mouse_8c" kind="file" language="C++">
     <compoundname>mouse.c</compoundname>
     <includes refid="mouse_8h" local="no">isa/mouse.h</includes>
     <includes refid="8259_8h" local="no">isa/8259.h</includes>
@@ -8,77 +8,118 @@
     <includes refid="gdt_8h" local="no">sys/gdt.h</includes>
     <includes refid="io_8h" local="no">sys/io.h</includes>
     <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
     <incdepgraph>
-      <node id="5134">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="5135" relation="include">
-        </childnode>
+      <node id="15">
+        <label>stdarg.h</label>
+        <link refid="stdarg_8h"/>
       </node>
-      <node id="5135">
-        <label>sys/_types.h</label>
-        <link refid="__types_8h"/>
-      </node>
-      <node id="5132">
-        <label>isa/mouse.h</label>
-        <link refid="mouse_8h"/>
-      </node>
-      <node id="5136">
-        <label>sys/idt.h</label>
-        <link refid="idt_8h"/>
-        <childnode refid="5134" relation="include">
-        </childnode>
-        <childnode refid="5137" relation="include">
-        </childnode>
-      </node>
-      <node id="5139">
-        <label>lib/kprintf.h</label>
-        <link refid="kprintf_8h"/>
-        <childnode refid="5134" relation="include">
-        </childnode>
-      </node>
-      <node id="5137">
-        <label>sys/gdt.h</label>
-        <link refid="gdt_8h"/>
-      </node>
-      <node id="5138">
+      <node id="13">
         <label>sys/io.h</label>
         <link refid="io_8h"/>
       </node>
-      <node id="5133">
-        <label>isa/8259.h</label>
-        <link refid="8259_8h"/>
-        <childnode refid="5134" relation="include">
+      <node id="12">
+        <label>sys/gdt.h</label>
+        <link refid="gdt_8h"/>
+      </node>
+      <node id="11">
+        <label>sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
         </childnode>
       </node>
-      <node id="5131">
-        <label>src/sys/isa/mouse.c</label>
-        <link refid="mouse.c"/>
-        <childnode refid="5132" relation="include">
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
         </childnode>
-        <childnode refid="5133" relation="include">
+        <childnode refid="5" relation="include">
         </childnode>
-        <childnode refid="5136" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
-        <childnode refid="5137" relation="include">
+        <childnode refid="9" relation="include">
         </childnode>
-        <childnode refid="5138" relation="include">
+        <childnode refid="10" relation="include">
         </childnode>
-        <childnode refid="5139" relation="include">
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
-        <childnode refid="5134" relation="include">
+      </node>
+      <node id="3">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>isa/mouse.h</label>
+        <link refid="mouse_8h"/>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/isa/mouse.c</label>
+        <link refid="mouse_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+      </node>
+      <node id="5">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
     </incdepgraph>
       <sectiondef kind="func">
-      <memberdef kind="function" id="mouse_8c_16a4ad5b5e62c2d3d9398bd4ac9ea4c6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mouse_8c_1af10855ac152b8b6fea7edd22c5844596" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
         <definition>asm</definition>
-        <argsstring>(&quot;.globl mouseISR \n&quot;&quot;mouseISR:       \n&quot;&quot;  pusha         \n&quot;&quot;  call mouseHandler \n&quot;&quot;  popa          \n&quot;&quot;  iret          \n&quot;)</argsstring>
+        <argsstring>(&quot;.globl mouseISR \n&quot; &quot;mouseISR:       \n&quot; &quot;  pusha         \n&quot; &quot;  call mouseHandler \n&quot; &quot;  popa          \n&quot; &quot;  iret          \n&quot;)</argsstring>
         <name>asm</name>
         <param>
-          <type>&quot;.globl mouseISR \n&quot;&quot;mouseISR: \n&quot;&quot; pusha \n&quot;&quot; call mouseHandler \n&quot;&quot; popa \n&quot;&quot; iret \n&quot;</type>
+          <type>&quot;.globl <ref refid="mouse_8h_1a589718a005c965a29093980c1bdb62e1" kindref="member">mouseISR</ref> \n&quot; &quot;mouseISR: \n&quot; &quot; pusha \n&quot; &quot; call <ref refid="mouse_8c_1adb1403c2c7c25ea9b2826c504f8eb502" kindref="member">mouseHandler</ref> \n&quot; &quot; popa \n&quot; &quot; iret \n&quot;</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -86,10 +127,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" line="139"/>
+        <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c" line="122" column="1" declfile="C:/Dev/git/UbixOS/sys/isa/mouse.c" declline="122" declcolumn="1"/>
       </memberdef>
-      <memberdef kind="function" id="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="function" id="mouse_8c_1a3cef921f56340e940a23cb8039cdfd4c" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>static uInt8 kbdRead</definition>
         <argsstring>()</argsstring>
         <name>kbdRead</name>
@@ -99,22 +140,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" bodystart="38" bodyend="57"/>
-        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
-        <referencedby refid="mouse_8c_13a404b999a39405486648473efc2aaa4" compoundref="mouse_8c" startline="75" endline="90">kbdWriteRead</referencedby>
-        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c" line="36" column="14" bodyfile="C:/Dev/git/UbixOS/sys/isa/mouse.c" bodystart="36" bodyend="53"/>
       </memberdef>
-      <memberdef kind="function" id="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mouse_8c_1a57d9b8c880e86f3c89741cf29602cd73" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>static void kbdWrite</definition>
         <argsstring>(uInt16 port, uInt8 data)</argsstring>
         <name>kbdWrite</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
           <declname>port</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
           <declname>data</declname>
         </param>
         <briefdescription>
@@ -123,27 +161,23 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" bodystart="59" bodyend="73"/>
-        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <referencedby refid="mouse_8c_13a404b999a39405486648473efc2aaa4" compoundref="mouse_8c" startline="75" endline="90">kbdWriteRead</referencedby>
-        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c" line="55" column="13" bodyfile="C:/Dev/git/UbixOS/sys/isa/mouse.c" bodystart="55" bodyend="68"/>
       </memberdef>
-      <memberdef kind="function" id="mouse_8c_13a404b999a39405486648473efc2aaa4" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+      <memberdef kind="function" id="mouse_8c_1a3a404b999a39405486648473efc2aaa4" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
         <definition>static uInt8 kbdWriteRead</definition>
         <argsstring>(uInt16 port, uInt8 data, const char *expect)</argsstring>
         <name>kbdWriteRead</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref></type>
           <declname>port</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
           <declname>data</declname>
         </param>
         <param>
-          <type>const char *</type>
+          <type><ref refid="cdefs_8h_1a2c212835823e3c54a8ab6d95c652660e" kindref="member">const</ref> char *</type>
           <declname>expect</declname>
         </param>
         <briefdescription>
@@ -152,12 +186,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" bodystart="75" bodyend="90"/>
-        <references refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" compoundref="mouse_8c" startline="38" endline="57">kbdRead</references>
-        <references refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" compoundref="mouse_8c" startline="59" endline="73">kbdWrite</references>
-        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c" line="70" column="14" bodyfile="C:/Dev/git/UbixOS/sys/isa/mouse.c" bodystart="70" bodyend="82"/>
       </memberdef>
-      <memberdef kind="function" id="mouse_8c_1db1403c2c7c25ea9b2826c504f8eb502" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mouse_8c_1adb1403c2c7c25ea9b2826c504f8eb502" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void mouseHandler</definition>
         <argsstring>()</argsstring>
@@ -168,14 +199,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" bodystart="141" bodyend="148"/>
-        <references refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" compoundref="8259_8h" startline="39">eoi</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="8259_8h_10195451428bc646f820202dc15f25d9f" compoundref="8259_8h" startline="35">mPic</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" compoundref="8259_8h" startline="37">sPic</references>
+        <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c" line="131" column="6" bodyfile="C:/Dev/git/UbixOS/sys/isa/mouse.c" bodystart="131" bodyend="138"/>
+        <references refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" compoundref="8259_8h" startline="38">eoi</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="8259_8h_1a0195451428bc646f820202dc15f25d9f" compoundref="8259_8h" startline="34">mPic</references>
+        <references refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="72" endline="78">outportByte</references>
+        <references refid="8259_8h_1a7d4efc593ecc4ace3d92e1f4ee919b99" compoundref="8259_8h" startline="36">sPic</references>
       </memberdef>
-      <memberdef kind="function" id="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="mouse_8c_1addd388f29d13c841d76dbab30cdfa756" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mouseInit</definition>
         <argsstring>()</argsstring>
@@ -186,22 +217,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c" bodystart="94" bodyend="130"/>
-        <references refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" compoundref="gdt_8h" startline="44">dDpl3</references>
-        <references refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" compoundref="gdt_8h" startline="37">dInt</references>
-        <references refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" compoundref="gdt_8h" startline="48">dPresent</references>
-        <references refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" compoundref="8259_8h" startline="39">eoi</references>
-        <references refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a">irqEnable</references>
-        <references refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" compoundref="mouse_8c" startline="38" endline="57">kbdRead</references>
-        <references refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" compoundref="mouse_8c" startline="59" endline="73">kbdWrite</references>
-        <references refid="mouse_8c_13a404b999a39405486648473efc2aaa4" compoundref="mouse_8c" startline="75" endline="90">kbdWriteRead</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="mouse_8h_1589718a005c965a29093980c1bdb62e1">mouseISR</references>
-        <references refid="8259_8h_10195451428bc646f820202dc15f25d9f" compoundref="8259_8h" startline="35">mPic</references>
-        <references refid="8259_8h_17d84962c1a1c225344a94545309f92fc" compoundref="8259_8h" startline="42">mVec</references>
-        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
-        <references refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</references>
-        <references refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" compoundref="8259_8h" startline="37">sPic</references>
+        <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c" line="84" column="5" bodyfile="C:/Dev/git/UbixOS/sys/isa/mouse.c" bodystart="84" bodyend="120"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -209,182 +225,169 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: mouse_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mouse_8h" kindref="compound">isa/mouse.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="idt_8h" kindref="compound">sys/idt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" kindref="member">kbdRead</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>Timeout;</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>Stat,<sp/>Data;</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(Timeout<sp/>=<sp/>50000L;<sp/>Timeout<sp/>!=<sp/>0;<sp/>Timeout--)<sp/>{</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Stat<sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x64);</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"></highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>loop<sp/>until<sp/>8042<sp/>output<sp/>buffer<sp/>full<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((Stat<sp/>&amp;<sp/>0x01)<sp/>!=<sp/>0)</highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>Data<sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x60);</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"></highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>loop<sp/>if<sp/>parity<sp/>error<sp/>or<sp/>receive<sp/>timeout<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">((Stat<sp/>&amp;<sp/>0xC0)<sp/>==<sp/>0)</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>Data;</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
-<codeline lineno="57"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mouse_8h" kindref="compound">isa/mouse.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="idt_8h" kindref="compound">sys/idt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>kbdRead()<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>Timeout;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>Stat,<sp/>Data;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(Timeout<sp/>=<sp/>50000<ref refid="include_2sys_2types_8h_1aa73214aa5f2f94f63d90bb4e3d99fe53" kindref="member">L</ref>;<sp/>Timeout<sp/>!=<sp/>0;<sp/>Timeout--)<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>Stat<sp/>=<sp/><ref refid="io_8h_1a77b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x64);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>loop<sp/>until<sp/>8042<sp/>output<sp/>buffer<sp/>full<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((Stat<sp/>&amp;<sp/>0x01)<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>Data<sp/>=<sp/><ref refid="io_8h_1a77b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x60);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>loop<sp/>if<sp/>parity<sp/>error<sp/>or<sp/>receive<sp/>timeout<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((Stat<sp/>&amp;<sp/>0xC0)<sp/>==<sp/>0)</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>Data;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>kbdWrite(<ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/>port,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>data)<sp/>{</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1ada085051a6d9a8e00a2cb256d1af14ba" kindref="member">uInt32</ref><sp/>timeout;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structstat" kindref="compound">stat</ref>;</highlight></codeline>
 <codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59" refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>data)<sp/>{</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>timeout;</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structstat" kindref="compound">stat</ref>;</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(timeout<sp/>=<sp/>500000L;<sp/>timeout<sp/>!=<sp/>0;<sp/>timeout--)</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stat<sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x64);</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((stat<sp/>&amp;<sp/>0x02)<sp/>==<sp/>0)</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(timeout<sp/>!=<sp/>0)</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(port,<sp/>data);</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75" refid="mouse_8c_13a404b999a39405486648473efc2aaa4" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="mouse_8c_13a404b999a39405486648473efc2aaa4" kindref="member">kbdWriteRead</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>data,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>expect)</highlight></codeline>
-<codeline lineno="76"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>RetVal;</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(port,<sp/>data);</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>*expect;<sp/>expect++)</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>RetVal<sp/>=<sp/><ref refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" kindref="member">kbdRead</ref>();</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>)<sp/>*expect<sp/>!=<sp/>RetVal)</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>RetVal;</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
-<codeline lineno="90"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight></codeline>
-<codeline lineno="93"><highlight class="normal"></highlight></codeline>
-<codeline lineno="94" refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mouse_8h_1ddd388f29d13c841d76dbab30cdfa756" kindref="member">mouseInit</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>s1[]<sp/>=<sp/>{<sp/>0xF3,<sp/>0xC8,<sp/>0xF3,<sp/>0x64,<sp/>0xF3,<sp/>0x50,<sp/>0<sp/>};</highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>s2[]<sp/>=<sp/>{<sp/>0xF6,<sp/>0xE6,<sp/>0xF4,<sp/>0xF3,<sp/>0x64,<sp/>0xE8,<sp/>0x03,<sp/>0<sp/>};</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>*<sp/>ch;</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/>cmd<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"></highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(0x64,0xA8);</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(ch<sp/>=<sp/>s1;<sp/>*ch;<sp/>ch++)<sp/>{</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(0x64,<sp/>0xD4);</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="mouse_8c_13a404b999a39405486648473efc2aaa4" kindref="member">kbdWriteRead</ref>(0x60,<sp/>*ch,</highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(ch<sp/>=<sp/>s2;<sp/>*ch;<sp/>ch++)<sp/>{</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(0x64,<sp/>0xD4);</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="mouse_8c_13a404b999a39405486648473efc2aaa4" kindref="member">kbdWriteRead</ref>(0x60,<sp/>*ch,</highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(0x64,0xD4);</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="mouse_8c_13a404b999a39405486648473efc2aaa4" kindref="member">kbdWriteRead</ref>(0x60,0xF2,</highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>With<sp/>Mouse\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/>cmd<sp/>=<sp/><ref refid="mouse_8c_13cef921f56340e940a23cb8039cdfd4c" kindref="member">kbdRead</ref>();<sp/><sp/></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;CMD:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,cmd);</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="mouse_8c_157d9b8c880e86f3c89741cf29602cd73" kindref="member">kbdWrite</ref>(0x64,<sp/>0xD4);</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="mouse_8c_13a404b999a39405486648473efc2aaa4" kindref="member">kbdWriteRead</ref>(0x60,<sp/>0xF4,</highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(timeout<sp/>=<sp/>500000<ref refid="include_2sys_2types_8h_1aa73214aa5f2f94f63d90bb4e3d99fe53" kindref="member">L</ref>;<sp/>timeout<sp/>!=<sp/>0;<sp/>timeout--)<sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structstat" kindref="compound">stat</ref><sp/>=<sp/><ref refid="io_8h_1a77b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x64);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="structstat" kindref="compound">stat</ref><sp/>&amp;<sp/>0x02)<sp/>==<sp/>0)</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(timeout<sp/>!=<sp/>0)</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(port,<sp/>data);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>kbdWriteRead(<ref refid="objgfx30_8h_1a81f3b46fa4ddd984830104840a08da82" kindref="member">uInt16</ref><sp/>port,<sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>data,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>expect)<sp/>{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>RetVal;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>kbdWrite(port,<sp/>data);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>*expect;<sp/>expect++)<sp/>{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>RetVal<sp/>=<sp/>kbdRead();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>)<sp/>*expect<sp/>!=<sp/>RetVal)<sp/>{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>RetVal;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="mouse_8c_1addd388f29d13c841d76dbab30cdfa756" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="mouse_8c_1addd388f29d13c841d76dbab30cdfa756" kindref="member">mouseInit</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>s1[]<sp/>=<sp/>{<sp/>0xF3,<sp/>0xC8,<sp/>0xF3,<sp/>0x64,<sp/>0xF3,<sp/>0x50,<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>s2[]<sp/>=<sp/>{<sp/>0xF6,<sp/>0xE6,<sp/>0xF4,<sp/>0xF3,<sp/>0x64,<sp/>0xE8,<sp/>0x03,<sp/>0<sp/>};</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="objgfx30_8h_1aa4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>*<sp/>ch;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="objgfx30_8h_1a7e31ca7716b8d85dd473450a5c5e5a97" kindref="member">Int8</ref><sp/>cmd<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>kbdWrite(0x64,<sp/>0xA8);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(ch<sp/>=<sp/>s1;<sp/>*ch;<sp/>ch++)<sp/>{</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>kbdWrite(0x64,<sp/>0xD4);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>kbdWriteRead(0x60,<sp/>*ch,<sp/></highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(ch<sp/>=<sp/>s2;<sp/>*ch;<sp/>ch++)<sp/>{</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>kbdWrite(0x64,<sp/>0xD4);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>kbdWriteRead(0x60,<sp/>*ch,<sp/></highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>kbdWrite(0x64,<sp/>0xD4);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(kbdWriteRead(0x60,<sp/>0xF2,<sp/></highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>With<sp/>Mouse\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/>cmd<sp/>=<sp/>kbdRead();</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;CMD:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>cmd);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>kbdWrite(0x64,<sp/>0xD4);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/>kbdWriteRead(0x60,<sp/>0xF4,<sp/></highlight><highlight class="stringliteral">&quot;\xFA&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1a174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(&amp;<ref refid="mouse_8h_1a589718a005c965a29093980c1bdb62e1" kindref="member">mouseISR</ref>,<sp/><ref refid="8259_8h_1a7d84962c1a1c225344a94545309f92fc" kindref="member">mVec</ref><sp/>+<sp/>12,<sp/><ref refid="gdt_8h_1abe5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_1a7eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_1a2e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<sp/><ref refid="8259_8h_1a0195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><ref refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<sp/><ref refid="8259_8h_1a7d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><ref refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="8259_8h_1a0ac079c4d770f02e505f4d8569a6960a" kindref="member">irqEnable</ref>(12);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<sp/><ref refid="8259_8h_1a0195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><ref refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<sp/><ref refid="8259_8h_1a7d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><ref refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;psm0<sp/>-<sp/>Address:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>&amp;<ref refid="mouse_8h_1a589718a005c965a29093980c1bdb62e1" kindref="member">mouseISR</ref>);</highlight></codeline>
 <codeline lineno="117"><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(&amp;<ref refid="mouse_8h_1589718a005c965a29093980c1bdb62e1" kindref="member">mouseISR</ref>,<sp/><ref refid="8259_8h_17d84962c1a1c225344a94545309f92fc" kindref="member">mVec</ref>+12,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>);</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"></highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><ref refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><ref refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><ref refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a" kindref="member">irqEnable</ref>(12);</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><ref refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><ref refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"></highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;psm0<sp/>-<sp/>Address:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,&amp;<ref refid="mouse_8h_1589718a005c965a29093980c1bdb62e1" kindref="member">mouseISR</ref>);</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"></highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>everything<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"></highlight></codeline>
-<codeline lineno="132"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;.globl<sp/>mouseISR<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;mouseISR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pusha<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>all<sp/>registers<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>call<sp/>mouseHandler<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popa<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Exit<sp/>interrupt<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"></highlight></codeline>
-<codeline lineno="141" refid="mouse_8c_1db1403c2c7c25ea9b2826c504f8eb502" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mouse_8h_1db1403c2c7c25ea9b2826c504f8eb502" kindref="member">mouseHandler</ref>()<sp/>{</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;MOUSE!!!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"></highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><ref refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><ref refid="8259_8h_1417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
-<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="148"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="149"><highlight class="normal"></highlight></codeline>
-<codeline lineno="150"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="151"><highlight class="comment"><sp/>$Log: mouse_8c.xml,v $
-<codeline lineno="151"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
-<codeline lineno="151"><highlight class="comment"><sp/>rtld-elf almost workign
-<codeline lineno="151"><highlight class="comment"><sp/></highlight></codeline>
-<codeline lineno="152"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:12<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="153"><highlight class="comment"><sp/>ubix2</highlight></codeline>
-<codeline lineno="154"><highlight class="comment"></highlight></codeline>
-<codeline lineno="155"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="156"><highlight class="comment"><sp/>Removed</highlight></codeline>
-<codeline lineno="157"><highlight class="comment"></highlight></codeline>
-<codeline lineno="158"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:02<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="159"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
-<codeline lineno="160"><highlight class="comment"></highlight></codeline>
-<codeline lineno="161"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/09/07<sp/>21:54:38<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="162"><highlight class="comment"><sp/>ok<sp/>reverted<sp/>back<sp/>to<sp/>old<sp/>scheduling<sp/>for<sp/>now....</highlight></codeline>
-<codeline lineno="163"><highlight class="comment"></highlight></codeline>
-<codeline lineno="164"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/09/06<sp/>15:13:25<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="165"><highlight class="comment"><sp/>Last<sp/>commit<sp/>before<sp/>FreeBSD<sp/>6.0</highlight></codeline>
-<codeline lineno="166"><highlight class="comment"></highlight></codeline>
-<codeline lineno="167"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/06/04<sp/>10:20:53<sp/><sp/>reddawg</highlight></codeline>
-<codeline lineno="168"><highlight class="comment"><sp/>mouse<sp/>drive:<sp/>fixed<sp/>a<sp/>few<sp/>bugs<sp/>works<sp/>a<sp/>bit<sp/>better<sp/>now</highlight></codeline>
-<codeline lineno="169"><highlight class="comment"></highlight></codeline>
-<codeline lineno="170"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="171"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>everything<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;.globl<sp/>mouseISR<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;mouseISR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pusha<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>all<sp/>registers<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>call<sp/>mouseHandler<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popa<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Exit<sp/>interrupt<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal">);</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131" refid="mouse_8c_1adb1403c2c7c25ea9b2826c504f8eb502" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="mouse_8c_1adb1403c2c7c25ea9b2826c504f8eb502" kindref="member">mouseHandler</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;MOUSE!!!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<sp/><ref refid="8259_8h_1a0195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><ref refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1a8acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<sp/><ref refid="8259_8h_1a7d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><ref refid="8259_8h_1a417bb9e0e5c2751570faf6d7b848f977" kindref="member">eoi</ref>);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="141"><highlight class="comment"><sp/>$Log:<sp/>mouse.c,v<sp/>$</highlight></codeline>
+<codeline lineno="142"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:12<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="143"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="144"><highlight class="comment"></highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="146"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="147"><highlight class="comment"></highlight></codeline>
+<codeline lineno="148"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:02<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="149"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="150"><highlight class="comment"></highlight></codeline>
+<codeline lineno="151"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/09/07<sp/>21:54:38<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="152"><highlight class="comment"><sp/>ok<sp/>reverted<sp/>back<sp/>to<sp/>old<sp/>scheduling<sp/>for<sp/>now....</highlight></codeline>
+<codeline lineno="153"><highlight class="comment"></highlight></codeline>
+<codeline lineno="154"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/09/06<sp/>15:13:25<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="155"><highlight class="comment"><sp/>Last<sp/>commit<sp/>before<sp/>FreeBSD<sp/>6.0</highlight></codeline>
+<codeline lineno="156"><highlight class="comment"></highlight></codeline>
+<codeline lineno="157"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/06/04<sp/>10:20:53<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="158"><highlight class="comment"><sp/>mouse<sp/>drive:<sp/>fixed<sp/>a<sp/>few<sp/>bugs<sp/>works<sp/>a<sp/>bit<sp/>better<sp/>now</highlight></codeline>
+<codeline lineno="159"><highlight class="comment"></highlight></codeline>
+<codeline lineno="160"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="161"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/mouse.c"/>
+    <location file="C:/Dev/git/UbixOS/sys/isa/mouse.c"/>
   </compounddef>
 </doxygen>

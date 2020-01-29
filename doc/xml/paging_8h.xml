@@ -1,270 +1,512 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="paging_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="paging_8h" kind="file" language="C++">
     <compoundname>paging.h</compoundname>
-    <includes refid="types_8h" local="no">ubixos/types.h</includes>
-    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
+    <includes refid="include_2sys_2types_8h" local="no">sys/types.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sys/sysproto_posix.h</includes>
     <includes refid="thread_8h" local="no">sys/thread.h</includes>
-    <includedby refid="vmm_8h" local="no">src/sys/include/vmm/vmm.h</includedby>
-    <includedby refid="file_8c" local="no">src/sys/vfs/file.c</includedby>
+    <includedby refid="i386_2bioscall_8c" local="no">C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</includedby>
+    <includedby refid="file_8c" local="no">C:/Dev/git/UbixOS/sys/fs/vfs/file.c</includedby>
+    <includedby refid="vmm_8h" local="no">C:/Dev/git/UbixOS/sys/include/vmm/vmm.h</includedby>
+    <includedby refid="colours_8cc" local="no">C:/Dev/git/UbixOS/sys/sde/colours.cc</includedby>
+    <includedby refid="copyvirtualspace_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</includedby>
+    <includedby refid="vmm__allocpagetable_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c</includedby>
     <incdepgraph>
-      <node id="4963">
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="10">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="11">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="4959" relation="include">
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
         </childnode>
       </node>
-      <node id="4959">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="4960" relation="include">
-        </childnode>
+      <node id="5">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
       </node>
-      <node id="4960">
+      <node id="3">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="4958">
-        <label>src/sys/include/vmm/paging.h</label>
-        <link refid="paging.h"/>
-        <childnode refid="4959" relation="include">
-        </childnode>
-        <childnode refid="4961" relation="include">
-        </childnode>
-        <childnode refid="4963" relation="include">
+      <node id="6">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="4961">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="4962" relation="include">
-        </childnode>
-        <childnode refid="4963" relation="include">
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2" relation="include">
         </childnode>
       </node>
-      <node id="4962">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="4959" relation="include">
+      <node id="9">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="3" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="4969">
-        <label>src/sys/kernel/elf.c</label>
-        <link refid="elf_8c"/>
-      </node>
-      <node id="4977">
-        <label>src/sys/kmods/kmod.c</label>
-        <link refid="kmod_8c"/>
-      </node>
-      <node id="4978">
-        <label>src/sys/lib/kmalloc.c</label>
-        <link refid="kmalloc_8c"/>
-      </node>
-      <node id="4986">
-        <label>src/sys/vmm/paging.c</label>
-        <link refid="paging_8c"/>
-      </node>
-      <node id="4976">
-        <label>src/sys/kernel/systemtask.c</label>
-        <link refid="systemtask_8c"/>
-      </node>
-      <node id="4964">
-        <label>src/sys/include/vmm/paging.h</label>
-        <link refid="paging.h"/>
-        <childnode refid="4965" relation="include">
-        </childnode>
-        <childnode refid="4991" relation="include">
-        </childnode>
-      </node>
-      <node id="4973">
-        <label>src/sys/kernel/ld.c</label>
-        <link refid="ld_8c"/>
-      </node>
-      <node id="4972">
-        <label>src/sys/kernel/fork.c</label>
-        <link refid="fork_8c"/>
-      </node>
-      <node id="4981">
-        <label>src/sys/vmm/createvirtualspace.c</label>
-        <link refid="createvirtualspace_8c"/>
-      </node>
-      <node id="4989">
-        <label>src/sys/vmm/vmm_init.c</label>
-        <link refid="vmm__init_8c"/>
-      </node>
-      <node id="4974">
-        <label>src/sys/kernel/sched.c</label>
-        <link refid="sched_8c"/>
-      </node>
-      <node id="4965">
-        <label>src/sys/include/vmm/vmm.h</label>
-        <link refid="vmm_8h"/>
-        <childnode refid="4966" relation="include">
-        </childnode>
-        <childnode refid="4968" relation="include">
-        </childnode>
-        <childnode refid="4969" relation="include">
-        </childnode>
-        <childnode refid="4970" relation="include">
-        </childnode>
-        <childnode refid="4971" relation="include">
-        </childnode>
-        <childnode refid="4972" relation="include">
-        </childnode>
-        <childnode refid="4973" relation="include">
-        </childnode>
-        <childnode refid="4974" relation="include">
-        </childnode>
-        <childnode refid="4975" relation="include">
-        </childnode>
-        <childnode refid="4976" relation="include">
-        </childnode>
-        <childnode refid="4977" relation="include">
-        </childnode>
-        <childnode refid="4978" relation="include">
-        </childnode>
-        <childnode refid="4979" relation="include">
-        </childnode>
-        <childnode refid="4980" relation="include">
-        </childnode>
-        <childnode refid="4981" relation="include">
-        </childnode>
-        <childnode refid="4982" relation="include">
-        </childnode>
-        <childnode refid="4983" relation="include">
-        </childnode>
-        <childnode refid="4984" relation="include">
-        </childnode>
-        <childnode refid="4985" relation="include">
-        </childnode>
-        <childnode refid="4986" relation="include">
-        </childnode>
-        <childnode refid="4987" relation="include">
-        </childnode>
-        <childnode refid="4988" relation="include">
-        </childnode>
-        <childnode refid="4989" relation="include">
-        </childnode>
-        <childnode refid="4990" relation="include">
-        </childnode>
-      </node>
-      <node id="4987">
-        <label>src/sys/vmm/setpageattributes.c</label>
-        <link refid="setpageattributes_8c"/>
-      </node>
-      <node id="4984">
-        <label>src/sys/vmm/getphysicaladdr.c</label>
-        <link refid="getphysicaladdr_8c"/>
-      </node>
-      <node id="4967">
-        <label>src/sys/init/main.c</label>
-        <link refid="main_8c"/>
-      </node>
-      <node id="4968">
-        <label>src/sys/kernel/bioscall.c</label>
-        <link refid="bioscall_8c"/>
-      </node>
-      <node id="4975">
-        <label>src/sys/kernel/syscall.c</label>
-        <link refid="syscall_8c"/>
-      </node>
-      <node id="4985">
-        <label>src/sys/vmm/pagefault.c</label>
+      <node id="33">
+        <label>C:/Dev/git/UbixOS/sys/vmm/pagefault.c</label>
         <link refid="pagefault_8c"/>
       </node>
-      <node id="4966">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="4967" relation="include">
-        </childnode>
+      <node id="41">
+        <label>C:/Dev/git/UbixOS/sys/sde/colours.cc</label>
+        <link refid="colours_8cc"/>
       </node>
-      <node id="4988">
-        <label>src/sys/vmm/unmappage.c</label>
-        <link refid="unmappage_8c"/>
+      <node id="17">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
+        <link refid="main_8c"/>
       </node>
-      <node id="4990">
-        <label>src/sys/vmm/vmm_memory.c</label>
-        <link refid="vmm__memory_8c"/>
+      <node id="24">
+        <label>C:/Dev/git/UbixOS/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
       </node>
-      <node id="4970">
-        <label>src/sys/kernel/endtask.c</label>
-        <link refid="endtask_8c"/>
+      <node id="7">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/fork.c</label>
+        <link refid="armv6_2fork_8c"/>
       </node>
-      <node id="4991">
-        <label>src/sys/vfs/file.c</label>
+      <node id="25">
+        <label>C:/Dev/git/UbixOS/sys/sde/main.cc</label>
+        <link refid="main_8cc"/>
+      </node>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/fs/vfs/file.c</label>
         <link refid="file_8c"/>
       </node>
-      <node id="4982">
-        <label>src/sys/vmm/getfreepage.c</label>
-        <link refid="getfreepage_8c"/>
-      </node>
-      <node id="4979">
-        <label>src/sys/sys/idt.c</label>
+      <node id="27">
+        <label>C:/Dev/git/UbixOS/sys/sys/idt.c</label>
         <link refid="idt_8c"/>
       </node>
-      <node id="4971">
-        <label>src/sys/kernel/exec.c</label>
+      <node id="13">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/sched.c</label>
+        <link refid="i386_2sched_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_allocpagetable.c</label>
+        <link refid="vmm__allocpagetable_8c"/>
+      </node>
+      <node id="18">
+        <label>C:/Dev/git/UbixOS/sys/kernel/elf.c</label>
+        <link refid="kernel_2elf_8c"/>
+      </node>
+      <node id="36">
+        <label>C:/Dev/git/UbixOS/sys/vmm/unmappage.c</label>
+        <link refid="unmappage_8c"/>
+      </node>
+      <node id="26">
+        <label>C:/Dev/git/UbixOS/sys/sde/ogDisplay_UbixOS.cc</label>
+        <link refid="ogDisplay__UbixOS_8cc"/>
+      </node>
+      <node id="19">
+        <label>C:/Dev/git/UbixOS/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="23">
+        <label>C:/Dev/git/UbixOS/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/exec.c</label>
         <link refid="exec_8c"/>
       </node>
-      <node id="4983">
-        <label>src/sys/vmm/getfreevirtualpage.c</label>
+      <node id="11">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/fork.c</label>
+        <link refid="i386_2fork_8c"/>
+      </node>
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/bioscall.c</label>
+        <link refid="armv6_2bioscall_8c"/>
+      </node>
+      <node id="40">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_mmap.c</label>
+        <link refid="vmm__mmap_8c"/>
+      </node>
+      <node id="34">
+        <label>C:/Dev/git/UbixOS/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="28">
+        <label>C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+      <node id="21">
+        <label>C:/Dev/git/UbixOS/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="14">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/systemtask.c</label>
+        <link refid="i386_2systemtask_8c"/>
+      </node>
+      <node id="20">
+        <label>C:/Dev/git/UbixOS/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="30">
+        <label>C:/Dev/git/UbixOS/sys/vmm/getfreepage.c</label>
+        <link refid="getfreepage_8c"/>
+      </node>
+      <node id="32">
+        <label>C:/Dev/git/UbixOS/sys/vmm/getphysicaladdr.c</label>
+        <link refid="getphysicaladdr_8c"/>
+      </node>
+      <node id="29">
+        <label>C:/Dev/git/UbixOS/sys/vmm/createvirtualspace.c</label>
+        <link refid="createvirtualspace_8c"/>
+      </node>
+      <node id="31">
+        <label>C:/Dev/git/UbixOS/sys/vmm/getfreevirtualpage.c</label>
         <link refid="getfreevirtualpage_8c"/>
       </node>
-      <node id="4980">
-        <label>src/sys/vmm/copyvirtualspace.c</label>
-        <link refid="copyvirtualspace_8c"/>
+      <node id="8">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/sched.c</label>
+        <link refid="armv6_2sched_8c"/>
+      </node>
+      <node id="39">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="35">
+        <label>C:/Dev/git/UbixOS/sys/vmm/setpageattributes.c</label>
+        <link refid="setpageattributes_8c"/>
+      </node>
+      <node id="22">
+        <label>C:/Dev/git/UbixOS/sys/kernel/syscall.c</label>
+        <link refid="kernel_2syscall_8c"/>
+      </node>
+      <node id="10">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/systemtask.c</label>
+        <link refid="armv6_2systemtask_8c"/>
+      </node>
+      <node id="38">
+        <label>C:/Dev/git/UbixOS/sys/vmm/vmm_init.c</label>
+        <link refid="vmm__init_8c"/>
+      </node>
+      <node id="9">
+        <label>C:/Dev/git/UbixOS/sys/arch/armv6/syscall.c</label>
+        <link refid="arch_2armv6_2syscall_8c"/>
+      </node>
+      <node id="12">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/i386_exec.c</label>
+        <link refid="i386__exec_8c"/>
+      </node>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/bioscall.c</label>
+        <link refid="i386_2bioscall_8c"/>
+      </node>
+      <node id="16">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>C:/Dev/git/UbixOS/sys/arch/i386/trap.c</label>
+        <link refid="trap_8c"/>
       </node>
     </invincdepgraph>
       <sectiondef kind="define">
-      <memberdef kind="define" id="paging_8h_10851ee42f36c8a00e9eafe739c8ffaaa" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a0851ee42f36c8a00e9eafe739c8ffaaa" prot="public" static="no">
         <name>btoc</name>
         <param><defname>x</defname></param>
-        <initializer>(((<ref refid="types_8h_1d6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref>)(x)+PAGE_MASK)&gt;&gt;PAGE_SHIFT)</initializer>
+        <initializer>(((<ref refid="include_2sys_2types_8h_1ad6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref>)(x)+<ref refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" kindref="member">PAGE_MASK</ref>)&gt;&gt;<ref refid="paging_8h_1a850d80ca2291d26b40dc6b25c419f81a" kindref="member">PAGE_SHIFT</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="62" bodyend="-1"/>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="75" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="75" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1071caea8a82a06e754daca63317d3c07" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a071caea8a82a06e754daca63317d3c07" prot="public" static="no">
         <name>ctob</name>
         <param><defname>x</defname></param>
-        <initializer>((x)&lt;&lt;PAGE_SHIFT)</initializer>
+        <initializer>((x)&lt;&lt;<ref refid="paging_8h_1a850d80ca2291d26b40dc6b25c419f81a" kindref="member">PAGE_SHIFT</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="61" bodyend="-1"/>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="74" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="74" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" prot="public" static="no">
         <name>KERNEL_PAGE_DEFAULT</name>
-        <initializer>(PAGE_PRESENT|PAGE_WRITE)</initializer>
+        <initializer>(<ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>|<ref refid="paging_8h_1a559697780e34fd09ba6a2e909f0fe1df" kindref="member">PAGE_WRITE</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="53" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
-        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
-        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
-        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="69" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="69" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_157d743cb60fe478f6720c42315e7e813" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1ae583257f64c7549d122d6757c6d51728" prot="public" static="no">
+        <name>PAGE_</name>
+        <initializer>0x00000100</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="63" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1add0f255a15cf72f5b47251d19092c41d" prot="public" static="no">
+        <name>PAGE_ACCESSED</name>
+        <initializer>0x00000020</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="60" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a8d7496f2eb17d3f70143c00c99140e97" prot="public" static="no">
+        <name>PAGE_CACHE_DISABLED</name>
+        <initializer>0x00000010</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="59" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a57d743cb60fe478f6720c42315e7e813" prot="public" static="no">
         <name>PAGE_COW</name>
         <initializer>0x00000200</initializer>
         <briefdescription>
@@ -273,49 +515,53 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="46" bodyend="-1"/>
-        <referencedby refid="paging_8c_10444c8635648fabdbd6e702137aa1723" compoundref="paging_8c" startline="522" endline="559">vmm_cleanVirtualSpace</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="64" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="64" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" prot="public" static="no">
         <name>PAGE_DEFAULT</name>
-        <initializer>(PAGE_PRESENT|PAGE_WRITE|PAGE_USER)</initializer>
+        <initializer>(<ref refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" kindref="member">PAGE_PRESENT</ref>|<ref refid="paging_8h_1a559697780e34fd09ba6a2e909f0fe1df" kindref="member">PAGE_WRITE</ref>|<ref refid="paging_8h_1a2d0253527ea5080d6befe0ee3bde473f" kindref="member">PAGE_USER</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="52" bodyend="-1"/>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
-        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="68" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="68" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1e4aa620ce57c7c3171b916de2c5f09f2" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a0b65338140b4aab20aae2708677df343" prot="public" static="no">
+        <name>PAGE_DIRTY</name>
+        <initializer>0x00000040</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="61" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a0d99c75e51b448fcb97266da4815c63f" prot="public" static="no">
+        <name>PAGE_GLOBAL</name>
+        <initializer>0x00000080</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="62" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" prot="public" static="no">
         <name>PAGE_MASK</name>
-        <initializer>(PAGE_SIZE-1)</initializer>
+        <initializer>(<ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>-1)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="57" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="38" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="38" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1122dfc414a40e260fd35dbe9743db26f" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" prot="public" static="no">
         <name>PAGE_PRESENT</name>
         <initializer>0x00000001</initializer>
         <briefdescription>
@@ -324,16 +570,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="49" bodyend="-1"/>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="paging_8c_10444c8635648fabdbd6e702137aa1723" compoundref="paging_8c" startline="522" endline="559">vmm_cleanVirtualSpace</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="55" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="55" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1850d80ca2291d26b40dc6b25c419f81a" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a850d80ca2291d26b40dc6b25c419f81a" prot="public" static="no">
         <name>PAGE_SHIFT</name>
         <initializer>12</initializer>
         <briefdescription>
@@ -342,23 +581,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="55" bodyend="-1"/>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="36" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="36" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_17d467c1d283fdfa1f2081ba1e0d01b6e" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" prot="public" static="no">
         <name>PAGE_SIZE</name>
-        <initializer>(1&lt;&lt;PAGE_SHIFT)</initializer>
+        <initializer>0x1000</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="56" bodyend="-1"/>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="37" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="37" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_11532db17068ba8d409b8ffe066414af2" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a1532db17068ba8d409b8ffe066414af2" prot="public" static="no">
         <name>PAGE_STACK</name>
         <initializer>0x00000400</initializer>
         <briefdescription>
@@ -367,13 +603,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="47" bodyend="-1"/>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="paging_8c_10444c8635648fabdbd6e702137aa1723" compoundref="paging_8c" startline="522" endline="559">vmm_cleanVirtualSpace</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="65" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="65" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_12d0253527ea5080d6befe0ee3bde473f" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a2d0253527ea5080d6befe0ee3bde473f" prot="public" static="no">
         <name>PAGE_USER</name>
         <initializer>0x00000004</initializer>
         <briefdescription>
@@ -382,24 +614,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="57" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="57" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_141b733e23eb5b22e1df907b87d6b3996" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a41b733e23eb5b22e1df907b87d6b3996" prot="public" static="no">
         <name>PAGE_WIRED</name>
-        <initializer>0x00000600</initializer>
+        <initializer>0x00000800</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="48" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="66" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="66" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1559697780e34fd09ba6a2e909f0fe1df" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a559697780e34fd09ba6a2e909f0fe1df" prot="public" static="no">
         <name>PAGE_WRITE</name>
         <initializer>0x00000002</initializer>
         <briefdescription>
@@ -408,123 +636,135 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="50" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="56" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="56" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" prot="public" static="no">
-        <name>pageEntries</name>
-        <initializer>(pageSize/4)</initializer>
+      <memberdef kind="define" id="paging_8h_1ab392709908a0587bc194c5fe3300237a" prot="public" static="no">
+        <name>PAGE_WRITE_THROUGH</name>
+        <initializer>0x00000008</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="paging_8c_1230a160ddb717c5a133e55aa42e9d324" compoundref="paging_8c" startline="314" endline="329">vmmClearVirtualPage</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="58" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="58" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1d8f95327f815dfa0f9196dbc48b94ddb" prot="public" static="no">
-        <name>pageLength</name>
-        <initializer>0x00000400</initializer>
+      <memberdef kind="define" id="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" prot="public" static="no">
+        <name>PD_BASE_ADDR</name>
+        <initializer>0xC0400000</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="40" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="45" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_13d9cc2be3113b17e62612d00f7082b10" prot="public" static="no">
-        <name>pageSize</name>
-        <initializer>4096</initializer>
+      <memberdef kind="define" id="paging_8h_1ac1a62d9f7ed5a48f8f710cf006dbc77c" prot="public" static="no">
+        <name>PD_BASE_ADDR2</name>
+        <initializer>((<ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref> &lt;&lt; 0xA) + <ref refid="vmm_8h_1ad6394b4f60e68fe4e1431fc4e1998957" kindref="member">VMM_KERN_START</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="41" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="43" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" prot="public" static="no">
-        <name>parentPageDirAddr</name>
-        <initializer>0x100000</initializer>
+      <memberdef kind="define" id="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" prot="public" static="no">
+        <name>PD_ENTRIES</name>
+        <initializer>(<ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>/4)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="44" bodyend="-1"/>
-        <referencedby refid="paging_8c_10444c8635648fabdbd6e702137aa1723" compoundref="paging_8c" startline="522" endline="559">vmm_cleanVirtualSpace</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="48" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_12702263fcf2b3b026cb26c6d895cb0ee" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" prot="public" static="no">
+        <name>PD_INDEX</name>
+        <param><defname>v_addr</defname></param>
+        <initializer>(v_addr &gt;&gt; 22)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a51c93610d4e70b5449692328dbbe2928" prot="public" static="no">
+        <name>PD_OFFSET</name>
+        <param><defname>v_addr</defname></param>
+        <initializer>(v_addr &gt;&gt; 0xA)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" prot="public" static="no">
+        <name>PT_BASE_ADDR</name>
+        <initializer>0xC0000000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1adc9776583e54abf06ae7b99f1f3036a6" prot="public" static="no">
+        <name>PT_ENTRIES</name>
+        <initializer>(<ref refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" kindref="member">PAGE_SIZE</ref>/4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a2c6e29890bb0209384b6d012db48e2f7" prot="public" static="no">
+        <name>PT_INDEX</name>
+        <param><defname>v_addr</defname></param>
+        <initializer>((v_addr &gt;&gt; 12) &amp; 0x03FF)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" prot="public" static="no">
         <name>round_page</name>
         <param><defname>x</defname></param>
-        <initializer>(((x) + PAGE_MASK) &amp; ~PAGE_MASK)</initializer>
+        <initializer>(((x) + <ref refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" kindref="member">PAGE_MASK</ref>) &amp; ~<ref refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" kindref="member">PAGE_MASK</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="60" bodyend="-1"/>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="72" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="72" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_1a432d41840ad8a583a7e6af86feece4f" prot="public" static="no">
-        <name>tablesBaseAddress</name>
-        <initializer>0xBFC00000</initializer>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="43" bodyend="-1"/>
-        <referencedby refid="paging_8c_10444c8635648fabdbd6e702137aa1723" compoundref="paging_8c" startline="522" endline="559">vmm_cleanVirtualSpace</referencedby>
-        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
-        <referencedby refid="getphysicaladdr_8c_195ad0d803875fb80bd19bd5ef963bfc2" compoundref="getphysicaladdr_8c" startline="40" endline="54">vmm_getPhysicalAddr</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
-        <referencedby refid="setpageattributes_8c_110f37eb25e81ebf7e61fad46949af8e3" compoundref="setpageattributes_8c" startline="41" endline="68">vmm_setPageAttributes</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
-        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
-        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
-        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
-        <referencedby refid="unmappage_8c_1b0b3edc8b788e6418cc076ced9a19e74" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</referencedby>
-        <referencedby refid="unmappage_8c_10a924a2db888f186cdcc7dc58add08f5" compoundref="unmappage_8c" startline="101" endline="114">vmmUnmapPages</referencedby>
-      </memberdef>
-      <memberdef kind="define" id="paging_8h_1bd636a9b61ad98f4fc23b1f4a9210d78" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1abd636a9b61ad98f4fc23b1f4a9210d78" prot="public" static="no">
         <name>trunc_page</name>
         <param><defname>x</defname></param>
-        <initializer>((x) &amp; ~PAGE_MASK)</initializer>
+        <initializer>((x) &amp; ~<ref refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" kindref="member">PAGE_MASK</ref>)</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="59" bodyend="-1"/>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="71" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="71" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_159a518704bf2f0b56603476bcb1eebbf" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a59a518704bf2f0b56603476bcb1eebbf" prot="public" static="no">
         <name>VM_TASK</name>
         <initializer>1</initializer>
         <briefdescription>
@@ -533,13 +773,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="38" bodyend="-1"/>
-        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="syscall_8c_11db3bfbad534c2fa75c02646fcf80a90" compoundref="syscall_8c" startline="196" endline="204">sysGetFreePage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="52" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="paging_8h_14ede4e8b3e149ef94678acdae7de0e18" prot="public" static="no">
+      <memberdef kind="define" id="paging_8h_1a4ede4e8b3e149ef94678acdae7de0e18" prot="public" static="no">
         <name>VM_THRD</name>
         <initializer>0</initializer>
         <briefdescription>
@@ -548,13 +784,30 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" bodystart="37" bodyend="-1"/>
-        <referencedby refid="syscall_8c_11db3bfbad534c2fa75c02646fcf80a90" compoundref="syscall_8c" startline="196" endline="204">sysGetFreePage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="51" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="paging_8h_1a7c58070dedac2ee9e1c73d8c8206b923" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref> *</type>
+        <definition>uint32_t* kernelPageDirectory</definition>
+        <argsstring></argsstring>
+        <name>kernelPageDirectory</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="102" column="17" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="41" bodyend="-1" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="102" declcolumn="17"/>
+        <referencedby refid="i386_2bioscall_8c_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="i386_2bioscall_8c" startline="40" endline="91">biosCall</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a4b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="66" endline="136">execThread</referencedby>
+        <referencedby refid="paging_8c_1af47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="58" endline="187">vmm_pagingInit</referencedby>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="paging_8h_115b43ccb21abdb9e0a41acb82b260a99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1a15b43ccb21abdb9e0a41acb82b260a99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void _vmm_pageFault</definition>
         <argsstring>()</argsstring>
@@ -565,18 +818,19 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="82"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="94" column="6" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="94" declcolumn="6"/>
+        <referencedby refid="paging_8c_1af47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="58" endline="187">vmm_pagingInit</referencedby>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1f47d5f6b1a4a8738e65c9f539a9979fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1a0d45ce836c8a731beef7b3fd972d16fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int mmap</definition>
-        <argsstring>(struct thread *, struct mmap_args *)</argsstring>
+        <argsstring>(struct thread *, struct sys_mmap_args *)</argsstring>
         <name>mmap</name>
         <param>
           <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
         </param>
         <param>
-          <type>struct <ref refid="structmmap__args" kindref="compound">mmap_args</ref> *</type>
+          <type>struct <ref refid="structsys__mmap__args" kindref="compound">sys_mmap_args</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -584,32 +838,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="453" bodyend="476"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structmmap__args_113ec5b173a8fe6428cf3bf0a5f2d4fc2" compoundref="sysproto_8h" startline="113">mmap_args::addr</references>
-        <references refid="structmmap__args_1abfe32d5934305c27dd528bba990ae12" compoundref="sysproto_8h" startline="117">mmap_args::fd</references>
-        <references refid="structmmap__args_104b82aa69d28fc03e57632b7d524758d" compoundref="sysproto_8h" startline="116">mmap_args::flags</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structmmap__args_10b1dab766559d59a733fede0d3767c14" compoundref="sysproto_8h" startline="114">mmap_args::len</references>
-        <references refid="structmmap__args_15ad4ee0f25f92b5a4da5a86ba40ee1e2" compoundref="sysproto_8h" startline="118">mmap_args::pad</references>
-        <references refid="structmmap__args_17cc0a114bae15892a406fa7196229e37" compoundref="sysproto_8h" startline="119">mmap_args::pos</references>
-        <references refid="structmmap__args_1d6c74b2bf9e921cb4da0cbd508b2e21d" compoundref="sysproto_8h" startline="115">mmap_args::prot</references>
-        <references refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="38">thread::td_retval</references>
-        <references refid="paging_8h_159a518704bf2f0b56603476bcb1eebbf" compoundref="paging_8h" startline="38">VM_TASK</references>
-        <references refid="paging_8h_14b324672c4b25064eb8db1e3419337b1" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="95" column="5" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="95" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1c4296f2360f8217973674af8bc6f82dd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1a3b8f1043eab8384fb5b4be1a4a4245ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int munmap</definition>
-        <argsstring>(struct thread *, struct munmap_args *)</argsstring>
+        <argsstring>(struct thread *, struct sys_munmap_args *)</argsstring>
         <name>munmap</name>
         <param>
           <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
         </param>
         <param>
-          <type>struct <ref refid="structmunmap__args" kindref="compound">munmap_args</ref> *</type>
+          <type>struct <ref refid="structsys__munmap__args" kindref="compound">sys_munmap_args</ref> *</type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -617,10 +857,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="516" bodyend="520"/>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="97" column="5" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="97" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_18d8ba1d847eb4dbeb26a3c1077ab1981" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1a8d8ba1d847eb4dbeb26a3c1077ab1981" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int obreak</definition>
         <argsstring>(struct thread *, struct obreak_args *)</argsstring>
@@ -637,28 +876,86 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="478" bodyend="514"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="paging_8h_10851ee42f36c8a00e9eafe739c8ffaaa" compoundref="paging_8h" startline="62">btoc</references>
-        <references refid="paging_8h_1071caea8a82a06e754daca63317d3c07" compoundref="paging_8h" startline="61">ctob</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structobreak__args_1b30a3d3c9186553a40d1b6e7c5714fb4" compoundref="sysproto_8h" startline="123">obreak_args::nsize</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_12702263fcf2b3b026cb26c6d895cb0ee" compoundref="paging_8h" startline="60">round_page</references>
-        <references refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" compoundref="thread_8h" startline="40">thread::vm_daddr</references>
-        <references refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" compoundref="thread_8h" startline="41">thread::vm_dsize</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="96" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="546" bodyend="585" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="96" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1541f0b43826a40b9e978f5479080bb0e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmm_getFreeMallocPage</definition>
-        <argsstring>(uInt16 count)</argsstring>
-        <name>vmm_getFreeMallocPage</name>
+      <memberdef kind="function" id="paging_8h_1adf104ab2196331b538186550cb7ada3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int vmm_cleanVirtualSpace</definition>
+        <argsstring>(uint32_t)</argsstring>
+        <name>vmm_cleanVirtualSpace</name>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="99" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="587" bodyend="639" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="99" declcolumn="5"/>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1a5de86e63abae0b406ff4a286b44b109e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* vmm_copyVirtualSpace</definition>
+        <argsstring>(pidType)</argsstring>
+        <name>vmm_copyVirtualSpace</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="80" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c" bodystart="51" bodyend="275" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="80" declcolumn="6"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="i386_2fork_8c_1a193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="i386_2fork_8c" startline="144" endline="204">fork_copyProcess</referencedby>
+        <referencedby refid="sysproto__posix_8h_1a2df56a6757909dd205e60732f34acabb" compoundref="i386_2fork_8c" startline="40" endline="131">sys_fork</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1acd6d1b9b2687749ddd73542f7897696e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* vmm_createVirtualSpace</definition>
+        <argsstring>(pidType)</argsstring>
+        <name>vmm_createVirtualSpace</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="83" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/createvirtualspace.c" bodystart="53" bodyend="191" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="83" declcolumn="6"/>
+        <references refid="vmm_8h_1aafef303dc8f2c6ed7bcf171819579166">adjustCowCounter</references>
+        <references refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" compoundref="gpt_8h" startline="37">bzero</references>
+        <references refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="69">KERNEL_PAGE_DEFAULT</references>
+        <references refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="64">PAGE_COW</references>
+        <references refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="55">PAGE_PRESENT</references>
+        <references refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" compoundref="paging_8h" startline="37">PAGE_SIZE</references>
+        <references refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" compoundref="paging_8h" startline="45">PD_BASE_ADDR</references>
+        <references refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" compoundref="paging_8h" startline="48">PD_ENTRIES</references>
+        <references refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" compoundref="paging_8h" startline="40">PD_INDEX</references>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <references refid="paging_8h_1adc9776583e54abf06ae7b99f1f3036a6" compoundref="paging_8h" startline="49">PT_ENTRIES</references>
+        <references refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" compoundref="getfreepage_8c" startline="45" endline="80">vmm_getFreePage</references>
+        <references refid="paging_8h_1a5522eccf81d4630537620209651be16e" compoundref="getphysicaladdr_8c" startline="38" endline="53">vmm_getPhysicalAddr</references>
+        <references refid="vmm_8h_1ad6394b4f60e68fe4e1431fc4e1998957" compoundref="vmm_8h" startline="64">VMM_KERN_START</references>
+        <references refid="vmm_8h_1a457446966aafafd939af6603f68516b1" compoundref="unmappage_8c" startline="47" endline="81">vmm_unmapPage</references>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1a3615feeeee9f4038cd1070372ccba22e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* vmm_getFreeKernelPage</definition>
+        <argsstring>(pidType pid, uint16_t count)</argsstring>
+        <name>vmm_getFreeKernelPage</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
           <declname>count</declname>
         </param>
         <briefdescription>
@@ -667,55 +964,37 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="401" bodyend="451"/>
-        <references refid="paging_8c_1fe74a297627a1834d20925533b77c3d8" compoundref="paging_8c" startline="43">fkpSpinLock</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="kmalloc_8h_181d09bc848b49133401b3efeeb65f1af" compoundref="kmalloc_8h" startline="39">sysID</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_1230a160ddb717c5a133e55aa42e9d324" compoundref="paging_8c" startline="314" endline="329">vmmClearVirtualPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="kmalloc_8c_1f6c4ea5cb961c72548d92ff65d7e33a4" compoundref="kmalloc_8c" startline="67" endline="110">getEmptyDesc</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="82" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="291" bodyend="346" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="82" declcolumn="6"/>
+        <references refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="32">K_PANIC</references>
+        <references refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="69">KERNEL_PAGE_DEFAULT</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="55">PAGE_PRESENT</references>
+        <references refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" compoundref="paging_8h" startline="37">PAGE_SIZE</references>
+        <references refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" compoundref="paging_8h" startline="45">PD_BASE_ADDR</references>
+        <references refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" compoundref="paging_8h" startline="48">PD_ENTRIES</references>
+        <references refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" compoundref="paging_8h" startline="40">PD_INDEX</references>
+        <references refid="vmm_8h_1afcaabe90527f6aec9cfeaaba78500e4c" compoundref="vmm__init_8c" startline="33">pdSpinLock</references>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <references refid="paging_8h_1adc9776583e54abf06ae7b99f1f3036a6" compoundref="paging_8h" startline="49">PT_ENTRIES</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <references refid="armv6_2spinlock_8c_1ae29ab191c93f9ead066cb462dd2e7247" compoundref="armv6_2spinlock_8c" startline="36" endline="45">spinUnlock</references>
+        <references refid="vmm_8h_1acba8d9cc298370338bc5bea5187183b2" compoundref="vmm__allocpagetable_8c" startline="7" endline="46">vmm_allocPageTable</references>
+        <references refid="paging_8c_1a8350aa43ff69829ba667ca34d9bcaa7a" compoundref="paging_8c" startline="356" endline="370">vmm_clearVirtualPage</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="vmm_8h_1a8204faafc0c27e418f993e07c2f59f14" compoundref="vmm_8h" startline="65">VMM_KERN_END</references>
+        <references refid="vmm_8h_1ad6394b4f60e68fe4e1431fc4e1998957" compoundref="vmm_8h" startline="64">VMM_KERN_START</references>
+        <references refid="paging_8c_1ad6c3897473d837504f3d1415fb8ab796" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</references>
+        <referencedby refid="i386_2bioscall_8c_1a56a172d2268fc10811a0bb180d7c3f49" compoundref="i386_2bioscall_8c" startline="40" endline="91">biosCall</referencedby>
+        <referencedby refid="exec_8h_1a82087e9a98b3a265b5a19266d0fc5970" compoundref="i386__exec_8c" startline="148" endline="227">execThread</referencedby>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1e88bcfc69132a46a1982237913101a5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        <definition>uInt32 vmm_getPhysicalAddr</definition>
-        <argsstring>(uInt32)</argsstring>
-        <name>vmm_getPhysicalAddr</name>
+      <memberdef kind="function" id="paging_8h_1a6d09af2e4df8a7165caa4c4b1895e87c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* vmm_getFreeMallocPage</definition>
+        <argsstring>(uint16_t count)</argsstring>
+        <name>vmm_getFreeMallocPage</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-          <defname>pageAddr</defname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-<para>Function: void *vmmGetPhysicalAddr(); Description: Returns The Physical Address Of The Virtual Page Notes: </para>        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/getphysicaladdr.c" bodystart="40" bodyend="54"/>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_1442adfc886cbfedfc3edadf45c5f89a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void vmm_pageFault</definition>
-        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
-        <name>vmm_pageFault</name>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+          <declname>count</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -723,32 +1002,143 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/pagefault.c" bodystart="53" bodyend="131"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</references>
-        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="paging_8h_157d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="46">PAGE_COW</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" compoundref="pagefault_8c" startline="36">pageFaultSpinLock</references>
-        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
-        <references refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" compoundref="thread_8h" startline="40">thread::vm_daddr</references>
-        <references refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" compoundref="thread_8h" startline="41">thread::vm_dsize</references>
-        <references refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" compoundref="getphysicaladdr_8c" startline="40" endline="54">vmm_getPhysicalAddr</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="paging_8h_14b324672c4b25064eb8db1e3419337b1" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</references>
-        <references refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="91" column="6" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="91" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1f47a45e3f0802f5aac053808127aaaf1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* vmm_getFreePage</definition>
+        <argsstring>(pidType)</argsstring>
+        <name>vmm_getFreePage</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="81" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/getfreepage.c" bodystart="45" bodyend="80" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="81" declcolumn="6"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="createvirtualspace_8c_1ab7ce06bf4237638127c7f052e8872f8a" compoundref="createvirtualspace_8c" startline="53" endline="191">vmm_createVirtualSpace</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void * vmm_getFreeVirtualPage</definition>
+        <argsstring>(pidType, int, int)</argsstring>
+        <name>vmm_getFreeVirtualPage</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <defname>pid</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <defname>count</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <defname>type</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="84" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/getfreevirtualpage.c" bodystart="47" bodyend="133" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="84" declcolumn="6"/>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="kernel_2syscall_8c_1aa023f30aed656a766f6aca5d9eeb5f46" compoundref="kernel_2syscall_8c" startline="179" endline="184">sysGetFreePage</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1a5522eccf81d4630537620209651be16e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t vmm_getPhysicalAddr</definition>
+        <argsstring>(uint32_t)</argsstring>
+        <name>vmm_getPhysicalAddr</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+          <defname>pageAddr</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function: void *vmm_getPhysicalAddr(); Description: Returns The Physical Address Of The Virtual Page Notes: </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="86" column="10" bodyfile="C:/Dev/git/UbixOS/sys/vmm/getphysicaladdr.c" bodystart="38" bodyend="53" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="86" declcolumn="10"/>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <referencedby refid="createvirtualspace_8c_1ab7ce06bf4237638127c7f052e8872f8a" compoundref="createvirtualspace_8c" startline="53" endline="191">vmm_createVirtualSpace</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1a17fca9c83854e88d2ca3c0ef8ec687dc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t vmm_getRealAddr</definition>
+        <argsstring>(uint32_t)</argsstring>
+        <name>vmm_getRealAddr</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="87" column="10" bodyfile="C:/Dev/git/UbixOS/sys/vmm/getphysicaladdr.c" bodystart="56" bodyend="70" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="87" declcolumn="10"/>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <referencedby refid="lnc_8c_1a0c06be8c0c0c046c5073f4cfae3eed7c" compoundref="lnc_8c" startline="94" endline="189">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1a715dad65aea26aaf149284fd2432eff9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* vmm_mapFromTask</definition>
+        <argsstring>(pidType, void *, uint32_t)</argsstring>
+        <name>vmm_mapFromTask</name>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="79" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="372" bodyend="486" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="79" declcolumn="6"/>
+        <referencedby refid="main_8cc_1aa6c38d07b193857fbaebc1656b89136e" compoundref="main_8cc" startline="51" endline="143">sdeThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1aa1e1475b5bc5c935c2dfc9907c95bf96" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vmm_pageFault</definition>
+        <argsstring>(struct trapframe *, uint32_t)</argsstring>
+        <name>vmm_pageFault</name>
+        <param>
+          <type>struct <ref refid="structtrapframe" kindref="compound">trapframe</ref> *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="93" column="6" bodyfile="C:/Dev/git/UbixOS/sys/vmm/pagefault.c" bodystart="53" bodyend="147" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="93" declcolumn="6"/>
+        <references refid="armv6_2sched_8c_1a54397bfe18d5da4d50ff03b15f540858" compoundref="armv6_2sched_8c" startline="50">_current</references>
+        <references refid="structtaskStruct_1a30966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="63">taskStruct::id</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <references refid="structtrapframe_1a5d510dabbcd29cf981b17a4c08234c3b" compoundref="trap_8h" startline="50">trapframe::tf_eip</references>
+        <references refid="structtrapframe_1a9e4fa072056d86cd7516e9445822ef34" compoundref="trap_8h" startline="49">trapframe::tf_err</references>
+        <references refid="structtrapframe_1acbc06b1642fabea71bfa8ddbba3ede44" compoundref="trap_8h" startline="54">trapframe::tf_esp</references>
+      </memberdef>
+      <memberdef kind="function" id="paging_8h_1af47a45e3f0802f5aac053808127aaaf1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vmm_pagingInit</definition>
         <argsstring>()</argsstring>
@@ -759,37 +1149,52 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="59" bodyend="147"/>
-        <references refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" compoundref="page__fault_8S" startline="38">_vmm_pageFault</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" compoundref="paging_8c" startline="40">kernelPageDirectory</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="vmm_8h_12b0091bdc36e32af3daf9cfcaa7c04e1" compoundref="vmm__memory_8c" startline="44">numPages</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="kmalloc_8h_181d09bc848b49133401b3efeeb65f1af" compoundref="kmalloc_8h" startline="39">sysID</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
-        <references refid="vmm_8h_1e6d4c286bb58576d1802a2c7d92e698e" compoundref="vmm_8h" startline="39">vmmMemoryMapAddr</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="vmm__init_8c_1ac183f585641487a954ca46c0d7bde31" compoundref="vmm__init_8c" startline="41" endline="49">vmm_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="90" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="58" bodyend="187" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="90" declcolumn="5"/>
+        <references refid="paging_8h_1a15b43ccb21abdb9e0a41acb82b260a99">_vmm_pageFault</references>
+        <references refid="gpt_8h_1a310ac455ac45de9713bd7dcb0b5500ad" compoundref="gpt_8h" startline="37">bzero</references>
+        <references refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="32">K_PANIC</references>
+        <references refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="69">KERNEL_PAGE_DEFAULT</references>
+        <references refid="paging_8c_1a7c58070dedac2ee9e1c73d8c8206b923" compoundref="paging_8c" startline="41">kernelPageDirectory</references>
+        <references refid="kprintf_8h_1a20b56810edb62a6fe59917015c30848f" compoundref="kprintf_8c" startline="259" endline="276">kprintf</references>
+        <references refid="vmm_8h_1a2b0091bdc36e32af3daf9cfcaa7c04e1" compoundref="vmm__memory_8c" startline="45">numPages</references>
+        <references refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="68">PAGE_DEFAULT</references>
+        <references refid="paging_8h_1a0d99c75e51b448fcb97266da4815c63f" compoundref="paging_8h" startline="62">PAGE_GLOBAL</references>
+        <references refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" compoundref="paging_8h" startline="37">PAGE_SIZE</references>
+        <references refid="paging_8h_1a1532db17068ba8d409b8ffe066414af2" compoundref="paging_8h" startline="65">PAGE_STACK</references>
+        <references refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" compoundref="paging_8h" startline="45">PD_BASE_ADDR</references>
+        <references refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" compoundref="paging_8h" startline="48">PD_ENTRIES</references>
+        <references refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" compoundref="paging_8h" startline="40">PD_INDEX</references>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <references refid="kmalloc_8h_1a81d09bc848b49133401b3efeeb65f1af" compoundref="kmalloc_8h" startline="38">sysID</references>
+        <references refid="vmm_8h_1ab8e4e189a7b1df2a03072ce5b75c89fe" compoundref="vmm__memory_8c" startline="221" endline="252">vmm_findFreePage</references>
+        <references refid="vmm_8h_1a8204faafc0c27e418f993e07c2f59f14" compoundref="vmm_8h" startline="65">VMM_KERN_END</references>
+        <references refid="vmm_8h_1ad6394b4f60e68fe4e1431fc4e1998957" compoundref="vmm_8h" startline="64">VMM_KERN_START</references>
+        <references refid="vmm_8h_1aa015f84b2a9b7588c472ff5dc99646f6" compoundref="vmm_8h" startline="50">VMM_MMAP_ADDR_PMODE</references>
+        <references refid="vmm_8h_1a1e10465731ac6cbfc253ce7d89ae34c8" compoundref="vmm_8h" startline="51">VMM_MMAP_ADDR_RMODE</references>
+        <references refid="paging_8c_1ad6c3897473d837504f3d1415fb8ab796" compoundref="paging_8c" startline="199" endline="281">vmm_remapPage</references>
+        <references refid="vmm_8h_1a89e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="47">vmmMemoryMap</references>
+        <referencedby refid="vmm__init_8c_1aac183f585641487a954ca46c0d7bde31" compoundref="vmm__init_8c" startline="43" endline="51">vmm_init</referencedby>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1adea68f248df43bddee62a09d945304b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vmm_remapPage</definition>
-        <argsstring>(uInt32, uInt32, uInt16)</argsstring>
+        <argsstring>(uint32_t, uint32_t, uint16_t, pidType, int haveLock)</argsstring>
         <name>vmm_remapPage</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>haveLock</declname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -797,49 +1202,34 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="160" bodyend="241"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="vmm_8h_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="paging_8h_157d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="46">PAGE_COW</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="49">PAGE_PRESENT</references>
-        <references refid="paging_8h_11532db17068ba8d409b8ffe066414af2" compoundref="paging_8h" startline="47">PAGE_STACK</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
-        <references refid="paging_8c_179ee934bb85cf9e184c2ad54b707f9db" compoundref="paging_8c" startline="44">rmpSpinLock</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
-        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
-        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
-        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
-        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
-        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
-        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="89" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/paging.c" bodystart="199" bodyend="281" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="89" declcolumn="5"/>
+        <references refid="kpanic_8h_1aa5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="32">K_PANIC</references>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="armv6_2spinlock_8c_1a71f03d2ba55111c715b6068254847a53" compoundref="armv6_2spinlock_8c" startline="55" endline="61">spinLock</references>
+        <references refid="kmalloc_8h_1a81d09bc848b49133401b3efeeb65f1af" compoundref="kmalloc_8h" startline="38">sysID</references>
+        <references refid="vmm_8h_1a71bd5e4901787995ae8f9cc3e1a888f9" compoundref="vmm_8h" startline="59">VMM_USER_END</references>
+        <references refid="vmm_8h_1ad43d15bd90c1980dae3db013c1a5abb0" compoundref="vmm_8h" startline="58">VMM_USER_START</references>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="vmm__mmap_8c_1ac6b3ef6da47d002e7ff528f9a8e75012" compoundref="vmm__mmap_8c" startline="75" endline="153">freebsd6_mmap</referencedby>
+        <referencedby refid="kmod_8c_1a92b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="70" endline="207">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1add6ca1fb619f0bc0f4addffbfc5577a7" compoundref="ld_8c" startline="40" endline="194">ldEnable</referencedby>
+        <referencedby refid="classogDisplay__UbixOS_1a63ff8d6ee36f49385885fd0cf64fba3f" compoundref="ogDisplay__UbixOS_8cc" startline="99" endline="203">ogDisplay_UbixOS::SetMode</referencedby>
+        <referencedby refid="vmm__mmap_8c_1a34f95e2ffa8a4bb4ca88918a3a3af580" compoundref="vmm__mmap_8c" startline="162" endline="220">sys_mmap</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
+        <referencedby refid="paging_8c_1a3615feeeee9f4038cd1070372ccba22e" compoundref="paging_8c" startline="291" endline="346">vmm_getFreeKernelPage</referencedby>
+        <referencedby refid="paging_8c_1af47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="58" endline="187">vmm_pagingInit</referencedby>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_11913e8607a69ecf446b18fa1cd36c9cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1ab060cb62a6dd6d22f63757d72c27c335" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vmm_setPageAttributes</definition>
-        <argsstring>(uInt32, uInt16)</argsstring>
+        <argsstring>(uint32_t, uint16_t)</argsstring>
         <name>vmm_setPageAttributes</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
         </param>
         <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
         </param>
         <briefdescription>
         </briefdescription>
@@ -847,22 +1237,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/setpageattributes.c" bodystart="41" bodyend="68"/>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="88" column="5" bodyfile="C:/Dev/git/UbixOS/sys/vmm/setpageattributes.c" bodystart="39" bodyend="66" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="88" declcolumn="5"/>
+        <references refid="armv6_2kpanic_8c_1adb9a182aa071791a306163d50d653deb" compoundref="armv6_2kpanic_8c" startline="41" endline="61">kpanic</references>
+        <references refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" compoundref="paging_8h" startline="46">PT_BASE_ADDR</references>
+        <referencedby refid="kernel_2elf_8c_1aaf5f82fbbff76c71fcefe513c40730b4" compoundref="kernel_2elf_8c" startline="37" endline="137">elf_load_file</referencedby>
+        <referencedby refid="exec_8c_1af80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="153" endline="330">execFile</referencedby>
+        <referencedby refid="exec_8c_1a219681612352232186a0f568457d851d" compoundref="exec_8c" startline="340" endline="545">sysExec</referencedby>
       </memberdef>
-      <memberdef kind="function" id="paging_8h_1230a160ddb717c5a133e55aa42e9d324" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="paging_8h_1a917d614e699949c52741b429219ea456" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vmmClearVirtualPage</definition>
-        <argsstring>(uInt32 pageAddr)</argsstring>
+        <argsstring>(uint32_t pageAddr)</argsstring>
         <name>vmmClearVirtualPage</name>
         <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
           <declname>pageAddr</declname>
         </param>
         <briefdescription>
@@ -871,281 +1259,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="314" bodyend="329"/>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
-        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
-        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
-        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_141985de19bd46cbe3b702cee74168dec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmmCopyVirtualSpace</definition>
-        <argsstring>(pidType)</argsstring>
-        <name>vmmCopyVirtualSpace</name>
-        <param>
-          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/copyvirtualspace.c" bodystart="53" bodyend="206"/>
-        <references refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</references>
-        <references refid="copyvirtualspace_8c_1d0e5c4817eb928f6db5f6b89bb96d997" compoundref="copyvirtualspace_8c" startline="36">cvsSpinLock</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
-        <references refid="paging_8h_157d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="46">PAGE_COW</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_11532db17068ba8d409b8ffe066414af2" compoundref="paging_8h" startline="47">PAGE_STACK</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" compoundref="getphysicaladdr_8c" startline="40" endline="54">vmm_getPhysicalAddr</references>
-        <references refid="paging_8h_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</references>
-        <references refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_139ac9b6ea58fc8b6f129775642077c99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmmCreateVirtualSpace</definition>
-        <argsstring>(pidType)</argsstring>
-        <name>vmmCreateVirtualSpace</name>
-        <param>
-          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/createvirtualspace.c" bodystart="81" bodyend="143"/>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" compoundref="getphysicaladdr_8c" startline="40" endline="54">vmm_getPhysicalAddr</references>
-        <references refid="paging_8h_1d006a10f436671f8ee9cb402e372ff02" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</references>
-        <references refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</references>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_130a38035243b9dfb285b3793788126be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmmGetFreeKernelPage</definition>
-        <argsstring>(pidType pid, uInt16 count)</argsstring>
-        <name>vmmGetFreeKernelPage</name>
-        <param>
-          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
-          <declname>pid</declname>
-        </param>
-        <param>
-          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
-          <declname>count</declname>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="253" bodyend="301"/>
-        <references refid="paging_8c_1fe74a297627a1834d20925533b77c3d8" compoundref="paging_8c" startline="43">fkpSpinLock</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_1230a160ddb717c5a133e55aa42e9d324" compoundref="paging_8c" startline="314" endline="329">vmmClearVirtualPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_1d006a10f436671f8ee9cb402e372ff02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmmGetFreePage</definition>
-        <argsstring>(pidType)</argsstring>
-        <name>vmmGetFreePage</name>
-        <param>
-          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/getfreepage.c" bodystart="48" bodyend="77"/>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_1230a160ddb717c5a133e55aa42e9d324" compoundref="paging_8c" startline="314" endline="329">vmmClearVirtualPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="getfreepage_8c_1ebc7aa9c5f3b171c3e2660c4f102b248" compoundref="getfreepage_8c" startline="34">vmmGFPlock</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_14b324672c4b25064eb8db1e3419337b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmmGetFreeVirtualPage</definition>
-        <argsstring>(pidType, int, int)</argsstring>
-        <name>vmmGetFreeVirtualPage</name>
-        <param>
-          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
-        </param>
-        <param>
-          <type>int</type>
-        </param>
-        <param>
-          <type>int</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/getfreevirtualpage.c" bodystart="47" bodyend="159"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="paging_8h_10851ee42f36c8a00e9eafe739c8ffaaa" compoundref="paging_8h" startline="62">btoc</references>
-        <references refid="paging_8h_1071caea8a82a06e754daca63317d3c07" compoundref="paging_8h" startline="61">ctob</references>
-        <references refid="getfreevirtualpage_8c_1153dbb51837629ad18f14637d0357248" compoundref="getfreevirtualpage_8c" startline="36">fvpSpinLock</references>
-        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
-        <references refid="paging_8h_157d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="46">PAGE_COW</references>
-        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
-        <references refid="paging_8h_1122dfc414a40e260fd35dbe9743db26f" compoundref="paging_8h" startline="49">PAGE_PRESENT</references>
-        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
-        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
-        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
-        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
-        <references refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" compoundref="thread_8h" startline="40">thread::vm_daddr</references>
-        <references refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" compoundref="thread_8h" startline="41">thread::vm_dsize</references>
-        <references refid="paging_8h_159a518704bf2f0b56603476bcb1eebbf" compoundref="paging_8h" startline="38">VM_TASK</references>
-        <references refid="paging_8h_14ede4e8b3e149ef94678acdae7de0e18" compoundref="paging_8h" startline="37">VM_THRD</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_1230a160ddb717c5a133e55aa42e9d324" compoundref="paging_8c" startline="314" endline="329">vmmClearVirtualPage</references>
-        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
-        <references refid="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="47">osInfo::vmStart</references>
-        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
-        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
-        <referencedby refid="syscall_8c_11db3bfbad534c2fa75c02646fcf80a90" compoundref="syscall_8c" startline="196" endline="204">sysGetFreePage</referencedby>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_18f335022705939f0a6553d289b9c1e4e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void *</type>
-        <definition>void* vmmMapFromTask</definition>
-        <argsstring>(pidType, void *, uInt32)</argsstring>
-        <name>vmmMapFromTask</name>
-        <param>
-          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
-        </param>
-        <param>
-          <type>void *</type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="332" bodyend="399"/>
-        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
-        <references refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="47">tssStruct::cr3</references>
-        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
-        <references refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" compoundref="paging_8h" startline="53">KERNEL_PAGE_DEFAULT</references>
-        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
-        <references refid="sched_8h_19cf37ade4c1f6184b33014ac2015e8ed" compoundref="sched_8c" startline="216" endline="226">schedFindTask</references>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="58">taskStruct::tss</references>
-        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
-        <references refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</references>
-        <references refid="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" compoundref="sched_8h" startline="47">osInfo::vmStart</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void vmmUnmapPage</definition>
-        <argsstring>(uInt32, int)</argsstring>
-        <name>vmmUnmapPage</name>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <param>
-          <type>int</type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/unmappage.c" bodystart="50" bodyend="80"/>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
-        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
-        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
-        <referencedby refid="createvirtualspace_8c_1c8f92aa05b669f43457fed9002d6cb40" compoundref="createvirtualspace_8c" startline="81" endline="143">vmmCreateVirtualSpace</referencedby>
-        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
-      </memberdef>
-      <memberdef kind="function" id="paging_8h_10655b3d717666bf025c37fa55b588d37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type>void</type>
-        <definition>void vmmUnmapPages</definition>
-        <argsstring>(void *, uInt32)</argsstring>
-        <name>vmmUnmapPages</name>
-        <param>
-          <type>void *</type>
-        </param>
-        <param>
-          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
-        </param>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/unmappage.c" bodystart="101" bodyend="114"/>
-        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> *</type>
-        <definition>uInt32* kernelPageDirectory</definition>
-        <argsstring></argsstring>
-        <name>kernelPageDirectory</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/paging.c" bodystart="40" bodyend="-1"/>
-        <referencedby refid="idt_8c_12444cd2a62fc14b2d7f404b0fad5bf1b" compoundref="idt_8c" startline="239" endline="255">_int8</referencedby>
-        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
-        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
-        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
-        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" line="77" column="5" declfile="C:/Dev/git/UbixOS/sys/include/vmm/paging.h" declline="77" declcolumn="5"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -1153,102 +1267,111 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: paging_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_PAGING_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_PAGING_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37" refid="paging_8h_14ede4e8b3e149ef94678acdae7de0e18" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VM_THRD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
-<codeline lineno="38" refid="paging_8h_159a518704bf2f0b56603476bcb1eebbf" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>VM_TASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
-<codeline lineno="39"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40" refid="paging_8h_1d8f95327f815dfa0f9196dbc48b94ddb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>pageLength<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000400</highlight></codeline>
-<codeline lineno="41" refid="paging_8h_13d9cc2be3113b17e62612d00f7082b10" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>pageSize<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4096</highlight></codeline>
-<codeline lineno="42" refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>pageEntries<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(pageSize/4)</highlight></codeline>
-<codeline lineno="43" refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>tablesBaseAddress<sp/><sp/><sp/>0xBFC00000</highlight></codeline>
-<codeline lineno="44" refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>parentPageDirAddr<sp/><sp/><sp/>0x100000</highlight></codeline>
-<codeline lineno="45"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="46" refid="paging_8h_157d743cb60fe478f6720c42315e7e813" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_COW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000200</highlight></codeline>
-<codeline lineno="47" refid="paging_8h_11532db17068ba8d409b8ffe066414af2" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PAGE_STACK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000400</highlight></codeline>
-<codeline lineno="48" refid="paging_8h_141b733e23eb5b22e1df907b87d6b3996" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PAGE_WIRED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000600</highlight></codeline>
-<codeline lineno="49" refid="paging_8h_1122dfc414a40e260fd35dbe9743db26f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PAGE_PRESENT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000001</highlight></codeline>
-<codeline lineno="50" refid="paging_8h_1559697780e34fd09ba6a2e909f0fe1df" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PAGE_WRITE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000002</highlight></codeline>
-<codeline lineno="51" refid="paging_8h_12d0253527ea5080d6befe0ee3bde473f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PAGE_USER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000004</highlight></codeline>
-<codeline lineno="52" refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PAGE_DEFAULT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PAGE_PRESENT|PAGE_WRITE|PAGE_USER)</highlight></codeline>
-<codeline lineno="53" refid="paging_8h_18b838cda4f0bc79ab8d07eb19dd35420" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>KERNEL_PAGE_DEFAULT<sp/>(PAGE_PRESENT|PAGE_WRITE)</highlight></codeline>
-<codeline lineno="54"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="55" refid="paging_8h_1850d80ca2291d26b40dc6b25c419f81a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/>12<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>LOG2(PAGE_SIZE)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56" refid="paging_8h_17d467c1d283fdfa1f2081ba1e0d01b6e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1&lt;&lt;PAGE_SHIFT)<sp/></highlight><highlight class="comment">/*<sp/>bytes/page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="57" refid="paging_8h_1e4aa620ce57c7c3171b916de2c5f09f2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PAGE_SIZE-1)</highlight></codeline>
-<codeline lineno="58"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="59" refid="paging_8h_1bd636a9b61ad98f4fc23b1f4a9210d78" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>trunc_page(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((x)<sp/>&amp;<sp/>~PAGE_MASK)</highlight></codeline>
-<codeline lineno="60" refid="paging_8h_12702263fcf2b3b026cb26c6d895cb0ee" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>round_page(x)<sp/><sp/><sp/>(((x)<sp/>+<sp/>PAGE_MASK)<sp/>&amp;<sp/>~PAGE_MASK)</highlight></codeline>
-<codeline lineno="61" refid="paging_8h_1071caea8a82a06e754daca63317d3c07" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ctob(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((x)&lt;&lt;PAGE_SHIFT)</highlight></codeline>
-<codeline lineno="62" refid="paging_8h_10851ee42f36c8a00e9eafe739c8ffaaa" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>btoc(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((vm_offset_t)(x)+PAGE_MASK)&gt;&gt;PAGE_SHIFT)</highlight></codeline>
-<codeline lineno="63"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1230a160ddb717c5a133e55aa42e9d324" kindref="member">vmmClearVirtualPage</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>pageAddr);</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" kindref="member">vmmUnmapPage</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="paging_8h_10655b3d717666bf025c37fa55b588d37" kindref="member">vmmUnmapPages</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_18f335022705939f0a6553d289b9c1e4e" kindref="member">vmmMapFromTask</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_141985de19bd46cbe3b702cee74168dec" kindref="member">vmmCopyVirtualSpace</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>);</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1d006a10f436671f8ee9cb402e372ff02" kindref="member">vmmGetFreePage</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>);</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_130a38035243b9dfb285b3793788126be" kindref="member">vmmGetFreeKernelPage</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>count);</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_139ac9b6ea58fc8b6f129775642077c99" kindref="member">vmmCreateVirtualSpace</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>);</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_14b324672c4b25064eb8db1e3419337b1" kindref="member">vmmGetFreeVirtualPage</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="paging_8h_11913e8607a69ecf446b18fa1cd36c9cc" kindref="member">vmm_setPageAttributes</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>);</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" kindref="member">vmm_remapPage</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>);</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="paging_8h_1f47a45e3f0802f5aac053808127aaaf1" kindref="member">vmm_pagingInit</ref>();</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/>*<ref refid="paging_8h_1541f0b43826a40b9e978f5479080bb0e" kindref="member">vmm_getFreeMallocPage</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>count);</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="paging_8h_1442adfc886cbfedfc3edadf45c5f89a6" kindref="member">vmm_pageFault</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><ref refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" kindref="member">_vmm_pageFault</ref>();</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_19721caa05ef16cbf780658769bfd537a" kindref="member">mmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structmmap__args" kindref="compound">mmap_args</ref><sp/>*);</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_17f9e3f42e3fe0ba5e2dd3a4140ef14de" kindref="member">obreak</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structobreak__args" kindref="compound">obreak_args</ref><sp/>*);</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_194676b8bce29788e36abad710783e545" kindref="member">munmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structmunmap__args" kindref="compound">munmap_args</ref><sp/>*);</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*<ref refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" kindref="member">kernelPageDirectory</ref>;</highlight></codeline>
-<codeline lineno="89"><highlight class="normal"></highlight></codeline>
-<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="91"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="93"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="94"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_VMM_PAGING_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_VMM_PAGING_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="include_2sys_2types_8h" kindref="compound">sys/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto__posix_8h" kindref="compound">sys/sysproto_posix.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="paging_8h_1a850d80ca2291d26b40dc6b25c419f81a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_SHIFT<sp/><sp/><sp/><sp/><sp/><sp/>12<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Page<sp/>Shift</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="paging_8h_1a7d467c1d283fdfa1f2081ba1e0d01b6e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x1000<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Page<sp/>Size</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="paging_8h_1ae4aa620ce57c7c3171b916de2c5f09f2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_MASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PAGE_SIZE-1)<sp/><sp/><sp/>//<sp/>Page<sp/>Mask</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="paging_8h_1ac96f9536624cb5d2e7634f37fa919c4c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PD_INDEX(v_addr)<sp/><sp/>(v_addr<sp/>&gt;&gt;<sp/>22)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Calc<sp/>Page<sp/>Directory<sp/>Index</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="paging_8h_1a51c93610d4e70b5449692328dbbe2928" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PD_OFFSET(v_addr)<sp/>(v_addr<sp/>&gt;&gt;<sp/>0xA)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Calc<sp/>Page<sp/>Directory<sp/>OFfset</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="paging_8h_1a2c6e29890bb0209384b6d012db48e2f7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PT_INDEX(v_addr)<sp/><sp/>((v_addr<sp/>&gt;&gt;<sp/>12)<sp/>&amp;<sp/>0x03FF)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>//<sp/>Calc<sp/>Page<sp/>Table<sp/>Offset</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="paging_8h_1ac1a62d9f7ed5a48f8f710cf006dbc77c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PD_BASE_ADDR2<sp/><sp/><sp/><sp/><sp/>((PAGE_SIZE<sp/>&lt;&lt;<sp/>0xA)<sp/>+<sp/>VMM_KERN_START)<sp/>//<sp/>Find<sp/>Out<sp/>What<sp/>This<sp/>Was<sp/>For</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="paging_8h_1a1b0f37794d3da1a86f1df77e503ed98f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PD_BASE_ADDR<sp/><sp/><sp/><sp/><sp/><sp/>0xC0400000<sp/>//<sp/>Page<sp/>Directory<sp/>Addressable<sp/>Base<sp/>Address</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="paging_8h_1a8d42a9a09d9dea53cab3044f51482acc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PT_BASE_ADDR<sp/><sp/><sp/><sp/><sp/><sp/>0xC0000000<sp/>//<sp/>Page<sp/>Table<sp/>Addressable<sp/>Base<sp/>Address</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="paging_8h_1a91bd4c1c49996222f571b2f53ca00dc4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PD_ENTRIES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PAGE_SIZE/4)<sp/>//Return<sp/>Page<sp/>Directory<sp/>Entries</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="paging_8h_1adc9776583e54abf06ae7b99f1f3036a6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PT_ENTRIES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PAGE_SIZE/4)<sp/>//Return<sp/>Page<sp/>Table<sp/>Entries</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="paging_8h_1a4ede4e8b3e149ef94678acdae7de0e18" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VM_THRD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/>//<sp/>Thread</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="paging_8h_1a59a518704bf2f0b56603476bcb1eebbf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>VM_TASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/>//<sp/>Task</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Page<sp/>Flags</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="paging_8h_1a122dfc414a40e260fd35dbe9743db26f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_PRESENT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000001</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="paging_8h_1a559697780e34fd09ba6a2e909f0fe1df" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_WRITE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000002</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="paging_8h_1a2d0253527ea5080d6befe0ee3bde473f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_USER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000004</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="paging_8h_1ab392709908a0587bc194c5fe3300237a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_WRITE_THROUGH<sp/><sp/>0x00000008</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="paging_8h_1a8d7496f2eb17d3f70143c00c99140e97" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_CACHE_DISABLED<sp/>0x00000010</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="paging_8h_1add0f255a15cf72f5b47251d19092c41d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_ACCESSED<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000020</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="paging_8h_1a0b65338140b4aab20aae2708677df343" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_DIRTY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000040</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="paging_8h_1a0d99c75e51b448fcb97266da4815c63f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_GLOBAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000080</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="paging_8h_1ae583257f64c7549d122d6757c6d51728" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000100</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="paging_8h_1a57d743cb60fe478f6720c42315e7e813" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_COW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000200</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="paging_8h_1a1532db17068ba8d409b8ffe066414af2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_STACK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000400</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="paging_8h_1a41b733e23eb5b22e1df907b87d6b3996" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_WIRED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000800</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="paging_8h_1af0fff7a38cd2c7a32d580787423b94ea" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PAGE_DEFAULT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(PAGE_PRESENT|PAGE_WRITE|PAGE_USER)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="paging_8h_1a8b838cda4f0bc79ab8d07eb19dd35420" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>KERNEL_PAGE_DEFAULT<sp/>(PAGE_PRESENT|PAGE_WRITE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="paging_8h_1abd636a9b61ad98f4fc23b1f4a9210d78" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>trunc_page(x)<sp/><sp/><sp/>((x)<sp/>&amp;<sp/>~PAGE_MASK)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="paging_8h_1a2702263fcf2b3b026cb26c6d895cb0ee" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>round_page(x)<sp/><sp/><sp/>(((x)<sp/>+<sp/>PAGE_MASK)<sp/>&amp;<sp/>~PAGE_MASK)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="paging_8h_1a071caea8a82a06e754daca63317d3c07" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ctob(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((x)&lt;&lt;PAGE_SHIFT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="paging_8h_1a0851ee42f36c8a00e9eafe739c8ffaaa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>btoc(x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((vm_offset_t)(x)+PAGE_MASK)&gt;&gt;PAGE_SHIFT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1a917d614e699949c52741b429219ea456" kindref="member">vmmClearVirtualPage</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>pageAddr);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1a715dad65aea26aaf149284fd2432eff9" kindref="member">vmm_mapFromTask</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1a5de86e63abae0b406ff4a286b44b109e" kindref="member">vmm_copyVirtualSpace</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1a7035c695cbbae5799ecc1f9bcab7dd48" kindref="member">vmm_getFreePage</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1a3615feeeee9f4038cd1070372ccba22e" kindref="member">vmm_getFreeKernelPage</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid,<sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/>count);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1acd6d1b9b2687749ddd73542f7897696e" kindref="member">vmm_createVirtualSpace</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" kindref="member">vmm_getFreeVirtualPage</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="paging_8h_1a5522eccf81d4630537620209651be16e" kindref="member">vmm_getPhysicalAddr</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/><ref refid="paging_8h_1a17fca9c83854e88d2ca3c0ef8ec687dc" kindref="member">vmm_getRealAddr</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1ab060cb62a6dd6d22f63757d72c27c335" kindref="member">vmm_setPageAttributes</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref>);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1adea68f248df43bddee62a09d945304b0" kindref="member">vmm_remapPage</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref>,<sp/><ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>haveLock);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1af47a45e3f0802f5aac053808127aaaf1" kindref="member">vmm_pagingInit</ref>();</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1a6d09af2e4df8a7165caa4c4b1895e87c" kindref="member">vmm_getFreeMallocPage</ref>(<ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref><sp/>count);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="comment">//void<sp/>vmm_pageFault(<sp/>uint32_t,<sp/>uint32_t,<sp/>uint32_t<sp/>);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1aa1e1475b5bc5c935c2dfc9907c95bf96" kindref="member">vmm_pageFault</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtrapframe" kindref="compound">trapframe</ref><sp/>*,<sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1a15b43ccb21abdb9e0a41acb82b260a99" kindref="member">_vmm_pageFault</ref>();</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1a0d45ce836c8a731beef7b3fd972d16fd" kindref="member">mmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__mmap__args" kindref="compound">sys_mmap_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1a8d8ba1d847eb4dbeb26a3c1077ab1981" kindref="member">obreak</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structobreak__args" kindref="compound">obreak_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1a3b8f1043eab8384fb5b4be1a4a4245ce" kindref="member">munmap</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsys__munmap__args" kindref="compound">sys_munmap_args</ref><sp/>*);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1adf104ab2196331b538186550cb7ada3e" kindref="member">vmm_cleanVirtualSpace</ref>(<ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref>);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="paging_8h_1ac5fa0688dfb2237da626a34ad6b36a92" kindref="member">vmm_getFreeVirtualPage</ref>(<ref refid="include_2sys_2types_8h_1ae438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>type);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref><sp/>*<ref refid="paging_8h_1a7c58070dedac2ee9e1c73d8c8206b923" kindref="member">kernelPageDirectory</ref>;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/paging.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/vmm/paging.h"/>
   </compounddef>
 </doxygen>

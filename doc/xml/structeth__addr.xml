@@ -1,16 +1,16 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structeth__addr" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structeth__addr" kind="struct" language="C++" prot="public">
     <compoundname>eth_addr</compoundname>
-    <includes refid="arp_8h" local="no">arp.h</includes>
+    <includes refid="prot_2ethernet_8h" local="no">ethernet.h</includes>
       <sectiondef kind="public-func">
-      <memberdef kind="function" id="structeth__addr_1659e6d94ddb0acdae1a3df46b0de80ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="structeth__addr_1a711ab57c326e3ba928a4e4e83bc17f6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type></type>
-        <definition>eth_addr::PACK_STRUCT_FIELD</definition>
-        <argsstring>(uInt8 addr[6])</argsstring>
-        <name>PACK_STRUCT_FIELD</name>
+        <definition>eth_addr::PACK_STRUCT_FLD_8</definition>
+        <argsstring>(u8_t addr[6])</argsstring>
+        <name>PACK_STRUCT_FLD_8</name>
         <param>
-          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <type><ref refid="group__compiler__abstraction_1ga4caecabca98b43919dd11be1c0d4cd8e" kindref="member">u8_t</ref></type>
           <declname>addr</declname>
           <array>[6]</array>
         </param>
@@ -20,16 +20,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="49"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="59" column="3"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" bodystart="48" bodyend="50"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>eth_addr</label>
+        <link refid="structeth__addr"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" line="58" column="15" bodyfile="C:/Dev/git/UbixOS/sys/include/net/prot/ethernet.h" bodystart="58" bodyend="60"/>
     <listofallmembers>
-      <member refid="structeth__addr_1659e6d94ddb0acdae1a3df46b0de80ed" prot="public" virt="non-virtual"><scope>eth_addr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structeth__addr_1a711ab57c326e3ba928a4e4e83bc17f6f" prot="public" virt="non-virtual"><scope>eth_addr</scope><name>PACK_STRUCT_FLD_8</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

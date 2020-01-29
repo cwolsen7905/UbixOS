@@ -1,253 +1,395 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="kern__sysctl_8h" kind="file">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="kern__sysctl_8h" kind="file" language="C++">
     <compoundname>kern_sysctl.h</compoundname>
-    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
+    <includes refid="sysproto__posix_8h" local="no">sys/sysproto_posix.h</includes>
     <includes refid="thread_8h" local="no">sys/thread.h</includes>
-    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
-    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
-    <includedby refid="copyvirtualspace_8c" local="no">src/sys/vmm/copyvirtualspace.c</includedby>
+    <includedby refid="ubixos_2init_8h" local="no">C:/Dev/git/UbixOS/sys/include/ubixos/init.h</includedby>
+    <includedby refid="ufs__extern_8h" local="no">C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="copyvirtualspace_8c" local="no">C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</includedby>
     <incdepgraph>
-      <node id="3771">
+      <node id="21">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>i386/cpu.h</label>
+        <link refid="i386_2cpu_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>sys/select.h</label>
+        <link refid="select_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>vfs/inode.h</label>
+        <link refid="inode_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>sys/_sigset.h</label>
+        <link refid="__sigset_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>sys/resource.h</label>
+        <link refid="resource_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+        <link refid="include_2sys_2types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>fs/msdos_fs.h</label>
+        <link refid="msdos__fs_8h"/>
+      </node>
+      <node id="3">
+        <label>sys/signal.h</label>
+        <link refid="sys_2signal_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>fs/pipe_fs.h</label>
+        <link refid="pipe__fs_8h"/>
+      </node>
+      <node id="18">
+        <label>ubixos/wait.h</label>
+        <link refid="wait_8h"/>
+      </node>
+      <node id="11">
         <label>sys/thread.h</label>
         <link refid="thread_8h"/>
-        <childnode refid="3769" relation="include">
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
         </childnode>
       </node>
-      <node id="3769">
-        <label>ubixos/types.h</label>
-        <link refid="types_8h"/>
-        <childnode refid="3770" relation="include">
-        </childnode>
+      <node id="7">
+        <label>sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
       </node>
-      <node id="3770">
+      <node id="5">
         <label>sys/_types.h</label>
         <link refid="__types_8h"/>
       </node>
-      <node id="3766">
-        <label>src/sys/include/sys/kern_sysctl.h</label>
-        <link refid="kern_sysctl.h"/>
-        <childnode refid="3767" relation="include">
-        </childnode>
-        <childnode refid="3771" relation="include">
+      <node id="8">
+        <label>sys/_timespec.h</label>
+        <link refid="__timespec_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
-      <node id="3767">
-        <label>sys/sysproto.h</label>
-        <link refid="sysproto_8h"/>
-        <childnode refid="3768" relation="include">
-        </childnode>
-        <childnode refid="3771" relation="include">
+      <node id="22">
+        <label>sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="3768">
-        <label>sys/signal.h</label>
-        <link refid="signal_8h"/>
-        <childnode refid="3769" relation="include">
+      <node id="2">
+        <label>sys/sysproto_posix.h</label>
+        <link refid="sysproto__posix_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>sys/_timeval.h</label>
+        <link refid="__timeval_8h"/>
+        <childnode refid="5" relation="include">
         </childnode>
       </node>
     </incdepgraph>
     <invincdepgraph>
-      <node id="3775">
-        <label>src/sys/kernel/kern_sysctl.c</label>
-        <link refid="kern__sysctl_8c"/>
-      </node>
-      <node id="3772">
-        <label>src/sys/include/sys/kern_sysctl.h</label>
-        <link refid="kern_sysctl.h"/>
-        <childnode refid="3773" relation="include">
-        </childnode>
-        <childnode refid="3775" relation="include">
-        </childnode>
-        <childnode refid="3776" relation="include">
-        </childnode>
-      </node>
-      <node id="3774">
-        <label>src/sys/init/main.c</label>
+      <node id="3">
+        <label>C:/Dev/git/UbixOS/sys/init/main.c</label>
         <link refid="main_8c"/>
       </node>
-      <node id="3773">
-        <label>src/sys/include/ubixos/init.h</label>
-        <link refid="init_8h"/>
-        <childnode refid="3774" relation="include">
+      <node id="5">
+        <label>C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="4">
+        <label>C:/Dev/git/UbixOS/sys/include/ufs/ufs/ufs_extern.h</label>
+        <link refid="ufs__extern_8h"/>
+      </node>
+      <node id="6">
+        <label>C:/Dev/git/UbixOS/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+      <node id="1">
+        <label>C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
         </childnode>
       </node>
-      <node id="3776">
-        <label>src/sys/vmm/copyvirtualspace.c</label>
-        <link refid="copyvirtualspace_8c"/>
+      <node id="2">
+        <label>C:/Dev/git/UbixOS/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
       </node>
     </invincdepgraph>
     <innerclass refid="structsysctl__entry" prot="public">sysctl_entry</innerclass>
       <sectiondef kind="define">
-      <memberdef kind="define" id="kern__sysctl_8h_1e6b785c09f229d4721e21ac93c050d25" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1ae6b785c09f229d4721e21ac93c050d25" prot="public" static="no">
         <name>CTL_DEBUG</name>
-        <initializer>5</initializer>
+        <initializer>5           /* debugging parameters */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="46" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="45" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="45" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1c5963570c033378ae3a95be4ea4bcd6a" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1ac5963570c033378ae3a95be4ea4bcd6a" prot="public" static="no">
         <name>CTL_HW</name>
-        <initializer>6</initializer>
+        <initializer>6           /* generic cpu/io */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="47" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="46" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="46" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1e2217b9898706e75ee4c68263f40f14f" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1ae2217b9898706e75ee4c68263f40f14f" prot="public" static="no">
         <name>CTL_KERN</name>
-        <initializer>1</initializer>
+        <initializer>1           /* &quot;high kernel&quot;: proc, limits */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="42" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="41" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="41" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1e465ed8b625e601b0f77a1a4c0f411f0" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1ae465ed8b625e601b0f77a1a4c0f411f0" prot="public" static="no">
         <name>CTL_KERN_OPENFILES</name>
-        <initializer>1</initializer>
+        <initializer>1           /* kernel openfiles */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="53" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="52" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="52" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1ecdcd57f7e07c377f8a3f5d8c3dfc5c3" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1aecdcd57f7e07c377f8a3f5d8c3dfc5c3" prot="public" static="no">
         <name>CTL_MACHDEP</name>
-        <initializer>7</initializer>
+        <initializer>7           /* machine dependent */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="48" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="47" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="47" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_164c10ad2583c04cbc1b4c5ee9269f9ee" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1a64c10ad2583c04cbc1b4c5ee9269f9ee" prot="public" static="no">
         <name>CTL_MAXNAME</name>
-        <initializer>24</initializer>
+        <initializer>24      /* largest number of components supported */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="36" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" compoundref="kern__sysctl_8c" startline="46" endline="63">def_ctls</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="35" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="35" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_195feaa2f7d63c1feead4999e6826b663" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1a95feaa2f7d63c1feead4999e6826b663" prot="public" static="no">
         <name>CTL_NET</name>
-        <initializer>4</initializer>
+        <initializer>4           /* network, see socket.h */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="45" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="44" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="44" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1e367595aed72f0d28376f41963be0716" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1ae367595aed72f0d28376f41963be0716" prot="public" static="no">
         <name>CTL_P1003_1B</name>
-        <initializer>9</initializer>
+        <initializer>9           /* POSIX 1003.1<ref refid="include_2sys_2types_8h_1a111da81ae5883147168bbb8366377b10" kindref="member">B</ref> */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="50" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="49" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="49" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1c279bc858fea4ae549e51a5382ad7709" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1ac279bc858fea4ae549e51a5382ad7709" prot="public" static="no">
         <name>CTL_UBIX</name>
-        <initializer>10</initializer>
+        <initializer>10           /* ubixos */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="51" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="50" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="50" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_12d465d8d18db06791908c04b168e26c2" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1a2d465d8d18db06791908c04b168e26c2" prot="public" static="no">
         <name>CTL_UNSPEC</name>
-        <initializer>0</initializer>
+        <initializer>0           /* unused */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="41" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="40" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="40" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_172fbcdd5beae9909011f3b9b96412145" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1a72fbcdd5beae9909011f3b9b96412145" prot="public" static="no">
         <name>CTL_USER</name>
-        <initializer>8</initializer>
+        <initializer>8           /* user-level */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="49" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="48" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="48" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_18468f3456b5e69f27996cfa59f73525f" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1a8468f3456b5e69f27996cfa59f73525f" prot="public" static="no">
         <name>CTL_VFS</name>
-        <initializer>3</initializer>
+        <initializer>3           /* filesystem, mount type is next */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="44" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="43" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="43" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_1f6d848b54abe0956f610dc61df972778" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1af6d848b54abe0956f610dc61df972778" prot="public" static="no">
         <name>CTL_VM</name>
-        <initializer>2</initializer>
+        <initializer>2           /* virtual memory */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="43" bodyend="-1"/>
-        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="42" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="42" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="define" id="kern__sysctl_8h_12d1678d5a7cc8ce499643f3b8957def4" prot="public" static="no">
+      <memberdef kind="define" id="kern__sysctl_8h_1a2d1678d5a7cc8ce499643f3b8957def4" prot="public" static="no">
         <name>EINVAL</name>
-        <initializer>-1</initializer>
+        <initializer>-1               /* */</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="55" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="54" column="9" bodyfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="kern__sysctl_8h_1a712de03282020240591c73cd2432c2da" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1af6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool sysctl_enabled</definition>
+        <argsstring></argsstring>
+        <name>sysctl_enabled</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="72" column="13" declfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" declline="72" declcolumn="13"/>
       </memberdef>
       </sectiondef>
       <sectiondef kind="func">
-      <memberdef kind="function" id="kern__sysctl_8h_1435b5eee7e8e20fa7d3cf84d3065beff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="kern__sysctl_8h_1a435b5eee7e8e20fa7d3cf84d3065beff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int kern_sysctl</definition>
         <argsstring>(int *name, u_int namelen, void *old, size_t *oldlenp, void *new, size_t newlen, size_t *retval, int flags)</argsstring>
@@ -257,7 +399,7 @@
           <declname>name</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref></type>
           <declname>namelen</declname>
         </param>
         <param>
@@ -265,7 +407,7 @@
           <declname>old</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref> *</type>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref> *</type>
           <declname>oldlenp</declname>
         </param>
         <param>
@@ -273,11 +415,11 @@
           <declname>new</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
           <declname>newlen</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref> *</type>
+          <type><ref refid="include_2sys_2types_8h_1a7619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref> *</type>
           <declname>retval</declname>
         </param>
         <param>
@@ -290,9 +432,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="67"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="68" column="5" declfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" declline="68" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="kern__sysctl_8h_1ae50e8494ce7dc186f78a4bd65c7e8387" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sysctl_add</definition>
         <argsstring>(int *, int, char *, void *, int)</argsstring>
@@ -318,22 +460,9 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="205" bodyend="248"/>
-        <references refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" compoundref="kern__sysctl_8h" startline="60">sysctl_entry::children</references>
-        <references refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" compoundref="kern__sysctl_8h" startline="62">sysctl_entry::id</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
-        <references refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" compoundref="kern__sysctl_8h" startline="61">sysctl_entry::name</references>
-        <references refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" compoundref="kern__sysctl_8h" startline="59">sysctl_entry::next</references>
-        <references refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" compoundref="kern__sysctl_8h" startline="58">sysctl_entry::prev</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-        <references refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</references>
-        <references refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" compoundref="kern__sysctl_8h" startline="64">sysctl_entry::val_len</references>
-        <references refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" compoundref="kern__sysctl_8h" startline="63">sysctl_entry::value</references>
-        <referencedby refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" compoundref="kern__sysctl_8c" startline="46" endline="63">def_ctls</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="69" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c" bodystart="418" bodyend="482" declfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" declline="69" declcolumn="5"/>
       </memberdef>
-      <memberdef kind="function" id="kern__sysctl_8h_16d1146ba67c212252bb9699a7dc77cbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="kern__sysctl_8h_1a6d1146ba67c212252bb9699a7dc77cbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int sysctl_init</definition>
         <argsstring>()</argsstring>
@@ -344,43 +473,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="65" bodyend="151"/>
-        <references refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" compoundref="kern__sysctl_8h" startline="60">sysctl_entry::children</references>
-        <references refid="kern__sysctl_8h_1e6b785c09f229d4721e21ac93c050d25" compoundref="kern__sysctl_8h" startline="46">CTL_DEBUG</references>
-        <references refid="kern__sysctl_8h_1c5963570c033378ae3a95be4ea4bcd6a" compoundref="kern__sysctl_8h" startline="47">CTL_HW</references>
-        <references refid="kern__sysctl_8h_1e2217b9898706e75ee4c68263f40f14f" compoundref="kern__sysctl_8h" startline="42">CTL_KERN</references>
-        <references refid="kern__sysctl_8h_1ecdcd57f7e07c377f8a3f5d8c3dfc5c3" compoundref="kern__sysctl_8h" startline="48">CTL_MACHDEP</references>
-        <references refid="kern__sysctl_8h_195feaa2f7d63c1feead4999e6826b663" compoundref="kern__sysctl_8h" startline="45">CTL_NET</references>
-        <references refid="kern__sysctl_8h_1e367595aed72f0d28376f41963be0716" compoundref="kern__sysctl_8h" startline="50">CTL_P1003_1B</references>
-        <references refid="kern__sysctl_8h_1c279bc858fea4ae549e51a5382ad7709" compoundref="kern__sysctl_8h" startline="51">CTL_UBIX</references>
-        <references refid="kern__sysctl_8h_12d465d8d18db06791908c04b168e26c2" compoundref="kern__sysctl_8h" startline="41">CTL_UNSPEC</references>
-        <references refid="kern__sysctl_8h_172fbcdd5beae9909011f3b9b96412145" compoundref="kern__sysctl_8h" startline="49">CTL_USER</references>
-        <references refid="kern__sysctl_8h_18468f3456b5e69f27996cfa59f73525f" compoundref="kern__sysctl_8h" startline="44">CTL_VFS</references>
-        <references refid="kern__sysctl_8h_1f6d848b54abe0956f610dc61df972778" compoundref="kern__sysctl_8h" startline="43">CTL_VM</references>
-        <references refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" compoundref="kern__sysctl_8c" startline="41">ctls</references>
-        <references refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" compoundref="kern__sysctl_8c" startline="46" endline="63">def_ctls</references>
-        <references refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" compoundref="kern__sysctl_8h" startline="62">sysctl_entry::id</references>
-        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
-        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
-        <references refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" compoundref="kern__sysctl_8h" startline="61">sysctl_entry::name</references>
-        <references refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" compoundref="kern__sysctl_8h" startline="59">sysctl_entry::next</references>
-        <references refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" compoundref="kern__sysctl_8h" startline="58">sysctl_entry::prev</references>
-        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
-      </memberdef>
-      </sectiondef>
-      <sectiondef kind="var">
-      <memberdef kind="variable" id="kern__sysctl_8h_1712de03282020240591c73cd2432c2da" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
-        <definition>bool sysctl_enabled</definition>
-        <argsstring></argsstring>
-        <name>sysctl_enabled</name>
-        <briefdescription>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="71"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" line="70" column="5" bodyfile="C:/Dev/git/UbixOS/sys/kernel/kern_sysctl.c" bodystart="147" bodyend="253" declfile="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h" declline="70" declcolumn="5"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -388,84 +481,80 @@
     <detaileddescription>
     </detaileddescription>
     <programlisting>
-<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
-<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
-<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
-<codeline lineno="4"><highlight class="comment"></highlight></codeline>
-<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
-<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
-<codeline lineno="7"><highlight class="comment"></highlight></codeline>
-<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
-<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
-<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
-<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
-<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
-<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
-<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
-<codeline lineno="15"><highlight class="comment"></highlight></codeline>
-<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
-<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
-<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
-<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
-<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
-<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
-<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
-<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
-<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
-<codeline lineno="25"><highlight class="comment"></highlight></codeline>
-<codeline lineno="26"><highlight class="comment"><sp/>$Id: kern__sysctl_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
-<codeline lineno="27"><highlight class="comment"></highlight></codeline>
-<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KERNSYSCTL_H</highlight></codeline>
-<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_KERNSYSCTL_H</highlight></codeline>
-<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"></highlight></codeline>
-<codeline lineno="36" refid="kern__sysctl_8h_164c10ad2583c04cbc1b4c5ee9269f9ee" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_MAXNAME<sp/><sp/><sp/><sp/><sp/>24<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>largest<sp/>number<sp/>of<sp/>components<sp/>supported<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
-<codeline lineno="39"><highlight class="comment"><sp/>*<sp/>Top-level<sp/>identifiers</highlight></codeline>
-<codeline lineno="40"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41" refid="kern__sysctl_8h_12d465d8d18db06791908c04b168e26c2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_UNSPEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>unused<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42" refid="kern__sysctl_8h_1e2217b9898706e75ee4c68263f40f14f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_KERN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>&quot;high<sp/>kernel&quot;:<sp/>proc,<sp/>limits<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="43" refid="kern__sysctl_8h_1f6d848b54abe0956f610dc61df972778" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_VM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>virtual<sp/>memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="44" refid="kern__sysctl_8h_18468f3456b5e69f27996cfa59f73525f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_VFS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem,<sp/>mount<sp/>type<sp/>is<sp/>next<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45" refid="kern__sysctl_8h_195feaa2f7d63c1feead4999e6826b663" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>network,<sp/>see<sp/>socket.h<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="46" refid="kern__sysctl_8h_1e6b785c09f229d4721e21ac93c050d25" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>debugging<sp/>parameters<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47" refid="kern__sysctl_8h_1c5963570c033378ae3a95be4ea4bcd6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_HW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>generic<sp/>cpu/io<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="48" refid="kern__sysctl_8h_1ecdcd57f7e07c377f8a3f5d8c3dfc5c3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_MACHDEP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>machine<sp/>dependent<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="49" refid="kern__sysctl_8h_172fbcdd5beae9909011f3b9b96412145" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_USER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>user-level<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="50" refid="kern__sysctl_8h_1e367595aed72f0d28376f41963be0716" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_P1003_1B<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>POSIX<sp/>1003.1B<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="51" refid="kern__sysctl_8h_1c279bc858fea4ae549e51a5382ad7709" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_UBIX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ubixos<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53" refid="kern__sysctl_8h_1e465ed8b625e601b0f77a1a4c0f411f0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_KERN_OPENFILES<sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kernel<sp/>openfiles<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55" refid="kern__sysctl_8h_12d1678d5a7cc8ce499643f3b8957def4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EINVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56"><highlight class="normal"></highlight></codeline>
-<codeline lineno="57" refid="structsysctl__entry" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>{</highlight></codeline>
-<codeline lineno="58" refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref>;</highlight></codeline>
-<codeline lineno="59" refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
-<codeline lineno="60" refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>;</highlight></codeline>
-<codeline lineno="61" refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>[32];</highlight></codeline>
-<codeline lineno="62" refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref>;</highlight></codeline>
-<codeline lineno="63" refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref>;</highlight></codeline>
-<codeline lineno="64" refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" kindref="member">val_len</ref>;</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1435b5eee7e8e20fa7d3cf84d3065beff" kindref="member">kern_sysctl</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref><sp/>namelen,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*old,<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>*oldlenp,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">new</highlight><highlight class="normal">,<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>newlen,<ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>*retval,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags);</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" kindref="member">sysctl_add</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_16d1146ba67c212252bb9699a7dc77cbf" kindref="member">sysctl_init</ref>();</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1712de03282020240591c73cd2432c2da" kindref="member">sysctl_enabled</ref>;</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
-<codeline lineno="73"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
-<codeline lineno="75"><highlight class="comment"><sp/>END</highlight></codeline>
-<codeline lineno="76"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2002-2018<sp/>The<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>This<sp/>was<sp/>developed<sp/>by<sp/>Christopher<sp/>W.<sp/>Olsen<sp/>for<sp/>the<sp/>UbixOS<sp/>Project.</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are<sp/>permitted</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>1)<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>2)<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>3)<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/>without<sp/>specific<sp/>prior<sp/>written</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>permission.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>AUTHOR<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SYS_KERN_SYSCTL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SYS_KERN_SYSCTL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto__posix_8h" kindref="compound">sys/sysproto_posix.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="kern__sysctl_8h_1a64c10ad2583c04cbc1b4c5ee9269f9ee" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_MAXNAME<sp/><sp/><sp/><sp/><sp/>24<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>largest<sp/>number<sp/>of<sp/>components<sp/>supported<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>Top-level<sp/>identifiers</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="kern__sysctl_8h_1a2d465d8d18db06791908c04b168e26c2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_UNSPEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>unused<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="kern__sysctl_8h_1ae2217b9898706e75ee4c68263f40f14f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_KERN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>&quot;high<sp/>kernel&quot;:<sp/>proc,<sp/>limits<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="kern__sysctl_8h_1af6d848b54abe0956f610dc61df972778" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_VM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>virtual<sp/>memory<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="kern__sysctl_8h_1a8468f3456b5e69f27996cfa59f73525f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_VFS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem,<sp/>mount<sp/>type<sp/>is<sp/>next<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="kern__sysctl_8h_1a95feaa2f7d63c1feead4999e6826b663" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_NET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>network,<sp/>see<sp/>socket.h<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="kern__sysctl_8h_1ae6b785c09f229d4721e21ac93c050d25" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>debugging<sp/>parameters<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="kern__sysctl_8h_1ac5963570c033378ae3a95be4ea4bcd6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_HW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>generic<sp/>cpu/io<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="kern__sysctl_8h_1aecdcd57f7e07c377f8a3f5d8c3dfc5c3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_MACHDEP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>7<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>machine<sp/>dependent<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="kern__sysctl_8h_1a72fbcdd5beae9909011f3b9b96412145" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_USER<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>user-level<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="kern__sysctl_8h_1ae367595aed72f0d28376f41963be0716" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_P1003_1B<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>POSIX<sp/>1003.1B<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="kern__sysctl_8h_1ac279bc858fea4ae549e51a5382ad7709" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_UBIX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>10<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ubixos<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="kern__sysctl_8h_1ae465ed8b625e601b0f77a1a4c0f411f0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CTL_KERN_OPENFILES<sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kernel<sp/>openfiles<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="kern__sysctl_8h_1a2d1678d5a7cc8ce499643f3b8957def4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>EINVAL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="structsysctl__entry" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>{</highlight></codeline>
+<codeline lineno="57" refid="structsysctl__entry_1a0e2e6c2769d6f630bcb94a51af41d132" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="structsysctl__entry_1a0e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structsysctl__entry_1a7fe5c9ce75d56acee42c432e3e00321f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="structsysctl__entry_1a7fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="59" refid="structsysctl__entry_1a239c611e035660fc8f16883c74cdffdc" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="structsysctl__entry_1a239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>;</highlight></codeline>
+<codeline lineno="60" refid="structsysctl__entry_1a0209092e0d9a6dc9da8c5e072c30e9c8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1a0209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>[32];</highlight></codeline>
+<codeline lineno="61" refid="structsysctl__entry_1aa59204308c5d65c292b5e76280dc4e2c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1aa59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="62" refid="structsysctl__entry_1affd915637490eb2ec4674c4a13894a1a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structsysctl__entry_1affd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref>;</highlight></codeline>
+<codeline lineno="63" refid="structsysctl__entry_1abd8a485d90fa0bb76070a23e37c2a6aa" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1abd8a485d90fa0bb76070a23e37c2a6aa" kindref="member">val_len</ref>;</highlight></codeline>
+<codeline lineno="64" refid="structsysctl__entry_1a0f9f4c47ccc8dfe919f279fbeaab6f20" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1a0f9f4c47ccc8dfe919f279fbeaab6f20" kindref="member">full_name</ref>[<ref refid="kern__sysctl_8h_1a64c10ad2583c04cbc1b4c5ee9269f9ee" kindref="member">CTL_MAXNAME</ref>];</highlight></codeline>
+<codeline lineno="65" refid="structsysctl__entry_1a0d730bca6ca3fbb9053d04696512f502" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structsysctl__entry_1a0d730bca6ca3fbb9053d04696512f502" kindref="member">namelen</ref>;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1a435b5eee7e8e20fa7d3cf84d3065beff" kindref="member">kern_sysctl</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_1a8f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<ref refid="include_2sys_2types_8h_1ac319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref><sp/><ref refid="structsysctl__entry_1a0d730bca6ca3fbb9053d04696512f502" kindref="member">namelen</ref>,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*old,</highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>*oldlenp,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">new</highlight><highlight class="normal">,</highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>newlen,</highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>*retval,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1ae50e8494ce7dc186f78a4bd65c7e8387" kindref="member">sysctl_add</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1a6d1146ba67c212252bb9699a7dc77cbf" kindref="member">sysctl_init</ref>();</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1a712de03282020240591c73cd2432c2da" kindref="member">sysctl_enabled</ref>;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>END<sp/>_SYS_KERN_SYSCTL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/sys/kern_sysctl.h"/>
   </compounddef>
 </doxygen>

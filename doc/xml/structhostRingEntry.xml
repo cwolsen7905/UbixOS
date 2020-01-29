@@ -1,39 +1,42 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structhostRingEntry" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structhostRingEntry" kind="struct" language="C++" prot="public">
     <compoundname>hostRingEntry</compoundname>
     <includes refid="lnc_8h" local="no">lnc.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structhostRingEntry_1c161484f38e0d27a0923dcd5636dd150" prot="public" static="no" mutable="no">
-        <type>hostRingEntry::@0</type>
-        <definition>union hostRingEntry::@0 hostRingEntry::buff</definition>
+      <memberdef kind="variable" id="structhostRingEntry_1a34d92363e396c0ca0beb6dc8707e7fcb" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t hostRingEntry::addr</definition>
         <argsstring></argsstring>
-        <name>buff</name>
+        <name>addr</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="138"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="85" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structhostRingEntry_1ddc4bbce700597b4277125f8c0835a42" prot="public" static="no" mutable="no">
-        <type>char *</type>
-        <definition>char* hostRingEntry::data</definition>
+      <memberdef kind="variable" id="structhostRingEntry_1a8d309990c12b073a189107ee78313e3e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a281b4b5562236420969a830503b0ba19" kindref="member">uint16_t</ref></type>
+        <definition>uint16_t hostRingEntry::bcnt</definition>
         <argsstring></argsstring>
-        <name>data</name>
+        <name>bcnt</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="137" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="86" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="86" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a85f794a709a826cb783b49a20dda4cf3" compoundref="lnc_8c" startline="546" endline="571">lnc_sendPacket</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structhostRingEntry_11d19c97563a6859a066762e7d0d32739" prot="public" static="no" mutable="no">
-        <type><ref refid="structmds" kindref="compound">mds</ref> *</type>
-        <definition>struct mds* hostRingEntry::md</definition>
-        <argsstring></argsstring>
+      <memberdef kind="variable" id="structhostRingEntry_1ad47f374df8b180e7fa5c58cfa9ef474e" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t hostRingEntry::md[6]</definition>
+        <argsstring>[6]</argsstring>
         <name>md</name>
         <briefdescription>
         </briefdescription>
@@ -41,7 +44,26 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="134" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="87" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="87" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1a15887c99a129da1ef80b030d097c6c80" compoundref="lnc_8c" startline="518" endline="520">lnc_driverOwnsRX</referencedby>
+        <referencedby refid="lnc_8c_1ab876fabc49e39786f1a2ad625c90f2d2" compoundref="lnc_8c" startline="514" endline="516">lnc_driverOwnsTX</referencedby>
+        <referencedby refid="lnc_8c_1afa544fa662f94035a72f9c04f7f7fd5a" compoundref="lnc_8c" startline="316" endline="350">lnc_rxINT</referencedby>
+        <referencedby refid="lnc_8c_1a85f794a709a826cb783b49a20dda4cf3" compoundref="lnc_8c" startline="546" endline="571">lnc_sendPacket</referencedby>
+        <referencedby refid="lnc_8c_1a6fb9d9c3d73ce2d10b2cebe1d71f07e2" compoundref="lnc_8c" startline="278" endline="314">lnc_thread</referencedby>
+        <referencedby refid="lnc_8c_1a86e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="419" endline="512">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structhostRingEntry_1a733ad6ade2b5d3d089a3ee711e8b0bde" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a0238af00180b6d9278fa1c6aa790fdf4" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t hostRingEntry::reserved</definition>
+        <argsstring></argsstring>
+        <name>reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="88" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="88" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -49,23 +71,17 @@
     <detaileddescription>
     </detaileddescription>
     <collaborationgraph>
-      <node id="514">
-        <label>mds</label>
-        <link refid="structmds"/>
-      </node>
-      <node id="513">
+      <node id="1">
         <label>hostRingEntry</label>
         <link refid="structhostRingEntry"/>
-        <childnode refid="514" relation="usage">
-          <edgelabel>md</edgelabel>
-        </childnode>
       </node>
     </collaborationgraph>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="133" bodyend="139"/>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" line="84" column="20" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/lnc.h" bodystart="84" bodyend="89"/>
     <listofallmembers>
-      <member refid="structhostRingEntry_1c161484f38e0d27a0923dcd5636dd150" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>buff</name></member>
-      <member refid="structhostRingEntry_1ddc4bbce700597b4277125f8c0835a42" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>data</name></member>
-      <member refid="structhostRingEntry_11d19c97563a6859a066762e7d0d32739" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>md</name></member>
+      <member refid="structhostRingEntry_1a34d92363e396c0ca0beb6dc8707e7fcb" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>addr</name></member>
+      <member refid="structhostRingEntry_1a8d309990c12b073a189107ee78313e3e" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>bcnt</name></member>
+      <member refid="structhostRingEntry_1ad47f374df8b180e7fa5c58cfa9ef474e" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>md</name></member>
+      <member refid="structhostRingEntry_1a733ad6ade2b5d3d089a3ee711e8b0bde" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>reserved</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

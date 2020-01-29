@@ -1,12 +1,12 @@
-<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
-  <compounddef id="structconfadd" kind="struct" prot="public">
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.16">
+  <compounddef id="structconfadd" kind="struct" language="C++" prot="public">
     <compoundname>confadd</compoundname>
     <includes refid="pci_8h" local="no">pci.h</includes>
       <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 confadd::bus</definition>
+      <memberdef kind="variable" id="structconfadd_1a183f0168efe559d9bd93c0333c633e87" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t confadd::bus</definition>
         <argsstring></argsstring>
         <name>bus</name>
         <bitfield>8</bitfield>
@@ -16,12 +16,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="72" bodyend="-1"/>
-        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="93" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="93" bodyend="-1"/>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 confadd::dev</definition>
+      <memberdef kind="variable" id="structconfadd_1a25302013455d0f821a642ca36088082d" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t confadd::dev</definition>
         <argsstring></argsstring>
         <name>dev</name>
         <bitfield>5</bitfield>
@@ -31,12 +32,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="71" bodyend="-1"/>
-        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="92" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structconfadd_1c2dd33e1c67afa8930a230ff6c222615" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 confadd::enable</definition>
+      <memberdef kind="variable" id="structconfadd_1a7e9ccb6d9b97c39e102cbedf58c22919" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t confadd::enable</definition>
         <argsstring></argsstring>
         <name>enable</name>
         <bitfield>1</bitfield>
@@ -46,11 +48,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="74" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="95" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="95" bodyend="-1"/>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structconfadd_1afb15c7a48b105117892b837bf2c23f2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 confadd::func</definition>
+      <memberdef kind="variable" id="structconfadd_1a29f775cd426e1c998042e0ddf3b747ce" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t confadd::func</definition>
         <argsstring></argsstring>
         <name>func</name>
         <bitfield>3</bitfield>
@@ -60,12 +64,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="70" bodyend="-1"/>
-        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="91" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="91" bodyend="-1"/>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structconfadd_168dbcf1a10079c788ebf7b7cebb58125" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 confadd::reg</definition>
+      <memberdef kind="variable" id="structconfadd_1a0a9c3960a73c47086fcccb9c955638c7" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t confadd::reg</definition>
         <argsstring></argsstring>
         <name>reg</name>
         <bitfield>8</bitfield>
@@ -75,11 +80,13 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="69" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="90" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="90" bodyend="-1"/>
+        <referencedby refid="pci_8c_1a09d5fac523ec602b928a2eeb2dc3eee6" compoundref="pci_8c" startline="76" endline="106">pciRead</referencedby>
+        <referencedby refid="pci_8c_1a562e38dfaaab5bd65c08f7ee9769235d" compoundref="pci_8c" startline="108" endline="137">pciWrite</referencedby>
       </memberdef>
-      <memberdef kind="variable" id="structconfadd_15899cc614af11f99fab8391fbe8022b7" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
-        <definition>uInt8 confadd::rsvd</definition>
+      <memberdef kind="variable" id="structconfadd_1a595d0f91c5459eb66c3777fd30861bca" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2sys_2types_8h_1a2aff71146ab4942b2b38860c749c4074" kindref="member">uint8_t</ref></type>
+        <definition>uint8_t confadd::rsvd</definition>
         <argsstring></argsstring>
         <name>rsvd</name>
         <bitfield>7</bitfield>
@@ -89,21 +96,27 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="73" bodyend="-1"/>
+        <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="94" column="13" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="94" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="68" bodyend="75"/>
+    <collaborationgraph>
+      <node id="1">
+        <label>confadd</label>
+        <link refid="structconfadd"/>
+      </node>
+    </collaborationgraph>
+    <location file="C:/Dev/git/UbixOS/sys/include/pci/pci.h" line="89" column="14" bodyfile="C:/Dev/git/UbixOS/sys/include/pci/pci.h" bodystart="89" bodyend="96"/>
     <listofallmembers>
-      <member refid="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" prot="public" virt="non-virtual"><scope>confadd</scope><name>bus</name></member>
-      <member refid="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" prot="public" virt="non-virtual"><scope>confadd</scope><name>dev</name></member>
-      <member refid="structconfadd_1c2dd33e1c67afa8930a230ff6c222615" prot="public" virt="non-virtual"><scope>confadd</scope><name>enable</name></member>
-      <member refid="structconfadd_1afb15c7a48b105117892b837bf2c23f2" prot="public" virt="non-virtual"><scope>confadd</scope><name>func</name></member>
-      <member refid="structconfadd_168dbcf1a10079c788ebf7b7cebb58125" prot="public" virt="non-virtual"><scope>confadd</scope><name>reg</name></member>
-      <member refid="structconfadd_15899cc614af11f99fab8391fbe8022b7" prot="public" virt="non-virtual"><scope>confadd</scope><name>rsvd</name></member>
+      <member refid="structconfadd_1a183f0168efe559d9bd93c0333c633e87" prot="public" virt="non-virtual"><scope>confadd</scope><name>bus</name></member>
+      <member refid="structconfadd_1a25302013455d0f821a642ca36088082d" prot="public" virt="non-virtual"><scope>confadd</scope><name>dev</name></member>
+      <member refid="structconfadd_1a7e9ccb6d9b97c39e102cbedf58c22919" prot="public" virt="non-virtual"><scope>confadd</scope><name>enable</name></member>
+      <member refid="structconfadd_1a29f775cd426e1c998042e0ddf3b747ce" prot="public" virt="non-virtual"><scope>confadd</scope><name>func</name></member>
+      <member refid="structconfadd_1a0a9c3960a73c47086fcccb9c955638c7" prot="public" virt="non-virtual"><scope>confadd</scope><name>reg</name></member>
+      <member refid="structconfadd_1a595d0f91c5459eb66c3777fd30861bca" prot="public" virt="non-virtual"><scope>confadd</scope><name>rsvd</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>
