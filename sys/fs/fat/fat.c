@@ -118,7 +118,7 @@ int write_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
   kprintf("Writing: %i[%i]\n", size, offset);
-  fl_fseek(_file, offset, 0);
+  // XXX this is not supposed to happen fl_fseek(_file, offset, 0);
 
   if (fl_fwrite(data, 1, size, _file) != size)
     kprintf("ERROR: Write file failed\n");
