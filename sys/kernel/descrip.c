@@ -321,7 +321,7 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
   }
   else if (td->o_files[to] != 0x0) {
     kprintf("FD IN USE!");
-    return (-1);
+    //return (-1);
   }
 
   td->o_files[to] = td->o_files[from];
