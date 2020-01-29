@@ -312,11 +312,6 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd) {
 }
 
 size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
-
-  assert(fd);
-  assert(fd->mp);
-  assert(fd->mp->fs);
-
   kprintf("fd[0x%X]\m", fd);
   kprintf("fd->mp[0x%X]\m", fd->mp);
   kprintf("fd->mp->fs[0x%X]\m", fd->mp->fs);
