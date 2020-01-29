@@ -53,7 +53,7 @@ static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
 
 static unsigned int keyboardMap[255][8] = {
 /*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
-{     0,     0,    0,   0,   0,    0,          0,         0 },
+{ 0, 0, 0, 0, 0, 0, 0, 0 },
 /* ESC */{ 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B },
 /* 1,! */{ 0x31, 0x21, 0, 0, 0x31, 0x31, 0x21, 0x21 },
 /* 2,@ */{ 0x32, 0x40, 0, 0, 0x32, 0x32, 0x40, 0x40 },
@@ -177,28 +177,28 @@ int atkbd_init() {
  */
 
 asm(
-  ".globl atkbd_isr       \n"
-  "atkbd_isr:             \n"
-  "push $0x80\n"
-  "push $0x80\n"
-  "  pusha                \n" /* Save all registers           */
-  "  push %ds             \n"
-  "  push %es             \n"
-  "  push %fs             \n"
-  "  push %gs             \n"
-  "  push %esp            \n"
-  "  call keyboardHandler \n"
-  "  add $0x4,%esp\n"
-  "  mov $0x20,%dx        \n"
-  "  mov $0x20,%ax        \n"
-  "  outb %al,%dx         \n"
-  "  pop %gs              \n"
-  "  pop %fs              \n"
-  "  pop %es              \n"
-  "  pop %ds              \n"
-  "  popa                 \n"
-  "  add $0x8,%esp\n"
-  "  iret                 \n" /* Exit interrupt                           */
+    ".globl atkbd_isr       \n"
+    "atkbd_isr:             \n"
+    "push $0x80\n"
+    "push $0x80\n"
+    "  pusha                \n" /* Save all registers           */
+    "  push %ds             \n"
+    "  push %es             \n"
+    "  push %fs             \n"
+    "  push %gs             \n"
+    "  push %esp            \n"
+    "  call keyboardHandler \n"
+    "  add $0x4,%esp\n"
+    "  mov $0x20,%dx        \n"
+    "  mov $0x20,%ax        \n"
+    "  outb %al,%dx         \n"
+    "  pop %gs              \n"
+    "  pop %fs              \n"
+    "  pop %es              \n"
+    "  pop %ds              \n"
+    "  popa                 \n"
+    "  add $0x8,%esp\n"
+    "  iret                 \n" /* Exit interrupt                           */
 );
 
 static int atkbd_scan() {
@@ -224,7 +224,6 @@ void keyboardHandler(struct trapframe *frame) {
 
   if (key > 255)
     return;
-
 
   /* Control Key */
   if (key == 0x1D && !(controlKeys & controlKey)) {
@@ -288,24 +287,27 @@ void keyboardHandler(struct trapframe *frame) {
           tty_foreground->stdin[tty_foreground->stdinSize] = keyboardMap[key][keyMap];
           tty_foreground->stdinSize++;
         }
-      break;
+        break;
       case 0x3:
         //if (tty_foreground != 0x0)
         //  endTask(tty_foreground->owner);
         //K_PANIC( "CTRL-C pressed\n" );
         kprintf("FreePages: [0x%X]\n", systemVitals->freePages);
         sched_setStatus(tty_foreground->owner, DEAD);
-      break;
+        break;
       case 0x9:
         kprintf("REBOOTING");
+
+        // XXX Hack add shutdown procedure
+        fl_shutdown();
         while (inportByte(0x64) & 0x02)
           ;
         outportByte(0x64, 0xFE);
-      break;
+        break;
       case 0x18:
-          if (tty_foreground->owner == _current->id)
-            die_if_kernel("CTRL-X", frame, frame->tf_eax);
-      break;
+        if (tty_foreground->owner == _current->id)
+          die_if_kernel("CTRL-X", frame, frame->tf_eax);
+        break;
       default:
         if (tty_foreground == 0x0) {
           stdinBuffer[stdinSize] = keyboardMap[key][keyMap];
@@ -315,7 +317,7 @@ void keyboardHandler(struct trapframe *frame) {
           tty_foreground->stdin[tty_foreground->stdinSize] = keyboardMap[key][keyMap];
           tty_foreground->stdinSize++;
         }
-      break;
+        break;
     }
   }
   else {
@@ -323,9 +325,9 @@ void keyboardHandler(struct trapframe *frame) {
       case 0x30:
         tty_change(keyboardMap[key][keyMap] & 0xFF);
         //kprintf("Changing Consoles[0x%X:0x%X]\n",_current->id,_current);
-      break;
+        break;
       default:
-      break;
+        break;
     }
   }
 
