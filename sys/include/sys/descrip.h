@@ -129,7 +129,7 @@ struct stat {
 };
 #endif
 
-int fcntl(struct thread *, struct fcntl_args *);
+int fcntl(struct thread*, struct sys_fcntl_args*);
 int close(struct thread *, struct close_args *);
 int falloc(struct thread *, struct file **, int *);
 int getdtablesize(struct thread *, struct getdtablesize_args *);
