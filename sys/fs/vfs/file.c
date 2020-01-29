@@ -312,6 +312,11 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd) {
 }
 
 size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
+
+  assert(fd);
+  assert(fd->mp);
+  assert(fd->mp->fs);
+
   if (fd != 0x0) {
     fd->mp->fs->vfsWrite(fd, ptr, fd->offset, size * nmemb);
     fd->offset += size * nmemb;
