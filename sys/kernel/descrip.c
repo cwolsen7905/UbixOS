@@ -63,12 +63,12 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
 
           ((struct file*) td->o_files[uap->fd])->fd->dup++;
 
-          fclose(td->o_files[uap->fd]);
+          fclose((struct file*) td->o_files[uap->fd]->fd);
 
           //td->o_files[uap->fd] = 0;
 
           if (!fdestroy(td, fp, uap->fd))
-            kprintf("[%s:%i] fdestroy() failed\n", __FILE__, __LINE__);
+            kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fp, td->o_files[uap->fd]);
 
           kprintf("FCNTL: %i, %i, 0x%X.", i, uap->fd, fp);
 
