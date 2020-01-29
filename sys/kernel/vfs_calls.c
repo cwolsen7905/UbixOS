@@ -100,8 +100,9 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   struct file *fd = 0x0;
   struct pipeInfo *pFD = 0x0;
 
-  kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
   getfd(td, &fd, args->fd);
+
+  kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
 
 #ifdef DEBUG_VFS_CALLS
   kprintf("[sC::0x%X:0x%X]", args->fd, fd, fd->fd);
