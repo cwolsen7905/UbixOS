@@ -33,7 +33,7 @@
 #include <sys/select.h>
 
 #ifndef NULL
-#define NULL ( (void *) 0)
+#define NULL 0
 #endif
 
 typedef __uintfptr_t uintfptr_t;
