@@ -541,23 +541,28 @@ int fclose(fileDescriptor_t *fd) {
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
     if (tmpFd == fd) {
-      if (fd->res != 0x0)
-        fl_fclose(fd->res);
+      if (fd->dup > 0)
+        fd->dup--;
+      else {
 
-      if (tmpFd->prev)
-        tmpFd->prev->next = tmpFd->next;
-      if (tmpFd->next)
-        tmpFd->next->prev = tmpFd->prev;
+        if (fd->res != 0x0)
+          fl_fclose(fd->res);
 
-      if (tmpFd == fdTable)
-        fdTable = tmpFd->next;
+        if (tmpFd->prev)
+          tmpFd->prev->next = tmpFd->next;
+        if (tmpFd->next)
+          tmpFd->next->prev = tmpFd->prev;
 
-      systemVitals->openFiles--;
-      spinUnlock(&fdTable_lock);
-      if (tmpFd->buffer != NULL)
-        kfree(tmpFd->buffer);
-      kfree(tmpFd);
-      return (0x0);
+        if (tmpFd == fdTable)
+          fdTable = tmpFd->next;
+
+        systemVitals->openFiles--;
+        spinUnlock(&fdTable_lock);
+        if (tmpFd->buffer != NULL)
+          kfree(tmpFd->buffer);
+        kfree(tmpFd);
+        return (0x0);
+      }
     }
   }
 

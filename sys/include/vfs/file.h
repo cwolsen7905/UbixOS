@@ -80,6 +80,7 @@ typedef struct fileDescriptor {
     struct inode inode;
     int fd_type;
     void *res;
+    int dup;
 } fileDescriptor_t;
 
 typedef struct userFileDescriptorStruct {
