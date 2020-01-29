@@ -312,9 +312,11 @@ size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd) {
 }
 
 size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd) {
+  /*
   kprintf("fd[0x%X]\m", fd);
   kprintf("fd->mp[0x%X]\m", fd->mp);
   kprintf("fd->mp->fs[0x%X]\m", fd->mp->fs);
+   */
 
   if (fd != 0x0) {
     fd->mp->fs->vfsWrite(fd, ptr, fd->offset, size * nmemb);
